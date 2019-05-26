@@ -78,6 +78,14 @@ IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_2019.Pue
     DROP TABLE FGNN_2019.Puertos
 GO
 
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_2019.Tipos_Cabinas'))
+	DROP TABLE FGNN_2019.Tipos_Cabinas
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_2019.Fabricantes'))
+	DROP TABLE FGNN_2019.Fabricantes
+GO	
+
 --Creación de tablas.
 CREATE TABLE [FGNN_2019].[Usuarios] (
 	[id] NUMERIC(18, 0) IDENTITY(1, 1),
@@ -185,8 +193,7 @@ CREATE TABLE [FGNN_2019].[Cabinas] (
 	[crucero_id] NUMERIC(18, 0),
 	[numero] NUMERIC(18, 0),
 	[piso] SMALLINT NOT NULL,
-	[tipo] VARCHAR(255) NOT NULL,
-	[tipo_porc_recargo] FLOAT NOT NULL,
+	[tipo_id] NUMERIC(18, 0),
 	[estado] BIT NOT NULL,
 	PRIMARY KEY ([crucero_id], [numero])
 );
@@ -197,7 +204,7 @@ CREATE TABLE [FGNN_2019].[Cruceros] (
 	[nombre] VARCHAR(255) NOT NULL,
 	[fecha_alta] DATETIME NOT NULL,
 	[modelo] VARCHAR(255) NOT NULL,
-	[fabricante] VARCHAR(255) NOT NULL,
+	[fabricante_id] NUMERIC(18, 0),
 	[tipo_servicio] VARCHAR(255) NOT NULL,
 	[baja_servicio] BIT DEFAULT 0 NOT NULL,
 	[baja_vida_util] BIT DEFAULT 0 NOT NULL,
@@ -239,6 +246,21 @@ CREATE TABLE [FGNN_2019].[Recorridos_X_Crucero] (
 	PRIMARY KEY ([recorrido_codigo], [recorrido_crucero])
 );
 GO
+
+CREATE TABLE [FGNN_2019].[Tipos_Cabinas] (
+	[id] NUMERIC(18, 0) IDENTITY(1, 1),
+	[descripcion] VARCHAR(255) NOT NULL,
+	[porcentaje_adicional] FLOAT NOT NULL,
+	PRIMARY KEY ([id])
+);
+GO
+
+CREATE TABLE [FGNN_2019].[Fabricantes] (
+	[id] NUMERIC(18, 0) IDENTITY(1, 1),
+	[descripcion] VARCHAR(255) NOT NULL,
+	PRIMARY KEY ([id])
+	
+)
 
 --Fin creación de tablas.
 
