@@ -26,7 +26,7 @@ IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_2019.Fun
     DROP TABLE FGNN_2019.Funcionalidades_Roles
 GO
 	
-IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_2019.Roles_Usuarios'))
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_2019.Usuarios_Roles'))
     DROP TABLE FGNN_2019.Usuarios_Roles		
 GO
 
