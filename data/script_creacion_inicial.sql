@@ -2,30 +2,23 @@
 USE [GD1C2019]
 GO
 
---Creación de schema.
-IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'FGNN_2019')
-BEGIN
-	EXEC ('CREATE SCHEMA FGNN_2019 AUTHORIZATION gdCruceros2019')
-END
-GO
-
 --Validación de tablas.
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_2019.Usuarios'))
     DROP TABLE FGNN_2019.Usuarios
 GO
 
-IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_2019.Roles'))
-    DROP TABLE FGNN_2019.Roles
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_2019.Funcionalidades_Roles'))
+    DROP TABLE FGNN_2019.Funcionalidades_Roles
 GO
 
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_2019.Funcionalidades'))
     DROP TABLE FGNN_2019.Funcionalidades
 GO
 
-IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_2019.Funcionalidades_Roles'))
-    DROP TABLE FGNN_2019.Funcionalidades_Roles
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_2019.Roles'))
+    DROP TABLE FGNN_2019.Roles
 GO
-	
+
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_2019.Usuarios_Roles'))
     DROP TABLE FGNN_2019.Usuarios_Roles		
 GO
@@ -84,7 +77,20 @@ GO
 
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_2019.Fabricantes'))
 	DROP TABLE FGNN_2019.Fabricantes
-GO	
+GO
+
+-- Elimina esquema si existe
+IF EXISTS (SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = 'FGNN_2019')
+    DROP SCHEMA FGNN_2019
+
+GO
+
+--Creación de schema.
+IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'FGNN_2019')
+BEGIN
+	EXEC ('CREATE SCHEMA FGNN_2019 AUTHORIZATION gdCruceros2019')
+END
+GO
 
 --Creación de tablas.
 CREATE TABLE [FGNN_2019].[Usuarios] (
@@ -124,6 +130,14 @@ CREATE TABLE [FGNN_2019].[Funcionalidades_Roles] (
 	[funcionalidad_id] NUMERIC(18, 0),
 	PRIMARY KEY ([rol_id], [funcionalidad_id])
 );
+GO
+
+ALTER TABLE [FGNN_2019].[Funcionalidades_Roles] WITH CHECK ADD  CONSTRAINT FK_id_rol_funcionalidades_roles FOREIGN KEY( rol_id )
+REFERENCES [FGNN_2019].[Roles] (id)
+GO
+
+ALTER TABLE [FGNN_2019].[Funcionalidades_Roles] WITH CHECK ADD  CONSTRAINT FK_id_funcionalidad_funcionalidades_roles FOREIGN KEY( funcionalidad_id )
+REFERENCES [FGNN_2019].[funcionalidades] (id)
 GO
 
 CREATE TABLE [FGNN_2019].[Reservas] (
@@ -264,4 +278,19 @@ CREATE TABLE [FGNN_2019].[Fabricantes] (
 
 --Fin creación de tablas.
 
---Migración
+/* MIGRACIÓN DE DATOS */
+
+-- Roles --
+INSERT INTO [FGNN_2019].[Roles](descripcion)
+VALUES ('Administrador'), ('Cliente')
+
+-- Funcionalidades --
+INSERT INTO [FGNN_2019].[Roles](descripcion)
+VALUES ('ABM Roles'),('ABM Puertos'),('ABM Recorridos'),('ABM Cruceros'),('Generar Viajes'),('Comprar Viajes'),('Pagar Reservas'), ('Listado Estadistico')
+
+-- Funcionalidades_Roles --
+INSERT INTO [FGNN_2019].[Funcionalidades_Roles]
+	SELECT r.rol_id, f.funcionalidad_id 
+	FROM [FGNN_2019].[Funcionalidades_Roles] f,
+	[FGNN_2019].[Roles] r join TRAEME_LA_COPA_MESSI.Usuario u on (rpu.Username = u.Username) where u.Username = 'admin'
+
