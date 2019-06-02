@@ -285,12 +285,34 @@ INSERT INTO [FGNN_2019].[Roles](descripcion)
 VALUES ('Administrador'), ('Cliente')
 
 -- Funcionalidades --
-INSERT INTO [FGNN_2019].[Roles](descripcion)
-VALUES ('ABM Roles'),('ABM Puertos'),('ABM Recorridos'),('ABM Cruceros'),('Generar Viajes'),('Comprar Viajes'),('Pagar Reservas'), ('Listado Estadistico')
+INSERT INTO [FGNN_2019].[Funcionalidades](descripcion)
+VALUES ('ABM Roles'),
+	('ABM Puertos'),
+	('ABM Recorridos'),
+	('ABM Cruceros'),
+	('Generar Viajes'),
+	('Comprar Viajes'),
+	('Pagar Reservas'),
+	('Listado Estadistico')
 
 -- Funcionalidades_Roles --
 INSERT INTO [FGNN_2019].[Funcionalidades_Roles]
-	SELECT r.rol_id, f.funcionalidad_id 
-	FROM [FGNN_2019].[Funcionalidades_Roles] f,
-	[FGNN_2019].[Roles] r join TRAEME_LA_COPA_MESSI.Usuario u on (rpu.Username = u.Username) where u.Username = 'admin'
+	SELECT r.id, f.id 
+	FROM [FGNN_2019].[Funcionalidades] f, [FGNN_2019].[Roles] r
+	WHERE r.descripcion = 'Administrador';
+GO
+
+INSERT INTO [FGNN_2019].[Funcionalidades_Roles]
+	SELECT r.id, f.id 
+	FROM [FGNN_2019].[Funcionalidades] f, [FGNN_2019].[Roles] r
+	WHERE r.descripcion = 'Cliente'
+		AND f.descripcion in (
+			'Generar Viajes',
+			'Comprar Viajes'
+		);
+GO
+
+
+
+
 
