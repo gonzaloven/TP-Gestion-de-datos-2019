@@ -178,7 +178,6 @@ CREATE TABLE [FGNN_19].[Clientes] (
 	[mail] VARCHAR(255),
 	[usuario_id] NUMERIC(18, 0),
 	PRIMARY KEY ([id]),
-	UNIQUE([dni]),
 	FOREIGN KEY (usuario_id) REFERENCES FGNN_19.Usuarios(id)
 );
 GO
@@ -216,8 +215,8 @@ CREATE TABLE [FGNN_19].[Viajes] (
 	[codigo] NUMERIC(18, 0) IDENTITY(1, 1),
 	[crucero_id] NUMERIC(18, 0),
 	[recorrido_codigo] NUMERIC(18, 0),
-	[fecha_inicio] DATETIME2(3) NOT NULL,
-	[fecha_fin] DATETIME2(3) NOT NULL,
+	[fecha_inicio] DATETIME2(3),
+	[fecha_fin] DATETIME2(3),
 	PRIMARY KEY([codigo]),
 	FOREIGN KEY (crucero_id) REFERENCES FGNN_19.Cruceros(id),
 	FOREIGN KEY (recorrido_codigo) REFERENCES FGNN_19.Recorridos(codigo)
@@ -254,7 +253,7 @@ CREATE TABLE [FGNN_19].[Cabinas] (
 	[numero] NUMERIC(18, 0),
 	[piso] SMALLINT NOT NULL,
 	[tipo_id] NUMERIC(18, 0),
-	[estado] BIT NOT NULL,
+	[estado] BIT,
 	pasaje_codigo NUMERIC(18, 0),
 	PRIMARY KEY ([crucero_id], [numero]),
 	FOREIGN KEY (crucero_id) REFERENCES FGNN_19.Cruceros(id),
@@ -299,6 +298,7 @@ SELECT M.RECORRIDO_CODIGO, PD.id, PH.id, M.RECORRIDO_PRECIO_BASE
 FROM gd_esquema.Maestra M, FGNN_19.Puertos PD, FGNN_19.Puertos PH
 WHERE PD.descripcion = M.PUERTO_DESDE
 AND PH.descripcion = M.PUERTO_HASTA
+GROUP BY M.RECORRIDO_CODIGO, PD.id, PH.id, M.RECORRIDO_PRECIO_BASE
 
 INSERT INTO FGNN_19.Reservas (codigo, fecha)
 SELECT RESERVA_CODIGO, RESERVA_FECHA
