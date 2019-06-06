@@ -284,3 +284,42 @@ GO
 --Fin creación de tablas.
 
 --Migración
+
+INSERT INTO FGNN_19.Tipos_Cabinas (descripcion, porcentaje_adicional)
+SELECT CABINA_TIPO, CABINA_TIPO_PORC_RECARGO FROM gd_esquema.Maestra
+GROUP BY CABINA_TIPO, CABINA_TIPO_PORC_RECARGO
+
+INSERT INTO FGNN_19.Puertos (descripcion)
+SELECT C.PUERTO_DESDE FROM gd_esquema.Maestra C
+UNION
+SELECT D.PUERTO_HASTA FROM gd_esquema.Maestra D
+
+INSERT INTO FGNN_19.Recorridos
+SELECT M.RECORRIDO_CODIGO, PD.id, PH.id, M.RECORRIDO_PRECIO_BASE
+FROM gd_esquema.Maestra M, FGNN_19.Puertos PD, FGNN_19.Puertos PH
+WHERE PD.descripcion = M.PUERTO_DESDE
+AND PH.descripcion = M.PUERTO_HASTA
+
+INSERT INTO FGNN_19.Reservas (codigo, fecha)
+SELECT RESERVA_CODIGO, RESERVA_FECHA
+FROM gd_esquema.Maestra
+WHERE RESERVA_CODIGO IS NOT NULL
+AND RESERVA_FECHA IS NOT NULL
+
+INSERT INTO FGNN_19.Fabricantes(descripcion)
+SELECT CRU_FABRICANTE
+FROM gd_esquema.Maestra
+
+INSERT INTO FGNN_19.Cruceros(nombre, modelo, fabricante_id)
+SELECT m.CRUCERO_IDENTIFICADOR, m.CRUCERO_MODELO, f.id
+FROM gd_esquema.Maestra m, FGNN_19.Fabricantes f
+WHERE f.descripcion = m.CRU_FABRICANTE
+
+INSERT INTO FGNN_19.Clientes(nombre, apellido, dni, direccion, telefono, fecha_nac, mail)
+SELECT CLI_NOMBRE, CLI_APELLIDO, CLI_DNI, CLI_DIRECCION, CLI_TELEFONO, CLI_FECHA_NAC, CLI_MAIL
+FROM gd_esquema.Maestra
+
+INSERT INTO FGNN_19.Cabinas(crucero_id, numero, piso, tipo_id, pasaje_codigo)
+SELECT c.id ,m.CABINA_NRO, m.CABINA_PISO, tc.id, m.PASAJE_CODIGO
+FROM gd_esquema.Maestra m, FGNN_19.Tipos_Cabinas tc, FGNN_19.Cruceros c
+WHERE tc.descripcion = m.CABINA_TIPO AND c.nombre = m.CRUCERO_IDENTIFICADOR
