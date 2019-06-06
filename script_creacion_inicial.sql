@@ -174,7 +174,7 @@ CREATE TABLE [FGNN_19].[Clientes] (
 	[dni] NUMERIC(18, 0) NOT NULL,
 	[direccion] VARCHAR(255) NOT NULL,
 	[telefono] NUMERIC(18, 0) NOT NULL,
-	[fecha_nac] DATETIME NOT NULL,
+	[fecha_nac] DATETIME2(3) NOT NULL,
 	[mail] VARCHAR(255),
 	[usuario_id] NUMERIC(18, 0),
 	PRIMARY KEY ([id]),
