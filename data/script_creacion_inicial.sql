@@ -218,6 +218,7 @@ CREATE TABLE [FGNN_19].[Viajes] (
 	[recorrido_codigo] NUMERIC(18, 0),
 	[fecha_inicio] DATETIME2(3),
 	[fecha_fin] DATETIME2(3),
+	[fecha_fin_estimada] DATETIME2(3),
 	PRIMARY KEY([codigo]),
 	FOREIGN KEY (crucero_id) REFERENCES FGNN_19.Cruceros(id),
 	FOREIGN KEY (recorrido_codigo) REFERENCES FGNN_19.Recorridos(id)
@@ -329,15 +330,15 @@ SELECT CLI_NOMBRE, CLI_APELLIDO, CLI_DNI, CLI_DIRECCION, CLI_TELEFONO, CLI_FECHA
 FROM gd_esquema.Maestra
 GROUP BY CLI_NOMBRE, CLI_APELLIDO, CLI_DNI, CLI_DIRECCION, CLI_TELEFONO, CLI_FECHA_NAC, CLI_MAIL
 
-INSERT INTO FGNN_19.Viajes(crucero_id, recorrido_codigo)
-SELECT c.id, r.id
+INSERT INTO FGNN_19.Viajes(crucero_id, recorrido_codigo, fecha_inicio, fecha_fin, fecha_fin_estimada)
+SELECT c.id, r.id, m.FECHA_SALIDA, m.FECHA_LLEGADA, m.FECHA_LLEGADA_ESTIMADA
 FROM gd_esquema.Maestra m, FGNN_19.Cruceros c, FGNN_19.Fabricantes f, FGNN_19.Recorridos r
 WHERE c.nombre = m.CRUCERO_IDENTIFICADOR 
 AND c.modelo = m.CRUCERO_MODELO 
 AND f.descripcion = m.CRU_FABRICANTE 
 AND c.fabricante_id = f.id
 AND r.codigo = CONVERT(VARCHAR,M.RECORRIDO_CODIGO)
-GROUP BY c.id, r.id
+GROUP BY c.id, r.id, m.FECHA_SALIDA, m.FECHA_LLEGADA, m.FECHA_LLEGADA_ESTIMADA
 
 INSERT INTO FGNN_19.Pasajes(reserva_codigo, cliente_id, viaje_codigo, fecha_compra, precio, codigo)
 SELECT m.RESERVA_CODIGO, c.id, v.codigo, m.PASAJE_FECHA_COMPRA, m.PASAJE_PRECIO, m.PASAJE_CODIGO
