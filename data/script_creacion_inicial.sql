@@ -201,11 +201,12 @@ CREATE TABLE [FGNN_19].[Cruceros] (
 GO
 
 CREATE TABLE [FGNN_19].[Recorridos] (
-	[codigo] NUMERIC(18, 0),
+	[id] NUMERIC(18, 0) IDENTITY(1, 1),
+	[codigo] VARCHAR(255),
 	[puerto_desde_id] NUMERIC(18, 0),
 	[puerto_hasta_id] NUMERIC(18, 0),
 	[precio_base] FLOAT NOT NULL,
-	PRIMARY KEY ([codigo]),
+	PRIMARY KEY ([id]),
 	FOREIGN KEY (puerto_desde_id) REFERENCES FGNN_19.Puertos(id),
 	FOREIGN KEY (puerto_hasta_id) REFERENCES FGNN_19.Puertos(id)
 );
@@ -219,7 +220,7 @@ CREATE TABLE [FGNN_19].[Viajes] (
 	[fecha_fin] DATETIME2(3),
 	PRIMARY KEY([codigo]),
 	FOREIGN KEY (crucero_id) REFERENCES FGNN_19.Cruceros(id),
-	FOREIGN KEY (recorrido_codigo) REFERENCES FGNN_19.Recorridos(codigo)
+	FOREIGN KEY (recorrido_codigo) REFERENCES FGNN_19.Recorridos(id)
 );
 GO
 
@@ -233,14 +234,15 @@ CREATE TABLE [FGNN_19].[Compras] (
 GO
 
 CREATE TABLE [FGNN_19].[Pasajes] (
-	[codigo] NUMERIC(18, 0) IDENTITY(1, 1),
+	[id] NUMERIC(18, 0) IDENTITY(1, 1),
 	[reserva_codigo] NUMERIC(18, 0),
 	[cliente_id] NUMERIC(18, 0),
 	[compra_codigo] NUMERIC(18, 0),
 	[viaje_codigo] NUMERIC(18, 0),
-	[fecha_compra] DATETIME2(3) NOT NULL,
-	[precio] FLOAT NOT NULL,
-	PRIMARY KEY ([codigo]),
+	[fecha_compra] DATETIME2(3),
+	[precio] FLOAT,
+	[codigo] NUMERIC(18,0)
+	PRIMARY KEY ([id]),
 	FOREIGN KEY (reserva_codigo) REFERENCES FGNN_19.Reservas(codigo),
 	FOREIGN KEY (cliente_id) REFERENCES FGNN_19.Clientes(id),
 	FOREIGN KEY (compra_codigo) REFERENCES FGNN_19.Compras(codigo),
@@ -249,16 +251,17 @@ CREATE TABLE [FGNN_19].[Pasajes] (
 GO
 
 CREATE TABLE [FGNN_19].[Cabinas] (
+	[codigo] NUMERIC(18, 0) IDENTITY(1, 1),
 	[crucero_id] NUMERIC(18, 0),
 	[numero] NUMERIC(18, 0),
-	[piso] SMALLINT NOT NULL,
+	[piso] NUMERIC(18, 0) NOT NULL,
 	[tipo_id] NUMERIC(18, 0),
 	[estado] BIT,
-	pasaje_codigo NUMERIC(18, 0),
-	PRIMARY KEY ([crucero_id], [numero]),
+	[pasaje_codigo] NUMERIC(18, 0),
+	PRIMARY KEY ([codigo]),
 	FOREIGN KEY (crucero_id) REFERENCES FGNN_19.Cruceros(id),
 	FOREIGN KEY (tipo_id) REFERENCES FGNN_19.Tipos_Cabinas(id),
-	FOREIGN KEY (pasaje_codigo) REFERENCES FGNN_19.Pasajes(codigo)
+	FOREIGN KEY (pasaje_codigo) REFERENCES FGNN_19.Pasajes(id)
 );
 GO
 
@@ -266,8 +269,8 @@ CREATE TABLE [FGNN_19].[Recorrido_X_Recorrido] (
 	[recorrido_total] NUMERIC(18, 0),
 	[recorrido_tramo] NUMERIC(18, 0),
 	PRIMARY KEY ([recorrido_total], [recorrido_tramo]),
-	FOREIGN KEY (recorrido_total) REFERENCES FGNN_19.Recorridos(codigo),
-	FOREIGN KEY (recorrido_tramo) REFERENCES FGNN_19.Recorridos(codigo)
+	FOREIGN KEY (recorrido_total) REFERENCES FGNN_19.Recorridos(id),
+	FOREIGN KEY (recorrido_tramo) REFERENCES FGNN_19.Recorridos(id)
 );
 GO
 
@@ -275,7 +278,7 @@ CREATE TABLE [FGNN_19].[Recorridos_X_Crucero] (
 	[recorrido_codigo] NUMERIC(18, 0),
 	[recorrido_crucero] NUMERIC(18, 0),
 	PRIMARY KEY ([recorrido_codigo], [recorrido_crucero]),
-	FOREIGN KEY (recorrido_codigo) REFERENCES FGNN_19.Recorridos(codigo),
+	FOREIGN KEY (recorrido_codigo) REFERENCES FGNN_19.Recorridos(id),
 	FOREIGN KEY (recorrido_crucero) REFERENCES FGNN_19.Cruceros(id)
 );
 GO
@@ -293,12 +296,12 @@ SELECT C.PUERTO_DESDE FROM gd_esquema.Maestra C
 UNION
 SELECT D.PUERTO_HASTA FROM gd_esquema.Maestra D
 
-INSERT INTO FGNN_19.Recorridos
-SELECT M.RECORRIDO_CODIGO, PD.id, PH.id, M.RECORRIDO_PRECIO_BASE
+INSERT INTO FGNN_19.Recorridos (codigo, puerto_desde_id, puerto_hasta_id, precio_base)
+SELECT CONVERT(VARCHAR,M.RECORRIDO_CODIGO), PD.id, PH.id, M.RECORRIDO_PRECIO_BASE
 FROM gd_esquema.Maestra M, FGNN_19.Puertos PD, FGNN_19.Puertos PH
 WHERE PD.descripcion = M.PUERTO_DESDE
 AND PH.descripcion = M.PUERTO_HASTA
-GROUP BY M.RECORRIDO_CODIGO, PD.id, PH.id, M.RECORRIDO_PRECIO_BASE
+GROUP BY CONVERT(VARCHAR,M.RECORRIDO_CODIGO), PD.id, PH.id, M.RECORRIDO_PRECIO_BASE
 
 INSERT INTO FGNN_19.Reservas (codigo, fecha)
 SELECT RESERVA_CODIGO, RESERVA_FECHA
@@ -326,44 +329,57 @@ SELECT CLI_NOMBRE, CLI_APELLIDO, CLI_DNI, CLI_DIRECCION, CLI_TELEFONO, CLI_FECHA
 FROM gd_esquema.Maestra
 GROUP BY CLI_NOMBRE, CLI_APELLIDO, CLI_DNI, CLI_DIRECCION, CLI_TELEFONO, CLI_FECHA_NAC, CLI_MAIL
 
-INSERT INTO FGNN_19.Cabinas(crucero_id, numero, piso, tipo_id, pasaje_codigo)
-SELECT c.id ,m.CABINA_NRO, m.CABINA_PISO, tc.id, m.PASAJE_CODIGO
-FROM gd_esquema.Maestra m, FGNN_19.Tipos_Cabinas tc, FGNN_19.Cruceros c
-WHERE tc.descripcion = m.CABINA_TIPO AND c.nombre = m.CRUCERO_IDENTIFICADOR
-GROUP BY c.id ,m.CABINA_NRO, m.CABINA_PISO, tc.id, m.PASAJE_CODIGO
-
-INSERT INTO FGNN_19.Recorridos_X_Crucero 
-SELECT m.RECORRIDO_CODIGO, c.id
-FROM gd_esquema.Maestra m, FGNN_19.Cruceros c, FGNN_19.Fabricantes f
-WHERE c.nombre = m.CRUCERO_IDENTIFICADOR
-AND c.modelo = m.CRUCERO_MODELO
-AND c.fabricante_id = f.id
-AND f.descripcion = m.CRU_FABRICANTE
-GROUP BY m.RECORRIDO_CODIGO, c.id
-
 INSERT INTO FGNN_19.Viajes(crucero_id, recorrido_codigo)
-SELECT c.id, m.RECORRIDO_CODIGO
-FROM gd_esquema.Maestra m, FGNN_19.Cruceros c, FGNN_19.Fabricantes f
+SELECT c.id, r.id
+FROM gd_esquema.Maestra m, FGNN_19.Cruceros c, FGNN_19.Fabricantes f, FGNN_19.Recorridos r
 WHERE c.nombre = m.CRUCERO_IDENTIFICADOR 
 AND c.modelo = m.CRUCERO_MODELO 
 AND f.descripcion = m.CRU_FABRICANTE 
 AND c.fabricante_id = f.id
-GROUP BY c.id, m.RECORRIDO_CODIGO
+AND r.codigo = CONVERT(VARCHAR,M.RECORRIDO_CODIGO)
+GROUP BY c.id, r.id
 
-INSERT INTO FGNN_19.Pasajes(reserva_codigo, cliente_id, viaje_codigo, fecha_compra, precio)
-SELECT m.RESERVA_CODIGO, clie.id, v.codigo, m.PASAJE_FECHA_COMPRA, m.PASAJE_PRECIO
-FROM gd_esquema.Maestra m, FGNN_19.Clientes clie, FGNN_19.Compras c, FGNN_19.Viajes v, FGNN_19.Cruceros cru, FGNN_19.Fabricantes f
-WHERE m.CLI_APELLIDO = clie.apellido 
-AND m.CLI_DIRECCION = clie.direccion 
-AND m.CLI_DNI = clie.dni 
-AND m.CLI_FECHA_NAC = clie.fecha_nac 
-AND m.CLI_MAIL = clie.mail 
-AND m.CLI_NOMBRE = clie.nombre 
-AND m.CLI_TELEFONO = clie.telefono 
+INSERT INTO FGNN_19.Pasajes(reserva_codigo, cliente_id, viaje_codigo, fecha_compra, precio, codigo)
+SELECT m.RESERVA_CODIGO, c.id, v.codigo, m.PASAJE_FECHA_COMPRA, m.PASAJE_PRECIO, m.PASAJE_CODIGO
+FROM gd_esquema.Maestra m, FGNN_19.Clientes c, FGNN_19.Viajes v, FGNN_19.Cruceros cru, FGNN_19.Fabricantes f, FGNN_19.Recorridos r, FGNN_19.Puertos pd, FGNN_19.Puertos ph
+WHERE m.CLI_APELLIDO = c.apellido
+AND m.CLI_DIRECCION = c.direccion
+AND m.CLI_DNI = c.dni
+AND m.CLI_FECHA_NAC = c.fecha_nac
+AND m.CLI_MAIL = c.mail
+AND m.CLI_NOMBRE = c.nombre
+AND m.CLI_TELEFONO = c.telefono
 AND cru.nombre = m.CRUCERO_IDENTIFICADOR
-AND cru.modelo = m.CRUCERO_MODELO 
-AND f.descripcion = m.CRU_FABRICANTE 
-AND cru.fabricante_id = f.id 
-AND v.crucero_id = cru.id 
-AND v.recorrido_codigo = m.RECORRIDO_CODIGO
-GROUP BY m.RESERVA_CODIGO, clie.id, v.codigo, m.PASAJE_FECHA_COMPRA, m.PASAJE_PRECIO
+AND cru.modelo = m.CRUCERO_MODELO
+AND f.descripcion = m.CRU_FABRICANTE
+AND cru.fabricante_id = f.id
+AND v.crucero_id = cru.id
+AND r.codigo = CONVERT(varchar,m.RECORRIDO_CODIGO)
+AND r.puerto_desde_id = pd.id
+AND r.puerto_hasta_id = ph.id
+AND pd.descripcion = m.PUERTO_DESDE
+AND ph.descripcion = m.PUERTO_HASTA
+AND v.recorrido_codigo = r.id
+GROUP BY m.RESERVA_CODIGO, c.id, v.codigo, m.PASAJE_FECHA_COMPRA, m.PASAJE_PRECIO, m.PASAJE_CODIGO
+
+INSERT INTO FGNN_19.Cabinas(crucero_id, numero, piso, tipo_id, pasaje_codigo)
+SELECT cru.id, m.CABINA_NRO, m.CABINA_PISO, tc.id, p.id
+FROM gd_esquema.Maestra m, FGNN_19.Cruceros cru, FGNN_19.Tipos_Cabinas tc, FGNN_19.Pasajes p, FGNN_19.Fabricantes f
+WHERE m.CRUCERO_IDENTIFICADOR = cru.nombre
+AND m.CRUCERO_MODELO = cru.modelo
+AND m.CRU_FABRICANTE = f.descripcion
+AND f.id = cru.fabricante_id
+AND tc.descripcion = m.CABINA_TIPO
+AND tc.porcentaje_adicional = m.CABINA_TIPO_PORC_RECARGO
+AND p.codigo = m.PASAJE_CODIGO
+GROUP BY cru.id, m.CABINA_NRO, m.CABINA_PISO, tc.id, p.id
+
+INSERT INTO FGNN_19.Recorridos_X_Crucero 
+SELECT r.id, c.id
+FROM gd_esquema.Maestra m, FGNN_19.Cruceros c, FGNN_19.Fabricantes f, FGNN_19.Recorridos r
+WHERE c.nombre = m.CRUCERO_IDENTIFICADOR
+AND c.modelo = m.CRUCERO_MODELO
+AND c.fabricante_id = f.id
+AND f.descripcion = m.CRU_FABRICANTE
+AND r.codigo = CONVERT(VARCHAR,M.RECORRIDO_CODIGO)
+GROUP BY r.id, c.id
