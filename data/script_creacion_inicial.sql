@@ -384,3 +384,37 @@ AND c.fabricante_id = f.id
 AND f.descripcion = m.CRU_FABRICANTE
 AND r.codigo = CONVERT(VARCHAR,M.RECORRIDO_CODIGO)
 GROUP BY r.id, c.id
+
+-- Fin Migracion
+
+-- Roles --
+INSERT INTO [FGNN_19].[Roles](descripcion)
+VALUES ('Administrador'), ('Cliente')
+
+-- Funcionalidades --
+INSERT INTO [FGNN_19].[Funcionalidades](descripcion)
+VALUES ('ABM Roles'),
+	('ABM Puertos'),
+	('ABM Recorridos'),
+	('ABM Cruceros'),
+	('Generar Viajes'),
+	('Comprar Viajes'),
+	('Pagar Reservas'),
+	('Listado Estadistico')
+
+-- Funcionalidades_Roles --
+INSERT INTO [FGNN_19].[Funcionalidades_Roles]
+	SELECT r.id, f.id 
+	FROM [FGNN_19].[Funcionalidades] f, [FGNN_19].[Roles] r
+	WHERE r.descripcion = 'Administrador';
+GO
+
+INSERT INTO [FGNN_19].[Funcionalidades_Roles]
+	SELECT r.id, f.id 
+	FROM [FGNN_19].[Funcionalidades] f, [FGNN_19].[Roles] r
+	WHERE r.descripcion = 'Cliente'
+		AND f.descripcion in (
+			'Generar Viajes',
+			'Comprar Viajes'
+		);
+GO
