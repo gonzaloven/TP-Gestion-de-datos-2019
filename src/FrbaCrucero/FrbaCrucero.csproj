@@ -64,11 +64,11 @@
     <Compile Include="AbmRecorrido\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="AbmRol\Form1.cs">
+    <Compile Include="AbmRol\ListadoDeRoles.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AbmRol\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="AbmRol\ListadoDeRoles.Designer.cs">
+      <DependentUpon>ListadoDeRoles.cs</DependentUpon>
     </Compile>
     <Compile Include="CompraReservaPasaje\Form1.cs">
       <SubType>Form</SubType>
@@ -76,11 +76,11 @@
     <Compile Include="CompraReservaPasaje\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form1.cs">
+    <Compile Include="MenuPrincipal.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="MenuPrincipal.Designer.cs">
+      <DependentUpon>MenuPrincipal.cs</DependentUpon>
     </Compile>
     <Compile Include="GeneracionViaje\Form1.cs">
       <SubType>Form</SubType>
@@ -94,6 +94,8 @@
     <Compile Include="ListadoEstadistico\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Modelos\Funcionalidad.cs" />
+    <Compile Include="Modelos\Rol.cs" />
     <Compile Include="PagoReserva\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -102,7 +104,17 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositorios\AbstractRepo.cs" />
+    <Compile Include="Repositorios\IRepo.cs" />
+    <Compile Include="Repositorios\RepoFuncionalidad.cs" />
+    <Compile Include="Repositorios\RepoRol.cs" />
     <Compile Include="Utils\ConexionDB.cs" />
+    <EmbeddedResource Include="AbmRol\ListadoDeRoles.resx">
+      <DependentUpon>ListadoDeRoles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MenuPrincipal.resx">
+      <DependentUpon>MenuPrincipal.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -125,6 +137,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
