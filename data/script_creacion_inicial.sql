@@ -418,3 +418,77 @@ INSERT INTO [FGNN_19].[Funcionalidades_Roles]
 			'Comprar Viajes'
 		);
 GO
+
+-- Vistas
+
+CREATE VIEW vw_RolesYFuncionalidades
+AS 
+SELECT r.descripcion AS ROL, f.descripcion AS FUNCIONALIDAD 
+FROM FGNN_19.Roles r, FGNN_19.Funcionalidades f, FGNN_19.Funcionalidades_Roles fr
+WHERE fr.funcionalidad_id = f.id
+AND fr.rol_id = r.id;
+GO
+
+-- Triggers
+
+CREATE TRIGGER TR_Roles_AfterUpdate ON FGNN_19.Roles
+AFTER UPDATE
+AS
+
+BEGIN TRANSACTION 
+
+DELETE FROM FGNN_19.Usuarios_Roles
+WHERE rol_id IN (SELECT i.id FROM INSERTED i
+				 WHERE i.habilitado = 0)
+
+COMMIT;
+GO
+
+CREATE TRIGGER TR_Roles_InsteadOfDelete ON FGNN_19.Roles
+INSTEAD OF DELETE
+AS
+
+BEGIN TRANSACTION
+
+DELETE FROM FGNN_19.Usuarios_Roles
+WHERE rol_id IN (SELECT id FROM DELETED)
+
+DELETE FROM FGNN_19.Roles
+WHERE id IN (SELECT id FROM DELETED)
+
+COMMIT;
+GO
+
+CREATE PROCEDURE FN_ValidarLogin 
+@User VARCHAR(255), 
+@Pass VARCHAR(255), 
+@Resultado INT OUTPUT
+AS
+BEGIN
+	IF EXISTS (
+			SELECT 1
+			FROM FGNN_19.Usuarios
+			WHERE username = @User
+			)
+	BEGIN
+		IF EXISTS (
+				SELECT 1
+				FROM FGNN_19.Usuarios
+				WHERE username = @User
+				AND password = CONVERT(BINARY (32), @Pass)
+				)
+		BEGIN
+			SET @Resultado = 0
+		END
+		ELSE
+		BEGIN
+			UPDATE FGNN_19.Usuarios
+			SET intentos_fallidos = intentos_fallidos + 1
+			WHERE username = @user
+
+			SET @Resultado = 1
+		END
+	END
+
+	RETURN @Resultado
+END
