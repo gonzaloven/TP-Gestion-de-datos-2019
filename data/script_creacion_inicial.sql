@@ -477,7 +477,7 @@ BEGIN
 				SELECT 1
 				FROM FGNN_19.Usuarios
 				WHERE username = @User
-				AND password = CONVERT(BINARY (32), @Pass)
+				AND password = CONVERT(BINARY (32), HASHBYTES('SHA2_256',@Pass))
 				)
 		BEGIN
 			SET @Resultado = 0
