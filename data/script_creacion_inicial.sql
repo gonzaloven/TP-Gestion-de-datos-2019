@@ -86,6 +86,22 @@ IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_19.Puert
     DROP TABLE FGNN_19.Puertos
 GO
 
+IF EXISTS (SELECT * FROM sys.views WHERE name = 'vw_RolesYFuncionalidades' AND type = 'V') 
+	DROP VIEW FGNN_19.vw_RolesYFuncionalidades
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE [name] = N'TR_Roles_AfterUpdate' AND [type] = 'TR')
+      DROP TRIGGER FGNN_19.TR_Roles_AfterUpdate
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE [name] = N'TR_Roles_InsteadOfDelete' AND [type] = 'TR')
+      DROP TRIGGER FGNN_19.TR_Roles_InsteadOfDelete
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.P_ValidarLogin') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
+	DROP PROCEDURE FGNN_19.P_ValidarLogin 
+GO
+
 --Creación de tablas.
 CREATE TABLE [FGNN_19].[Usuarios] (
 	[id] NUMERIC(18, 0) IDENTITY(1, 1),
@@ -176,9 +192,7 @@ CREATE TABLE [FGNN_19].[Clientes] (
 	[telefono] NUMERIC(18, 0) NOT NULL,
 	[fecha_nac] DATETIME2(3) NOT NULL,
 	[mail] VARCHAR(255),
-	[usuario_id] NUMERIC(18, 0),
-	PRIMARY KEY ([id]),
-	FOREIGN KEY (usuario_id) REFERENCES FGNN_19.Usuarios(id)
+	PRIMARY KEY ([id])
 );
 GO
 
@@ -389,7 +403,7 @@ GROUP BY r.id, c.id
 
 -- Roles --
 INSERT INTO [FGNN_19].[Roles](descripcion)
-VALUES ('Administrador'), ('Cliente')
+VALUES ('Administrador')
 
 -- Funcionalidades --
 INSERT INTO [FGNN_19].[Funcionalidades](descripcion)
@@ -409,19 +423,27 @@ INSERT INTO [FGNN_19].[Funcionalidades_Roles]
 	WHERE r.descripcion = 'Administrador';
 GO
 
-INSERT INTO [FGNN_19].[Funcionalidades_Roles]
-	SELECT r.id, f.id 
-	FROM [FGNN_19].[Funcionalidades] f, [FGNN_19].[Roles] r
-	WHERE r.descripcion = 'Cliente'
-		AND f.descripcion in (
-			'Generar Viajes',
-			'Comprar Viajes'
-		);
+INSERT INTO FGNN_19.Usuarios (username, password, intentos_fallidos, habilitado)
+VALUES ('juanpedro',CONVERT(BINARY(32),HASHBYTES('SHA2_256','w23e')),0,1)
+GO
+
+INSERT INTO FGNN_19.Usuarios (username, password, intentos_fallidos, habilitado)
+VALUES ('pablo18',CONVERT(BINARY(32),HASHBYTES('SHA2_256','w23e')),0,1)
+GO
+
+INSERT INTO FGNN_19.Usuarios (username, password, intentos_fallidos, habilitado)
+VALUES ('javiperez67',CONVERT(BINARY(32),HASHBYTES('SHA2_256','w23e')),0,1)
+GO
+
+INSERT INTO FGNN_19.Usuarios_Roles
+SELECT u.id, r.id
+FROM FGNN_19.Usuarios u, FGNN_19.Roles r
+WHERE r.descripcion = 'Administrador';
 GO
 
 -- Vistas
 
-CREATE VIEW vw_RolesYFuncionalidades
+CREATE VIEW FGNN_19.vw_RolesYFuncionalidades
 AS 
 SELECT r.descripcion AS ROL, f.descripcion AS FUNCIONALIDAD 
 FROM FGNN_19.Roles r, FGNN_19.Funcionalidades f, FGNN_19.Funcionalidades_Roles fr
@@ -431,7 +453,7 @@ GO
 
 -- Triggers
 
-CREATE TRIGGER TR_Roles_AfterUpdate ON FGNN_19.Roles
+CREATE TRIGGER FGNN_19.TR_Roles_AfterUpdate ON FGNN_19.Roles
 AFTER UPDATE
 AS
 
@@ -444,7 +466,7 @@ WHERE rol_id IN (SELECT i.id FROM INSERTED i
 COMMIT;
 GO
 
-CREATE TRIGGER TR_Roles_InsteadOfDelete ON FGNN_19.Roles
+CREATE TRIGGER FGNN_19.TR_Roles_InsteadOfDelete ON FGNN_19.Roles
 INSTEAD OF DELETE
 AS
 
@@ -461,7 +483,7 @@ GO
 
 -- Procedures
 
-CREATE PROCEDURE FN_ValidarLogin 
+CREATE PROCEDURE FGNN_19.P_ValidarLogin 
 @User VARCHAR(255), 
 @Pass VARCHAR(255), 
 @Resultado INT OUTPUT
