@@ -459,6 +459,8 @@ WHERE id IN (SELECT id FROM DELETED)
 COMMIT;
 GO
 
+-- Procedures
+
 CREATE PROCEDURE FN_ValidarLogin 
 @User VARCHAR(255), 
 @Pass VARCHAR(255), 
@@ -488,6 +490,10 @@ BEGIN
 
 			SET @Resultado = 1
 		END
+	END
+	ELSE
+	BEGIN
+		SET @Resultado = 1
 	END
 
 	RETURN @Resultado
