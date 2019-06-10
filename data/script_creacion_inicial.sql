@@ -91,11 +91,11 @@ IF EXISTS (SELECT * FROM sys.views WHERE name = 'vw_RolesYFuncionalidades' AND t
 GO
 
 IF EXISTS (SELECT * FROM sys.objects WHERE [name] = N'TR_Roles_AfterUpdate' AND [type] = 'TR')
-      DROP TRIGGER FGNN_19.TR_Roles_AfterUpdate
+    DROP TRIGGER FGNN_19.TR_Roles_AfterUpdate
 GO
 
 IF EXISTS (SELECT * FROM sys.objects WHERE [name] = N'TR_Roles_InsteadOfDelete' AND [type] = 'TR')
-      DROP TRIGGER FGNN_19.TR_Roles_InsteadOfDelete
+    DROP TRIGGER FGNN_19.TR_Roles_InsteadOfDelete
 GO
 
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.P_ValidarLogin') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
@@ -103,7 +103,15 @@ IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.P_Val
 GO
 
 IF EXISTS (SELECT * FROM sys.objects WHERE [name] = N'TR_Recorridos_InsteadOfDelete' AND [type] = 'TR')
-      DROP TRIGGER FGNN_19.TR_Recorridos_InsteadOfDelete
+    DROP TRIGGER FGNN_19.TR_Recorridos_InsteadOfDelete
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_19.FN_Calcular_costo_pasaje') AND type in (N'FN', N'IF', N'TF', N'FS', N'FT'))
+	DROP FUNCTION FGNN_19.FN_Calcular_costo_pasaje
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_19.FN_Calcular_costo_base') AND type in (N'FN', N'IF', N'TF', N'FS', N'FT'))
+	DROP FUNCTION FGNN_19.FN_Calcular_costo_base
 GO
 
 --Creación de tablas.
@@ -221,8 +229,8 @@ GO
 CREATE TABLE [FGNN_19].[Recorridos] (
 	[id] NUMERIC(18, 0) IDENTITY(1, 1),
 	[codigo] VARCHAR(255),
-	[puerto_desde_id] NUMERIC(18, 0),
-	[puerto_hasta_id] NUMERIC(18, 0),
+	[puerto_desde_id] NUMERIC(18, 0) NOT NULL,
+	[puerto_hasta_id] NUMERIC(18, 0) NOT NULL,
 	[precio_base] FLOAT NOT NULL,
 	PRIMARY KEY ([id]),
 	FOREIGN KEY (puerto_desde_id) REFERENCES FGNN_19.Puertos(id),
@@ -602,4 +610,54 @@ BEGIN
 	END
 
 	RETURN @Resultado
-END
+END;
+GO
+
+-- Funciones
+
+CREATE FUNCTION FGNN_19.FN_Calcular_costo_pasaje (@idRecorrido NUMERIC(18,0), @codigoCabina NUMERIC(18,0))
+RETURNS FLOAT
+AS
+
+BEGIN
+
+DECLARE @PrecioTotal FLOAT
+DECLARE @PorcAdicional FLOAT
+DECLARE @PrecioBaseTotal FLOAT
+
+SELECT @PorcAdicional = tc.porcentaje_adicional
+FROM FGNN_19.Cabinas c, FGNN_19.Tipos_Cabinas tc
+WHERE c.codigo = @codigoCabina
+AND tc.id = c.tipo_id
+
+SET @PrecioBaseTotal = FGNN_19.FN_Calcular_costo_base(@idRecorrido)
+
+SET @PrecioTotal = @PrecioBaseTotal * @PorcAdicional
+
+RETURN @PrecioTotal
+
+END;
+GO
+
+CREATE FUNCTION FGNN_19.FN_Calcular_costo_base (@idRecorrido NUMERIC(18,0))
+RETURNS FLOAT
+AS
+
+BEGIN
+
+	DECLARE @PrecioBaseTotal FLOAT
+
+	SELECT @PrecioBaseTotal = SUM(r.precio_base + FGNN_19.FN_Calcular_costo_base(rr.recorrido_tramo))
+	FROM FGNN_19.Recorridos r, FGNN_19.Recorrido_X_Recorrido rr
+	WHERE r.id = @idRecorrido
+	AND r.id = rr.recorrido_total
+
+	IF @PrecioBaseTotal IS NULL
+	BEGIN
+		SET @PrecioBaseTotal = (SELECT r.precio_base FROM FGNN_19.Recorridos r WHERE r.id = @idRecorrido)
+	END
+
+	RETURN @PrecioBaseTotal
+
+END;
+GO
