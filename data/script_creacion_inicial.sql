@@ -102,10 +102,6 @@ IF EXISTS (SELECT * FROM sys.objects WHERE [name] = N'TR_Recorridos_AfterUpdate'
     DROP TRIGGER FGNN_19.TR_Recorridos_InsteadOfUpdate
 GO
 
-IF EXISTS (SELECT * FROM sys.objects WHERE [name] = N'TR_Viajes_AfterInsert' AND [type] = 'TR')
-    DROP TRIGGER FGNN_19.TR_Viajes_AfterInsert
-GO
-
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.P_ValidarLogin') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
 	DROP PROCEDURE FGNN_19.P_ValidarLogin 
 GO
@@ -513,7 +509,9 @@ WHERE id IN (SELECT i.id FROM INSERTED i, FGNN_19.Viajes v
 COMMIT;
 GO
 
-CREATE TRIGGER FGNN_19.TR_Viajes_AfterInsert ON FGNN_19.Viajes
+--Este Trigger hay que hacerlo dentro de la aplicacion desktop porque altera la migracion de datos
+--pero es necesario
+/*CREATE TRIGGER FGNN_19.TR_Viajes_AfterInsert ON FGNN_19.Viajes
 AFTER INSERT
 AS
 BEGIN TRANSACTION
@@ -526,7 +524,7 @@ WHERE codigo IN (SELECT i.codigo FROM INSERTED i, FGNN_19.Viajes v2
 				 AND i.fecha_fin = v2.fecha_fin)
 
 COMMIT;
-GO
+GO*/
 
 -- Procedures
 
