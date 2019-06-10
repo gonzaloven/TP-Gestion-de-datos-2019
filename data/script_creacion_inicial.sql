@@ -98,8 +98,12 @@ IF EXISTS (SELECT * FROM sys.objects WHERE [name] = N'TR_Roles_InsteadOfDelete' 
     DROP TRIGGER FGNN_19.TR_Roles_InsteadOfDelete
 GO
 
-IF EXISTS (SELECT * FROM sys.objects WHERE [name] = N'TR_Recorridos_InsteadOfUpdate' AND [type] = 'TR')
+IF EXISTS (SELECT * FROM sys.objects WHERE [name] = N'TR_Recorridos_AfterUpdate' AND [type] = 'TR')
     DROP TRIGGER FGNN_19.TR_Recorridos_InsteadOfUpdate
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE [name] = N'TR_Viajes_AfterInsert' AND [type] = 'TR')
+    DROP TRIGGER FGNN_19.TR_Viajes_AfterInsert
 GO
 
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.P_ValidarLogin') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
@@ -494,7 +498,7 @@ WHERE id IN (SELECT id FROM DELETED)
 COMMIT;
 GO
 
-CREATE TRIGGER FGNN_19.TR_Recorridos_InsteadOfUpdate ON FGNN_19.Recorridos
+CREATE TRIGGER FGNN_19.TR_Recorridos_AfterUpdate ON FGNN_19.Recorridos
 AFTER UPDATE
 AS
 BEGIN TRANSACTION
@@ -505,6 +509,21 @@ WHERE id IN (SELECT i.id FROM INSERTED i, FGNN_19.Viajes v
 			 WHERE i.habilitado = 0
 			 AND i.id = v.recorrido_codigo
 			 AND v.fecha_inicio > CONVERT(datetime2(3), GETDATE()))
+
+COMMIT;
+GO
+
+CREATE TRIGGER FGNN_19.TR_Viajes_AfterInsert ON FGNN_19.Viajes
+AFTER INSERT
+AS
+BEGIN TRANSACTION
+
+DELETE FROM FGNN_19.Viajes 
+WHERE codigo IN (SELECT i.codigo FROM INSERTED i, FGNN_19.Viajes v2
+				 WHERE i.codigo != v2.codigo
+				 AND i.crucero_id = v2.crucero_id
+				 AND i.fecha_inicio = v2.fecha_inicio
+				 AND i.fecha_fin = v2.fecha_fin)
 
 COMMIT;
 GO
