@@ -90,10 +90,6 @@ IF EXISTS (SELECT * FROM sys.views WHERE name = 'vw_RolesYFuncionalidades' AND t
 	DROP VIEW FGNN_19.vw_RolesYFuncionalidades
 GO
 
-IF EXISTS (SELECT * FROM sys.objects WHERE [name] = N'TR_Roles_AfterUpdate' AND [type] = 'TR')
-    DROP TRIGGER FGNN_19.TR_Roles_AfterUpdate
-GO
-
 IF EXISTS (SELECT * FROM sys.objects WHERE [name] = N'TR_Roles_InsteadOfDelete' AND [type] = 'TR')
     DROP TRIGGER FGNN_19.TR_Roles_InsteadOfDelete
 GO
@@ -151,6 +147,7 @@ GO
 CREATE TABLE [FGNN_19].[Metodos_Pago] (
 	[id] NUMERIC(18, 0) IDENTITY(1, 1),
 	[descripcion] VARCHAR(255) NOT NULL,
+	[cuotas] BIT NOT NULL,
 	PRIMARY KEY ([id])
 );
 GO
@@ -466,30 +463,18 @@ GO
 
 -- Triggers
 
-CREATE TRIGGER FGNN_19.TR_Roles_AfterUpdate ON FGNN_19.Roles
-AFTER UPDATE
-AS
-
-BEGIN TRANSACTION 
-
-DELETE FROM FGNN_19.Usuarios_Roles
-WHERE rol_id IN (SELECT i.id FROM INSERTED i
-				 WHERE i.habilitado = 0)
-
-COMMIT;
-GO
-
 CREATE TRIGGER FGNN_19.TR_Roles_InsteadOfDelete ON FGNN_19.Roles
 INSTEAD OF DELETE
 AS
 
 BEGIN TRANSACTION
 
+UPDATE FGNN_19.Roles
+SET habilitado = 0
+WHERE id IN (SELECT id FROM DELETED)
+
 DELETE FROM FGNN_19.Usuarios_Roles
 WHERE rol_id IN (SELECT id FROM DELETED)
-
-DELETE FROM FGNN_19.Roles
-WHERE id IN (SELECT id FROM DELETED)
 
 COMMIT;
 GO
