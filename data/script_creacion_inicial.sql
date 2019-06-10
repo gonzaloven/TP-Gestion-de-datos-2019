@@ -98,12 +98,12 @@ IF EXISTS (SELECT * FROM sys.objects WHERE [name] = N'TR_Roles_InsteadOfDelete' 
     DROP TRIGGER FGNN_19.TR_Roles_InsteadOfDelete
 GO
 
-IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.P_ValidarLogin') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
-	DROP PROCEDURE FGNN_19.P_ValidarLogin 
+IF EXISTS (SELECT * FROM sys.objects WHERE [name] = N'TR_Recorridos_InsteadOfUpdate' AND [type] = 'TR')
+    DROP TRIGGER FGNN_19.TR_Recorridos_InsteadOfUpdate
 GO
 
-IF EXISTS (SELECT * FROM sys.objects WHERE [name] = N'TR_Recorridos_InsteadOfDelete' AND [type] = 'TR')
-    DROP TRIGGER FGNN_19.TR_Recorridos_InsteadOfDelete
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.P_ValidarLogin') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
+	DROP PROCEDURE FGNN_19.P_ValidarLogin 
 GO
 
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_19.FN_Calcular_costo_pasaje') AND type in (N'FN', N'IF', N'TF', N'FS', N'FT'))
@@ -221,6 +221,7 @@ CREATE TABLE [FGNN_19].[Cruceros] (
 	[fecha_reinicio_servicio] DATETIME2(3),
 	[fecha_baja_definitiva] DATETIME2(3),
 	[cant_cabinas] SMALLINT,
+	[habilitado] BIT DEFAULT 1 NOT NULL,
 	PRIMARY KEY ([id]),
 	FOREIGN KEY (fabricante_id) REFERENCES FGNN_19.Fabricantes(id)
 );
@@ -232,6 +233,7 @@ CREATE TABLE [FGNN_19].[Recorridos] (
 	[puerto_desde_id] NUMERIC(18, 0) NOT NULL,
 	[puerto_hasta_id] NUMERIC(18, 0) NOT NULL,
 	[precio_base] FLOAT NOT NULL,
+	[habilitado] BIT DEFAULT 1 NOT NULL,
 	PRIMARY KEY ([id]),
 	FOREIGN KEY (puerto_desde_id) REFERENCES FGNN_19.Puertos(id),
 	FOREIGN KEY (puerto_hasta_id) REFERENCES FGNN_19.Puertos(id)
@@ -492,82 +494,17 @@ WHERE id IN (SELECT id FROM DELETED)
 COMMIT;
 GO
 
-CREATE TRIGGER FGNN_19.TR_Recorridos_InsteadOfDelete ON FGNN_19.Recorridos
-INSTEAD OF DELETE
+CREATE TRIGGER FGNN_19.TR_Recorridos_InsteadOfUpdate ON FGNN_19.Recorridos
+AFTER UPDATE
 AS
 BEGIN TRANSACTION
 
-DECLARE @idRecorrido NUMERIC(18, 0)
-DECLARE @codigoCabina NUMERIC(18, 0)
-DECLARE @idPasaje NUMERIC(18, 0)
-DECLARE @codigoViaje NUMERIC(18, 0)
-DECLARE @fechaInicio DATETIME2(3)
-
-DECLARE mi_cursor CURSOR LOCAL FAST_FORWARD
-FOR
-SELECT r.id, c.codigo, p.id, v.codigo, v.fecha_inicio
-FROM DELETED r, FGNN_19.Cabinas c, FGNN_19.Pasajes p, FGNN_19.Viajes v
-WHERE c.pasaje_codigo = p.id
-AND p.viaje_codigo = v.codigo
-AND v.recorrido_codigo = r.id
-GROUP BY r.id, c.codigo, p.id, v.codigo, v.fecha_inicio
-
-OPEN mi_cursor
-
-FETCH NEXT
-FROM mi_cursor
-INTO @idRecorrido
-	,@codigoCabina
-	,@idPasaje
-	,@codigoViaje
-	,@fechaInicio
-
-WHILE @@FETCH_STATUS = 0
-BEGIN
-	IF @fechaInicio > CONVERT(DATETIME2(3), GETDATE())
-	BEGIN
-		RAISERROR ('No se puede borrar porque existen viajes pendientes para ese recorrido',1,1)
-	END
-	ELSE
-	BEGIN
-		DELETE
-		FROM FGNN_19.Cabinas
-		WHERE codigo = @codigoCabina
-
-		DELETE
-		FROM FGNN_19.Pasajes
-		WHERE id = @idPasaje
-
-		DELETE
-		FROM FGNN_19.Viajes
-		WHERE codigo = @codigoViaje
-
-		DELETE
-		FROM FGNN_19.Recorridos_X_Crucero
-		WHERE recorrido_codigo = @idRecorrido
-
-		DELETE
-		FROM FGNN_19.Recorrido_X_Recorrido
-		WHERE recorrido_total = @idRecorrido
-			OR recorrido_tramo = @idRecorrido
-
-		DELETE
-		FROM FGNN_19.Recorridos
-		WHERE id = @idRecorrido
-	END
-
-	FETCH NEXT
-	FROM mi_cursor
-	INTO @idRecorrido
-		,@codigoCabina
-		,@idPasaje
-		,@codigoViaje
-		,@fechaInicio
-END
-
-CLOSE mi_cursor
-
-DEALLOCATE mi_cursor
+UPDATE FGNN_19.Recorridos
+SET habilitado = 1
+WHERE id IN (SELECT i.id FROM INSERTED i, FGNN_19.Viajes v
+			 WHERE i.habilitado = 0
+			 AND i.id = v.recorrido_codigo
+			 AND v.fecha_inicio > CONVERT(datetime2(3), GETDATE()))
 
 COMMIT;
 GO
