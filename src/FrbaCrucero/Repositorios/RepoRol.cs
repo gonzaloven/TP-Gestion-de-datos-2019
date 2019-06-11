@@ -11,7 +11,7 @@ namespace FrbaCrucero.Repositorios
 {
     class RepoRol: AbstractRepo<Rol>
     {
-        public static RepoRol instancia = new RepoRol("[FGNN_2019].[Roles]");
+        public static RepoRol instancia = new RepoRol("[FGNN_19].[Roles]");
 
         public RepoRol(string nombreTabla) : base(nombreTabla) 
         {
