@@ -12,10 +12,19 @@ namespace FrbaCrucero.GeneracionViaje
 {
     public partial class SeleccionarFecha : Form
     {
-        public SeleccionarFecha()
+        FormGenerarViaje form;
+        TextBox textBoxParam;
+
+        public SeleccionarFecha(FormGenerarViaje form, TextBox textBoxParam)
         {
             InitializeComponent();
+            this.form = form;
+            this.textBoxParam = textBoxParam;
         }
 
+        private void buttonSeleccionarFecha_Click(object sender, EventArgs e)
+        {
+            form.textBoxParam.Text = dateTimePickerFecha.Value.ToString();
+        }
     }
 }

@@ -28,22 +28,35 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.dateTimePickerFecha = new System.Windows.Forms.DateTimePicker();
+            this.buttonSeleccionarFecha = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // dateTimePicker1
+            // dateTimePickerFecha
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(12, 12);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(258, 22);
-            this.dateTimePicker1.TabIndex = 0;
+            this.dateTimePickerFecha.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dateTimePickerFecha.Location = new System.Drawing.Point(0, 0);
+            this.dateTimePickerFecha.Name = "dateTimePickerFecha";
+            this.dateTimePickerFecha.Size = new System.Drawing.Size(282, 22);
+            this.dateTimePickerFecha.TabIndex = 0;
+            // 
+            // buttonSeleccionarFecha
+            // 
+            this.buttonSeleccionarFecha.Location = new System.Drawing.Point(92, 56);
+            this.buttonSeleccionarFecha.Name = "buttonSeleccionarFecha";
+            this.buttonSeleccionarFecha.Size = new System.Drawing.Size(97, 33);
+            this.buttonSeleccionarFecha.TabIndex = 1;
+            this.buttonSeleccionarFecha.Text = "Guardar";
+            this.buttonSeleccionarFecha.UseVisualStyleBackColor = true;
+            this.buttonSeleccionarFecha.Click += new System.EventHandler(this.buttonSeleccionarFecha_Click);
             // 
             // SeleccionarFecha
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(282, 253);
-            this.Controls.Add(this.dateTimePicker1);
+            this.ClientSize = new System.Drawing.Size(282, 101);
+            this.Controls.Add(this.buttonSeleccionarFecha);
+            this.Controls.Add(this.dateTimePickerFecha);
             this.Name = "SeleccionarFecha";
             this.Text = "Seleccionar Fecha";
             this.ResumeLayout(false);
@@ -52,6 +65,7 @@
 
         #endregion
 
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.DateTimePicker dateTimePickerFecha;
+        private System.Windows.Forms.Button buttonSeleccionarFecha;
     }
 }

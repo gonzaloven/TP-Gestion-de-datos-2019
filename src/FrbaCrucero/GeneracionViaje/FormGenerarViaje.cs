@@ -12,6 +12,7 @@ namespace FrbaCrucero.GeneracionViaje
 {
     public partial class FormGenerarViaje : Form
     {
+        public TextBox textBoxParam;
         public FormGenerarViaje()
         {
             InitializeComponent();
@@ -23,8 +24,12 @@ namespace FrbaCrucero.GeneracionViaje
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
+        {   
+        }
+
+        public TextBox getTextBox()
         {
-            
+            return this.textBoxParam;
         }
 
         private void buttonSeleccionarCrucero_Click(object sender, EventArgs e)
@@ -35,25 +40,31 @@ namespace FrbaCrucero.GeneracionViaje
 
         private void buttonSeleccionarPuertoDesde_Click(object sender, EventArgs e)
         {
-            SeleccionarPuerto seleccionarPuerto = new SeleccionarPuerto();
+            this.textBoxParam = textBoxPuertoDesde;
+            SeleccionarPuerto seleccionarPuerto = new SeleccionarPuerto(this, textBoxParam);
             seleccionarPuerto.Show();
         }
 
         private void buttonSeleccionarPuertoHasta_Click(object sender, EventArgs e)
         {
-            SeleccionarPuerto seleccionarPuerto = new SeleccionarPuerto();
+            this.textBoxParam = textBoxPuertoHasta;
+            SeleccionarPuerto seleccionarPuerto = new SeleccionarPuerto(this, textBoxParam);
             seleccionarPuerto.Show();
         }
 
         private void buttonSeleccionarFechaInicio_Click(object sender, EventArgs e)
         {
-            SeleccionarFecha seleccionarFecha = new SeleccionarFecha();
+            this.textBoxParam = textBoxFechaInicio;
+            SeleccionarFecha seleccionarFecha = new SeleccionarFecha(this, textBoxParam);
+            seleccionarFecha.MdiParent = this.MdiParent;
             seleccionarFecha.Show();
         }
 
         private void buttonSeleccionarFechaFin_Click(object sender, EventArgs e)
         {
-            SeleccionarFecha seleccionarFecha = new SeleccionarFecha();
+            this.textBoxParam = textBoxFechaFin;
+            SeleccionarFecha seleccionarFecha = new SeleccionarFecha(this, textBoxParam);
+            seleccionarFecha.MdiParent = this.MdiParent;
             seleccionarFecha.Show();
         }
     }

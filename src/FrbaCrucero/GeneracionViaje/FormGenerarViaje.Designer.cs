@@ -219,7 +219,6 @@
         private System.Windows.Forms.TextBox textBoxCrucero;
         private System.Windows.Forms.TextBox textBoxPuertoDesde;
         private System.Windows.Forms.TextBox textBoxPuertoHasta;
-        private System.Windows.Forms.TextBox textBoxFechaInicio;
         private System.Windows.Forms.Label labelCrucero;
         private System.Windows.Forms.Label labelPuertoDesde;
         private System.Windows.Forms.Label labelPuertoHasta;
@@ -232,5 +231,6 @@
         private System.Windows.Forms.Button buttonSeleccionarFechaInicio;
         private System.Windows.Forms.Button buttonSeleccionarFechaFin;
         private System.Windows.Forms.Button buttonGenerarViaje;
+        public System.Windows.Forms.TextBox textBoxFechaInicio;
     }
 }
