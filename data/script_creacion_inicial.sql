@@ -86,6 +86,30 @@ IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_19.Puert
     DROP TABLE FGNN_19.Puertos
 GO
 
+IF EXISTS (SELECT * FROM sys.views WHERE name = 'vw_RolesYFuncionalidades' AND type = 'V') 
+	DROP VIEW FGNN_19.vw_RolesYFuncionalidades
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE [name] = N'TR_Roles_InsteadOfDelete' AND [type] = 'TR')
+    DROP TRIGGER FGNN_19.TR_Roles_InsteadOfDelete
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE [name] = N'TR_Recorridos_AfterUpdate' AND [type] = 'TR')
+    DROP TRIGGER FGNN_19.TR_Recorridos_InsteadOfUpdate
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.P_ValidarLogin') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
+	DROP PROCEDURE FGNN_19.P_ValidarLogin 
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_19.FN_Calcular_costo_pasaje') AND type in (N'FN', N'IF', N'TF', N'FS', N'FT'))
+	DROP FUNCTION FGNN_19.FN_Calcular_costo_pasaje
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_19.FN_Calcular_costo_base') AND type in (N'FN', N'IF', N'TF', N'FS', N'FT'))
+	DROP FUNCTION FGNN_19.FN_Calcular_costo_base
+GO
+
 --Creación de tablas.
 CREATE TABLE [FGNN_19].[Usuarios] (
 	[id] NUMERIC(18, 0) IDENTITY(1, 1),
@@ -123,6 +147,7 @@ GO
 CREATE TABLE [FGNN_19].[Metodos_Pago] (
 	[id] NUMERIC(18, 0) IDENTITY(1, 1),
 	[descripcion] VARCHAR(255) NOT NULL,
+	[cuotas] BIT NOT NULL,
 	PRIMARY KEY ([id])
 );
 GO
@@ -176,9 +201,7 @@ CREATE TABLE [FGNN_19].[Clientes] (
 	[telefono] NUMERIC(18, 0) NOT NULL,
 	[fecha_nac] DATETIME2(3) NOT NULL,
 	[mail] VARCHAR(255),
-	[usuario_id] NUMERIC(18, 0),
-	PRIMARY KEY ([id]),
-	FOREIGN KEY (usuario_id) REFERENCES FGNN_19.Usuarios(id)
+	PRIMARY KEY ([id])
 );
 GO
 
@@ -195,6 +218,7 @@ CREATE TABLE [FGNN_19].[Cruceros] (
 	[fecha_reinicio_servicio] DATETIME2(3),
 	[fecha_baja_definitiva] DATETIME2(3),
 	[cant_cabinas] SMALLINT,
+	[habilitado] BIT DEFAULT 1 NOT NULL,
 	PRIMARY KEY ([id]),
 	FOREIGN KEY (fabricante_id) REFERENCES FGNN_19.Fabricantes(id)
 );
@@ -203,9 +227,10 @@ GO
 CREATE TABLE [FGNN_19].[Recorridos] (
 	[id] NUMERIC(18, 0) IDENTITY(1, 1),
 	[codigo] VARCHAR(255),
-	[puerto_desde_id] NUMERIC(18, 0),
-	[puerto_hasta_id] NUMERIC(18, 0),
+	[puerto_desde_id] NUMERIC(18, 0) NOT NULL,
+	[puerto_hasta_id] NUMERIC(18, 0) NOT NULL,
 	[precio_base] FLOAT NOT NULL,
+	[habilitado] BIT DEFAULT 1 NOT NULL,
 	PRIMARY KEY ([id]),
 	FOREIGN KEY (puerto_desde_id) REFERENCES FGNN_19.Puertos(id),
 	FOREIGN KEY (puerto_hasta_id) REFERENCES FGNN_19.Puertos(id)
@@ -389,12 +414,11 @@ GROUP BY r.id, c.id
 
 -- Roles --
 INSERT INTO [FGNN_19].[Roles](descripcion)
-VALUES ('Administrador'), ('Cliente')
+VALUES ('Administrador')
 
 -- Funcionalidades --
 INSERT INTO [FGNN_19].[Funcionalidades](descripcion)
 VALUES ('ABM Roles'),
-	('ABM Puertos'),
 	('ABM Recorridos'),
 	('ABM Cruceros'),
 	('Generar Viajes'),
@@ -409,12 +433,170 @@ INSERT INTO [FGNN_19].[Funcionalidades_Roles]
 	WHERE r.descripcion = 'Administrador';
 GO
 
-INSERT INTO [FGNN_19].[Funcionalidades_Roles]
-	SELECT r.id, f.id 
-	FROM [FGNN_19].[Funcionalidades] f, [FGNN_19].[Roles] r
-	WHERE r.descripcion = 'Cliente'
-		AND f.descripcion in (
-			'Generar Viajes',
-			'Comprar Viajes'
-		);
+INSERT INTO FGNN_19.Usuarios (username, password, intentos_fallidos, habilitado)
+VALUES ('juanpedro',CONVERT(BINARY(32),HASHBYTES('SHA2_256','w23e')),0,1)
+GO
+
+INSERT INTO FGNN_19.Usuarios (username, password, intentos_fallidos, habilitado)
+VALUES ('pablo18',CONVERT(BINARY(32),HASHBYTES('SHA2_256','w23e')),0,1)
+GO
+
+INSERT INTO FGNN_19.Usuarios (username, password, intentos_fallidos, habilitado)
+VALUES ('javiperez67',CONVERT(BINARY(32),HASHBYTES('SHA2_256','w23e')),0,1)
+GO
+
+INSERT INTO FGNN_19.Usuarios_Roles
+SELECT u.id, r.id
+FROM FGNN_19.Usuarios u, FGNN_19.Roles r
+WHERE r.descripcion = 'Administrador';
+GO
+
+-- Vistas
+
+CREATE VIEW FGNN_19.vw_RolesYFuncionalidades
+AS 
+SELECT r.descripcion AS ROL, f.descripcion AS FUNCIONALIDAD 
+FROM FGNN_19.Roles r, FGNN_19.Funcionalidades f, FGNN_19.Funcionalidades_Roles fr
+WHERE fr.funcionalidad_id = f.id
+AND fr.rol_id = r.id;
+GO
+
+-- Triggers
+
+CREATE TRIGGER FGNN_19.TR_Roles_InsteadOfDelete ON FGNN_19.Roles
+INSTEAD OF DELETE
+AS
+
+BEGIN TRANSACTION
+
+UPDATE FGNN_19.Roles
+SET habilitado = 0
+WHERE id IN (SELECT id FROM DELETED)
+
+DELETE FROM FGNN_19.Usuarios_Roles
+WHERE rol_id IN (SELECT id FROM DELETED)
+
+COMMIT;
+GO
+
+CREATE TRIGGER FGNN_19.TR_Recorridos_AfterUpdate ON FGNN_19.Recorridos
+AFTER UPDATE
+AS
+BEGIN TRANSACTION
+
+UPDATE FGNN_19.Recorridos
+SET habilitado = 1
+WHERE id IN (SELECT i.id FROM INSERTED i, FGNN_19.Viajes v
+			 WHERE i.habilitado = 0
+			 AND i.id = v.recorrido_codigo
+			 AND v.fecha_inicio > CONVERT(datetime2(3), GETDATE()))
+
+COMMIT;
+GO
+
+--Este Trigger hay que hacerlo dentro de la aplicacion desktop porque altera la migracion de datos
+--pero es necesario
+/*CREATE TRIGGER FGNN_19.TR_Viajes_AfterInsert ON FGNN_19.Viajes
+AFTER INSERT
+AS
+BEGIN TRANSACTION
+
+DELETE FROM FGNN_19.Viajes 
+WHERE codigo IN (SELECT i.codigo FROM INSERTED i, FGNN_19.Viajes v2
+				 WHERE i.codigo != v2.codigo
+				 AND i.crucero_id = v2.crucero_id
+				 AND i.fecha_inicio = v2.fecha_inicio
+				 AND i.fecha_fin = v2.fecha_fin)
+
+COMMIT;
+GO*/
+
+-- Procedures
+
+CREATE PROCEDURE FGNN_19.P_ValidarLogin 
+@User VARCHAR(255), 
+@Pass VARCHAR(255), 
+@Resultado INT OUTPUT
+AS
+BEGIN
+	IF EXISTS (
+			SELECT 1
+			FROM FGNN_19.Usuarios
+			WHERE username = @User
+			)
+	BEGIN
+		IF EXISTS (
+				SELECT 1
+				FROM FGNN_19.Usuarios
+				WHERE username = @User
+				AND password = CONVERT(BINARY (32), HASHBYTES('SHA2_256',@Pass))
+				)
+		BEGIN
+			SET @Resultado = 0
+		END
+		ELSE
+		BEGIN
+			UPDATE FGNN_19.Usuarios
+			SET intentos_fallidos = intentos_fallidos + 1
+			WHERE username = @user
+
+			SET @Resultado = 1
+		END
+	END
+	ELSE
+	BEGIN
+		SET @Resultado = 1
+	END
+
+	RETURN @Resultado
+END;
+GO
+
+-- Funciones
+
+CREATE FUNCTION FGNN_19.FN_Calcular_costo_pasaje (@idRecorrido NUMERIC(18,0), @codigoCabina NUMERIC(18,0))
+RETURNS FLOAT
+AS
+
+BEGIN
+
+DECLARE @PrecioTotal FLOAT
+DECLARE @PorcAdicional FLOAT
+DECLARE @PrecioBaseTotal FLOAT
+
+SELECT @PorcAdicional = tc.porcentaje_adicional
+FROM FGNN_19.Cabinas c, FGNN_19.Tipos_Cabinas tc
+WHERE c.codigo = @codigoCabina
+AND tc.id = c.tipo_id
+
+SET @PrecioBaseTotal = FGNN_19.FN_Calcular_costo_base(@idRecorrido)
+
+SET @PrecioTotal = @PrecioBaseTotal * @PorcAdicional
+
+RETURN @PrecioTotal
+
+END;
+GO
+
+CREATE FUNCTION FGNN_19.FN_Calcular_costo_base (@idRecorrido NUMERIC(18,0))
+RETURNS FLOAT
+AS
+
+BEGIN
+
+	DECLARE @PrecioBaseTotal FLOAT
+
+	SELECT @PrecioBaseTotal = SUM(r.precio_base + FGNN_19.FN_Calcular_costo_base(rr.recorrido_tramo))
+	FROM FGNN_19.Recorridos r, FGNN_19.Recorrido_X_Recorrido rr
+	WHERE r.id = @idRecorrido
+	AND r.id = rr.recorrido_total
+
+	IF @PrecioBaseTotal IS NULL
+	BEGIN
+		SET @PrecioBaseTotal = (SELECT r.precio_base FROM FGNN_19.Recorridos r WHERE r.id = @idRecorrido)
+	END
+
+	RETURN @PrecioBaseTotal
+
+END;
 GO
