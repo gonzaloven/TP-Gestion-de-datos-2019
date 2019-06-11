@@ -47,8 +47,10 @@
             this.groupBox1.Controls.Add(this.textBoxRol);
             this.groupBox1.Controls.Add(this.labelRol);
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(389, 76);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Size = new System.Drawing.Size(519, 94);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Filtros de búsqueda";
@@ -60,33 +62,37 @@
             "",
             "Si",
             "No"});
-            this.comboBoxHabilitado.Location = new System.Drawing.Point(231, 18);
+            this.comboBoxHabilitado.Location = new System.Drawing.Point(307, 27);
+            this.comboBoxHabilitado.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.comboBoxHabilitado.Name = "comboBoxHabilitado";
-            this.comboBoxHabilitado.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxHabilitado.Size = new System.Drawing.Size(160, 24);
             this.comboBoxHabilitado.TabIndex = 7;
             // 
             // labelHabilitado
             // 
             this.labelHabilitado.AutoSize = true;
-            this.labelHabilitado.Location = new System.Drawing.Point(171, 22);
+            this.labelHabilitado.Location = new System.Drawing.Point(228, 27);
+            this.labelHabilitado.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelHabilitado.Name = "labelHabilitado";
-            this.labelHabilitado.Size = new System.Drawing.Size(54, 13);
+            this.labelHabilitado.Size = new System.Drawing.Size(71, 17);
             this.labelHabilitado.TabIndex = 4;
             this.labelHabilitado.Text = "Habilitado";
             // 
             // textBoxRol
             // 
-            this.textBoxRol.Location = new System.Drawing.Point(35, 19);
+            this.textBoxRol.Location = new System.Drawing.Point(50, 29);
+            this.textBoxRol.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBoxRol.Name = "textBoxRol";
-            this.textBoxRol.Size = new System.Drawing.Size(100, 20);
+            this.textBoxRol.Size = new System.Drawing.Size(132, 22);
             this.textBoxRol.TabIndex = 2;
             // 
             // labelRol
             // 
             this.labelRol.AutoSize = true;
-            this.labelRol.Location = new System.Drawing.Point(6, 25);
+            this.labelRol.Location = new System.Drawing.Point(13, 29);
+            this.labelRol.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelRol.Name = "labelRol";
-            this.labelRol.Size = new System.Drawing.Size(23, 13);
+            this.labelRol.Size = new System.Drawing.Size(29, 17);
             this.labelRol.TabIndex = 1;
             this.labelRol.Text = "Rol";
             // 
@@ -94,18 +100,20 @@
             // 
             this.dataGridViewRoles.AllowUserToAddRows = false;
             this.dataGridViewRoles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewRoles.Location = new System.Drawing.Point(12, 111);
+            this.dataGridViewRoles.Location = new System.Drawing.Point(16, 137);
+            this.dataGridViewRoles.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dataGridViewRoles.Name = "dataGridViewRoles";
             this.dataGridViewRoles.ReadOnly = true;
-            this.dataGridViewRoles.Size = new System.Drawing.Size(367, 238);
+            this.dataGridViewRoles.Size = new System.Drawing.Size(489, 293);
             this.dataGridViewRoles.TabIndex = 3;
             this.dataGridViewRoles.DoubleClick += new System.EventHandler(this.dataGridViewRoles_DoubleClick);
             // 
             // buttonLimpiar
             // 
-            this.buttonLimpiar.Location = new System.Drawing.Point(12, 82);
+            this.buttonLimpiar.Location = new System.Drawing.Point(16, 101);
+            this.buttonLimpiar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonLimpiar.Name = "buttonLimpiar";
-            this.buttonLimpiar.Size = new System.Drawing.Size(75, 23);
+            this.buttonLimpiar.Size = new System.Drawing.Size(100, 28);
             this.buttonLimpiar.TabIndex = 5;
             this.buttonLimpiar.Text = "Limpiar";
             this.buttonLimpiar.UseVisualStyleBackColor = true;
@@ -113,9 +121,10 @@
             // 
             // buttonBuscar
             // 
-            this.buttonBuscar.Location = new System.Drawing.Point(304, 82);
+            this.buttonBuscar.Location = new System.Drawing.Point(405, 101);
+            this.buttonBuscar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonBuscar.Name = "buttonBuscar";
-            this.buttonBuscar.Size = new System.Drawing.Size(75, 23);
+            this.buttonBuscar.Size = new System.Drawing.Size(100, 28);
             this.buttonBuscar.TabIndex = 6;
             this.buttonBuscar.Text = "Buscar";
             this.buttonBuscar.UseVisualStyleBackColor = true;
@@ -123,13 +132,14 @@
             // 
             // ListadoRolesForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(391, 362);
+            this.ClientSize = new System.Drawing.Size(521, 446);
             this.Controls.Add(this.buttonBuscar);
             this.Controls.Add(this.buttonLimpiar);
             this.Controls.Add(this.dataGridViewRoles);
             this.Controls.Add(this.groupBox1);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "ListadoRolesForm";
             this.Text = "ListadoRoles";
             this.groupBox1.ResumeLayout(false);

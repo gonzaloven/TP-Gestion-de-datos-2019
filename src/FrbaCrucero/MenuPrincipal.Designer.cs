@@ -32,9 +32,10 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolABMLabel = new System.Windows.Forms.ToolStripLabel();
-            this.toolABMRolesLabel2 = new System.Windows.Forms.ToolStripLabel();
-            this.toolStripLabelRecorrido = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripLabelRecorrido = new System.Windows.Forms.ToolStripLabel();
+            this.toolABMRolesLabel2 = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -54,10 +55,11 @@
             this.toolABMLabel,
             this.toolStripSeparator2,
             this.toolStripLabelRecorrido,
-            this.toolStripSeparator1});
+            this.toolStripSeparator1,
+            this.toolStripLabel2});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(807, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(1076, 25);
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -65,34 +67,42 @@
             // 
             this.toolABMLabel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolABMLabel.Name = "toolABMLabel";
-            this.toolABMLabel.Size = new System.Drawing.Size(35, 22);
+            this.toolABMLabel.Size = new System.Drawing.Size(45, 22);
             this.toolABMLabel.Text = "Roles";
             this.toolABMLabel.ToolTipText = "ABM Roles";
             this.toolABMLabel.Click += new System.EventHandler(this.toolStripLabel2_Click_1);
-            // 
-            // toolABMRolesLabel2
-            // 
-            this.toolABMRolesLabel2.Name = "toolABMRolesLabel2";
-            this.toolABMRolesLabel2.Size = new System.Drawing.Size(23, 23);
-            // 
-            // toolStripLabelRecorrido
-            // 
-            this.toolStripLabelRecorrido.Name = "toolStripLabelRecorrido";
-            this.toolStripLabelRecorrido.Size = new System.Drawing.Size(58, 22);
-            this.toolStripLabelRecorrido.Text = "Recorrido";
-            this.toolStripLabelRecorrido.Click += new System.EventHandler(this.toolStripLabelRecorrido_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
+            // toolStripLabelRecorrido
+            // 
+            this.toolStripLabelRecorrido.Name = "toolStripLabelRecorrido";
+            this.toolStripLabelRecorrido.Size = new System.Drawing.Size(74, 22);
+            this.toolStripLabelRecorrido.Text = "Recorrido";
+            this.toolStripLabelRecorrido.Click += new System.EventHandler(this.toolStripLabelRecorrido_Click);
+            // 
+            // toolABMRolesLabel2
+            // 
+            this.toolABMRolesLabel2.Name = "toolABMRolesLabel2";
+            this.toolABMRolesLabel2.Size = new System.Drawing.Size(23, 23);
+            // 
+            // toolStripLabel2
+            // 
+            this.toolStripLabel2.Name = "toolStripLabel2";
+            this.toolStripLabel2.Size = new System.Drawing.Size(98, 22);
+            this.toolStripLabel2.Text = "Generar Viaje";
+            this.toolStripLabel2.Click += new System.EventHandler(this.toolStripLabel2_Click);
+            // 
             // MenuPrincipal
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(807, 387);
+            this.ClientSize = new System.Drawing.Size(1076, 476);
             this.Controls.Add(this.toolStrip1);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MenuPrincipal";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -112,6 +122,7 @@
         private System.Windows.Forms.ToolStripLabel toolABMRolesLabel2;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripLabel toolStripLabelRecorrido;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel2;
     }
 }
 

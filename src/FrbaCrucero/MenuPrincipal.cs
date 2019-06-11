@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using FrbaCrucero.AbmRol;
 using FrbaCrucero.AbmRecorrido;
+using FrbaCrucero.GeneracionViaje;
 
 namespace FrbaCrucero
 {
@@ -40,5 +41,14 @@ namespace FrbaCrucero
             listadoRecorrido.MdiParent = this;
             listadoRecorrido.Show();
         }
+
+        private void toolStripLabel2_Click(object sender, EventArgs e)
+        {
+            this.IsMdiContainer = true;
+            FormGenerarViaje generarViaje = new FormGenerarViaje();
+            generarViaje.MdiParent = this;
+            generarViaje.Show();
+        }
+
     }
 }

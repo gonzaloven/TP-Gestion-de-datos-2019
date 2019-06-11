@@ -47,9 +47,10 @@
             // labelHabilitado
             // 
             this.labelHabilitado.AutoSize = true;
-            this.labelHabilitado.Location = new System.Drawing.Point(21, 33);
+            this.labelHabilitado.Location = new System.Drawing.Point(28, 41);
+            this.labelHabilitado.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelHabilitado.Name = "labelHabilitado";
-            this.labelHabilitado.Size = new System.Drawing.Size(54, 13);
+            this.labelHabilitado.Size = new System.Drawing.Size(71, 17);
             this.labelHabilitado.TabIndex = 0;
             this.labelHabilitado.Text = "Habilitado";
             // 
@@ -60,41 +61,46 @@
             "Todos",
             "Si",
             "No"});
-            this.comboBoxHabilitado.Location = new System.Drawing.Point(102, 30);
+            this.comboBoxHabilitado.Location = new System.Drawing.Point(136, 37);
+            this.comboBoxHabilitado.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.comboBoxHabilitado.Name = "comboBoxHabilitado";
-            this.comboBoxHabilitado.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxHabilitado.Size = new System.Drawing.Size(160, 24);
             this.comboBoxHabilitado.TabIndex = 1;
             // 
             // labelPuertoDesde
             // 
             this.labelPuertoDesde.AutoSize = true;
-            this.labelPuertoDesde.Location = new System.Drawing.Point(21, 68);
+            this.labelPuertoDesde.Location = new System.Drawing.Point(28, 84);
+            this.labelPuertoDesde.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelPuertoDesde.Name = "labelPuertoDesde";
-            this.labelPuertoDesde.Size = new System.Drawing.Size(70, 13);
+            this.labelPuertoDesde.Size = new System.Drawing.Size(93, 17);
             this.labelPuertoDesde.TabIndex = 2;
             this.labelPuertoDesde.Text = "Puerto desde";
             // 
             // labelPuertoHasta
             // 
             this.labelPuertoHasta.AutoSize = true;
-            this.labelPuertoHasta.Location = new System.Drawing.Point(29, 106);
+            this.labelPuertoHasta.Location = new System.Drawing.Point(39, 130);
+            this.labelPuertoHasta.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelPuertoHasta.Name = "labelPuertoHasta";
-            this.labelPuertoHasta.Size = new System.Drawing.Size(67, 13);
+            this.labelPuertoHasta.Size = new System.Drawing.Size(89, 17);
             this.labelPuertoHasta.TabIndex = 4;
             this.labelPuertoHasta.Text = "Puerto hasta";
             // 
             // textBoxPuertDesde
             // 
-            this.textBoxPuertDesde.Location = new System.Drawing.Point(102, 65);
+            this.textBoxPuertDesde.Location = new System.Drawing.Point(136, 80);
+            this.textBoxPuertDesde.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBoxPuertDesde.Name = "textBoxPuertDesde";
-            this.textBoxPuertDesde.Size = new System.Drawing.Size(100, 20);
+            this.textBoxPuertDesde.Size = new System.Drawing.Size(132, 22);
             this.textBoxPuertDesde.TabIndex = 5;
             // 
             // buttonSeleccionarDesde
             // 
-            this.buttonSeleccionarDesde.Location = new System.Drawing.Point(220, 63);
+            this.buttonSeleccionarDesde.Location = new System.Drawing.Point(293, 78);
+            this.buttonSeleccionarDesde.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonSeleccionarDesde.Name = "buttonSeleccionarDesde";
-            this.buttonSeleccionarDesde.Size = new System.Drawing.Size(75, 23);
+            this.buttonSeleccionarDesde.Size = new System.Drawing.Size(100, 28);
             this.buttonSeleccionarDesde.TabIndex = 6;
             this.buttonSeleccionarDesde.Text = "Seleccionar";
             this.buttonSeleccionarDesde.UseVisualStyleBackColor = true;
@@ -102,18 +108,20 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(220, 101);
+            this.button1.Location = new System.Drawing.Point(293, 124);
+            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.Size = new System.Drawing.Size(100, 28);
             this.button1.TabIndex = 7;
             this.button1.Text = "Seleccionar";
             this.button1.UseVisualStyleBackColor = true;
             // 
             // textBoxPuertoHasta
             // 
-            this.textBoxPuertoHasta.Location = new System.Drawing.Point(102, 103);
+            this.textBoxPuertoHasta.Location = new System.Drawing.Point(136, 127);
+            this.textBoxPuertoHasta.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBoxPuertoHasta.Name = "textBoxPuertoHasta";
-            this.textBoxPuertoHasta.Size = new System.Drawing.Size(100, 20);
+            this.textBoxPuertoHasta.Size = new System.Drawing.Size(132, 22);
             this.textBoxPuertoHasta.TabIndex = 8;
             // 
             // groupBoxFiltrosRecorrido
@@ -126,18 +134,21 @@
             this.groupBoxFiltrosRecorrido.Controls.Add(this.buttonSeleccionarDesde);
             this.groupBoxFiltrosRecorrido.Controls.Add(this.labelPuertoHasta);
             this.groupBoxFiltrosRecorrido.Controls.Add(this.textBoxPuertDesde);
-            this.groupBoxFiltrosRecorrido.Location = new System.Drawing.Point(12, 12);
+            this.groupBoxFiltrosRecorrido.Location = new System.Drawing.Point(16, 15);
+            this.groupBoxFiltrosRecorrido.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBoxFiltrosRecorrido.Name = "groupBoxFiltrosRecorrido";
-            this.groupBoxFiltrosRecorrido.Size = new System.Drawing.Size(530, 143);
+            this.groupBoxFiltrosRecorrido.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBoxFiltrosRecorrido.Size = new System.Drawing.Size(707, 176);
             this.groupBoxFiltrosRecorrido.TabIndex = 9;
             this.groupBoxFiltrosRecorrido.TabStop = false;
             this.groupBoxFiltrosRecorrido.Text = "Filtros Recorrido";
             // 
             // buttonLimpiar
             // 
-            this.buttonLimpiar.Location = new System.Drawing.Point(12, 161);
+            this.buttonLimpiar.Location = new System.Drawing.Point(16, 198);
+            this.buttonLimpiar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonLimpiar.Name = "buttonLimpiar";
-            this.buttonLimpiar.Size = new System.Drawing.Size(75, 23);
+            this.buttonLimpiar.Size = new System.Drawing.Size(100, 28);
             this.buttonLimpiar.TabIndex = 10;
             this.buttonLimpiar.Text = "Limpiar";
             this.buttonLimpiar.UseVisualStyleBackColor = true;
@@ -145,9 +156,10 @@
             // 
             // buttonBuscar
             // 
-            this.buttonBuscar.Location = new System.Drawing.Point(467, 161);
+            this.buttonBuscar.Location = new System.Drawing.Point(623, 198);
+            this.buttonBuscar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonBuscar.Name = "buttonBuscar";
-            this.buttonBuscar.Size = new System.Drawing.Size(75, 23);
+            this.buttonBuscar.Size = new System.Drawing.Size(100, 28);
             this.buttonBuscar.TabIndex = 11;
             this.buttonBuscar.Text = "Buscar";
             this.buttonBuscar.UseVisualStyleBackColor = true;
@@ -155,20 +167,22 @@
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(12, 190);
+            this.dataGridView1.Location = new System.Drawing.Point(16, 234);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(530, 190);
+            this.dataGridView1.Size = new System.Drawing.Size(707, 234);
             this.dataGridView1.TabIndex = 12;
             // 
             // ListadoRecorridoForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(554, 392);
+            this.ClientSize = new System.Drawing.Size(739, 492);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.buttonBuscar);
             this.Controls.Add(this.buttonLimpiar);
             this.Controls.Add(this.groupBoxFiltrosRecorrido);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "ListadoRecorridoForm";
             this.Text = "Listado Recorridos";
             this.groupBoxFiltrosRecorrido.ResumeLayout(false);
