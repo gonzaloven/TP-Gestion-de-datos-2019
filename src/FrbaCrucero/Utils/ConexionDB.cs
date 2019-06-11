@@ -13,7 +13,8 @@ namespace FrbaCrucero
         public SqlConnection crearConexion() 
 		{
             var connectionString = ConfigurationManager.ConnectionStrings["GD1C2019DB"].ConnectionString;
-            return new SqlConnection(connectionString);
+            cnn = new SqlConnection(connectionString);
+            return cnn;
         }
 		
 		public void abrirConexion() 
@@ -29,14 +30,14 @@ namespace FrbaCrucero
         public DataTable obtenerData(String query) {
 			try
 			{
-            	crearConexion();
-            	abrirConexion();
-				
+            	SqlConnection cnn = crearConexion();
+                cnn.Open();
+
 				DataTable tabla = new DataTable();
             	SqlCommand sqlCmd = new SqlCommand(query, cnn);
 
             	tabla.Load(sqlCmd.ExecuteReader());
-            	cerrarConexion();
+                cnn.Close();
 				
 				return tabla;
 			}
@@ -45,5 +46,41 @@ namespace FrbaCrucero
                 throw;
             } 
         }
+
+        public DataTable obtenerData(SqlCommand cmd)
+        {
+            try
+            {
+                SqlConnection cnn = crearConexion();
+                cnn.Open();
+                cmd.Connection = cnn;
+                DataTable tabla = new DataTable();
+                tabla.Load(cmd.ExecuteReader());
+                cnn.Close();
+
+                return tabla;
+            } catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+           
+        public void ejecutarQuery(SqlCommand cmd)
+        {
+            try
+            {
+                SqlConnection cnn = crearConexion();
+                cnn.Open();
+
+                cmd.Connection = cnn;
+                int result = cmd.ExecuteNonQuery();
+                cnn.Close();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
 	}
 }
