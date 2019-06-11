@@ -102,6 +102,10 @@ IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.P_Val
 	DROP PROCEDURE FGNN_19.P_ValidarLogin 
 GO
 
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.P_ViajesValidacion') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
+	DROP PROCEDURE FGNN_19.P_ViajesValidacion
+GO
+
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_19.FN_Calcular_costo_pasaje') AND type in (N'FN', N'IF', N'TF', N'FS', N'FT'))
 	DROP FUNCTION FGNN_19.FN_Calcular_costo_pasaje
 GO
@@ -494,23 +498,6 @@ WHERE id IN (SELECT i.id FROM INSERTED i, FGNN_19.Viajes v
 COMMIT;
 GO
 
---Este Trigger hay que hacerlo dentro de la aplicacion desktop porque altera la migracion de datos
---pero es necesario
-/*CREATE TRIGGER FGNN_19.TR_Viajes_AfterInsert ON FGNN_19.Viajes
-AFTER INSERT
-AS
-BEGIN TRANSACTION
-
-DELETE FROM FGNN_19.Viajes 
-WHERE codigo IN (SELECT i.codigo FROM INSERTED i, FGNN_19.Viajes v2
-				 WHERE i.codigo != v2.codigo
-				 AND i.crucero_id = v2.crucero_id
-				 AND i.fecha_inicio = v2.fecha_inicio
-				 AND i.fecha_fin = v2.fecha_fin)
-
-COMMIT;
-GO*/
-
 -- Procedures
 
 CREATE PROCEDURE FGNN_19.P_ValidarLogin 
@@ -549,6 +536,43 @@ BEGIN
 	END
 
 	RETURN @Resultado
+END;
+GO
+
+CREATE PROCEDURE FGNN_19.P_ViajesValidacion 
+@nombreCrucero VARCHAR(255), 
+@puertoDesde VARCHAR(255), 
+@puertoHasta VARCHAR(255),
+@fechaInicio DATETIME2(3),
+@fechaFin DATETIME2(3),
+@Resultado INT OUTPUT
+AS
+BEGIN
+	
+	IF @fechaFin < @fechaInicio
+	BEGIN
+		SET @Resultado = 1
+	END
+	ELSE IF @puertoDesde = @puertoHasta
+	BEGIN
+		SET @Resultado = 1
+	END
+	ELSE IF EXISTS(SELECT v1.codigo FROM FGNN_19.Viajes v1, FGNN_19.Cruceros c
+				  WHERE v1.crucero_id = c.id
+				  AND c.nombre = @nombreCrucero
+				  AND v1.fecha_inicio = @fechaInicio
+				  AND v1.fecha_fin = @fechaFin
+				  GROUP BY v1.codigo)
+	BEGIN
+		SET @Resultado = 1
+	END
+	ELSE
+	BEGIN
+		SET @Resultado = 0
+	END
+
+RETURN @Resultado	
+
 END;
 GO
 
