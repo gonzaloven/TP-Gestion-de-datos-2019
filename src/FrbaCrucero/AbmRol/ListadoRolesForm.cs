@@ -12,17 +12,16 @@ using System.Windows.Forms;
 
 namespace FrbaCrucero.AbmRol
 {
-    public partial class ListadoDeRoles : Form
+    public partial class ListadoRolesForm : Form
     {
-        public ListadoDeRoles()
+        public ListadoRolesForm()
         {
             InitializeComponent();
         }
 
         private void buttonLimpiar_Click(object sender, EventArgs e)
         {
-            textBoxRol.Clear();
-            comboBoxHabilitado.SelectedIndex = comboBoxHabilitado.FindStringExact("");
+            limpiarFiltros();
         }
 
         private void buttonBuscar_Click(object sender, EventArgs e)
@@ -40,6 +39,24 @@ namespace FrbaCrucero.AbmRol
 
             List<Rol> roles = RepoRol.instancia.EncontrarPorDescripcionYHabilitado(valorDescripcion, valorHabilitado, hayValorHabilitado);
             dataGridViewRoles.DataSource = roles;
+            dataGridViewRoles.Columns["id"].Visible = false;
+            dataGridViewRoles.MultiSelect = false;
         }
+
+        private void dataGridViewRoles_DoubleClick(object sender, EventArgs e)
+        {
+            Rol rol = (Rol) dataGridViewRoles.CurrentRow.DataBoundItem;
+            Form rolForm = new RolForm(rol);
+            rolForm.MdiParent = this.MdiParent;
+            rolForm.Show(); 
+        }
+
+
+        private void limpiarFiltros()
+        {
+            textBoxRol.Clear();
+            comboBoxHabilitado.SelectedIndex = comboBoxHabilitado.FindStringExact("");
+        }
+
     }
 }

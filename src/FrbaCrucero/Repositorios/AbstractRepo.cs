@@ -33,22 +33,19 @@ namespace FrbaCrucero.Repositorios
             string sqlQuery = crearUpdateQuery(id, parametros);
             SqlCommand cmd = new SqlCommand(sqlQuery);
 
-            List<SqlParameter> sqlParametros = new List<SqlParameter>();
             foreach (string key in parametros.Keys) 
             {
-                sqlParametros.Add(new SqlParameter(key, parametros[key]));
+                cmd.Parameters.Add(new SqlParameter(key, parametros[key]));
             }
 
-            sqlParametros.Add(new SqlParameter("id", id));
-
-            cmd.Parameters.Add(sqlParametros);
+            cmd.Parameters.Add(new SqlParameter("Id", id));
 
             conexionDB.ejecutarQuery(cmd);
         }
 
         public List<T> EncontrarTodos()
         {
-            String sqlQuery = "SELECT * FRON " + nombreTabla;
+            String sqlQuery = "SELECT * FROM " + nombreTabla;
             DataTable tabla = conexionDB.obtenerData(sqlQuery);
             return ObtenerModelosDesdeTabla(tabla);
         }
@@ -73,15 +70,25 @@ namespace FrbaCrucero.Repositorios
         {
             string separador = "";
             string separadorComa = ", ";
+            bool primeraIteracion = true;
             StringBuilder sql = new StringBuilder();
             sql.Append("UPDATE ").Append(nombreTabla).Append(" SET ");
 
             foreach (string key in parametros.Keys) 
             {
-                sql.Append(separador).Append(key).Append(" = @").Append(key).Append(separadorComa);
+                if (primeraIteracion)
+                {
+                    primeraIteracion = false;
+                }
+                else 
+                {
+                    sql.Append(separadorComa);
+                }
+
+                sql.Append(separador).Append(key).Append(" = @").Append(key);
             }
 
-            sql.Append(" WHERE id = @id");
+            sql.Append(" WHERE id = @Id");
 
             return sql.ToString();
         }

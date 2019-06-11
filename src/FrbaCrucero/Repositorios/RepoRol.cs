@@ -17,6 +17,7 @@ namespace FrbaCrucero.Repositorios
         {
         }
 
+        
         public override void Crear(Rol rol)
         {
             string sqlQuery = "INSERT INTO " + nombreTabla + "(descripcion) VALUES (@descripcion)";
@@ -24,6 +25,7 @@ namespace FrbaCrucero.Repositorios
             cmd.Parameters.Add(new SqlParameter("descripcion", rol.descripcion));
 
             conexionDB.ejecutarQuery(cmd);
+            
         }
 
         public override List<Rol> ObtenerModelosDesdeTabla(DataTable table)
@@ -61,6 +63,11 @@ namespace FrbaCrucero.Repositorios
             DataTable tabla = conexionDB.obtenerData(cmd);
             return ObtenerModelosDesdeTabla(tabla);
         }
+
+        public void borrarRol(Int32 id) 
+        { 
+        }
+            
 
     }
 }

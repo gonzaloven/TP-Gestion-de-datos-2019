@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FrbaCrucero.Modelos
 {
-    class Funcionalidad
+    public class Funcionalidad
     {
         public Int32 id { get; set; }
         public String descripcion { get; set; }
@@ -16,5 +16,6 @@ namespace FrbaCrucero.Modelos
             this.id = id;
             this.descripcion = descripcion;
         }
+
     }
 }

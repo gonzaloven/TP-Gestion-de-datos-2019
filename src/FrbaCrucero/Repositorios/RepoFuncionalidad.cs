@@ -11,10 +11,11 @@ namespace FrbaCrucero.Repositorios
 {
     class RepoFuncionalidad : AbstractRepo<Funcionalidad>
     {
-        public static RepoFuncionalidad instancia = new RepoFuncionalidad("Funcionalidades");
-        
+        public static RepoFuncionalidad instancia = new RepoFuncionalidad("[FGNN_2019].[Funcionalidades]");
 
-        public RepoFuncionalidad(string table) : base(table) 
+
+        public RepoFuncionalidad(string table)
+            : base(table)
         {
         }
 
@@ -35,14 +36,14 @@ namespace FrbaCrucero.Repositorios
 
         public List<Funcionalidad> findByRol(Rol rol)
         {
-            String sqlQuery = "SELECT f.* " + 
-            "FROM [FGNN_2019].[Funcionalidades_Roles] fr, [FGNN_2019].[Funcionalidades] f " + 
+            String sqlQuery = "SELECT f.* " +
+            "FROM [FGNN_2019].[Funcionalidades_Roles] fr, [FGNN_2019].[Funcionalidades] f " +
             "WHERE fr.rol_id = @Id " +
             "AND fr.funcionalidad_id = f.id";
             SqlCommand cmd = new SqlCommand(sqlQuery);
             SqlParameter parameter = new SqlParameter("Id", rol.id);
             cmd.Parameters.Add(parameter);
-            
+
             DataTable table = conexionDB.obtenerData(cmd);
             return ObtenerModelosDesdeTabla(table);
         }

@@ -13,12 +13,10 @@ namespace FrbaCrucero
 {
     public partial class MenuPrincipal : Form
     {
-        ListadoDeRoles listadoRoles;
 
         public MenuPrincipal()
         {
             InitializeComponent();
-            this.listadoRoles = new ListadoDeRoles();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -28,6 +26,9 @@ namespace FrbaCrucero
 
         private void toolStripLabel2_Click_1(object sender, EventArgs e)
         {
+            this.IsMdiContainer = true;
+            ListadoRolesForm listadoRoles = new ListadoRolesForm();
+            listadoRoles.MdiParent = this;
             listadoRoles.Show();
         }
     }

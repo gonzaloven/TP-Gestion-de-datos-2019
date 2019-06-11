@@ -76,9 +76,9 @@ namespace FrbaCrucero
                 int result = cmd.ExecuteNonQuery();
                 cnn.Close();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
 

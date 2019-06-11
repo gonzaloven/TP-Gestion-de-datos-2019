@@ -1,6 +1,6 @@
 ﻿namespace FrbaCrucero.AbmRol
 {
-    partial class ListadoDeRoles
+    partial class ListadoRolesForm
     {
         /// <summary>
         /// Required designer variable.
@@ -99,6 +99,7 @@
             this.dataGridViewRoles.ReadOnly = true;
             this.dataGridViewRoles.Size = new System.Drawing.Size(367, 238);
             this.dataGridViewRoles.TabIndex = 3;
+            this.dataGridViewRoles.DoubleClick += new System.EventHandler(this.dataGridViewRoles_DoubleClick);
             // 
             // buttonLimpiar
             // 
@@ -120,7 +121,7 @@
             this.buttonBuscar.UseVisualStyleBackColor = true;
             this.buttonBuscar.Click += new System.EventHandler(this.buttonBuscar_Click);
             // 
-            // ListadoDeRoles
+            // ListadoRolesForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -129,7 +130,7 @@
             this.Controls.Add(this.buttonLimpiar);
             this.Controls.Add(this.dataGridViewRoles);
             this.Controls.Add(this.groupBox1);
-            this.Name = "ListadoDeRoles";
+            this.Name = "ListadoRolesForm";
             this.Text = "ListadoRoles";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

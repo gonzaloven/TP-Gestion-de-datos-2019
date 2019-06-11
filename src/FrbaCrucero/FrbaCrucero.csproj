@@ -64,11 +64,23 @@
     <Compile Include="AbmRecorrido\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="AbmRol\ListadoDeRoles.cs">
+    <Compile Include="AbmRol\AgregarFuncionalidadForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AbmRol\ListadoDeRoles.Designer.cs">
-      <DependentUpon>ListadoDeRoles.cs</DependentUpon>
+    <Compile Include="AbmRol\AgregarFuncionalidadForm.Designer.cs">
+      <DependentUpon>AgregarFuncionalidadForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AbmRol\ListadoRolesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmRol\ListadoRolesForm.Designer.cs">
+      <DependentUpon>ListadoRolesForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AbmRol\RolForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmRol\RolForm.Designer.cs">
+      <DependentUpon>RolForm.cs</DependentUpon>
     </Compile>
     <Compile Include="CompraReservaPasaje\Form1.cs">
       <SubType>Form</SubType>
@@ -109,8 +121,14 @@
     <Compile Include="Repositorios\RepoFuncionalidad.cs" />
     <Compile Include="Repositorios\RepoRol.cs" />
     <Compile Include="Utils\ConexionDB.cs" />
-    <EmbeddedResource Include="AbmRol\ListadoDeRoles.resx">
-      <DependentUpon>ListadoDeRoles.cs</DependentUpon>
+    <EmbeddedResource Include="AbmRol\AgregarFuncionalidadForm.resx">
+      <DependentUpon>AgregarFuncionalidadForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmRol\ListadoRolesForm.resx">
+      <DependentUpon>ListadoRolesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmRol\RolForm.resx">
+      <DependentUpon>RolForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MenuPrincipal.resx">
       <DependentUpon>MenuPrincipal.cs</DependentUpon>
