@@ -14,9 +14,14 @@ namespace FrbaCrucero.GeneracionViaje
 {
     public partial class SeleccionarCrucero : Form
     {
-        public SeleccionarCrucero()
+        FormGenerarViaje form;
+        TextBox textBoxParam;
+
+        public SeleccionarCrucero(FormGenerarViaje form, TextBox textBoxParam)
         {
             InitializeComponent();
+            this.form = form;
+            this.textBoxParam = textBoxParam;
         }
 
         private void buttonLimpiar_Click(object sender, EventArgs e)
@@ -41,6 +46,12 @@ namespace FrbaCrucero.GeneracionViaje
             dataGridViewCruceros.DataSource = cruceros;
             dataGridViewCruceros.Columns["id"].Visible = false;
             dataGridViewCruceros.MultiSelect = false;
+        }
+
+        private void dataGridViewCruceros_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.ColumnIndex == 0)
+                form.textBoxParam.Text = dataGridViewCruceros[2, e.RowIndex].Value.ToString();
         }
 
     }

@@ -36,6 +36,7 @@
             this.dataGridViewCruceros = new System.Windows.Forms.DataGridView();
             this.buttonLimpiar = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.Seleccionar = new System.Windows.Forms.DataGridViewButtonColumn();
             this.groupBoxFiltroCrucero.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewCruceros)).BeginInit();
             this.SuspendLayout();
@@ -93,11 +94,14 @@
             // dataGridViewCruceros
             // 
             this.dataGridViewCruceros.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewCruceros.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Seleccionar});
             this.dataGridViewCruceros.Location = new System.Drawing.Point(12, 162);
             this.dataGridViewCruceros.Name = "dataGridViewCruceros";
             this.dataGridViewCruceros.RowTemplate.Height = 24;
             this.dataGridViewCruceros.Size = new System.Drawing.Size(1048, 367);
             this.dataGridViewCruceros.TabIndex = 1;
+            this.dataGridViewCruceros.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridViewCruceros_CellMouseClick);
             // 
             // buttonLimpiar
             // 
@@ -118,6 +122,13 @@
             this.button2.Text = "Buscar";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // Seleccionar
+            // 
+            this.Seleccionar.HeaderText = "";
+            this.Seleccionar.Name = "Seleccionar";
+            this.Seleccionar.Text = "Seleccionar";
+            this.Seleccionar.UseColumnTextForButtonValue = true;
             // 
             // SeleccionarCrucero
             // 
@@ -147,5 +158,6 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.ComboBox comboBoxHabilitado;
         private System.Windows.Forms.Label labelHabilitado;
+        private System.Windows.Forms.DataGridViewButtonColumn Seleccionar;
     }
 }

@@ -27,14 +27,10 @@ namespace FrbaCrucero.GeneracionViaje
         {   
         }
 
-        public TextBox getTextBox()
-        {
-            return this.textBoxParam;
-        }
-
         private void buttonSeleccionarCrucero_Click(object sender, EventArgs e)
         {
-            SeleccionarCrucero seleccionarCrucero = new SeleccionarCrucero();
+            this.textBoxParam = textBoxCrucero;
+            SeleccionarCrucero seleccionarCrucero = new SeleccionarCrucero(this, textBoxParam);
             seleccionarCrucero.Show();
         }
 
