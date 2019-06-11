@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using FrbaCrucero.AbmRol;
+using FrbaCrucero.AbmRecorrido;
 
 namespace FrbaCrucero
 {
@@ -30,6 +31,14 @@ namespace FrbaCrucero
             ListadoRolesForm listadoRoles = new ListadoRolesForm();
             listadoRoles.MdiParent = this;
             listadoRoles.Show();
+        }
+
+        private void toolStripLabelRecorrido_Click(object sender, EventArgs e)
+        {
+            this.IsMdiContainer = true;
+            ListadoRecorridoForm listadoRecorrido = new ListadoRecorridoForm();
+            listadoRecorrido.MdiParent = this;
+            listadoRecorrido.Show();
         }
     }
 }

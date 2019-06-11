@@ -52,17 +52,17 @@
     <Compile Include="AbmCrucero\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="AbmPuerto\Form1.cs">
+    <Compile Include="AbmRecorrido\ListadoRecorridoForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AbmPuerto\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="AbmRecorrido\ListadoRecorridoForm.Designer.cs">
+      <DependentUpon>ListadoRecorridoForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="AbmRecorrido\Form1.cs">
+    <Compile Include="AbmRecorrido\SeleccionarPuerto.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AbmRecorrido\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="AbmRecorrido\SeleccionarPuerto.Designer.cs">
+      <DependentUpon>SeleccionarPuerto.cs</DependentUpon>
     </Compile>
     <Compile Include="AbmRol\AgregarFuncionalidadForm.cs">
       <SubType>Form</SubType>
@@ -107,6 +107,7 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Modelos\Funcionalidad.cs" />
+    <Compile Include="Modelos\Puerto.cs" />
     <Compile Include="Modelos\Rol.cs" />
     <Compile Include="PagoReserva\Form1.cs">
       <SubType>Form</SubType>
@@ -119,8 +120,15 @@
     <Compile Include="Repositorios\AbstractRepo.cs" />
     <Compile Include="Repositorios\IRepo.cs" />
     <Compile Include="Repositorios\RepoFuncionalidad.cs" />
+    <Compile Include="Repositorios\RepoPuerto.cs" />
     <Compile Include="Repositorios\RepoRol.cs" />
     <Compile Include="Utils\ConexionDB.cs" />
+    <EmbeddedResource Include="AbmRecorrido\ListadoRecorridoForm.resx">
+      <DependentUpon>ListadoRecorridoForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmRecorrido\SeleccionarPuerto.resx">
+      <DependentUpon>SeleccionarPuerto.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="AbmRol\AgregarFuncionalidadForm.resx">
       <DependentUpon>AgregarFuncionalidadForm.cs</DependentUpon>
     </EmbeddedResource>

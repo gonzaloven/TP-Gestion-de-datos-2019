@@ -33,6 +33,8 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolABMLabel = new System.Windows.Forms.ToolStripLabel();
             this.toolABMRolesLabel2 = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripLabelRecorrido = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -50,6 +52,8 @@
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolABMLabel,
+            this.toolStripSeparator2,
+            this.toolStripLabelRecorrido,
             this.toolStripSeparator1});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
@@ -70,6 +74,18 @@
             // 
             this.toolABMRolesLabel2.Name = "toolABMRolesLabel2";
             this.toolABMRolesLabel2.Size = new System.Drawing.Size(23, 23);
+            // 
+            // toolStripLabelRecorrido
+            // 
+            this.toolStripLabelRecorrido.Name = "toolStripLabelRecorrido";
+            this.toolStripLabelRecorrido.Size = new System.Drawing.Size(58, 22);
+            this.toolStripLabelRecorrido.Text = "Recorrido";
+            this.toolStripLabelRecorrido.Click += new System.EventHandler(this.toolStripLabelRecorrido_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
             // MenuPrincipal
             // 
@@ -94,6 +110,8 @@
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripLabel toolABMLabel;
         private System.Windows.Forms.ToolStripLabel toolABMRolesLabel2;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripLabel toolStripLabelRecorrido;
     }
 }
 
