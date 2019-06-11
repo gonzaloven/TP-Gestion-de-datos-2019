@@ -167,6 +167,9 @@
     <EmbeddedResource Include="GeneracionViaje\SeleccionarFecha.resx">
       <DependentUpon>SeleccionarFecha.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="GeneracionViaje\SeleccionarPuerto.resx">
+      <DependentUpon>SeleccionarPuerto.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MenuPrincipal.resx">
       <DependentUpon>MenuPrincipal.cs</DependentUpon>
     </EmbeddedResource>

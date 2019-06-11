@@ -32,5 +32,29 @@ namespace FrbaCrucero.GeneracionViaje
             SeleccionarCrucero seleccionarCrucero = new SeleccionarCrucero();
             seleccionarCrucero.Show();
         }
+
+        private void buttonSeleccionarPuertoDesde_Click(object sender, EventArgs e)
+        {
+            SeleccionarPuerto seleccionarPuerto = new SeleccionarPuerto();
+            seleccionarPuerto.Show();
+        }
+
+        private void buttonSeleccionarPuertoHasta_Click(object sender, EventArgs e)
+        {
+            SeleccionarPuerto seleccionarPuerto = new SeleccionarPuerto();
+            seleccionarPuerto.Show();
+        }
+
+        private void buttonSeleccionarFechaInicio_Click(object sender, EventArgs e)
+        {
+            SeleccionarFecha seleccionarFecha = new SeleccionarFecha();
+            seleccionarFecha.Show();
+        }
+
+        private void buttonSeleccionarFechaFin_Click(object sender, EventArgs e)
+        {
+            SeleccionarFecha seleccionarFecha = new SeleccionarFecha();
+            seleccionarFecha.Show();
+        }
     }
 }

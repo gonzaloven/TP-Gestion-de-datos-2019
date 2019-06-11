@@ -26,9 +26,22 @@ namespace FrbaCrucero.GeneracionViaje
 
         private void button2_Click(object sender, EventArgs e)
         {
-            string nombreCrucero = textBoxFiltroCrucero.Text;
-            List<Crucero> cruceros = RepoCrucero.instancia.EncontrarPorNombreCrucero(nombreCrucero);
+            string valorDescripcion = (!String.IsNullOrEmpty(textBoxFiltroCrucero.Text)) ? textBoxFiltroCrucero.Text.Trim() : "";
+            string textHabilitado = Convert.ToString(comboBoxHabilitado.SelectedItem);
+            Boolean hayValorHabilitado = false;
+            Int16 valorHabilitado = 0;
+
+            if (!String.IsNullOrWhiteSpace(textHabilitado))
+            {
+                hayValorHabilitado = true;
+                valorHabilitado = (textHabilitado.Equals("Si")) ? (Int16)1 : (Int16)0;
+            }
+
+            List<Crucero> cruceros = RepoCrucero.instancia.EncontrarPorDescripcionYHabilitado(valorDescripcion, valorHabilitado, hayValorHabilitado);
             dataGridViewCruceros.DataSource = cruceros;
+            dataGridViewCruceros.Columns["id"].Visible = false;
+            dataGridViewCruceros.MultiSelect = false;
         }
+
     }
 }

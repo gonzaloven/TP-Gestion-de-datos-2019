@@ -145,6 +145,7 @@
             this.buttonSeleccionarPuertoDesde.TabIndex = 11;
             this.buttonSeleccionarPuertoDesde.Text = "Seleccionar";
             this.buttonSeleccionarPuertoDesde.UseVisualStyleBackColor = true;
+            this.buttonSeleccionarPuertoDesde.Click += new System.EventHandler(this.buttonSeleccionarPuertoDesde_Click);
             // 
             // buttonSeleccionarPuertoHasta
             // 
@@ -154,6 +155,7 @@
             this.buttonSeleccionarPuertoHasta.TabIndex = 12;
             this.buttonSeleccionarPuertoHasta.Text = "Seleccionar";
             this.buttonSeleccionarPuertoHasta.UseVisualStyleBackColor = true;
+            this.buttonSeleccionarPuertoHasta.Click += new System.EventHandler(this.buttonSeleccionarPuertoHasta_Click);
             // 
             // buttonSeleccionarFechaInicio
             // 
@@ -163,6 +165,7 @@
             this.buttonSeleccionarFechaInicio.TabIndex = 13;
             this.buttonSeleccionarFechaInicio.Text = "Seleccionar";
             this.buttonSeleccionarFechaInicio.UseVisualStyleBackColor = true;
+            this.buttonSeleccionarFechaInicio.Click += new System.EventHandler(this.buttonSeleccionarFechaInicio_Click);
             // 
             // buttonSeleccionarFechaFin
             // 
@@ -172,6 +175,7 @@
             this.buttonSeleccionarFechaFin.TabIndex = 14;
             this.buttonSeleccionarFechaFin.Text = "Seleccionar";
             this.buttonSeleccionarFechaFin.UseVisualStyleBackColor = true;
+            this.buttonSeleccionarFechaFin.Click += new System.EventHandler(this.buttonSeleccionarFechaFin_Click);
             // 
             // buttonGenerarViaje
             // 

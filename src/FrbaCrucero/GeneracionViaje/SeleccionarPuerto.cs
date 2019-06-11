@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FrbaCrucero.Modelos;
+using FrbaCrucero.Repositorios;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -16,5 +18,18 @@ namespace FrbaCrucero.GeneracionViaje
         {
             InitializeComponent();
         }
+
+        private void buttonLimpiar_Click(object sender, EventArgs e)
+        {
+            textBoxPuerto.Text = null;
+        }
+
+        private void buttonBuscar_Click(object sender, EventArgs e)
+        {
+            string descripcionPuerto = textBoxPuerto.Text;
+            List<Puerto> puertos = RepoPuerto.instancia.EncontrarPorDescripcionPuerto(descripcionPuerto);
+            dataGridViewPuertos.DataSource = puertos;
+        }
+
     }
 }

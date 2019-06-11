@@ -59,6 +59,21 @@ namespace FrbaCrucero.Repositorios
             return ObtenerModelosDesdeTabla(tabla);
         }
 
+        public List<Crucero> EncontrarPorDescripcionYHabilitado(String nombre, Int16 habilitado, Boolean filtrarPorValor)
+        {
+            string sqlQuery = "SELECT * FROM " + nombreTabla + " WHERE nombre like @DescripcionPatron";
+            SqlCommand cmd = new SqlCommand(sqlQuery);
+            cmd.Parameters.Add(new SqlParameter("DescripcionPatron", nombre + "%"));
+            if (filtrarPorValor)
+            {
+                cmd.CommandText = cmd.CommandText + " AND habilitado = @Habilitado";
+                cmd.Parameters.Add(new SqlParameter("Habilitado", habilitado));
+            }
+
+            DataTable tabla = conexionDB.obtenerData(cmd);
+            return ObtenerModelosDesdeTabla(tabla);
+        }
+
         public override void Crear(Crucero entidad)
         {
             throw new NotImplementedException();
