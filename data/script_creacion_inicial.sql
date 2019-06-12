@@ -313,6 +313,16 @@ CREATE TABLE [FGNN_19].[Recorridos_X_Crucero] (
 );
 GO
 
+CREATE TABLE [FGNN_19].[Pasajes_Cancelados] (
+	[id] NUMERIC(18, 0) IDENTITY(1, 1),
+	[id_pasaje] NUMERIC(18,0),
+	[fecha_cancelacion] datetime2(3),
+	[motivo] VARCHAR(255)
+	PRIMARY KEY([id]),
+	FOREIGN KEY (id_pasaje) REFERENCES FGNN_19.Pasajes(id)
+);
+GO
+
 --Fin creación de tablas.
 
 --Migración
@@ -574,6 +584,51 @@ BEGIN
 RETURN @Resultado	
 
 END;
+GO
+
+CREATE PROCEDURE FGNN_19.Baja_difinitiva_crucero (@idCrucero numeric(18,0), @fechaBaja datetime2(3))
+AS
+BEGIN TRANSACTION
+
+	UPDATE FGNN_19.Cruceros
+	SET baja_vida_util = 1, fecha_baja_definitiva = @fechaBaja
+	WHERE id = @idCrucero
+
+COMMIT;
+GO
+
+CREATE PROCEDURE FGNN_19.Baja_temporal_crucero (@idCrucero numeric(18,0), @fechaBaja datetime2(3), @fechaReinicio datetime2(3))
+AS
+BEGIN TRANSACTION
+
+	UPDATE FGNN_19.Cruceros
+	SET baja_servicio = 1, fecha_fuera_servicio = @fechaBaja, fecha_reinicio_servicio = @fechaReinicio
+	WHERE id = @idCrucero
+
+COMMIT;
+GO
+
+CREATE PROCEDURE FGNN_19.Actualizacion_reinicio_cruceros
+AS
+BEGIN TRANSACTION
+
+	UPDATE FGNN_19.Cruceros
+	SET baja_servicio = 0, fecha_fuera_servicio = NULL, fecha_reinicio_servicio = NULL
+	WHERE baja_servicio = 1 AND fecha_reinicio_servicio < CONVERT(datetime2(3), GETDATE())
+
+COMMIT;
+GO
+
+CREATE PROCEDURE FGNN_19.Cancelar_pasajes_crucero(@idCrucero NUMERIC(18,0), @motivo VARCHAR(255))
+AS
+BEGIN TRANSACTION
+	
+	INSERT INTO FGNN_19.Pasajes_Cancelados(id_pasaje, fecha_cancelacion, motivo)
+	SELECT pasaje_codigo, CONVERT(datetime2(3), GETDATE()), @motivo
+	FROM Cabinas
+	WHERE crucero_id = @idCrucero
+
+COMMIT;
 GO
 
 -- Funciones
