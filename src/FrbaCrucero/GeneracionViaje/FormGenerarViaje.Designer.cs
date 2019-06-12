@@ -44,6 +44,8 @@
             this.buttonSeleccionarFechaInicio = new System.Windows.Forms.Button();
             this.buttonSeleccionarFechaFin = new System.Windows.Forms.Button();
             this.buttonGenerarViaje = new System.Windows.Forms.Button();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // textBoxCrucero
@@ -185,12 +187,25 @@
             this.buttonGenerarViaje.TabIndex = 15;
             this.buttonGenerarViaje.Text = "Generar";
             this.buttonGenerarViaje.UseVisualStyleBackColor = true;
+            this.buttonGenerarViaje.Click += new System.EventHandler(this.buttonGenerarViaje_Click);
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(13, 237);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
+            this.dataGridView1.RowTemplate.Height = 24;
+            this.dataGridView1.Size = new System.Drawing.Size(577, 288);
+            this.dataGridView1.TabIndex = 16;
             // 
             // FormGenerarViaje
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(602, 261);
+            this.ClientSize = new System.Drawing.Size(602, 537);
+            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.buttonGenerarViaje);
             this.Controls.Add(this.buttonSeleccionarFechaFin);
             this.Controls.Add(this.buttonSeleccionarFechaInicio);
@@ -209,6 +224,7 @@
             this.Controls.Add(this.textBoxCrucero);
             this.Name = "FormGenerarViaje";
             this.Text = "Generar Viaje";
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -232,5 +248,6 @@
         private System.Windows.Forms.Button buttonSeleccionarFechaFin;
         private System.Windows.Forms.Button buttonGenerarViaje;
         public System.Windows.Forms.TextBox textBoxFechaInicio;
+        private System.Windows.Forms.DataGridView dataGridView1;
     }
 }

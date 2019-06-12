@@ -14,9 +14,15 @@ namespace FrbaCrucero.AbmRecorrido
 {
     public partial class SeleccionarPuerto : Form
     {
-        public SeleccionarPuerto()
+        ListadoRecorridoForm form;
+        TextBox textBoxParam;
+        private ListadoRecorridoForm listadoRecorridoForm;
+
+        public SeleccionarPuerto(ListadoRecorridoForm form, TextBox textBoxParam)
         {
             InitializeComponent();
+            this.form = form;
+            this.textBoxParam = textBoxParam;
         }
 
         private void buttonLimpiar_Click(object sender, EventArgs e)
@@ -29,6 +35,12 @@ namespace FrbaCrucero.AbmRecorrido
             string descripcionPuerto = textBoxPuerto.Text;
             List<Puerto> puertos = RepoPuerto.instancia.EncontrarPorDescripcionPuerto(descripcionPuerto);
             dataGridViewPuertos.DataSource = puertos;
+        }
+
+        private void dataGridViewPuertos_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == 0)
+                form.textBoxParam.Text = dataGridViewPuertos[2, e.RowIndex].Value.ToString();
         }
 
     }

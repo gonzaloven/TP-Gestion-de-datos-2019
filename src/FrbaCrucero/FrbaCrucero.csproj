@@ -127,7 +127,9 @@
     <Compile Include="Modelos\Crucero.cs" />
     <Compile Include="Modelos\Funcionalidad.cs" />
     <Compile Include="Modelos\Puerto.cs" />
+    <Compile Include="Modelos\Recorrido.cs" />
     <Compile Include="Modelos\Rol.cs" />
+    <Compile Include="Modelos\Viaje.cs" />
     <Compile Include="PagoReserva\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -141,7 +143,9 @@
     <Compile Include="Repositorios\RepoCrucero.cs" />
     <Compile Include="Repositorios\RepoFuncionalidad.cs" />
     <Compile Include="Repositorios\RepoPuerto.cs" />
+    <Compile Include="Repositorios\RepoRecorrido.cs" />
     <Compile Include="Repositorios\RepoRol.cs" />
+    <Compile Include="Repositorios\RepoViaje.cs" />
     <Compile Include="Utils\ConexionDB.cs" />
     <EmbeddedResource Include="AbmRecorrido\ListadoRecorridoForm.resx">
       <DependentUpon>ListadoRecorridoForm.cs</DependentUpon>

@@ -39,9 +39,9 @@
             this.groupBoxFiltrosRecorrido = new System.Windows.Forms.GroupBox();
             this.buttonLimpiar = new System.Windows.Forms.Button();
             this.buttonBuscar = new System.Windows.Forms.Button();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dataGridViewRecorrido = new System.Windows.Forms.DataGridView();
             this.groupBoxFiltrosRecorrido.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewRecorrido)).BeginInit();
             this.SuspendLayout();
             // 
             // labelHabilitado
@@ -62,7 +62,7 @@
             "Si",
             "No"});
             this.comboBoxHabilitado.Location = new System.Drawing.Point(136, 37);
-            this.comboBoxHabilitado.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.comboBoxHabilitado.Margin = new System.Windows.Forms.Padding(4);
             this.comboBoxHabilitado.Name = "comboBoxHabilitado";
             this.comboBoxHabilitado.Size = new System.Drawing.Size(160, 24);
             this.comboBoxHabilitado.TabIndex = 1;
@@ -90,7 +90,7 @@
             // textBoxPuertDesde
             // 
             this.textBoxPuertDesde.Location = new System.Drawing.Point(136, 80);
-            this.textBoxPuertDesde.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBoxPuertDesde.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxPuertDesde.Name = "textBoxPuertDesde";
             this.textBoxPuertDesde.Size = new System.Drawing.Size(132, 22);
             this.textBoxPuertDesde.TabIndex = 5;
@@ -98,7 +98,7 @@
             // buttonSeleccionarDesde
             // 
             this.buttonSeleccionarDesde.Location = new System.Drawing.Point(293, 78);
-            this.buttonSeleccionarDesde.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.buttonSeleccionarDesde.Margin = new System.Windows.Forms.Padding(4);
             this.buttonSeleccionarDesde.Name = "buttonSeleccionarDesde";
             this.buttonSeleccionarDesde.Size = new System.Drawing.Size(100, 28);
             this.buttonSeleccionarDesde.TabIndex = 6;
@@ -109,17 +109,18 @@
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(293, 124);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button1.Margin = new System.Windows.Forms.Padding(4);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(100, 28);
             this.button1.TabIndex = 7;
             this.button1.Text = "Seleccionar";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // textBoxPuertoHasta
             // 
             this.textBoxPuertoHasta.Location = new System.Drawing.Point(136, 127);
-            this.textBoxPuertoHasta.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBoxPuertoHasta.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxPuertoHasta.Name = "textBoxPuertoHasta";
             this.textBoxPuertoHasta.Size = new System.Drawing.Size(132, 22);
             this.textBoxPuertoHasta.TabIndex = 8;
@@ -135,9 +136,9 @@
             this.groupBoxFiltrosRecorrido.Controls.Add(this.labelPuertoHasta);
             this.groupBoxFiltrosRecorrido.Controls.Add(this.textBoxPuertDesde);
             this.groupBoxFiltrosRecorrido.Location = new System.Drawing.Point(16, 15);
-            this.groupBoxFiltrosRecorrido.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBoxFiltrosRecorrido.Margin = new System.Windows.Forms.Padding(4);
             this.groupBoxFiltrosRecorrido.Name = "groupBoxFiltrosRecorrido";
-            this.groupBoxFiltrosRecorrido.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBoxFiltrosRecorrido.Padding = new System.Windows.Forms.Padding(4);
             this.groupBoxFiltrosRecorrido.Size = new System.Drawing.Size(707, 176);
             this.groupBoxFiltrosRecorrido.TabIndex = 9;
             this.groupBoxFiltrosRecorrido.TabStop = false;
@@ -146,7 +147,7 @@
             // buttonLimpiar
             // 
             this.buttonLimpiar.Location = new System.Drawing.Point(16, 198);
-            this.buttonLimpiar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.buttonLimpiar.Margin = new System.Windows.Forms.Padding(4);
             this.buttonLimpiar.Name = "buttonLimpiar";
             this.buttonLimpiar.Size = new System.Drawing.Size(100, 28);
             this.buttonLimpiar.TabIndex = 10;
@@ -157,37 +158,38 @@
             // buttonBuscar
             // 
             this.buttonBuscar.Location = new System.Drawing.Point(623, 198);
-            this.buttonBuscar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.buttonBuscar.Margin = new System.Windows.Forms.Padding(4);
             this.buttonBuscar.Name = "buttonBuscar";
             this.buttonBuscar.Size = new System.Drawing.Size(100, 28);
             this.buttonBuscar.TabIndex = 11;
             this.buttonBuscar.Text = "Buscar";
             this.buttonBuscar.UseVisualStyleBackColor = true;
+            this.buttonBuscar.Click += new System.EventHandler(this.buttonBuscar_Click);
             // 
-            // dataGridView1
+            // dataGridViewRecorrido
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(16, 234);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(707, 234);
-            this.dataGridView1.TabIndex = 12;
+            this.dataGridViewRecorrido.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewRecorrido.Location = new System.Drawing.Point(16, 234);
+            this.dataGridViewRecorrido.Margin = new System.Windows.Forms.Padding(4);
+            this.dataGridViewRecorrido.Name = "dataGridViewRecorrido";
+            this.dataGridViewRecorrido.Size = new System.Drawing.Size(707, 234);
+            this.dataGridViewRecorrido.TabIndex = 12;
             // 
             // ListadoRecorridoForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(739, 492);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.dataGridViewRecorrido);
             this.Controls.Add(this.buttonBuscar);
             this.Controls.Add(this.buttonLimpiar);
             this.Controls.Add(this.groupBoxFiltrosRecorrido);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "ListadoRecorridoForm";
             this.Text = "Listado Recorridos";
             this.groupBoxFiltrosRecorrido.ResumeLayout(false);
             this.groupBoxFiltrosRecorrido.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewRecorrido)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -205,6 +207,6 @@
         private System.Windows.Forms.GroupBox groupBoxFiltrosRecorrido;
         private System.Windows.Forms.Button buttonLimpiar;
         private System.Windows.Forms.Button buttonBuscar;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dataGridViewRecorrido;
     }
 }
