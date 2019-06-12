@@ -27,7 +27,7 @@ namespace FrbaCrucero.AbmRecorrido
         {
             textBoxPuertDesde.Text = null;
             textBoxPuertoHasta.Text = null;
-            comboBoxHabilitado.Text = null;
+            comboBoxHabilitado.Text = "Todos";
         }
 
         private void buttonSeleccionarDesde_Click(object sender, EventArgs e)

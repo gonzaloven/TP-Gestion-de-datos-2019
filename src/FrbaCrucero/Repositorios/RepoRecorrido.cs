@@ -55,9 +55,17 @@ namespace FrbaCrucero.Repositorios
 
         public List<Recorrido> EncontrarPorParametros(String puertoDesde, String puertoHasta, Int16 habilatado, Boolean filtarPorValor)
         {
-            string sqlQuery = "SELECT * FROM " + nombreTabla + ", FGNN_19.Puertos p1, FGNN_19.Puertos p2 "
-                                                             + "WHERE p1.id = puerto_desde_id AND p2.id = puerto_hasta_id "
-                                                             + "AND p1.descripcion = @puertoDesde AND p2.descripcion = @puertoHasta";
+            string sqlQuery;
+            if (!String.IsNullOrWhiteSpace(puertoDesde) && !String.IsNullOrWhiteSpace(puertoHasta))
+            {
+                sqlQuery = "SELECT * FROM " + nombreTabla + ", FGNN_19.Puertos p1, FGNN_19.Puertos p2 "
+                                                                 + "WHERE p1.id = puerto_desde_id AND p2.id = puerto_hasta_id "
+                                                                 + "AND p1.descripcion = @puertoDesde OR p2.descripcion = @puertoHasta";
+            }
+            else
+            {
+                sqlQuery = "SELECT * FROM " + nombreTabla;
+            }
             
             SqlCommand cmd = new SqlCommand(sqlQuery);
             cmd.Parameters.Add(new SqlParameter("puertoDesde", puertoDesde));
