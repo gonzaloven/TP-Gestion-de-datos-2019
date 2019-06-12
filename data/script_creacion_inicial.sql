@@ -578,31 +578,7 @@ GO
 
 -- Funciones
 
-CREATE FUNCTION FGNN_19.FN_Calcular_costo_pasaje (@idRecorrido NUMERIC(18,0), @codigoCabina NUMERIC(18,0))
-RETURNS FLOAT
-AS
-
-BEGIN
-
-DECLARE @PrecioTotal FLOAT
-DECLARE @PorcAdicional FLOAT
-DECLARE @PrecioBaseTotal FLOAT
-
-SELECT @PorcAdicional = tc.porcentaje_adicional
-FROM FGNN_19.Cabinas c, FGNN_19.Tipos_Cabinas tc
-WHERE c.codigo = @codigoCabina
-AND tc.id = c.tipo_id
-
-SET @PrecioBaseTotal = FGNN_19.FN_Calcular_costo_base(@idRecorrido)
-
-SET @PrecioTotal = @PrecioBaseTotal * @PorcAdicional
-
-RETURN @PrecioTotal
-
-END;
-GO
-
-CREATE FUNCTION FGNN_19.FN_Calcular_costo_base (@idRecorrido NUMERIC(18,0))
+CREATE FUNCTION FGNN_19.FN_Calcular_costo_base(@idRecorrido NUMERIC(18,0))
 RETURNS FLOAT
 AS
 
@@ -610,10 +586,10 @@ BEGIN
 
 	DECLARE @PrecioBaseTotal FLOAT
 
-	SELECT @PrecioBaseTotal = SUM(r.precio_base + FGNN_19.FN_Calcular_costo_base(rr.recorrido_tramo))
+	SET @PrecioBaseTotal = (SELECT SUM(FGNN_19.FN_Calcular_costo_base(rr.recorrido_tramo))
 	FROM FGNN_19.Recorridos r, FGNN_19.Recorrido_X_Recorrido rr
 	WHERE r.id = @idRecorrido
-	AND r.id = rr.recorrido_total
+	AND r.id = rr.recorrido_total)
 
 	IF @PrecioBaseTotal IS NULL
 	BEGIN
@@ -623,4 +599,29 @@ BEGIN
 	RETURN @PrecioBaseTotal
 
 END;
+GO
+
+CREATE FUNCTION FGNN_19.FN_Calcular_costo_pasaje(@idPasaje NUMERIC(18,0))
+RETURNS FLOAT
+AS
+BEGIN
+	
+	DECLARE @idRecorrido NUMERIC(18,0)
+	DECLARE @PorcAdicional FLOAT
+	DECLARE @PrecioBaseTotal FLOAT
+
+	SET @idRecorrido = (SELECT v.recorrido_codigo
+		FROM FGNN_19.Pasajes p
+			JOIN FGNN_19.Viajes v ON v.codigo = p.viaje_codigo
+		WHERE p.id = @idPasaje)
+
+	SET @PorcAdicional = (SELECT tc.porcentaje_adicional
+		FROM FGNN_19.Cabinas c
+			JOIN FGNN_19.Tipos_Cabinas tc ON tc.id = c.tipo_id
+		WHERE c.pasaje_codigo = @idPasaje)
+
+	SET @PrecioBaseTotal = FGNN_19.FN_Calcular_costo_base(@idRecorrido)
+
+	RETURN @PrecioBaseTotal * @PorcAdicional
+END
 GO
