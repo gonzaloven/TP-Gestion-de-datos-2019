@@ -22,6 +22,10 @@ IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_19.Cabin
     DROP TABLE FGNN_19.Cabinas
 GO
 
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_19.Pasajes_Cancelados'))
+    DROP TABLE FGNN_19.Pasajes_Cancelados
+GO
+
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_19.Pasajes'))
     DROP TABLE FGNN_19.Pasajes
 GO
@@ -86,15 +90,15 @@ IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_19.Puert
     DROP TABLE FGNN_19.Puertos
 GO
 
-IF EXISTS (SELECT * FROM sys.views WHERE name = 'vw_RolesYFuncionalidades' AND type = 'V') 
+IF EXISTS (SELECT * FROM sys.views WHERE name = 'FGNN_19.vw_RolesYFuncionalidades' AND type = 'V') 
 	DROP VIEW FGNN_19.vw_RolesYFuncionalidades
 GO
 
-IF EXISTS (SELECT * FROM sys.objects WHERE [name] = N'TR_Roles_InsteadOfDelete' AND [type] = 'TR')
+IF EXISTS (SELECT * FROM sys.objects WHERE [name] = N'FGNN_19.TR_Roles_InsteadOfDelete' AND [type] = 'TR')
     DROP TRIGGER FGNN_19.TR_Roles_InsteadOfDelete
 GO
 
-IF EXISTS (SELECT * FROM sys.objects WHERE [name] = N'TR_Recorridos_AfterUpdate' AND [type] = 'TR')
+IF EXISTS (SELECT * FROM sys.objects WHERE [name] = N'FGNN_19.TR_Recorridos_AfterUpdate' AND [type] = 'TR')
     DROP TRIGGER FGNN_19.TR_Recorridos_InsteadOfUpdate
 GO
 
@@ -106,6 +110,30 @@ IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.P_Via
 	DROP PROCEDURE FGNN_19.P_ViajesValidacion
 GO
 
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.Baja_difinitiva_crucero') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
+	DROP PROCEDURE FGNN_19.Baja_difinitiva_crucero
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.Baja_temporal_crucero') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
+	DROP PROCEDURE FGNN_19.Baja_temporal_crucero
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.Actualizacion_reinicio_cruceros') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
+	DROP PROCEDURE FGNN_19.Actualizacion_reinicio_cruceros
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.Cancelar_pasajes_crucero') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
+	DROP PROCEDURE FGNN_19.Cancelar_pasajes_crucero
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.Reemplazar_crucero') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
+	DROP PROCEDURE FGNN_19.Reemplazar_crucero
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.Reeprogramar_viajes_crucero') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
+	DROP PROCEDURE FGNN_19.Reeprogramar_viajes_crucero
+GO
+
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_19.FN_Calcular_costo_pasaje') AND type in (N'FN', N'IF', N'TF', N'FS', N'FT'))
 	DROP FUNCTION FGNN_19.FN_Calcular_costo_pasaje
 GO
@@ -113,6 +141,28 @@ GO
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_19.FN_Calcular_costo_base') AND type in (N'FN', N'IF', N'TF', N'FS', N'FT'))
 	DROP FUNCTION FGNN_19.FN_Calcular_costo_base
 GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_19.FN_Tiene_fecha_libre') AND type in (N'FN', N'IF', N'TF', N'FS', N'FT'))
+	DROP FUNCTION FGNN_19.FN_Tiene_fecha_libre
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_19.FN_Puede_cumplir_sus_viajes') AND type in (N'FN', N'IF', N'TF', N'FS', N'FT'))
+	DROP FUNCTION FGNN_19.FN_Puede_cumplir_sus_viajes
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_19.FN_Pasaje_no_cancelado') AND type in (N'FN', N'IF', N'TF', N'FS', N'FT'))
+	DROP FUNCTION FGNN_19.FN_Pasaje_no_cancelado
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_19.FN_Crucero_reemplazante') AND type in (N'FN', N'IF', N'TF', N'FS', N'FT'))
+	DROP FUNCTION FGNN_19.FN_Crucero_reemplazante
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_19.FN_Puede_cumplir_recorrido') AND type in (N'FN', N'IF', N'TF', N'FS', N'FT'))
+	DROP FUNCTION FGNN_19.FN_Puede_cumplir_recorrido
+GO
+
+
 
 --Creación de tablas.
 CREATE TABLE [FGNN_19].[Usuarios] (
@@ -508,129 +558,6 @@ WHERE id IN (SELECT i.id FROM INSERTED i, FGNN_19.Viajes v
 COMMIT;
 GO
 
--- Procedures
-
-CREATE PROCEDURE FGNN_19.P_ValidarLogin 
-@User VARCHAR(255), 
-@Pass VARCHAR(255), 
-@Resultado INT OUTPUT
-AS
-BEGIN
-	IF EXISTS (
-			SELECT 1
-			FROM FGNN_19.Usuarios
-			WHERE username = @User
-			)
-	BEGIN
-		IF EXISTS (
-				SELECT 1
-				FROM FGNN_19.Usuarios
-				WHERE username = @User
-				AND password = CONVERT(BINARY (32), HASHBYTES('SHA2_256',@Pass))
-				)
-		BEGIN
-			SET @Resultado = 0
-		END
-		ELSE
-		BEGIN
-			UPDATE FGNN_19.Usuarios
-			SET intentos_fallidos = intentos_fallidos + 1
-			WHERE username = @user
-
-			SET @Resultado = 1
-		END
-	END
-	ELSE
-	BEGIN
-		SET @Resultado = 1
-	END
-
-	RETURN @Resultado
-END;
-GO
-
-CREATE PROCEDURE FGNN_19.P_ViajesValidacion 
-@nombreCrucero VARCHAR(255), 
-@puertoDesde VARCHAR(255), 
-@puertoHasta VARCHAR(255),
-@fechaInicio DATETIME2(3),
-@fechaFin DATETIME2(3),
-@Resultado INT OUTPUT
-AS
-BEGIN
-	
-	IF @fechaFin < @fechaInicio
-	BEGIN
-		SET @Resultado = 1
-	END
-	ELSE IF @puertoDesde = @puertoHasta
-	BEGIN
-		SET @Resultado = 1
-	END
-	ELSE IF EXISTS(SELECT v1.codigo FROM FGNN_19.Viajes v1, FGNN_19.Cruceros c
-				  WHERE v1.crucero_id = c.id
-				  AND c.nombre = @nombreCrucero
-				  AND v1.fecha_inicio = @fechaInicio
-				  AND v1.fecha_fin = @fechaFin
-				  GROUP BY v1.codigo)
-	BEGIN
-		SET @Resultado = 1
-	END
-	ELSE
-	BEGIN
-		SET @Resultado = 0
-	END
-
-RETURN @Resultado	
-
-END;
-GO
-
-CREATE PROCEDURE FGNN_19.Baja_difinitiva_crucero (@idCrucero numeric(18,0), @fechaBaja datetime2(3))
-AS
-BEGIN TRANSACTION
-
-	UPDATE FGNN_19.Cruceros
-	SET baja_vida_util = 1, fecha_baja_definitiva = @fechaBaja
-	WHERE id = @idCrucero
-
-COMMIT;
-GO
-
-CREATE PROCEDURE FGNN_19.Baja_temporal_crucero (@idCrucero numeric(18,0), @fechaBaja datetime2(3), @fechaReinicio datetime2(3))
-AS
-BEGIN TRANSACTION
-
-	UPDATE FGNN_19.Cruceros
-	SET baja_servicio = 1, fecha_fuera_servicio = @fechaBaja, fecha_reinicio_servicio = @fechaReinicio
-	WHERE id = @idCrucero
-
-COMMIT;
-GO
-
-CREATE PROCEDURE FGNN_19.Actualizacion_reinicio_cruceros
-AS
-BEGIN TRANSACTION
-
-	UPDATE FGNN_19.Cruceros
-	SET baja_servicio = 0, fecha_fuera_servicio = NULL, fecha_reinicio_servicio = NULL
-	WHERE baja_servicio = 1 AND fecha_reinicio_servicio < CONVERT(datetime2(3), GETDATE())
-
-COMMIT;
-GO
-
-CREATE PROCEDURE FGNN_19.Cancelar_pasajes_crucero(@idCrucero NUMERIC(18,0), @motivo VARCHAR(255))
-AS
-BEGIN TRANSACTION
-	
-	INSERT INTO FGNN_19.Pasajes_Cancelados(id_pasaje, fecha_cancelacion, motivo)
-	SELECT pasaje_codigo, CONVERT(datetime2(3), GETDATE()), @motivo
-	FROM Cabinas
-	WHERE crucero_id = @idCrucero
-
-COMMIT;
-GO
-
 -- Funciones
 
 CREATE FUNCTION FGNN_19.FN_Calcular_costo_base(@idRecorrido NUMERIC(18,0))
@@ -679,4 +606,262 @@ BEGIN
 
 	RETURN @PrecioBaseTotal * @PorcAdicional
 END
+GO
+
+CREATE FUNCTION FGNN_19.FN_Pasaje_no_cancelado(@idPasaje NUMERIC(18,0))
+RETURNS BIT
+AS
+BEGIN
+
+	IF NOT EXISTS (SELECT 1
+		FROM Pasajes_Cancelados 
+		WHERE id_pasaje = @idPasaje)
+		RETURN 1
+
+	RETURN 0
+
+END
+GO
+
+CREATE FUNCTION FGNN_19.FN_Tiene_fecha_libre(@idCrucero NUMERIC(18,0), @fecha_inicio DATETIME2(3), @fecha_fin DATETIME2(3))
+RETURNS INT
+AS
+BEGIN
+
+	IF NOT EXISTS (SELECT 1
+		FROM Viajes v
+			JOIN Pasajes p ON p.viaje_codigo = v.codigo 
+		WHERE v.crucero_id = @idCrucero AND v.fecha_inicio < @fecha_fin AND v.fecha_fin > @fecha_inicio AND FGNN_19.FN_Pasaje_no_cancelado(p.id) = 1)
+		RETURN 1
+
+	RETURN 0
+
+END
+GO
+
+CREATE FUNCTION FGNN_19.FN_Puede_cumplir_recorrido(@idCrucero NUMERIC(18,0), @idRecorrido NUMERIC(18,0))
+RETURNS INT
+AS
+BEGIN
+
+	IF EXISTS (SELECT 1
+		FROM FGNN_19.Recorridos_X_Crucero
+		WHERE recorrido_codigo = @idRecorrido AND recorrido_crucero = @idCrucero)
+		RETURN 1
+
+	RETURN 0
+
+END
+GO
+
+CREATE FUNCTION FGNN_19.FN_Puede_cumplir_sus_viajes(@idCruceroOriginal NUMERIC(18,0), @idCruceroReemplazo NUMERIC(18,0))
+RETURNS BIT
+AS
+BEGIN
+
+	DECLARE @cantidad_viajes_cumple_fecha INT
+	DECLARE @cantidad_viajes_cumple_recorrido INT
+	DECLARE @cantidad_viajes_existentes INT
+
+	SET @cantidad_viajes_cumple_fecha = (SELECT ISNULL(SUM(FGNN_19.FN_Tiene_fecha_libre(@idCruceroReemplazo, fecha_inicio, fecha_fin)),0)
+		FROM FGNN_19.Viajes 
+		WHERE crucero_id = @idCruceroOriginal
+		GROUP BY crucero_id)
+		
+	SET @cantidad_viajes_cumple_recorrido = (SELECT ISNULL(SUM(FGNN_19.FN_Puede_cumplir_recorrido(@idCruceroReemplazo, recorrido_codigo)),0)
+		FROM FGNN_19.Viajes 
+		WHERE crucero_id = @idCruceroOriginal
+		GROUP BY crucero_id)
+
+	SET @cantidad_viajes_existentes = (SELECT COUNT(v.codigo)
+		FROM FGNN_19.Viajes v
+			JOIN Pasajes p ON p.viaje_codigo = v.codigo
+		WHERE v.crucero_id = @idCruceroOriginal AND v.fecha_inicio >=  CONVERT(datetime2(3), GETDATE()) AND FGNN_19.FN_Pasaje_no_cancelado(p.id) = 1
+		GROUP BY v.crucero_id)
+
+	IF(@cantidad_viajes_cumple_fecha = @cantidad_viajes_existentes AND @cantidad_viajes_cumple_recorrido = @cantidad_viajes_existentes)
+		RETURN 1
+
+	RETURN 0
+
+END
+GO
+
+CREATE FUNCTION FGNN_19.FN_Crucero_reemplazante(@idCruceroOriginal NUMERIC(18,0))
+RETURNS NUMERIC(18,0)
+AS
+BEGIN
+
+	DECLARE @idCruceroReemplazo NUMERIC(18,0)
+
+	SET @idCruceroReemplazo = (SELECT TOP 1 cr.id
+		FROM Cruceros co
+			JOIN Cruceros cr ON co.id != cr.id
+		WHERE co.id = @idCruceroOriginal AND cr.baja_servicio = 0 AND cr.baja_vida_util = 0 AND FGNN_19.FN_Puede_cumplir_sus_viajes(@idCruceroOriginal, cr.id) = 1
+			AND cr.modelo = co.modelo AND cr.tipo_servicio = co.tipo_servicio)
+
+	RETURN @idCruceroReemplazo
+END
+GO
+
+-- Procedures
+
+CREATE PROCEDURE FGNN_19.P_ValidarLogin 
+@User VARCHAR(255), 
+@Pass VARCHAR(255), 
+@Resultado INT OUTPUT
+AS
+BEGIN TRANSACTION
+	IF EXISTS (
+			SELECT 1
+			FROM FGNN_19.Usuarios
+			WHERE username = @User
+			)
+	BEGIN
+		IF EXISTS (
+				SELECT 1
+				FROM FGNN_19.Usuarios
+				WHERE username = @User
+				AND password = CONVERT(BINARY (32), HASHBYTES('SHA2_256',@Pass))
+				)
+		BEGIN
+			SET @Resultado = 0
+		END
+		ELSE
+		BEGIN
+			UPDATE FGNN_19.Usuarios
+			SET intentos_fallidos = intentos_fallidos + 1
+			WHERE username = @user
+
+			SET @Resultado = 1
+		END
+	END
+	ELSE
+	BEGIN
+		SET @Resultado = 1
+	END
+
+	RETURN @Resultado
+COMMIT TRANSACTION;
+GO
+
+CREATE PROCEDURE FGNN_19.P_ViajesValidacion 
+@nombreCrucero VARCHAR(255), 
+@puertoDesde VARCHAR(255), 
+@puertoHasta VARCHAR(255),
+@fechaInicio DATETIME2(3),
+@fechaFin DATETIME2(3),
+@Resultado INT OUTPUT
+AS
+BEGIN TRANSACTION
+	
+	IF @fechaFin < @fechaInicio
+	BEGIN
+		SET @Resultado = 1
+	END
+	ELSE IF @puertoDesde = @puertoHasta
+	BEGIN
+		SET @Resultado = 1
+	END
+	ELSE IF EXISTS(SELECT v1.codigo FROM FGNN_19.Viajes v1, FGNN_19.Cruceros c
+				  WHERE v1.crucero_id = c.id
+				  AND c.nombre = @nombreCrucero
+				  AND v1.fecha_inicio = @fechaInicio
+				  AND v1.fecha_fin = @fechaFin
+				  GROUP BY v1.codigo)
+	BEGIN
+		SET @Resultado = 1
+	END
+	ELSE
+	BEGIN
+		SET @Resultado = 0
+	END
+
+RETURN @Resultado	
+
+COMMIT TRANSACTION;
+GO
+
+CREATE PROCEDURE FGNN_19.Baja_difinitiva_crucero (@idCrucero numeric(18,0), @fechaBaja datetime2(3))
+AS
+BEGIN TRANSACTION
+
+	UPDATE FGNN_19.Cruceros
+	SET baja_vida_util = 1, fecha_baja_definitiva = @fechaBaja
+	WHERE id = @idCrucero
+
+COMMIT TRANSACTION;
+GO
+
+CREATE PROCEDURE FGNN_19.Baja_temporal_crucero (@idCrucero numeric(18,0), @fechaBaja datetime2(3), @fechaReinicio datetime2(3))
+AS
+BEGIN TRANSACTION
+
+	UPDATE FGNN_19.Cruceros
+	SET baja_servicio = 1, fecha_fuera_servicio = @fechaBaja, fecha_reinicio_servicio = @fechaReinicio
+	WHERE id = @idCrucero
+
+COMMIT TRANSACTION;
+GO
+
+CREATE PROCEDURE FGNN_19.Actualizacion_reinicio_cruceros
+AS
+BEGIN TRANSACTION
+
+	UPDATE FGNN_19.Cruceros
+	SET baja_servicio = 0, fecha_fuera_servicio = NULL, fecha_reinicio_servicio = NULL
+	WHERE baja_servicio = 1 AND fecha_reinicio_servicio <= CONVERT(datetime2(3), GETDATE())
+
+COMMIT TRANSACTION;
+GO
+
+CREATE PROCEDURE FGNN_19.Cancelar_pasajes_crucero(@idCrucero NUMERIC(18,0), @motivo VARCHAR(255))
+AS
+BEGIN TRANSACTION
+	
+	INSERT INTO FGNN_19.Pasajes_Cancelados(id_pasaje, fecha_cancelacion, motivo)
+	SELECT pasaje_codigo, CONVERT(datetime2(3), GETDATE()), @motivo
+	FROM Cabinas
+	WHERE crucero_id = @idCrucero
+
+COMMIT TRANSACTION;
+GO
+
+CREATE PROCEDURE FGNN_19.Reemplazar_crucero(@idCrucero NUMERIC(18,0))
+AS
+BEGIN TRANSACTION
+
+	DECLARE @idReemplazo NUMERIC(18,0)
+
+	SET @idReemplazo = FGNN_19.FN_Crucero_reemplazante(@idCrucero)
+
+	IF(@idReemplazo IS NULL)
+		BEGIN
+			RAISERROR('El crucero no puede ser reemplazado por ningun crucero existente, debe dar de alta uno nuevo para poder reemplazarlo',1,1)
+			RETURN -1
+		END
+
+	UPDATE Cabinas
+	SET crucero_id = @idReemplazo
+	WHERE crucero_id = @idCrucero AND (SELECT v.fecha_inicio
+		FROM Pasajes p
+			JOIN Viajes v ON v.codigo = p.viaje_codigo
+		WHERE p.id = pasaje_codigo) >= CONVERT(datetime2(3), GETDATE()) AND FGNN_19.FN_Pasaje_no_cancelado(pasaje_codigo) = 1
+
+	UPDATE Viajes
+	SET crucero_id = @idReemplazo
+	WHERE crucero_id = @idCrucero AND fecha_inicio >= CONVERT(datetime2(3), GETDATE()) AND EXISTS(SELECT 1 FROM Pasajes WHERE viaje_codigo = codigo AND FGNN_19.FN_Pasaje_no_cancelado(id) = 1)
+
+COMMIT TRANSACTION;
+GO
+
+CREATE PROCEDURE FGNN_19.Reeprogramar_viajes_crucero(@idCrucero NUMERIC(18,0), @cantidadDias INT)
+AS
+BEGIN TRANSACTION
+
+	UPDATE Viajes
+	SET fecha_inicio = DATEADD(DAY, @cantidadDias, fecha_inicio), fecha_fin = DATEADD(DAY, @cantidadDias, fecha_fin), fecha_fin_estimada = DATEADD(DAY, @cantidadDias, fecha_fin_estimada)
+	WHERE crucero_id = @idCrucero AND fecha_inicio >= CONVERT(datetime2(3), GETDATE()) AND EXISTS(SELECT 1 FROM Pasajes WHERE viaje_codigo = codigo AND FGNN_19.FN_Pasaje_no_cancelado(id) = 1)
+
+COMMIT TRANSACTION;
 GO
