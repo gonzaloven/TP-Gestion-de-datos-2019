@@ -102,16 +102,12 @@ IF EXISTS (SELECT * FROM sys.objects WHERE [name] = N'FGNN_19.TR_Recorridos_Afte
     DROP TRIGGER FGNN_19.TR_Recorridos_InsteadOfUpdate
 GO
 
-IF EXISTS (SELECT * FROM sys.objects WHERE [name] = N'FGNN_19.TR_Viajes_After_Insert' AND [type] = 'TR')
-    DROP TRIGGER FGNN_19.TR_Viajes_After_Insert
-GO
-
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.P_ValidarLogin') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
 	DROP PROCEDURE FGNN_19.P_ValidarLogin 
 GO
 
-IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.P_ViajesValidacion') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
-	DROP PROCEDURE FGNN_19.P_ViajesValidacion
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.P_Viaje_valido') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
+	DROP PROCEDURE FGNN_19.P_Viaje_valido
 GO
 
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.Baja_difinitiva_crucero') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
@@ -140,6 +136,10 @@ GO
 
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.TOP5_recorridos_mas_comprados') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
 	DROP PROCEDURE FGNN_19.TOP5_recorridos_mas_comprados
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.TOP5_recorridos_mas_cabinas_libres') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
+	DROP PROCEDURE FGNN_19.TOP5_recorridos_mas_cabinas_libres
 GO
 
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_19.FN_Calcular_costo_pasaje') AND type in (N'FN', N'IF', N'TF', N'FS', N'FT'))
@@ -558,7 +558,7 @@ BEGIN
 END;
 GO
 
-CREATE FUNCTION FGNN_19.FN_Calcular_costo_pasaje(@idPasaje NUMERIC(18,0))
+CREATE FUNCTION FGNN_19.FN_Calcular_costo_pasaje(@idViaje NUMERIC(18,0), @idCabina NUMERIC(18,0))
 RETURNS FLOAT
 AS
 BEGIN
@@ -568,14 +568,13 @@ BEGIN
 	DECLARE @PrecioBaseTotal FLOAT
 
 	SET @idRecorrido = (SELECT v.recorrido_codigo
-		FROM FGNN_19.Pasajes p
-			JOIN FGNN_19.Viajes v ON v.codigo = p.viaje_codigo
-		WHERE p.id = @idPasaje)
+		FROM FGNN_19.Viajes v
+		WHERE v.codigo = @idViaje)
 
 	SET @PorcAdicional = (SELECT tc.porcentaje_adicional
 		FROM FGNN_19.Cabinas c
 			JOIN FGNN_19.Tipos_Cabinas tc ON tc.id = c.tipo_id
-		WHERE c.pasaje_codigo = @idPasaje)
+			WHERE c.codigo = @idCabina)
 
 	SET @PrecioBaseTotal = FGNN_19.FN_Calcular_costo_base(@idRecorrido)
 
@@ -720,36 +719,34 @@ BEGIN TRANSACTION
 COMMIT TRANSACTION;
 GO
 
-CREATE PROCEDURE FGNN_19.P_ViajesValidacion 
+CREATE PROCEDURE FGNN_19.P_Viaje_valido
 @nombreCrucero VARCHAR(255), 
 @puertoDesde VARCHAR(255), 
 @puertoHasta VARCHAR(255),
 @fechaInicio DATETIME2(3),
 @fechaFin DATETIME2(3),
-@Resultado INT OUTPUT
+@Resultado BIT OUTPUT
 AS
 BEGIN
 	
 	IF @fechaFin < @fechaInicio
 	BEGIN
-		SET @Resultado = 1
+		SET @Resultado = 0
 	END
 	ELSE IF @puertoDesde = @puertoHasta
 	BEGIN
-		SET @Resultado = 1
+		SET @Resultado = 0
 	END
-	ELSE IF EXISTS(SELECT v1.codigo FROM FGNN_19.Viajes v1, FGNN_19.Cruceros c
-				  WHERE v1.crucero_id = c.id
-				  AND c.nombre = @nombreCrucero
-				  AND v1.fecha_inicio = @fechaInicio
-				  AND v1.fecha_fin = @fechaFin
-				  GROUP BY v1.codigo)
+	ELSE IF EXISTS(SELECT id
+				  FROM Cruceros
+				  WHERE nombre = @nombreCrucero
+					AND FGNN_19.FN_Tiene_fecha_libre(id, @fechaInicio, @fechaFin) = 0)
 	BEGIN
-		SET @Resultado = 1
+		SET @Resultado = 0
 	END
 	ELSE
 	BEGIN
-		SET @Resultado = 0
+		SET @Resultado = 1
 	END
 
 RETURN @Resultado	
@@ -855,10 +852,43 @@ BEGIN
 		JOIN FGNN_19.Puertos pl ON pl.id = r.puerto_hasta_id
 	WHERE c.fecha BETWEEN @fecha AND DATEADD(MONTH, 6, @fecha)
 	GROUP BY r.id, ps.descripcion, pl.descripcion
-	ORDER BY COUNT(*) DESC
+	ORDER BY [Cantidad de pasajes vendidos] DESC
 
 END
 GO
+
+CREATE PROCEDURE FGNN_19.TOP5_recorridos_mas_cabinas_libres(@fecha datetime2(3))
+AS
+BEGIN
+
+	SELECT TOP 5 ps.descripcion AS [Puerto de salida], pl.descripcion AS [Puerto de llegada],
+		COUNT(*) AS [Cantidad de cabinas libres]
+	FROM FGNN_19.Cabinas c
+		JOIN FGNN_19.Pasajes p ON p.id = c.pasaje_codigo
+		JOIN FGNN_19.Viajes v ON v.codigo = p.viaje_codigo
+		JOIN FGNN_19.Recorridos r ON r.codigo = v.recorrido_codigo
+		JOIN FGNN_19.Puertos ps ON ps.id = r.puerto_desde_id
+		JOIN FGNN_19.Puertos pl ON pl.id = r.puerto_hasta_id
+	WHERE c.estado = 0 AND v.fecha_fin BETWEEN @fecha AND DATEADD(MONTH, 6, @fecha)
+	GROUP BY r.codigo, ps.descripcion, pl.descripcion
+	ORDER BY [Cantidad de cabinas libres] DESC
+
+END
+GO
+
+CREATE PROCEDURE FGNN_19.TOP5_cruceros_mas_dias_fuera_servicio(@fecha datetime2(3))
+AS
+BEGIN
+
+	SELECT TOP 5 nombre, modelo, DATEDIFF(DAY, fecha_fuera_servicio, CONVERT(DATETIME2(3),GETDATE())) AS [Dias fuera de serivicio]
+	FROM FGNN_19.Cruceros 
+	WHERE fecha_reinicio_servicio < CONVERT(DATETIME2(3),GETDATE()) AND fecha_fuera_servicio BETWEEN @fecha AND DATEADD(MONTH, 6, @fecha)
+	GROUP BY id, nombre, modelo
+	ORDER BY [Dias fuera de serivicio] DESC
+
+END
+GO
+
 
 -- Triggers
 
@@ -889,37 +919,6 @@ WHERE id IN (SELECT i.id FROM INSERTED i, FGNN_19.Viajes v
 			 WHERE i.habilitado = 0
 			 AND i.id = v.recorrido_codigo
 			 AND v.fecha_inicio > CONVERT(datetime2(3), GETDATE()))
-
-COMMIT TRANSACTION;
-GO
-
-CREATE TRIGGER FGNN_19.TR_Viajes_After_Insert ON FGNN_19.Viajes
-AFTER INSERT 
-AS
-BEGIN TRANSACTION
-
-	IF EXISTS(SELECT 1
-		FROM INSERTED i
-		WHERE i.fecha_fin <= i.fecha_inicio)
-		BEGIN 
-			RAISERROR('ERROR: La fecha de partida debe ser anterior a la fecha de llegada',1,1)
-			ROLLBACK TRANSACTION
-		END
-
-	IF EXISTS(SELECT 1
-		FROM INSERTED i
-		WHERE FGNN_19.FN_Puede_cumplir_recorrido(i.crucero_id, i.recorrido_codigo) = 0)
-		BEGIN 
-			RAISERROR('ERROR: Se debe elegir un crucero que pueda cumplir con el recorrido',1,1)
-			ROLLBACK TRANSACTION
-		END
-
-	IF EXISTS(SELECT 1
-		FROM INSERTED i
-		WHERE FGNN_19.FN_Tiene_fecha_libre(i.crucero_id, i.fecha_inicio, i.fecha_fin) = 0)
-		BEGIN
-			RAISERROR('ERROR: Se debe elegir un crucero que no tenga viajes asignados para la fecha escogida',1,1)
-		END
 
 COMMIT TRANSACTION;
 GO
