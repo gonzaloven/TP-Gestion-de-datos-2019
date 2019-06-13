@@ -90,7 +90,7 @@ IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_19.Puert
     DROP TABLE FGNN_19.Puertos
 GO
 
-IF EXISTS (SELECT * FROM sys.views WHERE name = 'FGNN_19.vw_RolesYFuncionalidades' AND type = 'V') 
+IF EXISTS (SELECT * FROM sys.views WHERE name = 'vw_RolesYFuncionalidades' AND type = 'V') 
 	DROP VIEW FGNN_19.vw_RolesYFuncionalidades
 GO
 
@@ -100,6 +100,10 @@ GO
 
 IF EXISTS (SELECT * FROM sys.objects WHERE [name] = N'FGNN_19.TR_Recorridos_AfterUpdate' AND [type] = 'TR')
     DROP TRIGGER FGNN_19.TR_Recorridos_InsteadOfUpdate
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE [name] = N'FGNN_19.TR_Viajes_After_Insert' AND [type] = 'TR')
+    DROP TRIGGER FGNN_19.TR_Viajes_After_Insert
 GO
 
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.P_ValidarLogin') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
@@ -525,39 +529,6 @@ WHERE fr.funcionalidad_id = f.id
 AND fr.rol_id = r.id;
 GO
 
--- Triggers
-
-CREATE TRIGGER FGNN_19.TR_Roles_InsteadOfDelete ON FGNN_19.Roles
-INSTEAD OF DELETE
-AS
-
-BEGIN TRANSACTION
-
-UPDATE FGNN_19.Roles
-SET habilitado = 0
-WHERE id IN (SELECT id FROM DELETED)
-
-DELETE FROM FGNN_19.Usuarios_Roles
-WHERE rol_id IN (SELECT id FROM DELETED)
-
-COMMIT;
-GO
-
-CREATE TRIGGER FGNN_19.TR_Recorridos_AfterUpdate ON FGNN_19.Recorridos
-AFTER UPDATE
-AS
-BEGIN TRANSACTION
-
-UPDATE FGNN_19.Recorridos
-SET habilitado = 1
-WHERE id IN (SELECT i.id FROM INSERTED i, FGNN_19.Viajes v
-			 WHERE i.habilitado = 0
-			 AND i.id = v.recorrido_codigo
-			 AND v.fecha_inicio > CONVERT(datetime2(3), GETDATE()))
-
-COMMIT;
-GO
-
 -- Funciones
 
 CREATE FUNCTION FGNN_19.FN_Calcular_costo_base(@idRecorrido NUMERIC(18,0))
@@ -753,7 +724,7 @@ CREATE PROCEDURE FGNN_19.P_ViajesValidacion
 @fechaFin DATETIME2(3),
 @Resultado INT OUTPUT
 AS
-BEGIN TRANSACTION
+BEGIN
 	
 	IF @fechaFin < @fechaInicio
 	BEGIN
@@ -779,7 +750,7 @@ BEGIN TRANSACTION
 
 RETURN @Resultado	
 
-COMMIT TRANSACTION;
+END;
 GO
 
 CREATE PROCEDURE FGNN_19.Baja_difinitiva_crucero (@idCrucero numeric(18,0), @fechaBaja datetime2(3))
@@ -837,7 +808,7 @@ BEGIN TRANSACTION
 
 	IF(@idReemplazo IS NULL)
 		BEGIN
-			RAISERROR('El crucero no puede ser reemplazado por ningun crucero existente, debe dar de alta uno nuevo para poder reemplazarlo',1,1)
+			RAISERROR('ERROR: El crucero no puede ser reemplazado por ningun crucero existente, debe dar de alta uno nuevo para poder reemplazarlo',1,1)
 			RETURN -1
 		END
 
@@ -860,8 +831,72 @@ AS
 BEGIN TRANSACTION
 
 	UPDATE Viajes
-	SET fecha_inicio = DATEADD(DAY, @cantidadDias, fecha_inicio), fecha_fin = DATEADD(DAY, @cantidadDias, fecha_fin), fecha_fin_estimada = DATEADD(DAY, @cantidadDias, fecha_fin_estimada)
+	SET fecha_inicio = DATEADD(DAY, @cantidadDias, fecha_inicio), fecha_fin = DATEADD(DAY, @cantidadDias, fecha_fin)
 	WHERE crucero_id = @idCrucero AND fecha_inicio >= CONVERT(datetime2(3), GETDATE()) AND EXISTS(SELECT 1 FROM Pasajes WHERE viaje_codigo = codigo AND FGNN_19.FN_Pasaje_no_cancelado(id) = 1)
+
+COMMIT TRANSACTION;
+GO
+
+-- Triggers
+
+CREATE TRIGGER FGNN_19.TR_Roles_InsteadOfDelete ON FGNN_19.Roles
+INSTEAD OF DELETE
+AS
+
+BEGIN TRANSACTION
+
+UPDATE FGNN_19.Roles
+SET habilitado = 0
+WHERE id IN (SELECT id FROM DELETED)
+
+DELETE FROM FGNN_19.Usuarios_Roles
+WHERE rol_id IN (SELECT id FROM DELETED)
+
+COMMIT;
+GO
+
+CREATE TRIGGER FGNN_19.TR_Recorridos_AfterUpdate ON FGNN_19.Recorridos
+AFTER UPDATE
+AS
+BEGIN TRANSACTION
+
+UPDATE FGNN_19.Recorridos
+SET habilitado = 1
+WHERE id IN (SELECT i.id FROM INSERTED i, FGNN_19.Viajes v
+			 WHERE i.habilitado = 0
+			 AND i.id = v.recorrido_codigo
+			 AND v.fecha_inicio > CONVERT(datetime2(3), GETDATE()))
+
+COMMIT TRANSACTION;
+GO
+
+CREATE TRIGGER FGNN_19.TR_Viajes_After_Insert ON FGNN_19.Viajes
+AFTER INSERT 
+AS
+BEGIN TRANSACTION
+
+	IF EXISTS(SELECT 1
+		FROM INSERTED i
+		WHERE i.fecha_fin <= i.fecha_inicio)
+		BEGIN 
+			RAISERROR('ERROR: La fecha de partida debe ser anterior a la fecha de llegada',1,1)
+			ROLLBACK TRANSACTION
+		END
+
+	IF EXISTS(SELECT 1
+		FROM INSERTED i
+		WHERE FGNN_19.FN_Puede_cumplir_recorrido(i.crucero_id, i.recorrido_codigo) = 0)
+		BEGIN 
+			RAISERROR('ERROR: Se debe elegir un crucero que pueda cumplir con el recorrido',1,1)
+			ROLLBACK TRANSACTION
+		END
+
+	IF EXISTS(SELECT 1
+		FROM INSERTED i
+		WHERE FGNN_19.FN_Tiene_fecha_libre(i.crucero_id, i.fecha_inicio, i.fecha_fin) = 0)
+		BEGIN
+			RAISERROR('ERROR: Se debe elegir un crucero que no tenga viajes asignados para la fecha escogida',1,1)
+		END
 
 COMMIT TRANSACTION;
 GO
