@@ -142,6 +142,10 @@ IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.TOP5_
 	DROP PROCEDURE FGNN_19.TOP5_recorridos_mas_cabinas_libres
 GO
 
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.TOP5_cruceros_mas_dias_fuera_servicio') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
+	DROP PROCEDURE FGNN_19.TOP5_cruceros_mas_dias_fuera_servicio
+GO
+
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_19.FN_Calcular_costo_pasaje') AND type in (N'FN', N'IF', N'TF', N'FS', N'FT'))
 	DROP FUNCTION FGNN_19.FN_Calcular_costo_pasaje
 GO
