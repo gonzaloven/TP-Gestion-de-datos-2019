@@ -887,7 +887,7 @@ BEGIN
 	SELECT TOP 5 nombre, modelo, DATEDIFF(DAY, fecha_fuera_servicio, CONVERT(DATETIME2(3),GETDATE())) AS [Dias fuera de serivicio]
 	FROM FGNN_19.Cruceros 
 	WHERE fecha_reinicio_servicio < CONVERT(DATETIME2(3),GETDATE()) AND fecha_fuera_servicio BETWEEN @fecha AND DATEADD(MONTH, 6, @fecha)
-	GROUP BY id, nombre, modelo
+	GROUP BY id, nombre, modelo, fecha_fuera_servicio
 	ORDER BY [Dias fuera de serivicio] DESC
 
 END
