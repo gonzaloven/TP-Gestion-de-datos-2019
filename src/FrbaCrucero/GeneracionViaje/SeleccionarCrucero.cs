@@ -34,22 +34,22 @@ namespace FrbaCrucero.GeneracionViaje
             string valorDescripcion = (!String.IsNullOrEmpty(textBoxFiltroCrucero.Text)) ? textBoxFiltroCrucero.Text.Trim() : "";
 
             List<Crucero> cruceros = RepoCrucero.instancia.EncontrarCruceroNombre(valorDescripcion);
-            dataGridViewCruceros.DataSource = cruceros;
-            dataGridViewCruceros.Columns["id"].Visible = false;
-            dataGridViewCruceros.Columns["fabricante_id"].Visible = false;
-            dataGridViewCruceros.Columns["habilitado"].Visible = false;
-            dataGridViewCruceros.Columns["fecha_alta"].Visible = false;
-            dataGridViewCruceros.Columns["baja_servicio"].Visible = false;
-            dataGridViewCruceros.Columns["baja_vida_util"].Visible = false;
-            dataGridViewCruceros.Columns["fecha_baja_definitiva"].Visible = false;
-            dataGridViewCruceros.Columns["fecha_fuera_servicio"].Visible = false;
+            this.dataGridViewCruceros.DataSource = cruceros;
+            this.dataGridViewCruceros.Columns["id"].Visible = false;
+            this.dataGridViewCruceros.Columns["fabricante_id"].Visible = false;
+            this.dataGridViewCruceros.Columns["habilitado"].Visible = false;
+            this.dataGridViewCruceros.Columns["fecha_alta"].Visible = false;
+            this.dataGridViewCruceros.Columns["baja_servicio"].Visible = false;
+            this.dataGridViewCruceros.Columns["baja_vida_util"].Visible = false;
+            this.dataGridViewCruceros.Columns["fecha_baja_definitiva"].Visible = false;
+            this.dataGridViewCruceros.Columns["fecha_fuera_servicio"].Visible = false;
 
-            this.dataGridViewCrucero.Columns["nombre"].HeaderText = "Nombre";
-            this.dataGridViewCrucero.Columns["modelo"].HeaderText = "Modelo";
-            this.dataGridViewCrucero.Columns["tipo_servicio"].HeaderText = "Tipo de servicio";
-            this.dataGridViewCrucero.Columns["fecha_reinicio_servicio"].HeaderText = "Fecha reinicio servicio";
-            this.dataGridViewCrucero.Columns["cant_cabinas"].HeaderText = "Cantidad de cabinas";
-            dataGridViewCruceros.MultiSelect = false;
+            this.dataGridViewCruceros.Columns["nombre"].HeaderText = "Nombre";
+            this.dataGridViewCruceros.Columns["modelo"].HeaderText = "Modelo";
+            this.dataGridViewCruceros.Columns["tipo_servicio"].HeaderText = "Tipo de servicio";
+            this.dataGridViewCruceros.Columns["fecha_reinicio_servicio"].HeaderText = "Fecha reinicio servicio";
+            this.dataGridViewCruceros.Columns["cant_cabinas"].HeaderText = "Cantidad de cabinas";
+            this.dataGridViewCruceros.MultiSelect = false;
         }
 
         private void dataGridViewCruceros_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
