@@ -32,19 +32,17 @@ namespace FrbaCrucero.GeneracionViaje
         private void button2_Click(object sender, EventArgs e)
         {
             string valorDescripcion = (!String.IsNullOrEmpty(textBoxFiltroCrucero.Text)) ? textBoxFiltroCrucero.Text.Trim() : "";
-            string textHabilitado = Convert.ToString(comboBoxHabilitado.SelectedItem);
-            Boolean hayValorHabilitado = false;
-            Int16 valorHabilitado = 0;
 
-            if (!String.IsNullOrWhiteSpace(textHabilitado))
-            {
-                hayValorHabilitado = true;
-                valorHabilitado = (textHabilitado.Equals("Si")) ? (Int16)1 : (Int16)0;
-            }
-
-            List<Crucero> cruceros = RepoCrucero.instancia.EncontrarPorDescripcionYHabilitado(valorDescripcion, valorHabilitado, hayValorHabilitado);
+            List<Crucero> cruceros = RepoCrucero.instancia.EncontrarCruceroNombre(valorDescripcion);
             dataGridViewCruceros.DataSource = cruceros;
             dataGridViewCruceros.Columns["id"].Visible = false;
+            dataGridViewCruceros.Columns["fabricante_id"].Visible = false;
+            dataGridViewCruceros.Columns["habilitado"].Visible = false;
+            dataGridViewCruceros.Columns["fecha_alta"].Visible = false;
+            dataGridViewCruceros.Columns["baja_servicio"].Visible = false;
+            dataGridViewCruceros.Columns["baja_vida_util"].Visible = false;
+            dataGridViewCruceros.Columns["fecha_baja_definitiva"].Visible = false;
+            dataGridViewCruceros.Columns["fecha_fuera_servicio"].Visible = false;
             dataGridViewCruceros.MultiSelect = false;
         }
 
@@ -53,6 +51,5 @@ namespace FrbaCrucero.GeneracionViaje
             if (e.ColumnIndex == 0)
                 form.textBoxParam.Text = dataGridViewCruceros[2, e.RowIndex].Value.ToString();
         }
-
     }
 }

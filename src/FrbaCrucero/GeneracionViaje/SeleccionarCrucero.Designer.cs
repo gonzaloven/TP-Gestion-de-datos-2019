@@ -29,66 +29,45 @@
         private void InitializeComponent()
         {
             this.groupBoxFiltroCrucero = new System.Windows.Forms.GroupBox();
-            this.comboBoxHabilitado = new System.Windows.Forms.ComboBox();
-            this.labelHabilitado = new System.Windows.Forms.Label();
             this.labelFiltroCrucero = new System.Windows.Forms.Label();
             this.textBoxFiltroCrucero = new System.Windows.Forms.TextBox();
             this.dataGridViewCruceros = new System.Windows.Forms.DataGridView();
+            this.Seleccionar = new System.Windows.Forms.DataGridViewButtonColumn();
             this.buttonLimpiar = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
-            this.Seleccionar = new System.Windows.Forms.DataGridViewButtonColumn();
             this.groupBoxFiltroCrucero.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewCruceros)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBoxFiltroCrucero
             // 
-            this.groupBoxFiltroCrucero.Controls.Add(this.comboBoxHabilitado);
-            this.groupBoxFiltroCrucero.Controls.Add(this.labelHabilitado);
             this.groupBoxFiltroCrucero.Controls.Add(this.labelFiltroCrucero);
             this.groupBoxFiltroCrucero.Controls.Add(this.textBoxFiltroCrucero);
-            this.groupBoxFiltroCrucero.Location = new System.Drawing.Point(12, 12);
+            this.groupBoxFiltroCrucero.Location = new System.Drawing.Point(9, 10);
+            this.groupBoxFiltroCrucero.Margin = new System.Windows.Forms.Padding(2);
             this.groupBoxFiltroCrucero.Name = "groupBoxFiltroCrucero";
-            this.groupBoxFiltroCrucero.Size = new System.Drawing.Size(1048, 99);
+            this.groupBoxFiltroCrucero.Padding = new System.Windows.Forms.Padding(2);
+            this.groupBoxFiltroCrucero.Size = new System.Drawing.Size(470, 59);
             this.groupBoxFiltroCrucero.TabIndex = 0;
             this.groupBoxFiltroCrucero.TabStop = false;
             this.groupBoxFiltroCrucero.Text = "Filtro Crucero";
             // 
-            // comboBoxHabilitado
-            // 
-            this.comboBoxHabilitado.FormattingEnabled = true;
-            this.comboBoxHabilitado.Items.AddRange(new object[] {
-            "",
-            "Si",
-            "No"});
-            this.comboBoxHabilitado.Location = new System.Drawing.Point(97, 61);
-            this.comboBoxHabilitado.Name = "comboBoxHabilitado";
-            this.comboBoxHabilitado.Size = new System.Drawing.Size(141, 24);
-            this.comboBoxHabilitado.TabIndex = 8;
-            // 
-            // labelHabilitado
-            // 
-            this.labelHabilitado.AutoSize = true;
-            this.labelHabilitado.Location = new System.Drawing.Point(20, 61);
-            this.labelHabilitado.Name = "labelHabilitado";
-            this.labelHabilitado.Size = new System.Drawing.Size(71, 17);
-            this.labelHabilitado.TabIndex = 7;
-            this.labelHabilitado.Text = "Habilitado";
-            // 
             // labelFiltroCrucero
             // 
             this.labelFiltroCrucero.AutoSize = true;
-            this.labelFiltroCrucero.Location = new System.Drawing.Point(20, 29);
+            this.labelFiltroCrucero.Location = new System.Drawing.Point(15, 24);
+            this.labelFiltroCrucero.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelFiltroCrucero.Name = "labelFiltroCrucero";
-            this.labelFiltroCrucero.Size = new System.Drawing.Size(58, 17);
+            this.labelFiltroCrucero.Size = new System.Drawing.Size(44, 13);
             this.labelFiltroCrucero.TabIndex = 1;
             this.labelFiltroCrucero.Text = "Crucero";
             // 
             // textBoxFiltroCrucero
             // 
-            this.textBoxFiltroCrucero.Location = new System.Drawing.Point(97, 29);
+            this.textBoxFiltroCrucero.Location = new System.Drawing.Point(63, 24);
+            this.textBoxFiltroCrucero.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxFiltroCrucero.Name = "textBoxFiltroCrucero";
-            this.textBoxFiltroCrucero.Size = new System.Drawing.Size(141, 22);
+            this.textBoxFiltroCrucero.Size = new System.Drawing.Size(107, 20);
             this.textBoxFiltroCrucero.TabIndex = 0;
             // 
             // dataGridViewCruceros
@@ -96,32 +75,13 @@
             this.dataGridViewCruceros.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewCruceros.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Seleccionar});
-            this.dataGridViewCruceros.Location = new System.Drawing.Point(12, 162);
+            this.dataGridViewCruceros.Location = new System.Drawing.Point(7, 105);
+            this.dataGridViewCruceros.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridViewCruceros.Name = "dataGridViewCruceros";
             this.dataGridViewCruceros.RowTemplate.Height = 24;
-            this.dataGridViewCruceros.Size = new System.Drawing.Size(1048, 367);
+            this.dataGridViewCruceros.Size = new System.Drawing.Size(476, 198);
             this.dataGridViewCruceros.TabIndex = 1;
             this.dataGridViewCruceros.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridViewCruceros_CellMouseClick);
-            // 
-            // buttonLimpiar
-            // 
-            this.buttonLimpiar.Location = new System.Drawing.Point(35, 118);
-            this.buttonLimpiar.Name = "buttonLimpiar";
-            this.buttonLimpiar.Size = new System.Drawing.Size(86, 32);
-            this.buttonLimpiar.TabIndex = 2;
-            this.buttonLimpiar.Text = "Limpiar";
-            this.buttonLimpiar.UseVisualStyleBackColor = true;
-            this.buttonLimpiar.Click += new System.EventHandler(this.buttonLimpiar_Click);
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(956, 117);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(88, 35);
-            this.button2.TabIndex = 3;
-            this.button2.Text = "Buscar";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // Seleccionar
             // 
@@ -130,15 +90,38 @@
             this.Seleccionar.Text = "Seleccionar";
             this.Seleccionar.UseColumnTextForButtonValue = true;
             // 
+            // buttonLimpiar
+            // 
+            this.buttonLimpiar.Location = new System.Drawing.Point(9, 75);
+            this.buttonLimpiar.Margin = new System.Windows.Forms.Padding(2);
+            this.buttonLimpiar.Name = "buttonLimpiar";
+            this.buttonLimpiar.Size = new System.Drawing.Size(64, 26);
+            this.buttonLimpiar.TabIndex = 2;
+            this.buttonLimpiar.Text = "Limpiar";
+            this.buttonLimpiar.UseVisualStyleBackColor = true;
+            this.buttonLimpiar.Click += new System.EventHandler(this.buttonLimpiar_Click);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(413, 75);
+            this.button2.Margin = new System.Windows.Forms.Padding(2);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(66, 28);
+            this.button2.TabIndex = 3;
+            this.button2.Text = "Buscar";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // SeleccionarCrucero
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1072, 541);
+            this.ClientSize = new System.Drawing.Size(490, 312);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.buttonLimpiar);
             this.Controls.Add(this.dataGridViewCruceros);
             this.Controls.Add(this.groupBoxFiltroCrucero);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "SeleccionarCrucero";
             this.Text = "Seleccionar Crucero";
             this.groupBoxFiltroCrucero.ResumeLayout(false);
@@ -156,8 +139,6 @@
         private System.Windows.Forms.TextBox textBoxFiltroCrucero;
         private System.Windows.Forms.Button buttonLimpiar;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.ComboBox comboBoxHabilitado;
-        private System.Windows.Forms.Label labelHabilitado;
         private System.Windows.Forms.DataGridViewButtonColumn Seleccionar;
     }
 }
