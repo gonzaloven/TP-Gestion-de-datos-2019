@@ -29,7 +29,7 @@ namespace FrbaCrucero.AbmCrucero
             string valorDescripcion = (!String.IsNullOrEmpty(textBoxCrucero.Text)) ? textBoxCrucero.Text.Trim() : "";
             string textEstado = Convert.ToString(comboBoxEstado.SelectedItem);
             Int16 valorFueraServicio = -1;
-            string textModelo = null;
+            string textModelo = textBoxModelo.Text.Trim();
             string textServicio = Convert.ToString(comboBoxServicio.SelectedItem);
 
             if(textEstado.Equals("En servicio"))
@@ -37,19 +37,23 @@ namespace FrbaCrucero.AbmCrucero
             if(textEstado.Equals("Fuera de servicio"))
                 valorFueraServicio = (Int16)1;
 
-            if (!String.IsNullOrWhiteSpace(textBoxModelo.Text))
-                textModelo = textBoxModelo.Text.Trim();
-
+            
             List<Crucero> cruceros = RepoCrucero.instancia.EncontrarCruceroNombreEstadoModeloServicio(valorDescripcion, valorFueraServicio, textModelo, textServicio);
-            dataGridViewCrucero.DataSource = cruceros;
-            dataGridViewCrucero.Columns["id"].Visible = false;
-            dataGridViewCrucero.Columns["fabricante_id"].Visible = false;
-            dataGridViewCrucero.Columns["habilitado"].Visible = false;
-            dataGridViewCrucero.Columns["fecha_alta"].Visible = false;
-            dataGridViewCrucero.Columns["baja_servicio"].Visible = false;
-            dataGridViewCrucero.Columns["baja_vida_util"].Visible = false;
-            dataGridViewCrucero.Columns["fecha_baja_definitiva"].Visible = false;
-            dataGridViewCrucero.Columns["fecha_fuera_servicio"].Visible = false;
+            this.dataGridViewCrucero.DataSource = cruceros;
+            this.dataGridViewCrucero.Columns["id"].Visible = false;
+            this.dataGridViewCrucero.Columns["fabricante_id"].Visible = false;
+            this.dataGridViewCrucero.Columns["habilitado"].Visible = false;
+            this.dataGridViewCrucero.Columns["fecha_alta"].Visible = false;
+            this.dataGridViewCrucero.Columns["baja_servicio"].Visible = false;
+            this.dataGridViewCrucero.Columns["baja_vida_util"].Visible = false;
+            this.dataGridViewCrucero.Columns["fecha_baja_definitiva"].Visible = false;
+            this.dataGridViewCrucero.Columns["fecha_fuera_servicio"].Visible = false;
+
+            this.dataGridViewCrucero.Columns["nombre"].HeaderText = "Nombre";
+            this.dataGridViewCrucero.Columns["modelo"].HeaderText = "Modelo";
+            this.dataGridViewCrucero.Columns["tipo_servicio"].HeaderText = "Tipo de servicio";
+            this.dataGridViewCrucero.Columns["fecha_reinicio_servicio"].HeaderText = "Fecha reinicio servicio";
+            this.dataGridViewCrucero.Columns["cant_cabinas"].HeaderText = "Cantidad de cabinas";
             dataGridViewCrucero.MultiSelect = false;
 
         }

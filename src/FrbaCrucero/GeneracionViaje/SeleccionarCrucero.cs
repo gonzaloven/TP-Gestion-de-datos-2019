@@ -43,6 +43,12 @@ namespace FrbaCrucero.GeneracionViaje
             dataGridViewCruceros.Columns["baja_vida_util"].Visible = false;
             dataGridViewCruceros.Columns["fecha_baja_definitiva"].Visible = false;
             dataGridViewCruceros.Columns["fecha_fuera_servicio"].Visible = false;
+
+            this.dataGridViewCrucero.Columns["nombre"].HeaderText = "Nombre";
+            this.dataGridViewCrucero.Columns["modelo"].HeaderText = "Modelo";
+            this.dataGridViewCrucero.Columns["tipo_servicio"].HeaderText = "Tipo de servicio";
+            this.dataGridViewCrucero.Columns["fecha_reinicio_servicio"].HeaderText = "Fecha reinicio servicio";
+            this.dataGridViewCrucero.Columns["cant_cabinas"].HeaderText = "Cantidad de cabinas";
             dataGridViewCruceros.MultiSelect = false;
         }
 
