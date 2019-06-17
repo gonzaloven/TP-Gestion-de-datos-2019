@@ -40,14 +40,6 @@ namespace FrbaCrucero.AbmCrucero
             
             List<Crucero> cruceros = RepoCrucero.instancia.EncontrarCruceroNombreEstadoModeloServicio(valorDescripcion, valorFueraServicio, textModelo, textServicio);
             this.dataGridViewCrucero.DataSource = cruceros;
-            this.dataGridViewCrucero.Columns["id"].Visible = false;
-            this.dataGridViewCrucero.Columns["fabricante_id"].Visible = false;
-            this.dataGridViewCrucero.Columns["habilitado"].Visible = false;
-            this.dataGridViewCrucero.Columns["fecha_alta"].Visible = false;
-            this.dataGridViewCrucero.Columns["baja_servicio"].Visible = false;
-            this.dataGridViewCrucero.Columns["baja_vida_util"].Visible = false;
-            this.dataGridViewCrucero.Columns["fecha_baja_definitiva"].Visible = false;
-            this.dataGridViewCrucero.Columns["fecha_fuera_servicio"].Visible = false;
 
             this.dataGridViewCrucero.Columns["nombre"].HeaderText = "Nombre";
             this.dataGridViewCrucero.Columns["modelo"].HeaderText = "Modelo";

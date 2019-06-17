@@ -10,16 +10,16 @@ using System.Windows.Forms;
 
 namespace FrbaCrucero.AbmCrucero
 {
-    public partial class ModificarCrucero : Form
+    public partial class SeleccionarFecha : Form
     {
-        public ModificarCrucero()
+        ModificarCrucero form;
+        TextBox textBoxParam;
+
+        public SeleccionarFecha(ModificarCrucero form, TextBox textBoxParam)
         {
             InitializeComponent();
-            textBoxTipoServicio.ReadOnly = true;
-            textBoxFechaBajaDefinitiva.ReadOnly = true;
-            textBoxFechaFueraServicio.ReadOnly = true;
-            textBoxFechaReinicioServicio.ReadOnly = true;
-
+            this.form = form;
+            this.textBoxParam = textBoxParam;
         }
     }
 }
