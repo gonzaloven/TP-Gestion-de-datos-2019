@@ -49,13 +49,17 @@
             this.buttonSeleccionarFechaBajaDefinitiva = new System.Windows.Forms.Button();
             this.numericUpDownCantidadCabinas = new System.Windows.Forms.NumericUpDown();
             this.buttonGuardar = new System.Windows.Forms.Button();
+            this.buttonLimpiar = new System.Windows.Forms.Button();
+            this.buttonCancelar = new System.Windows.Forms.Button();
+            this.labelID = new System.Windows.Forms.Label();
+            this.textBoxID = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCantidadCabinas)).BeginInit();
             this.SuspendLayout();
             // 
             // labelNombre
             // 
             this.labelNombre.AutoSize = true;
-            this.labelNombre.Location = new System.Drawing.Point(37, 26);
+            this.labelNombre.Location = new System.Drawing.Point(37, 61);
             this.labelNombre.Name = "labelNombre";
             this.labelNombre.Size = new System.Drawing.Size(58, 17);
             this.labelNombre.TabIndex = 0;
@@ -63,7 +67,7 @@
             // 
             // textBoxNombre
             // 
-            this.textBoxNombre.Location = new System.Drawing.Point(143, 26);
+            this.textBoxNombre.Location = new System.Drawing.Point(101, 61);
             this.textBoxNombre.Name = "textBoxNombre";
             this.textBoxNombre.Size = new System.Drawing.Size(100, 22);
             this.textBoxNombre.TabIndex = 1;
@@ -71,7 +75,7 @@
             // labelModelo
             // 
             this.labelModelo.AutoSize = true;
-            this.labelModelo.Location = new System.Drawing.Point(37, 68);
+            this.labelModelo.Location = new System.Drawing.Point(37, 103);
             this.labelModelo.Name = "labelModelo";
             this.labelModelo.Size = new System.Drawing.Size(54, 17);
             this.labelModelo.TabIndex = 2;
@@ -79,7 +83,7 @@
             // 
             // textBoxModelo
             // 
-            this.textBoxModelo.Location = new System.Drawing.Point(143, 68);
+            this.textBoxModelo.Location = new System.Drawing.Point(101, 100);
             this.textBoxModelo.Name = "textBoxModelo";
             this.textBoxModelo.Size = new System.Drawing.Size(100, 22);
             this.textBoxModelo.TabIndex = 3;
@@ -87,7 +91,7 @@
             // labelTipoServicio
             // 
             this.labelTipoServicio.AutoSize = true;
-            this.labelTipoServicio.Location = new System.Drawing.Point(37, 106);
+            this.labelTipoServicio.Location = new System.Drawing.Point(37, 141);
             this.labelTipoServicio.Name = "labelTipoServicio";
             this.labelTipoServicio.Size = new System.Drawing.Size(88, 17);
             this.labelTipoServicio.TabIndex = 4;
@@ -96,7 +100,7 @@
             // labelBajaServicio
             // 
             this.labelBajaServicio.AutoSize = true;
-            this.labelBajaServicio.Location = new System.Drawing.Point(37, 142);
+            this.labelBajaServicio.Location = new System.Drawing.Point(37, 177);
             this.labelBajaServicio.Name = "labelBajaServicio";
             this.labelBajaServicio.Size = new System.Drawing.Size(88, 17);
             this.labelBajaServicio.TabIndex = 5;
@@ -104,7 +108,7 @@
             // 
             // textBoxTipoServicio
             // 
-            this.textBoxTipoServicio.Location = new System.Drawing.Point(143, 106);
+            this.textBoxTipoServicio.Location = new System.Drawing.Point(131, 141);
             this.textBoxTipoServicio.Name = "textBoxTipoServicio";
             this.textBoxTipoServicio.Size = new System.Drawing.Size(100, 22);
             this.textBoxTipoServicio.TabIndex = 6;
@@ -112,7 +116,7 @@
             // labelFechaFueraServicio
             // 
             this.labelFechaFueraServicio.AutoSize = true;
-            this.labelFechaFueraServicio.Location = new System.Drawing.Point(37, 181);
+            this.labelFechaFueraServicio.Location = new System.Drawing.Point(37, 216);
             this.labelFechaFueraServicio.Name = "labelFechaFueraServicio";
             this.labelFechaFueraServicio.Size = new System.Drawing.Size(156, 17);
             this.labelFechaFueraServicio.TabIndex = 8;
@@ -120,7 +124,7 @@
             // 
             // textBoxFechaFueraServicio
             // 
-            this.textBoxFechaFueraServicio.Location = new System.Drawing.Point(211, 181);
+            this.textBoxFechaFueraServicio.Location = new System.Drawing.Point(211, 216);
             this.textBoxFechaFueraServicio.Name = "textBoxFechaFueraServicio";
             this.textBoxFechaFueraServicio.Size = new System.Drawing.Size(100, 22);
             this.textBoxFechaFueraServicio.TabIndex = 9;
@@ -128,7 +132,7 @@
             // labelFechaReinicioServicio
             // 
             this.labelFechaReinicioServicio.AutoSize = true;
-            this.labelFechaReinicioServicio.Location = new System.Drawing.Point(37, 217);
+            this.labelFechaReinicioServicio.Location = new System.Drawing.Point(37, 252);
             this.labelFechaReinicioServicio.Name = "labelFechaReinicioServicio";
             this.labelFechaReinicioServicio.Size = new System.Drawing.Size(168, 17);
             this.labelFechaReinicioServicio.TabIndex = 10;
@@ -136,7 +140,7 @@
             // 
             // textBoxFechaReinicioServicio
             // 
-            this.textBoxFechaReinicioServicio.Location = new System.Drawing.Point(211, 217);
+            this.textBoxFechaReinicioServicio.Location = new System.Drawing.Point(211, 252);
             this.textBoxFechaReinicioServicio.Name = "textBoxFechaReinicioServicio";
             this.textBoxFechaReinicioServicio.Size = new System.Drawing.Size(100, 22);
             this.textBoxFechaReinicioServicio.TabIndex = 11;
@@ -144,7 +148,7 @@
             // labelFechaBajaDefinitiva
             // 
             this.labelFechaBajaDefinitiva.AutoSize = true;
-            this.labelFechaBajaDefinitiva.Location = new System.Drawing.Point(37, 251);
+            this.labelFechaBajaDefinitiva.Location = new System.Drawing.Point(37, 286);
             this.labelFechaBajaDefinitiva.Name = "labelFechaBajaDefinitiva";
             this.labelFechaBajaDefinitiva.Size = new System.Drawing.Size(138, 17);
             this.labelFechaBajaDefinitiva.TabIndex = 12;
@@ -152,7 +156,7 @@
             // 
             // textBoxFechaBajaDefinitiva
             // 
-            this.textBoxFechaBajaDefinitiva.Location = new System.Drawing.Point(211, 251);
+            this.textBoxFechaBajaDefinitiva.Location = new System.Drawing.Point(211, 286);
             this.textBoxFechaBajaDefinitiva.Name = "textBoxFechaBajaDefinitiva";
             this.textBoxFechaBajaDefinitiva.Size = new System.Drawing.Size(100, 22);
             this.textBoxFechaBajaDefinitiva.TabIndex = 13;
@@ -160,7 +164,7 @@
             // labelCantidadCabinas
             // 
             this.labelCantidadCabinas.AutoSize = true;
-            this.labelCantidadCabinas.Location = new System.Drawing.Point(37, 282);
+            this.labelCantidadCabinas.Location = new System.Drawing.Point(37, 317);
             this.labelCantidadCabinas.Name = "labelCantidadCabinas";
             this.labelCantidadCabinas.Size = new System.Drawing.Size(117, 17);
             this.labelCantidadCabinas.TabIndex = 14;
@@ -168,12 +172,13 @@
             // 
             // buttonSeleccionarTipoServicio
             // 
-            this.buttonSeleccionarTipoServicio.Location = new System.Drawing.Point(250, 106);
+            this.buttonSeleccionarTipoServicio.Location = new System.Drawing.Point(250, 141);
             this.buttonSeleccionarTipoServicio.Name = "buttonSeleccionarTipoServicio";
             this.buttonSeleccionarTipoServicio.Size = new System.Drawing.Size(93, 22);
             this.buttonSeleccionarTipoServicio.TabIndex = 16;
             this.buttonSeleccionarTipoServicio.Text = "Seleccionar";
             this.buttonSeleccionarTipoServicio.UseVisualStyleBackColor = true;
+            this.buttonSeleccionarTipoServicio.Click += new System.EventHandler(this.buttonSeleccionarTipoServicio_Click);
             // 
             // comboBoxBajaServicio
             // 
@@ -182,59 +187,103 @@
             "",
             "0",
             "1"});
-            this.comboBoxBajaServicio.Location = new System.Drawing.Point(143, 142);
+            this.comboBoxBajaServicio.Location = new System.Drawing.Point(131, 177);
             this.comboBoxBajaServicio.Name = "comboBoxBajaServicio";
             this.comboBoxBajaServicio.Size = new System.Drawing.Size(121, 24);
             this.comboBoxBajaServicio.TabIndex = 17;
             // 
             // buttonSeleccionarFechaFueraServicio
             // 
-            this.buttonSeleccionarFechaFueraServicio.Location = new System.Drawing.Point(318, 181);
+            this.buttonSeleccionarFechaFueraServicio.Location = new System.Drawing.Point(318, 216);
             this.buttonSeleccionarFechaFueraServicio.Name = "buttonSeleccionarFechaFueraServicio";
             this.buttonSeleccionarFechaFueraServicio.Size = new System.Drawing.Size(92, 23);
             this.buttonSeleccionarFechaFueraServicio.TabIndex = 18;
             this.buttonSeleccionarFechaFueraServicio.Text = "Seleccionar";
             this.buttonSeleccionarFechaFueraServicio.UseVisualStyleBackColor = true;
+            this.buttonSeleccionarFechaFueraServicio.Click += new System.EventHandler(this.buttonSeleccionarFechaFueraServicio_Click);
             // 
             // buttonSeleccionarFechaReinicioServicio
             // 
-            this.buttonSeleccionarFechaReinicioServicio.Location = new System.Drawing.Point(318, 217);
+            this.buttonSeleccionarFechaReinicioServicio.Location = new System.Drawing.Point(318, 252);
             this.buttonSeleccionarFechaReinicioServicio.Name = "buttonSeleccionarFechaReinicioServicio";
             this.buttonSeleccionarFechaReinicioServicio.Size = new System.Drawing.Size(92, 23);
             this.buttonSeleccionarFechaReinicioServicio.TabIndex = 19;
             this.buttonSeleccionarFechaReinicioServicio.Text = "Seleccionar";
             this.buttonSeleccionarFechaReinicioServicio.UseVisualStyleBackColor = true;
+            this.buttonSeleccionarFechaReinicioServicio.Click += new System.EventHandler(this.buttonSeleccionarFechaReinicioServicio_Click);
             // 
             // buttonSeleccionarFechaBajaDefinitiva
             // 
-            this.buttonSeleccionarFechaBajaDefinitiva.Location = new System.Drawing.Point(318, 251);
+            this.buttonSeleccionarFechaBajaDefinitiva.Location = new System.Drawing.Point(318, 286);
             this.buttonSeleccionarFechaBajaDefinitiva.Name = "buttonSeleccionarFechaBajaDefinitiva";
             this.buttonSeleccionarFechaBajaDefinitiva.Size = new System.Drawing.Size(92, 23);
             this.buttonSeleccionarFechaBajaDefinitiva.TabIndex = 20;
             this.buttonSeleccionarFechaBajaDefinitiva.Text = "Seleccionar";
             this.buttonSeleccionarFechaBajaDefinitiva.UseVisualStyleBackColor = true;
+            this.buttonSeleccionarFechaBajaDefinitiva.Click += new System.EventHandler(this.buttonSeleccionarFechaBajaDefinitiva_Click);
             // 
             // numericUpDownCantidadCabinas
             // 
-            this.numericUpDownCantidadCabinas.Location = new System.Drawing.Point(211, 282);
+            this.numericUpDownCantidadCabinas.Location = new System.Drawing.Point(211, 317);
             this.numericUpDownCantidadCabinas.Name = "numericUpDownCantidadCabinas";
             this.numericUpDownCantidadCabinas.Size = new System.Drawing.Size(120, 22);
             this.numericUpDownCantidadCabinas.TabIndex = 21;
             // 
             // buttonGuardar
             // 
-            this.buttonGuardar.Location = new System.Drawing.Point(40, 332);
+            this.buttonGuardar.Location = new System.Drawing.Point(145, 367);
             this.buttonGuardar.Name = "buttonGuardar";
             this.buttonGuardar.Size = new System.Drawing.Size(98, 30);
             this.buttonGuardar.TabIndex = 22;
             this.buttonGuardar.Text = "Guardar";
             this.buttonGuardar.UseVisualStyleBackColor = true;
+            this.buttonGuardar.Click += new System.EventHandler(this.buttonGuardar_Click);
+            // 
+            // buttonLimpiar
+            // 
+            this.buttonLimpiar.Location = new System.Drawing.Point(40, 367);
+            this.buttonLimpiar.Name = "buttonLimpiar";
+            this.buttonLimpiar.Size = new System.Drawing.Size(98, 30);
+            this.buttonLimpiar.TabIndex = 23;
+            this.buttonLimpiar.Text = "Limpiar";
+            this.buttonLimpiar.UseVisualStyleBackColor = true;
+            this.buttonLimpiar.Click += new System.EventHandler(this.buttonLimpiar_Click);
+            // 
+            // buttonCancelar
+            // 
+            this.buttonCancelar.Location = new System.Drawing.Point(339, 367);
+            this.buttonCancelar.Name = "buttonCancelar";
+            this.buttonCancelar.Size = new System.Drawing.Size(87, 30);
+            this.buttonCancelar.TabIndex = 24;
+            this.buttonCancelar.Text = "Cancelar";
+            this.buttonCancelar.UseVisualStyleBackColor = true;
+            this.buttonCancelar.Click += new System.EventHandler(this.buttonCancelar_Click);
+            // 
+            // labelID
+            // 
+            this.labelID.AutoSize = true;
+            this.labelID.Location = new System.Drawing.Point(40, 26);
+            this.labelID.Name = "labelID";
+            this.labelID.Size = new System.Drawing.Size(21, 17);
+            this.labelID.TabIndex = 25;
+            this.labelID.Text = "ID";
+            // 
+            // textBoxID
+            // 
+            this.textBoxID.Location = new System.Drawing.Point(67, 26);
+            this.textBoxID.Name = "textBoxID";
+            this.textBoxID.Size = new System.Drawing.Size(100, 22);
+            this.textBoxID.TabIndex = 26;
             // 
             // ModificarCrucero
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(650, 398);
+            this.ClientSize = new System.Drawing.Size(456, 451);
+            this.Controls.Add(this.textBoxID);
+            this.Controls.Add(this.labelID);
+            this.Controls.Add(this.buttonCancelar);
+            this.Controls.Add(this.buttonLimpiar);
             this.Controls.Add(this.buttonGuardar);
             this.Controls.Add(this.numericUpDownCantidadCabinas);
             this.Controls.Add(this.buttonSeleccionarFechaBajaDefinitiva);
@@ -287,5 +336,9 @@
         private System.Windows.Forms.Button buttonSeleccionarFechaBajaDefinitiva;
         private System.Windows.Forms.NumericUpDown numericUpDownCantidadCabinas;
         private System.Windows.Forms.Button buttonGuardar;
+        private System.Windows.Forms.Button buttonLimpiar;
+        private System.Windows.Forms.Button buttonCancelar;
+        private System.Windows.Forms.Label labelID;
+        private System.Windows.Forms.TextBox textBoxID;
     }
 }

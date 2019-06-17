@@ -26,28 +26,7 @@ namespace FrbaCrucero.AbmCrucero
 
         private void buttonBuscar_Click(object sender, EventArgs e)
         {
-            string valorDescripcion = (!String.IsNullOrEmpty(textBoxCrucero.Text)) ? textBoxCrucero.Text.Trim() : "";
-            string textEstado = Convert.ToString(comboBoxEstado.SelectedItem);
-            Int16 valorFueraServicio = -1;
-            string textModelo = textBoxModelo.Text.Trim();
-            string textServicio = Convert.ToString(comboBoxServicio.SelectedItem);
-
-            if(textEstado.Equals("En servicio"))
-                valorFueraServicio = (Int16)0;
-            if(textEstado.Equals("Fuera de servicio"))
-                valorFueraServicio = (Int16)1;
-
-            
-            List<Crucero> cruceros = RepoCrucero.instancia.EncontrarCruceroNombreEstadoModeloServicio(valorDescripcion, valorFueraServicio, textModelo, textServicio);
-            this.dataGridViewCrucero.DataSource = cruceros;
-
-            this.dataGridViewCrucero.Columns["nombre"].HeaderText = "Nombre";
-            this.dataGridViewCrucero.Columns["modelo"].HeaderText = "Modelo";
-            this.dataGridViewCrucero.Columns["tipo_servicio"].HeaderText = "Tipo de servicio";
-            this.dataGridViewCrucero.Columns["fecha_reinicio_servicio"].HeaderText = "Fecha reinicio servicio";
-            this.dataGridViewCrucero.Columns["cant_cabinas"].HeaderText = "Cantidad de cabinas";
-            dataGridViewCrucero.MultiSelect = false;
-
+            this.buscar();
         }
 
         private void limpiarFiltros()
@@ -60,14 +39,42 @@ namespace FrbaCrucero.AbmCrucero
         {
             if (e.ColumnIndex == 0)
             {
-                ModificarCrucero modificarCrucero = new ModificarCrucero();
+                String id = dataGridViewCrucero[2, e.RowIndex].Value.ToString();
+                int fila = e.RowIndex;
+                DataGridView tablaCruceros = dataGridViewCrucero;
+                ModificarCrucero modificarCrucero = new ModificarCrucero(this, id, tablaCruceros, fila);
                 modificarCrucero.Show();
             }
-            else
+            else if(e.ColumnIndex == 1)
             {
                 EliminarCrucero eliminarCrucero = new EliminarCrucero();
                 eliminarCrucero.Show();
             }
+        }
+
+        public void buscar()
+        {
+            string valorDescripcion = (!String.IsNullOrEmpty(textBoxCrucero.Text)) ? textBoxCrucero.Text.Trim() : "";
+            string textEstado = Convert.ToString(comboBoxEstado.SelectedItem);
+            Int16 valorFueraServicio = -1;
+            string textModelo = textBoxModelo.Text.Trim();
+            string textServicio = Convert.ToString(comboBoxServicio.SelectedItem);
+
+            if (textEstado.Equals("En servicio"))
+                valorFueraServicio = (Int16)0;
+            if (textEstado.Equals("Fuera de servicio"))
+                valorFueraServicio = (Int16)1;
+
+
+            List<Crucero> cruceros = RepoCrucero.instancia.EncontrarCruceroNombreEstadoModeloServicio(valorDescripcion, valorFueraServicio, textModelo, textServicio);
+            this.dataGridViewCrucero.DataSource = cruceros;
+
+            this.dataGridViewCrucero.Columns["nombre"].HeaderText = "Nombre";
+            this.dataGridViewCrucero.Columns["modelo"].HeaderText = "Modelo";
+            this.dataGridViewCrucero.Columns["tipo_servicio"].HeaderText = "Tipo de servicio";
+            this.dataGridViewCrucero.Columns["fecha_reinicio_servicio"].HeaderText = "Fecha reinicio servicio";
+            this.dataGridViewCrucero.Columns["cant_cabinas"].HeaderText = "Cantidad de cabinas";
+            dataGridViewCrucero.MultiSelect = false;
         }
     }
 }

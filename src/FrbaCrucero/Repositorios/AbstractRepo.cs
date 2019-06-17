@@ -35,7 +35,14 @@ namespace FrbaCrucero.Repositorios
 
             foreach (string key in parametros.Keys) 
             {
-                cmd.Parameters.Add(new SqlParameter(key, parametros[key]));
+                if (parametros[key] != null)
+                {
+                    cmd.Parameters.Add(new SqlParameter(key, parametros[key]));
+                }
+                else
+                {
+                    cmd.Parameters.Add(new SqlParameter(key, DBNull.Value));
+                }
             }
 
             cmd.Parameters.Add(new SqlParameter("Id", id));

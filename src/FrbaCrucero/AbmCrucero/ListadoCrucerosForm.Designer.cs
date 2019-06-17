@@ -38,10 +38,10 @@
             this.comboBoxServicio = new System.Windows.Forms.ComboBox();
             this.labelServicio = new System.Windows.Forms.Label();
             this.dataGridViewCrucero = new System.Windows.Forms.DataGridView();
-            this.buttonLimpiar = new System.Windows.Forms.Button();
-            this.buttonBuscar = new System.Windows.Forms.Button();
             this.Modificar = new System.Windows.Forms.DataGridViewButtonColumn();
             this.Eliminar = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.buttonLimpiar = new System.Windows.Forms.Button();
+            this.buttonBuscar = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewCrucero)).BeginInit();
             this.SuspendLayout();
@@ -57,10 +57,10 @@
             this.groupBox1.Controls.Add(this.comboBoxServicio);
             this.groupBox1.Controls.Add(this.labelServicio);
             this.groupBox1.Location = new System.Drawing.Point(16, 0);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.groupBox1.Size = new System.Drawing.Size(587, 145);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
+            this.groupBox1.Size = new System.Drawing.Size(1061, 145);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Filtros de búsqueda";
@@ -73,7 +73,7 @@
             "En servicio",
             "Fuera de servicio"});
             this.comboBoxEstado.Location = new System.Drawing.Point(389, 31);
-            this.comboBoxEstado.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.comboBoxEstado.Margin = new System.Windows.Forms.Padding(4);
             this.comboBoxEstado.Name = "comboBoxEstado";
             this.comboBoxEstado.Size = new System.Drawing.Size(160, 24);
             this.comboBoxEstado.TabIndex = 7;
@@ -91,7 +91,7 @@
             // textBoxCrucero
             // 
             this.textBoxCrucero.Location = new System.Drawing.Point(84, 32);
-            this.textBoxCrucero.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBoxCrucero.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxCrucero.Name = "textBoxCrucero";
             this.textBoxCrucero.Size = new System.Drawing.Size(132, 22);
             this.textBoxCrucero.TabIndex = 2;
@@ -109,7 +109,7 @@
             // textBoxModelo
             // 
             this.textBoxModelo.Location = new System.Drawing.Point(84, 91);
-            this.textBoxModelo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBoxModelo.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxModelo.Name = "textBoxModelo";
             this.textBoxModelo.Size = new System.Drawing.Size(132, 22);
             this.textBoxModelo.TabIndex = 2;
@@ -132,7 +132,7 @@
             "Premium",
             "Estandar"});
             this.comboBoxServicio.Location = new System.Drawing.Point(389, 90);
-            this.comboBoxServicio.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.comboBoxServicio.Margin = new System.Windows.Forms.Padding(4);
             this.comboBoxServicio.Name = "comboBoxServicio";
             this.comboBoxServicio.Size = new System.Drawing.Size(160, 24);
             this.comboBoxServicio.TabIndex = 7;
@@ -155,34 +155,12 @@
             this.Modificar,
             this.Eliminar});
             this.dataGridViewCrucero.Location = new System.Drawing.Point(16, 188);
-            this.dataGridViewCrucero.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dataGridViewCrucero.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridViewCrucero.Name = "dataGridViewCrucero";
             this.dataGridViewCrucero.ReadOnly = true;
-            this.dataGridViewCrucero.Size = new System.Drawing.Size(587, 293);
+            this.dataGridViewCrucero.Size = new System.Drawing.Size(1061, 293);
             this.dataGridViewCrucero.TabIndex = 3;
             this.dataGridViewCrucero.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewCrucero_CellContentClick);
-            // 
-            // buttonLimpiar
-            // 
-            this.buttonLimpiar.Location = new System.Drawing.Point(16, 153);
-            this.buttonLimpiar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.buttonLimpiar.Name = "buttonLimpiar";
-            this.buttonLimpiar.Size = new System.Drawing.Size(100, 28);
-            this.buttonLimpiar.TabIndex = 5;
-            this.buttonLimpiar.Text = "Limpiar";
-            this.buttonLimpiar.UseVisualStyleBackColor = true;
-            this.buttonLimpiar.Click += new System.EventHandler(this.buttonLimpiar_Click);
-            // 
-            // buttonBuscar
-            // 
-            this.buttonBuscar.Location = new System.Drawing.Point(503, 153);
-            this.buttonBuscar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.buttonBuscar.Name = "buttonBuscar";
-            this.buttonBuscar.Size = new System.Drawing.Size(100, 28);
-            this.buttonBuscar.TabIndex = 6;
-            this.buttonBuscar.Text = "Buscar";
-            this.buttonBuscar.UseVisualStyleBackColor = true;
-            this.buttonBuscar.Click += new System.EventHandler(this.buttonBuscar_Click);
             // 
             // Modificar
             // 
@@ -200,11 +178,33 @@
             this.Eliminar.Text = "Eliminar";
             this.Eliminar.UseColumnTextForButtonValue = true;
             // 
+            // buttonLimpiar
+            // 
+            this.buttonLimpiar.Location = new System.Drawing.Point(16, 153);
+            this.buttonLimpiar.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonLimpiar.Name = "buttonLimpiar";
+            this.buttonLimpiar.Size = new System.Drawing.Size(100, 28);
+            this.buttonLimpiar.TabIndex = 5;
+            this.buttonLimpiar.Text = "Limpiar";
+            this.buttonLimpiar.UseVisualStyleBackColor = true;
+            this.buttonLimpiar.Click += new System.EventHandler(this.buttonLimpiar_Click);
+            // 
+            // buttonBuscar
+            // 
+            this.buttonBuscar.Location = new System.Drawing.Point(977, 152);
+            this.buttonBuscar.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonBuscar.Name = "buttonBuscar";
+            this.buttonBuscar.Size = new System.Drawing.Size(100, 28);
+            this.buttonBuscar.TabIndex = 6;
+            this.buttonBuscar.Text = "Buscar";
+            this.buttonBuscar.UseVisualStyleBackColor = true;
+            this.buttonBuscar.Click += new System.EventHandler(this.buttonBuscar_Click);
+            // 
             // ListadoCrucerosForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(621, 497);
+            this.ClientSize = new System.Drawing.Size(1090, 497);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.dataGridViewCrucero);
             this.Controls.Add(this.buttonBuscar);

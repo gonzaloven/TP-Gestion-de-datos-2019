@@ -70,6 +70,12 @@
     <Compile Include="AbmCrucero\SeleccionarFecha.Designer.cs">
       <DependentUpon>SeleccionarFecha.cs</DependentUpon>
     </Compile>
+    <Compile Include="AbmCrucero\SeleccionarTipoServicio.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmCrucero\SeleccionarTipoServicio.Designer.cs">
+      <DependentUpon>SeleccionarTipoServicio.cs</DependentUpon>
+    </Compile>
     <Compile Include="AbmRecorrido\ListadoRecorridoForm.cs">
       <SubType>Form</SubType>
     </Compile>
