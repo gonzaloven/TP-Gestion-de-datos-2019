@@ -35,9 +35,11 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabelRecorrido = new System.Windows.Forms.ToolStripLabel();
             this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
-            this.toolABMRolesLabel2 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
+            this.toolABMRolesLabel2 = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripLabel4 = new System.Windows.Forms.ToolStripLabel();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -60,7 +62,9 @@
             this.toolStripSeparator1,
             this.toolStripLabel2,
             this.toolStripSeparator3,
-            this.toolStripLabel3});
+            this.toolStripLabel3,
+            this.toolStripSeparator4,
+            this.toolStripLabel4});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(807, 25);
@@ -95,11 +99,6 @@
             this.toolStripLabel2.Text = "Generar Viaje";
             this.toolStripLabel2.Click += new System.EventHandler(this.toolStripLabel2_Click);
             // 
-            // toolABMRolesLabel2
-            // 
-            this.toolABMRolesLabel2.Name = "toolABMRolesLabel2";
-            this.toolABMRolesLabel2.Size = new System.Drawing.Size(23, 23);
-            // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
@@ -111,6 +110,23 @@
             this.toolStripLabel3.Size = new System.Drawing.Size(49, 22);
             this.toolStripLabel3.Text = "Crucero";
             this.toolStripLabel3.Click += new System.EventHandler(this.toolStripLabel3_Click);
+            // 
+            // toolABMRolesLabel2
+            // 
+            this.toolABMRolesLabel2.Name = "toolABMRolesLabel2";
+            this.toolABMRolesLabel2.Size = new System.Drawing.Size(23, 23);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripLabel4
+            // 
+            this.toolStripLabel4.Name = "toolStripLabel4";
+            this.toolStripLabel4.Size = new System.Drawing.Size(104, 22);
+            this.toolStripLabel4.Text = "Listado estadistico";
+            this.toolStripLabel4.Click += new System.EventHandler(this.toolStripLabel4_Click);
             // 
             // MenuPrincipal
             // 
@@ -140,6 +156,8 @@
         private System.Windows.Forms.ToolStripLabel toolStripLabel2;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripLabel toolStripLabel3;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel4;
     }
 }
 

@@ -26,12 +26,12 @@ IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_19.Pasaj
     DROP TABLE FGNN_19.Pasajes
 GO
 
-IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_19.Compras'))
-    DROP TABLE FGNN_19.Compras
-GO
-
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_19.Viajes'))
     DROP TABLE FGNN_19.Viajes
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_19.Compras'))
+    DROP TABLE FGNN_19.Compras
 GO
 
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_19.Recorridos'))
@@ -104,6 +104,10 @@ GO
 
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.P_ViajesValidacion') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
 	DROP PROCEDURE FGNN_19.P_ViajesValidacion
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.TOP5_recorridos_mas_comprados') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
+	DROP PROCEDURE FGNN_19.TOP5_recorridos_mas_comprados
 GO
 
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_19.FN_Calcular_costo_pasaje') AND type in (N'FN', N'IF', N'TF', N'FS', N'FT'))
@@ -241,6 +245,16 @@ CREATE TABLE [FGNN_19].[Recorridos] (
 );
 GO
 
+CREATE TABLE [FGNN_19].[Compras] (
+	[codigo] NUMERIC(18, 0) IDENTITY(1, 1),
+	[codigo_pasaje] NUMERIC(18,0),
+	[metodo_pago] NUMERIC(18, 0),
+	[fecha] DATETIME2(3) NOT NULL,
+	PRIMARY KEY ([codigo]),
+	FOREIGN KEY (metodo_pago) REFERENCES FGNN_19.Metodos_Pago(id)
+);
+GO
+
 CREATE TABLE [FGNN_19].[Viajes] (
 	[codigo] NUMERIC(18, 0) IDENTITY(1, 1),
 	[crucero_id] NUMERIC(18, 0),
@@ -254,22 +268,12 @@ CREATE TABLE [FGNN_19].[Viajes] (
 );
 GO
 
-CREATE TABLE [FGNN_19].[Compras] (
-	[codigo] NUMERIC(18, 0) IDENTITY(1, 1),
-	[metodo_pago] NUMERIC(18, 0),
-	[fecha] DATETIME2(3) NOT NULL,
-	PRIMARY KEY ([codigo]),
-	FOREIGN KEY (metodo_pago) REFERENCES FGNN_19.Metodos_Pago(id)
-);
-GO
-
 CREATE TABLE [FGNN_19].[Pasajes] (
 	[id] NUMERIC(18, 0) IDENTITY(1, 1),
 	[reserva_codigo] NUMERIC(18, 0),
 	[cliente_id] NUMERIC(18, 0),
 	[compra_codigo] NUMERIC(18, 0),
 	[viaje_codigo] NUMERIC(18, 0),
-	[fecha_compra] DATETIME2(3),
 	[precio] FLOAT,
 	[codigo] NUMERIC(18,0)
 	PRIMARY KEY ([id]),
@@ -369,9 +373,14 @@ AND c.fabricante_id = f.id
 AND r.codigo = CONVERT(VARCHAR,M.RECORRIDO_CODIGO)
 GROUP BY c.id, r.id, m.FECHA_SALIDA, m.FECHA_LLEGADA, m.FECHA_LLEGADA_ESTIMADA
 
-INSERT INTO FGNN_19.Pasajes(reserva_codigo, cliente_id, viaje_codigo, fecha_compra, precio, codigo)
-SELECT m.RESERVA_CODIGO, c.id, v.codigo, m.PASAJE_FECHA_COMPRA, m.PASAJE_PRECIO, m.PASAJE_CODIGO
-FROM gd_esquema.Maestra m, FGNN_19.Clientes c, FGNN_19.Viajes v, FGNN_19.Cruceros cru, FGNN_19.Fabricantes f, FGNN_19.Recorridos r, FGNN_19.Puertos pd, FGNN_19.Puertos ph
+INSERT INTO FGNN_19.Compras(codigo_pasaje, fecha)
+SELECT m.PASAJE_CODIGO, m.PASAJE_FECHA_COMPRA
+FROM gd_esquema.Maestra m
+WHERE m.PASAJE_CODIGO IS NOT NULL
+
+INSERT INTO FGNN_19.Pasajes(reserva_codigo, cliente_id, compra_codigo, viaje_codigo, precio, codigo)
+SELECT m.RESERVA_CODIGO, c.id, co.codigo, v.codigo, m.PASAJE_PRECIO, m.PASAJE_CODIGO
+FROM gd_esquema.Maestra m, FGNN_19.Clientes c, FGNN_19.Viajes v, FGNN_19.Cruceros cru, FGNN_19.Fabricantes f, FGNN_19.Recorridos r, FGNN_19.Puertos pd, FGNN_19.Puertos ph, FGNN_19.Compras co
 WHERE m.CLI_APELLIDO = c.apellido
 AND m.CLI_DIRECCION = c.direccion
 AND m.CLI_DNI = c.dni
@@ -390,7 +399,8 @@ AND r.puerto_hasta_id = ph.id
 AND pd.descripcion = m.PUERTO_DESDE
 AND ph.descripcion = m.PUERTO_HASTA
 AND v.recorrido_codigo = r.id
-GROUP BY m.RESERVA_CODIGO, c.id, v.codigo, m.PASAJE_FECHA_COMPRA, m.PASAJE_PRECIO, m.PASAJE_CODIGO
+AND co.codigo_pasaje = m.PASAJE_CODIGO
+GROUP BY m.RESERVA_CODIGO, c.id, co.codigo, v.codigo, m.PASAJE_PRECIO, m.PASAJE_CODIGO
 
 INSERT INTO FGNN_19.Cabinas(crucero_id, numero, piso, tipo_id, pasaje_codigo)
 SELECT cru.id, m.CABINA_NRO, m.CABINA_PISO, tc.id, p.id
@@ -576,7 +586,48 @@ RETURN @Resultado
 END;
 GO
 
+CREATE PROCEDURE FGNN_19.TOP5_recorridos_mas_comprados(@fecha datetime2(3))
+AS
+BEGIN
+
+	SELECT TOP 5 ps.descripcion AS [Puerto de salida],
+		pl.descripcion [Puerto de llegada], COUNT(*) AS [Cantidad de pasajes vendidos]
+	FROM FGNN_19.Pasajes p
+		JOIN FGNN_19.Viajes v ON v.codigo = p.viaje_codigo
+		JOIN FGNN_19.Recorridos r ON r.id = v.recorrido_codigo
+		JOIN FGNN_19.Compras c ON c.codigo = p.compra_codigo
+		JOIN FGNN_19.Puertos ps ON ps.id = r.puerto_desde_id
+		JOIN FGNN_19.Puertos pl ON pl.id = r.puerto_hasta_id
+	WHERE c.fecha BETWEEN @fecha AND DATEADD(MONTH, 6, @fecha)
+	GROUP BY r.id, ps.descripcion, pl.descripcion
+	ORDER BY [Cantidad de pasajes vendidos] DESC
+
+END;
+GO
+
 -- Funciones
+CREATE FUNCTION FGNN_19.FN_Calcular_costo_base (@idRecorrido NUMERIC(18,0))
+RETURNS FLOAT
+AS
+
+BEGIN
+
+	DECLARE @PrecioBaseTotal FLOAT
+
+	SELECT @PrecioBaseTotal = SUM(r.precio_base + FGNN_19.FN_Calcular_costo_base(rr.recorrido_tramo))
+	FROM FGNN_19.Recorridos r, FGNN_19.Recorrido_X_Recorrido rr
+	WHERE r.id = @idRecorrido
+	AND r.id = rr.recorrido_total
+
+	IF @PrecioBaseTotal IS NULL
+	BEGIN
+		SET @PrecioBaseTotal = (SELECT r.precio_base FROM FGNN_19.Recorridos r WHERE r.id = @idRecorrido)
+	END
+
+	RETURN @PrecioBaseTotal
+
+END;
+GO
 
 CREATE FUNCTION FGNN_19.FN_Calcular_costo_pasaje (@idRecorrido NUMERIC(18,0), @codigoCabina NUMERIC(18,0))
 RETURNS FLOAT
@@ -602,25 +653,3 @@ RETURN @PrecioTotal
 END;
 GO
 
-CREATE FUNCTION FGNN_19.FN_Calcular_costo_base (@idRecorrido NUMERIC(18,0))
-RETURNS FLOAT
-AS
-
-BEGIN
-
-	DECLARE @PrecioBaseTotal FLOAT
-
-	SELECT @PrecioBaseTotal = SUM(r.precio_base + FGNN_19.FN_Calcular_costo_base(rr.recorrido_tramo))
-	FROM FGNN_19.Recorridos r, FGNN_19.Recorrido_X_Recorrido rr
-	WHERE r.id = @idRecorrido
-	AND r.id = rr.recorrido_total
-
-	IF @PrecioBaseTotal IS NULL
-	BEGIN
-		SET @PrecioBaseTotal = (SELECT r.precio_base FROM FGNN_19.Recorridos r WHERE r.id = @idRecorrido)
-	END
-
-	RETURN @PrecioBaseTotal
-
-END;
-GO

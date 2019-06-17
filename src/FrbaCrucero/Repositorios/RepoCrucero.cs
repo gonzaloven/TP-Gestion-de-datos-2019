@@ -52,7 +52,7 @@ namespace FrbaCrucero.Repositorios
 
         public List<Crucero> EncontrarCruceroNombre(string nombre)
         {
-            string sqlQuery = "SELECT * FROM " + nombreTabla + " WHERE nombre LIKE @DescripcionPatron";
+            string sqlQuery = "SELECT * FROM " + nombreTabla + " WHERE nombre LIKE @DescripcionPatron AND baja_vida_util = 0";
             SqlCommand cmd = new SqlCommand(sqlQuery);
             cmd.Parameters.Add(new SqlParameter("DescripcionPatron", "%" + nombre + "%"));
             DataTable tabla = conexionDB.obtenerData(cmd);
