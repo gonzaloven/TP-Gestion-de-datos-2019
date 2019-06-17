@@ -63,5 +63,19 @@ namespace FrbaCrucero.AbmCrucero
             textBoxCrucero.Clear();
             comboBoxEstado.SelectedIndex = comboBoxEstado.FindStringExact("");
         }
+
+        private void dataGridViewCrucero_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == 0)
+            {
+                ModificarCrucero modificarCrucero = new ModificarCrucero();
+                modificarCrucero.Show();
+            }
+            else
+            {
+                EliminarCrucero eliminarCrucero = new EliminarCrucero();
+                eliminarCrucero.Show();
+            }
+        }
     }
 }
