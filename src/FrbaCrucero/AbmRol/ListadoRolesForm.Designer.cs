@@ -34,8 +34,11 @@
             this.textBoxRol = new System.Windows.Forms.TextBox();
             this.labelRol = new System.Windows.Forms.Label();
             this.dataGridViewRoles = new System.Windows.Forms.DataGridView();
+            this.buttonEliminar = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.buttonModificar = new System.Windows.Forms.DataGridViewButtonColumn();
             this.buttonLimpiar = new System.Windows.Forms.Button();
             this.buttonBuscar = new System.Windows.Forms.Button();
+            this.buttonNuevo = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewRoles)).BeginInit();
             this.SuspendLayout();
@@ -46,7 +49,7 @@
             this.groupBox1.Controls.Add(this.labelHabilitado);
             this.groupBox1.Controls.Add(this.textBoxRol);
             this.groupBox1.Controls.Add(this.labelRol);
-            this.groupBox1.Location = new System.Drawing.Point(0, 0);
+            this.groupBox1.Location = new System.Drawing.Point(0, 8);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(389, 76);
             this.groupBox1.TabIndex = 0;
@@ -60,7 +63,7 @@
             "",
             "Si",
             "No"});
-            this.comboBoxHabilitado.Location = new System.Drawing.Point(231, 18);
+            this.comboBoxHabilitado.Location = new System.Drawing.Point(262, 30);
             this.comboBoxHabilitado.Name = "comboBoxHabilitado";
             this.comboBoxHabilitado.Size = new System.Drawing.Size(121, 21);
             this.comboBoxHabilitado.TabIndex = 7;
@@ -68,7 +71,7 @@
             // labelHabilitado
             // 
             this.labelHabilitado.AutoSize = true;
-            this.labelHabilitado.Location = new System.Drawing.Point(171, 22);
+            this.labelHabilitado.Location = new System.Drawing.Point(202, 33);
             this.labelHabilitado.Name = "labelHabilitado";
             this.labelHabilitado.Size = new System.Drawing.Size(54, 13);
             this.labelHabilitado.TabIndex = 4;
@@ -76,7 +79,7 @@
             // 
             // textBoxRol
             // 
-            this.textBoxRol.Location = new System.Drawing.Point(35, 19);
+            this.textBoxRol.Location = new System.Drawing.Point(35, 29);
             this.textBoxRol.Name = "textBoxRol";
             this.textBoxRol.Size = new System.Drawing.Size(100, 20);
             this.textBoxRol.TabIndex = 2;
@@ -84,7 +87,7 @@
             // labelRol
             // 
             this.labelRol.AutoSize = true;
-            this.labelRol.Location = new System.Drawing.Point(6, 25);
+            this.labelRol.Location = new System.Drawing.Point(6, 33);
             this.labelRol.Name = "labelRol";
             this.labelRol.Size = new System.Drawing.Size(23, 13);
             this.labelRol.TabIndex = 1;
@@ -93,17 +96,35 @@
             // dataGridViewRoles
             // 
             this.dataGridViewRoles.AllowUserToAddRows = false;
+            this.dataGridViewRoles.AllowUserToDeleteRows = false;
             this.dataGridViewRoles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewRoles.Location = new System.Drawing.Point(12, 111);
+            this.dataGridViewRoles.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.buttonEliminar,
+            this.buttonModificar});
+            this.dataGridViewRoles.Location = new System.Drawing.Point(11, 119);
             this.dataGridViewRoles.Name = "dataGridViewRoles";
             this.dataGridViewRoles.ReadOnly = true;
             this.dataGridViewRoles.Size = new System.Drawing.Size(367, 238);
             this.dataGridViewRoles.TabIndex = 3;
-            this.dataGridViewRoles.DoubleClick += new System.EventHandler(this.dataGridViewRoles_DoubleClick);
+            this.dataGridViewRoles.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewRoles_CellContentClick);
+            // 
+            // buttonEliminar
+            // 
+            this.buttonEliminar.HeaderText = "Eliminar";
+            this.buttonEliminar.Name = "buttonEliminar";
+            this.buttonEliminar.ReadOnly = true;
+            this.buttonEliminar.Text = "Eliminar";
+            // 
+            // buttonModificar
+            // 
+            this.buttonModificar.HeaderText = "Modificar";
+            this.buttonModificar.Name = "buttonModificar";
+            this.buttonModificar.ReadOnly = true;
+            this.buttonModificar.Text = "Modificar";
             // 
             // buttonLimpiar
             // 
-            this.buttonLimpiar.Location = new System.Drawing.Point(12, 82);
+            this.buttonLimpiar.Location = new System.Drawing.Point(12, 90);
             this.buttonLimpiar.Name = "buttonLimpiar";
             this.buttonLimpiar.Size = new System.Drawing.Size(75, 23);
             this.buttonLimpiar.TabIndex = 5;
@@ -113,7 +134,7 @@
             // 
             // buttonBuscar
             // 
-            this.buttonBuscar.Location = new System.Drawing.Point(304, 82);
+            this.buttonBuscar.Location = new System.Drawing.Point(303, 90);
             this.buttonBuscar.Name = "buttonBuscar";
             this.buttonBuscar.Size = new System.Drawing.Size(75, 23);
             this.buttonBuscar.TabIndex = 6;
@@ -121,11 +142,22 @@
             this.buttonBuscar.UseVisualStyleBackColor = true;
             this.buttonBuscar.Click += new System.EventHandler(this.buttonBuscar_Click);
             // 
+            // buttonNuevo
+            // 
+            this.buttonNuevo.Location = new System.Drawing.Point(303, 363);
+            this.buttonNuevo.Name = "buttonNuevo";
+            this.buttonNuevo.Size = new System.Drawing.Size(75, 23);
+            this.buttonNuevo.TabIndex = 7;
+            this.buttonNuevo.Text = "Nuevo";
+            this.buttonNuevo.UseVisualStyleBackColor = true;
+            this.buttonNuevo.Click += new System.EventHandler(this.buttonNuevo_Click);
+            // 
             // ListadoRolesForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(391, 362);
+            this.ClientSize = new System.Drawing.Size(390, 393);
+            this.Controls.Add(this.buttonNuevo);
             this.Controls.Add(this.buttonBuscar);
             this.Controls.Add(this.buttonLimpiar);
             this.Controls.Add(this.dataGridViewRoles);
@@ -149,5 +181,8 @@
         private System.Windows.Forms.ComboBox comboBoxHabilitado;
         private System.Windows.Forms.Button buttonLimpiar;
         private System.Windows.Forms.Button buttonBuscar;
+        private System.Windows.Forms.DataGridViewButtonColumn buttonEliminar;
+        private System.Windows.Forms.DataGridViewButtonColumn buttonModificar;
+        private System.Windows.Forms.Button buttonNuevo;
     }
 }

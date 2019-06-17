@@ -19,7 +19,7 @@ namespace FrbaCrucero.Repositorios
         }
 
         public abstract List<T> ObtenerModelosDesdeTabla(DataTable tabla);
-        public abstract void Crear(T entidad);
+        public abstract Int32 Crear(T entidad);
         
         public void Eliminar(Int32 id)
         {
@@ -91,6 +91,14 @@ namespace FrbaCrucero.Repositorios
             sql.Append(" WHERE id = @Id");
 
             return sql.ToString();
+        }
+
+        public void EliminacionLogica(Int32 id)
+        {
+            String sqlQuery = "UPDATE " + nombreTabla + " SET habilitado = 0 WHERE id = @Id";
+            SqlCommand cmd = new SqlCommand(sqlQuery);
+            cmd.Parameters.Add(new SqlParameter("Id", id));
+            conexionDB.ejecutarQuery(cmd);
         }
 
     }   

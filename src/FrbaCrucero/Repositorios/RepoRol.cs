@@ -11,21 +11,22 @@ namespace FrbaCrucero.Repositorios
 {
     class RepoRol: AbstractRepo<Rol>
     {
+        public static string TABLA_USUARIOS_ROLES = "[FGNN_19].[Usuarios_Roles]";
+        public static string TABLA_FUNCIONALIDADES_ROLES = "[FGNN_19].[Funcionalidades_Roles]";
         public static RepoRol instancia = new RepoRol("[FGNN_19].[Roles]");
 
         public RepoRol(string nombreTabla) : base(nombreTabla) 
         {
         }
 
-        
-        public override void Crear(Rol rol)
+        public override Int32 Crear(Rol rol)
         {
-            string sqlQuery = "INSERT INTO " + nombreTabla + "(descripcion) VALUES (@descripcion)";
+            string sqlQuery = "INSERT INTO " + nombreTabla + "(descripcion, habilitado) VALUES (@Descripcion, @Habilitado ); SELECT SCOPE_IDENTITY();";
             SqlCommand cmd = new SqlCommand(sqlQuery);
-            cmd.Parameters.Add(new SqlParameter("descripcion", rol.descripcion));
+            cmd.Parameters.Add(new SqlParameter("Descripcion", rol.descripcion));
+            cmd.Parameters.Add(new SqlParameter("Habilitado", rol.habilitado));
 
-            conexionDB.ejecutarQuery(cmd);
-            
+            return conexionDB.ejecutarQueryInsert(cmd);
         }
 
         public override List<Rol> ObtenerModelosDesdeTabla(DataTable table)
@@ -64,10 +65,70 @@ namespace FrbaCrucero.Repositorios
             return ObtenerModelosDesdeTabla(tabla);
         }
 
-        public void borrarRol(Int32 id) 
-        { 
+        public void DeshabilitarRol(Int32 id) 
+        {
+            this.EliminarRolDeUsuario(id);
+            this.EliminacionLogica(id);
         }
-            
+
+        public void HabilitarRol(Int32 id)
+        {
+            string sqlQuery = "UPDATE " + nombreTabla + "SET habilitado = 1 WHERE id = @Id";
+            SqlCommand cmd = new SqlCommand(sqlQuery);
+            cmd.Parameters.Add(new SqlParameter("Id", id));
+            conexionDB.ejecutarQuery(cmd);
+        }
+
+        public void EliminarRolDeUsuario(Int32 id)
+        {
+            string sqlQuery = "DELETE " + TABLA_USUARIOS_ROLES + " WHERE rol_id = @Id";
+            SqlCommand cmd = new SqlCommand(sqlQuery);
+            cmd.Parameters.Add(new SqlParameter("Id", id));
+            conexionDB.ejecutarQuery(cmd);
+        }
+
+        public void ActualizarFuncinalidades(Rol rol)
+        {
+            this.EliminarTodasFuncionalidades(rol);
+            this.InsertarFuncionalidades(rol);
+        }
+
+
+        public void EliminarTodasFuncionalidades(Rol rol)
+        {
+            string sqlQuery = "DELETE " + TABLA_FUNCIONALIDADES_ROLES + " WHERE rol_id = @Id";
+            SqlCommand cmd = new SqlCommand(sqlQuery);
+            cmd.Parameters.Add(new SqlParameter("Id", rol.id));
+            conexionDB.ejecutarQuery(cmd);
+        }
+
+        public void InsertarFuncionalidades(Rol rol)
+        {
+            bool primeraIteracion = true;
+            string coma = ", ";
+            StringBuilder sqlQueryBuilder = new StringBuilder();
+            sqlQueryBuilder.Append("INSERT INTO " + TABLA_FUNCIONALIDADES_ROLES + " (rol_id, funcionalidad_id) VALUES ");
+            List<Funcionalidad> funcionalidades = rol.funcionalidades;
+            foreach(Funcionalidad f in funcionalidades) 
+            {
+                if (primeraIteracion)
+                {
+                    sqlQueryBuilder.Append("( " + rol.id + ", " + f.id + ")");
+                    primeraIteracion = false;
+                }
+                else
+                {
+                    sqlQueryBuilder.Append(coma).Append("( " + rol.id + ", " + f.id + ")");
+                }
+            }
+
+            sqlQueryBuilder.Append(";");
+
+            string sqlQuery = sqlQueryBuilder.ToString();
+            SqlCommand cmd = new SqlCommand(sqlQuery);
+            conexionDB.ejecutarQuery(cmd);
+        }
+
 
     }
 }

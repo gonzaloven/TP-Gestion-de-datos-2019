@@ -14,49 +14,45 @@ namespace FrbaCrucero.AbmRol
 {
     public partial class RolForm : Form
     {
-        private Rol rolOriginal;
-        private Rol rolModificado;
+        private Rol rol;
+        private ListadoRolesForm formPadre;
 
-        public RolForm()
+        public RolForm(Rol rol, ListadoRolesForm form)
         {
             InitializeComponent();
-        }
-
-        public RolForm(Rol rol)
-        {
-            InitializeComponent();
-            this.rolOriginal = rol;
-            this.rolModificado = rol;
-            desactivarEditado(rol);
+            this.rol = rol;
+            this.formPadre = form;
+            textBoxDescripcion.Text = rol.descripcion;
+            checkBoxHabilitado.Checked = (rol.habilitado == 1) ? true : false;
+            dataGridViewFuncionalidades.DataSource = rol.GetFuncionalidades();
+            dataGridViewFuncionalidades.Columns["id"].Visible = false;
+            dataGridViewFuncionalidades.Columns["descripcion"].HeaderText = "Funcionalidad";
+            dataGridViewFuncionalidades.MultiSelect = false;
         }
 
         public void AgregarFuncionalidad(Funcionalidad funcionalidad)
         {
-            rolModificado.AgregarFuncionalidad(funcionalidad);
-            dataGridViewFuncionalidades.DataSource = rolModificado.GetFuncionalidades();
-        }
-
-        private void buttonEditar_Click(object sender, EventArgs e)
-        {
-            buttonAceptar.Show();
-            buttonCancelar.Show();
-            buttonEliminarFunc.Show();
-            buttonAgregarFunc.Show();
-            textBoxDescripcion.Enabled = true;
-            checkBoxHabilitado.Enabled = true;
-            buttonEditar.Hide();
+            rol.AgregarFuncionalidad(funcionalidad);
+            refresDataGridView();
         }
 
         private void buttonCancelar_Click(object sender, EventArgs e)
         {
-            rolModificado = rolOriginal;
-            desactivarEditado(rolOriginal);
+            this.Close();
+            this.formPadre.buttonBuscar_Click(null, null);
+        }
+
+        private void buttonEliminarFunc_Click(object sender, EventArgs e)
+        {
+            Funcionalidad funcionalidadAEliminar = (Funcionalidad)dataGridViewFuncionalidades.CurrentRow.DataBoundItem;
+            rol.funcionalidades = rol.GetFuncionalidades().Where(f => f.id != funcionalidadAEliminar.id).ToList();
+            refresDataGridView();
         }
 
         private void buttonAgregarFunc_Click(object sender, EventArgs e)
         {
             List<Funcionalidad> todasFunc = RepoFuncionalidad.instancia.EncontrarTodos();
-            List<Funcionalidad> rolFun = rolModificado.GetFuncionalidades();
+            List<Funcionalidad> rolFun = rol.GetFuncionalidades();
             List<Funcionalidad> faltantesFunc = todasFunc.Where(p => !rolFun.Any(l => p.id == l.id)).ToList();
 
             Form agregarFuncionalidad = new FormAgregarFuncionalidad(faltantesFunc, this);
@@ -64,45 +60,43 @@ namespace FrbaCrucero.AbmRol
             agregarFuncionalidad.Show();
         }
 
-        private void buttonEliminarFunc_Click(object sender, EventArgs e)
-        {
-            Funcionalidad funcionalidad = (Funcionalidad)dataGridViewFuncionalidades.CurrentRow.DataBoundItem;
-            rolModificado.EliminarFuncionalidad(funcionalidad);
-            refresDataGridView(rolModificado.GetFuncionalidades());
-        }
-
         private void buttonAceptar_Click(object sender, EventArgs e)
         {
-            rolModificado.descripcion = textBoxDescripcion.Text;
-            rolModificado.habilitado = (checkBoxHabilitado.Checked) ? Convert.ToInt16(1) : Convert.ToInt16(0);
-            Dictionary<string, object> paramentrosAModificar = new Dictionary<string,object>();
-            paramentrosAModificar.Add("descripcion", rolModificado.descripcion);
-            paramentrosAModificar.Add("habilitado", rolModificado.habilitado);
+            rol.descripcion = textBoxDescripcion.Text;
+            rol.habilitado = (checkBoxHabilitado.Checked) ? Convert.ToInt16(1) : Convert.ToInt16(0);
 
-            RepoRol.instancia.Modificar(rolModificado.id, paramentrosAModificar);
-            this.Close();            
+            if (IsValido(rol))
+            {
+                if (!rol.id.Equals(0))
+                {
+                    Dictionary<string, object> paramentrosAModificar = new Dictionary<string, object>();
+                    paramentrosAModificar.Add("descripcion", rol.descripcion);
+                    RepoRol.instancia.Modificar(rol.id, paramentrosAModificar);
+                }
+                else
+                {
+                    rol.id = RepoRol.instancia.Crear(rol);
+                }
+                
+
+                if (rol.funcionalidades.Any())
+                {
+                    RepoRol.instancia.ActualizarFuncinalidades(rol);
+                }
+
+                if (!checkBoxHabilitado.Checked)
+                {
+                    RepoRol.instancia.DeshabilitarRol(rol.id);
+                }
+                else
+                {
+                    RepoRol.instancia.HabilitarRol(rol.id);
+                }
+                
+                formPadre.buttonBuscar_Click(null, null);
+                this.Close();
+            }
         }
-
-        private void desactivarEditado(Rol rol)
-        {
-            buttonEditar.Show();
-            buttonEditar.Show();
-            buttonAceptar.Hide();
-            buttonCancelar.Hide();
-            buttonEliminarFunc.Hide();
-            buttonAgregarFunc.Hide();
-            textBoxDescripcion.Text = rol.descripcion;
-            textBoxDescripcion.Enabled = false;
-            checkBoxHabilitado.Checked = (rol.habilitado == 1) ? true : false;
-            checkBoxHabilitado.Enabled = false;
-            dataGridViewFuncionalidades.ReadOnly = true;
-            dataGridViewFuncionalidades.DataSource = rol.GetFuncionalidades();
-            dataGridViewFuncionalidades.Columns["id"].Visible = false;
-            dataGridViewFuncionalidades.Columns["descripcion"].HeaderText = "Funcionalidad";
-            dataGridViewFuncionalidades.MultiSelect = false;
-        }
-
-
 
         private void RolForm_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -123,13 +117,40 @@ namespace FrbaCrucero.AbmRol
 
         }
 
-        private void refresDataGridView(List<Funcionalidad> funcionalidades)
+        private void refresDataGridView()
         {
             dataGridViewFuncionalidades.DataSource = null;
-            dataGridViewFuncionalidades.DataSource = funcionalidades;
+            dataGridViewFuncionalidades.DataSource = rol.GetFuncionalidades();
             dataGridViewFuncionalidades.Columns["id"].Visible = false;
             dataGridViewFuncionalidades.Columns["descripcion"].HeaderText = "Funcionalidad";
             dataGridViewFuncionalidades.MultiSelect = false;
+        }
+
+        private Boolean IsValido(Rol rol)
+        {
+            List<string> errores = new List<string>();
+
+            if(String.IsNullOrEmpty(rol.descripcion))
+            {
+                errores.Add("Nombre: El campo no puede estar vacio.");
+            }
+
+
+            if (errores.Any())
+            {
+                StringBuilder stringBuileder = new StringBuilder();
+                foreach (string error in errores)
+                {
+                    stringBuileder.Append(error).Append("\n");
+                }
+                MessageBox.Show(stringBuileder.ToString(), "Error en Rol",
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
     }
 }
