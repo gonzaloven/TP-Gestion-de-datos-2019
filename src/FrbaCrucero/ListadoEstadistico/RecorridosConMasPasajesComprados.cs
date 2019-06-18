@@ -10,11 +10,21 @@ using System.Windows.Forms;
 
 namespace FrbaCrucero.ListadoEstadistico
 {
-    public partial class Form1 : Form
+    public partial class RecorridosConMasPasajesComprados : Form
     {
-        public Form1()
+        public RecorridosConMasPasajesComprados()
         {
             InitializeComponent();
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox1_Enter_1(object sender, EventArgs e)
+        {
+
         }
     }
 }

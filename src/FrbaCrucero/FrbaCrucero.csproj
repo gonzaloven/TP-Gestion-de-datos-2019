@@ -118,11 +118,11 @@
     <Compile Include="GeneracionViaje\FormGenerarViaje.Designer.cs">
       <DependentUpon>FormGenerarViaje.cs</DependentUpon>
     </Compile>
-    <Compile Include="ListadoEstadistico\Form1.cs">
+    <Compile Include="ListadoEstadistico\RecorridosConMasPasajesComprados.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ListadoEstadistico\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="ListadoEstadistico\RecorridosConMasPasajesComprados.Designer.cs">
+      <DependentUpon>RecorridosConMasPasajesComprados.cs</DependentUpon>
     </Compile>
     <Compile Include="Modelos\Crucero.cs" />
     <Compile Include="Modelos\Funcionalidad.cs" />
@@ -169,6 +169,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GeneracionViaje\SeleccionarPuerto.resx">
       <DependentUpon>SeleccionarPuerto.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ListadoEstadistico\RecorridosConMasPasajesComprados.resx">
+      <DependentUpon>RecorridosConMasPasajesComprados.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MenuPrincipal.resx">
       <DependentUpon>MenuPrincipal.cs</DependentUpon>
