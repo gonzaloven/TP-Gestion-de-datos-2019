@@ -43,24 +43,24 @@
             // limpiarButton
             // 
             this.limpiarButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.limpiarButton.Location = new System.Drawing.Point(13, 144);
-            this.limpiarButton.Margin = new System.Windows.Forms.Padding(4);
+            this.limpiarButton.Location = new System.Drawing.Point(10, 117);
             this.limpiarButton.Name = "limpiarButton";
-            this.limpiarButton.Size = new System.Drawing.Size(100, 37);
+            this.limpiarButton.Size = new System.Drawing.Size(75, 30);
             this.limpiarButton.TabIndex = 15;
             this.limpiarButton.Text = "Limpiar";
             this.limpiarButton.UseVisualStyleBackColor = true;
+            this.limpiarButton.Click += new System.EventHandler(this.limpiarButton_Click);
             // 
             // buscarButton
             // 
             this.buscarButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.buscarButton.Location = new System.Drawing.Point(467, 144);
-            this.buscarButton.Margin = new System.Windows.Forms.Padding(4);
+            this.buscarButton.Location = new System.Drawing.Point(350, 117);
             this.buscarButton.Name = "buscarButton";
-            this.buscarButton.Size = new System.Drawing.Size(100, 37);
+            this.buscarButton.Size = new System.Drawing.Size(75, 30);
             this.buscarButton.TabIndex = 16;
             this.buscarButton.Text = "Buscar";
             this.buscarButton.UseVisualStyleBackColor = true;
+            this.buscarButton.Click += new System.EventHandler(this.buscarButton_Click);
             // 
             // groupBox1
             // 
@@ -69,11 +69,9 @@
             this.groupBox1.Controls.Add(this.comboAnio);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.groupBox1.Location = new System.Drawing.Point(13, 13);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
+            this.groupBox1.Location = new System.Drawing.Point(10, 11);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox1.Size = new System.Drawing.Size(554, 95);
+            this.groupBox1.Size = new System.Drawing.Size(416, 77);
             this.groupBox1.TabIndex = 17;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Filtros de búsqueda";
@@ -83,19 +81,17 @@
             // 
             this.comboSemestre.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboSemestre.FormattingEnabled = true;
-            this.comboSemestre.Location = new System.Drawing.Point(352, 32);
-            this.comboSemestre.Margin = new System.Windows.Forms.Padding(4);
+            this.comboSemestre.Location = new System.Drawing.Point(264, 26);
             this.comboSemestre.Name = "comboSemestre";
-            this.comboSemestre.Size = new System.Drawing.Size(184, 25);
+            this.comboSemestre.Size = new System.Drawing.Size(139, 21);
             this.comboSemestre.TabIndex = 5;
             // 
-            // label3
+            // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(261, 36);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label2.Name = "label3";
-            this.label2.Size = new System.Drawing.Size(68, 17);
+            this.label2.Location = new System.Drawing.Point(196, 29);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(51, 13);
             this.label2.TabIndex = 4;
             this.label2.Text = "Semestre";
             // 
@@ -103,40 +99,39 @@
             // 
             this.comboAnio.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboAnio.FormattingEnabled = true;
-            this.comboAnio.Location = new System.Drawing.Point(72, 32);
-            this.comboAnio.Margin = new System.Windows.Forms.Padding(4);
+            this.comboAnio.Location = new System.Drawing.Point(54, 26);
             this.comboAnio.Name = "comboAnio";
-            this.comboAnio.Size = new System.Drawing.Size(160, 25);
+            this.comboAnio.Size = new System.Drawing.Size(121, 21);
             this.comboAnio.TabIndex = 1;
+            this.comboAnio.SelectedIndexChanged += new System.EventHandler(this.comboAnio_SelectedIndexChanged);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(9, 36);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(7, 29);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(33, 17);
+            this.label1.Size = new System.Drawing.Size(26, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Año";
             // 
             // resultadosTop5Grid
             // 
             this.resultadosTop5Grid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.resultadosTop5Grid.Location = new System.Drawing.Point(12, 225);
-            this.resultadosTop5Grid.Margin = new System.Windows.Forms.Padding(4);
+            this.resultadosTop5Grid.Location = new System.Drawing.Point(9, 183);
             this.resultadosTop5Grid.Name = "resultadosTop5Grid";
-            this.resultadosTop5Grid.Size = new System.Drawing.Size(570, 258);
+            this.resultadosTop5Grid.Size = new System.Drawing.Size(428, 210);
             this.resultadosTop5Grid.TabIndex = 18;
             // 
-            // Form1
+            // RecorridosConMasPasajesComprados
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(595, 521);
+            this.ClientSize = new System.Drawing.Size(446, 423);
             this.Controls.Add(this.resultadosTop5Grid);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.buscarButton);
             this.Controls.Add(this.limpiarButton);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "RecorridosConMasPasajesComprados";
             this.Text = "Recorridos con más pasajes comprados";
             this.groupBox1.ResumeLayout(false);
