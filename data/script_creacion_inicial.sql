@@ -842,10 +842,11 @@ BEGIN TRANSACTION
 COMMIT TRANSACTION;
 GO
 
-CREATE PROCEDURE FGNN_19.TOP5_recorridos_mas_comprados(@fecha datetime2(3))
+CREATE PROCEDURE FGNN_19.TOP5_recorridos_mas_comprados(@anio INT, @semestre INT)
 AS
 BEGIN
 
+DECLARE @QUERY VARCHAR(200)
 	SELECT TOP 5 ps.descripcion AS [Puerto de salida],
 		pl.descripcion [Puerto de llegada], COUNT(*) AS [Cantidad de pasajes vendidos]
 	FROM FGNN_19.Pasajes p
@@ -854,7 +855,11 @@ BEGIN
 		JOIN FGNN_19.Compras c ON c.codigo = p.compra_codigo
 		JOIN FGNN_19.Puertos ps ON ps.id = r.puerto_desde_id
 		JOIN FGNN_19.Puertos pl ON pl.id = r.puerto_hasta_id
-	WHERE c.fecha BETWEEN @fecha AND DATEADD(MONTH, 6, @fecha)
+		IF @semestre = 1
+			SET @QUERY = 'WHERE Format(c.fecha, ''yyyy'') = @anio AND Format(c.fecha, ''MM'') IN (1, 2, 3, 4, 5, 6)'
+		ELSE
+			SET @QUERY = 'WHERE Format(c.fecha, ''yyyy'') = @anio AND Format(c.fecha, ''MM'') IN (7, 8, 9, 10, 11, 12)'	
+	@QUERY
 	GROUP BY r.id, ps.descripcion, pl.descripcion
 	ORDER BY [Cantidad de pasajes vendidos] DESC
 
