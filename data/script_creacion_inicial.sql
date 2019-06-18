@@ -845,55 +845,59 @@ GO
 CREATE PROCEDURE FGNN_19.TOP5_recorridos_mas_comprados(@anio INT, @semestre INT)
 AS
 BEGIN
+DECLARE @QUERY_FINAL NVARCHAR(1500)
+DECLARE @QUERY_1 VARCHAR(200) = 'SELECT TOP 5 ps.descripcion AS [Puerto de salida], pl.descripcion [Puerto de llegada], COUNT(*) AS [Cantidad de pasajes vendidos]'
+DECLARE @QUERY_2 VARCHAR(200) = ' FROM FGNN_19.Pasajes p JOIN FGNN_19.Viajes v ON v.codigo = p.viaje_codigo JOIN FGNN_19.Recorridos r ON r.id = v.recorrido_codigo'
+DECLARE @QUERY_3 VARCHAR(200) = ' JOIN FGNN_19.Compras c ON c.codigo = p.compra_codigo JOIN FGNN_19.Puertos ps ON ps.id = r.puerto_desde_id JOIN FGNN_19.Puertos pl ON pl.id = r.puerto_hasta_id'
+DECLARE @QUERY_4 VARCHAR(200)
+DECLARE @QUERY_5 VARCHAR(200) = ' GROUP BY r.id, ps.descripcion, pl.descripcion ORDER BY [Cantidad de pasajes vendidos] DESC'
 
-DECLARE @QUERY VARCHAR(200)
-	SELECT TOP 5 ps.descripcion AS [Puerto de salida],
-		pl.descripcion [Puerto de llegada], COUNT(*) AS [Cantidad de pasajes vendidos]
-	FROM FGNN_19.Pasajes p
-		JOIN FGNN_19.Viajes v ON v.codigo = p.viaje_codigo
-		JOIN FGNN_19.Recorridos r ON r.id = v.recorrido_codigo
-		JOIN FGNN_19.Compras c ON c.codigo = p.compra_codigo
-		JOIN FGNN_19.Puertos ps ON ps.id = r.puerto_desde_id
-		JOIN FGNN_19.Puertos pl ON pl.id = r.puerto_hasta_id
 		IF @semestre = 1
-			SET @QUERY = 'WHERE Format(c.fecha, ''yyyy'') = @anio AND Format(c.fecha, ''MM'') IN (1, 2, 3, 4, 5, 6)'
+			SET @QUERY_4 = 'WHERE Format(c.fecha, ''yyyy'') = @anio AND Format(c.fecha, ''MM'') IN (1, 2, 3, 4, 5, 6)'
 		ELSE
-			SET @QUERY = 'WHERE Format(c.fecha, ''yyyy'') = @anio AND Format(c.fecha, ''MM'') IN (7, 8, 9, 10, 11, 12)'	
-	@QUERY
-	GROUP BY r.id, ps.descripcion, pl.descripcion
-	ORDER BY [Cantidad de pasajes vendidos] DESC
+			SET @QUERY_4 = 'WHERE Format(c.fecha, ''yyyy'') = @anio AND Format(c.fecha, ''MM'') IN (7, 8, 9, 10, 11, 12)'
+	SET @QUERY_FINAL = @QUERY_1 + @QUERY_2 + @QUERY_3 + @QUERY_4 + @QUERY_5
+	EXEC sp_executesql @QUERY_FINAL, N'@anio INT, @semestre INT', @anio, @semestre
 
 END
 GO
 
-CREATE PROCEDURE FGNN_19.TOP5_recorridos_mas_cabinas_libres(@fecha datetime2(3))
+CREATE PROCEDURE FGNN_19.TOP5_recorridos_mas_cabinas_libres(@anio INT, @semestre INT)
 AS
 BEGIN
-
-	SELECT TOP 5 ps.descripcion AS [Puerto de salida], pl.descripcion AS [Puerto de llegada],
-		COUNT(*) AS [Cantidad de cabinas libres]
-	FROM FGNN_19.Cabinas c
-		JOIN FGNN_19.Pasajes p ON p.id = c.pasaje_codigo
-		JOIN FGNN_19.Viajes v ON v.codigo = p.viaje_codigo
-		JOIN FGNN_19.Recorridos r ON r.codigo = v.recorrido_codigo
-		JOIN FGNN_19.Puertos ps ON ps.id = r.puerto_desde_id
-		JOIN FGNN_19.Puertos pl ON pl.id = r.puerto_hasta_id
-	WHERE c.estado = 0 AND v.fecha_fin BETWEEN @fecha AND DATEADD(MONTH, 6, @fecha)
-	GROUP BY r.codigo, ps.descripcion, pl.descripcion
-	ORDER BY [Cantidad de cabinas libres] DESC
+DECLARE @QUERY_FINAL NVARCHAR(1500)
+DECLARE @QUERY_1 VARCHAR(200) = 'SELECT TOP 5 ps.descripcion AS [Puerto de salida], pl.descripcion AS [Puerto de llegada], COUNT(*) AS [Cantidad de cabinas libres]'
+DECLARE @QUERY_2 VARCHAR(200) = ' FROM FGNN_19.Cabinas c JOIN FGNN_19.Pasajes p ON p.id = c.pasaje_codigo JOIN FGNN_19.Viajes v ON v.codigo = p.viaje_codigo'
+DECLARE @QUERY_3 VARCHAR(200) = ' JOIN FGNN_19.Recorridos r ON r.codigo = v.recorrido_codigo JOIN FGNN_19.Puertos ps ON ps.id = r.puerto_desde_id JOIN FGNN_19.Puertos pl ON pl.id = r.puerto_hasta_id'
+DECLARE @QUERY_4 VARCHAR(200) = ' WHERE c.estado = 0 AND '
+DECLARE @QUERY_5 VARCHAR(200)
+DECLARE @QUERY_6 VARCHAR(200) = ' GROUP BY r.codigo, ps.descripcion, pl.descripcion ORDER BY [Cantidad de cabinas libres] DESC'
+	
+	IF @semestre = 1
+			SET @QUERY_5 = 'Format(v.fecha_fin, ''yyyy'') = @anio AND Format(v.fecha_fin, ''MM'') IN (1, 2, 3, 4, 5, 6)'
+		ELSE
+			SET @QUERY_5 = 'Format(v.fecha_fin, ''yyyy'') = @anio AND Format(v.fecha_fin, ''MM'') IN (7, 8, 9, 10, 11, 12)'
+	SET @QUERY_FINAL = @QUERY_1 + @QUERY_2 + @QUERY_3 + @QUERY_4 + @QUERY_5 + @QUERY_6
+	EXEC sp_executesql @QUERY_FINAL, N'@anio INT, @semestre INT', @anio, @semestre
 
 END
 GO
 
-CREATE PROCEDURE FGNN_19.TOP5_cruceros_mas_dias_fuera_servicio(@fecha datetime2(3))
+CREATE PROCEDURE FGNN_19.TOP5_cruceros_mas_dias_fuera_servicio(@anio INT, @semestre INT)
 AS
 BEGIN
+DECLARE @QUERY_FINAL NVARCHAR(1500)
+DECLARE @QUERY_1 VARCHAR(200) = 'SELECT TOP 5 nombre, modelo, DATEDIFF(DAY, fecha_fuera_servicio, CONVERT(DATETIME2(3),GETDATE())) AS [Dias fuera de serivicio]'
+DECLARE @QUERY_2 VARCHAR(200) = ' FROM FGNN_19.Cruceros WHERE fecha_reinicio_servicio < CONVERT(DATETIME2(3),GETDATE()) AND' 
+DECLARE @QUERY_3 VARCHAR(200)
+DECLARE @QUERY_4 VARCHAR(200) = ' GROUP BY id, nombre, modelo, fecha_fuera_servicio ORDER BY [Dias fuera de serivicio] DESC'
 
-	SELECT TOP 5 nombre, modelo, DATEDIFF(DAY, fecha_fuera_servicio, CONVERT(DATETIME2(3),GETDATE())) AS [Dias fuera de serivicio]
-	FROM FGNN_19.Cruceros 
-	WHERE fecha_reinicio_servicio < CONVERT(DATETIME2(3),GETDATE()) AND fecha_fuera_servicio BETWEEN @fecha AND DATEADD(MONTH, 6, @fecha)
-	GROUP BY id, nombre, modelo, fecha_fuera_servicio
-	ORDER BY [Dias fuera de serivicio] DESC
+	IF @semestre = 1
+			SET @QUERY_5 = 'Format(fecha_fuera_servicio, ''yyyy'') = @anio AND Format(fecha_fuera_servicio, ''MM'') IN (1, 2, 3, 4, 5, 6)'
+		ELSE
+			SET @QUERY_5 = 'Format(fecha_fuera_servicio, ''yyyy'') = @anio AND Format(fecha_fuera_servicio, ''MM'') IN (7, 8, 9, 10, 11, 12)'
+	SET @QUERY_FINAL = @QUERY_1 + @QUERY_2 + @QUERY_3 + @QUERY_4
+	EXEC sp_executesql @QUERY_FINAL, N'@anio INT, @semestre INT', @anio, @semestre
 
 END
 GO
