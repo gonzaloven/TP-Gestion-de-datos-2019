@@ -45,6 +45,7 @@ namespace FrbaCrucero.AbmCrucero
             {
                 foreach (KeyValuePair<string, string> parametro in parametrosObligatorios)
                 {
+                    if (this.ValidarNulo(parametro.Value))
                     MessageBox.Show("No se puede dejar el campo " + parametro.Key + " vacio.", "Error",
                                 MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
