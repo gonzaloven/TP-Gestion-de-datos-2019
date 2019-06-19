@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 --Conexión a la base de datos.
 USE [GD1C2019]
 GO
@@ -652,4 +653,3 @@ RETURN @PrecioTotal
 
 END;
 GO
-
