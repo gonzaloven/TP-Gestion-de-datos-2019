@@ -47,8 +47,7 @@ namespace FrbaCrucero.AbmCrucero
             }
             else if(e.ColumnIndex == 1)
             {
-                EliminarCrucero eliminarCrucero = new EliminarCrucero();
-                eliminarCrucero.Show();
+                throw new NotImplementedException();
             }
         }
 
