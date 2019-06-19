@@ -11,6 +11,7 @@ using FrbaCrucero.AbmRol;
 using FrbaCrucero.AbmRecorrido;
 using FrbaCrucero.GeneracionViaje;
 using FrbaCrucero.AbmCrucero;
+using FrbaCrucero.ListadoEstadistico;
 
 namespace FrbaCrucero
 {
@@ -54,9 +55,17 @@ namespace FrbaCrucero
         private void toolStripLabel3_Click(object sender, EventArgs e)
         {
             this.IsMdiContainer = true;
-            ListadoCrucerosForm generarViaje = new ListadoCrucerosForm();
-            generarViaje.MdiParent = this;
-            generarViaje.Show();
+            ListadoCrucerosForm listadoCruceros = new ListadoCrucerosForm();
+            listadoCruceros.MdiParent = this;
+            listadoCruceros.Show();
+        }
+
+        private void toolStripLabel4_Click(object sender, EventArgs e)
+        {
+            this.IsMdiContainer = true;
+            ListadoEstadisticoForm listadoEstadistico = new ListadoEstadisticoForm();
+            listadoEstadistico.MdiParent = this;
+            listadoEstadistico.Show();
         }
 
     }
