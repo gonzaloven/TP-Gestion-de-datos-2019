@@ -34,7 +34,6 @@
             this.textBoxModelo = new System.Windows.Forms.TextBox();
             this.labelTipoServicio = new System.Windows.Forms.Label();
             this.labelBajaServicio = new System.Windows.Forms.Label();
-            this.textBoxTipoServicio = new System.Windows.Forms.TextBox();
             this.labelFechaFueraServicio = new System.Windows.Forms.Label();
             this.textBoxFechaFueraServicio = new System.Windows.Forms.TextBox();
             this.labelFechaReinicioServicio = new System.Windows.Forms.Label();
@@ -42,7 +41,6 @@
             this.labelFechaBajaDefinitiva = new System.Windows.Forms.Label();
             this.textBoxFechaBajaDefinitiva = new System.Windows.Forms.TextBox();
             this.labelCantidadCabinas = new System.Windows.Forms.Label();
-            this.buttonSeleccionarTipoServicio = new System.Windows.Forms.Button();
             this.comboBoxBajaServicio = new System.Windows.Forms.ComboBox();
             this.buttonSeleccionarFechaFueraServicio = new System.Windows.Forms.Button();
             this.buttonSeleccionarFechaReinicioServicio = new System.Windows.Forms.Button();
@@ -53,6 +51,7 @@
             this.buttonCancelar = new System.Windows.Forms.Button();
             this.labelID = new System.Windows.Forms.Label();
             this.textBoxID = new System.Windows.Forms.TextBox();
+            this.comboBoxTipoServicio = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCantidadCabinas)).BeginInit();
             this.SuspendLayout();
             // 
@@ -105,13 +104,6 @@
             this.labelBajaServicio.Size = new System.Drawing.Size(88, 17);
             this.labelBajaServicio.TabIndex = 5;
             this.labelBajaServicio.Text = "Baja servicio";
-            // 
-            // textBoxTipoServicio
-            // 
-            this.textBoxTipoServicio.Location = new System.Drawing.Point(131, 141);
-            this.textBoxTipoServicio.Name = "textBoxTipoServicio";
-            this.textBoxTipoServicio.Size = new System.Drawing.Size(100, 22);
-            this.textBoxTipoServicio.TabIndex = 6;
             // 
             // labelFechaFueraServicio
             // 
@@ -169,16 +161,6 @@
             this.labelCantidadCabinas.Size = new System.Drawing.Size(117, 17);
             this.labelCantidadCabinas.TabIndex = 14;
             this.labelCantidadCabinas.Text = "Cantidad cabinas";
-            // 
-            // buttonSeleccionarTipoServicio
-            // 
-            this.buttonSeleccionarTipoServicio.Location = new System.Drawing.Point(250, 141);
-            this.buttonSeleccionarTipoServicio.Name = "buttonSeleccionarTipoServicio";
-            this.buttonSeleccionarTipoServicio.Size = new System.Drawing.Size(93, 22);
-            this.buttonSeleccionarTipoServicio.TabIndex = 16;
-            this.buttonSeleccionarTipoServicio.Text = "Seleccionar";
-            this.buttonSeleccionarTipoServicio.UseVisualStyleBackColor = true;
-            this.buttonSeleccionarTipoServicio.Click += new System.EventHandler(this.buttonSeleccionarTipoServicio_Click);
             // 
             // comboBoxBajaServicio
             // 
@@ -275,11 +257,20 @@
             this.textBoxID.Size = new System.Drawing.Size(100, 22);
             this.textBoxID.TabIndex = 26;
             // 
+            // comboBoxTipoServicio
+            // 
+            this.comboBoxTipoServicio.FormattingEnabled = true;
+            this.comboBoxTipoServicio.Location = new System.Drawing.Point(132, 141);
+            this.comboBoxTipoServicio.Name = "comboBoxTipoServicio";
+            this.comboBoxTipoServicio.Size = new System.Drawing.Size(121, 24);
+            this.comboBoxTipoServicio.TabIndex = 27;
+            // 
             // ModificarCrucero
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(456, 451);
+            this.Controls.Add(this.comboBoxTipoServicio);
             this.Controls.Add(this.textBoxID);
             this.Controls.Add(this.labelID);
             this.Controls.Add(this.buttonCancelar);
@@ -290,7 +281,6 @@
             this.Controls.Add(this.buttonSeleccionarFechaReinicioServicio);
             this.Controls.Add(this.buttonSeleccionarFechaFueraServicio);
             this.Controls.Add(this.comboBoxBajaServicio);
-            this.Controls.Add(this.buttonSeleccionarTipoServicio);
             this.Controls.Add(this.labelCantidadCabinas);
             this.Controls.Add(this.textBoxFechaBajaDefinitiva);
             this.Controls.Add(this.labelFechaBajaDefinitiva);
@@ -298,7 +288,6 @@
             this.Controls.Add(this.labelFechaReinicioServicio);
             this.Controls.Add(this.textBoxFechaFueraServicio);
             this.Controls.Add(this.labelFechaFueraServicio);
-            this.Controls.Add(this.textBoxTipoServicio);
             this.Controls.Add(this.labelBajaServicio);
             this.Controls.Add(this.labelTipoServicio);
             this.Controls.Add(this.textBoxModelo);
@@ -321,7 +310,6 @@
         private System.Windows.Forms.TextBox textBoxModelo;
         private System.Windows.Forms.Label labelTipoServicio;
         private System.Windows.Forms.Label labelBajaServicio;
-        private System.Windows.Forms.TextBox textBoxTipoServicio;
         private System.Windows.Forms.Label labelFechaFueraServicio;
         private System.Windows.Forms.TextBox textBoxFechaFueraServicio;
         private System.Windows.Forms.Label labelFechaReinicioServicio;
@@ -329,7 +317,6 @@
         private System.Windows.Forms.Label labelFechaBajaDefinitiva;
         private System.Windows.Forms.TextBox textBoxFechaBajaDefinitiva;
         private System.Windows.Forms.Label labelCantidadCabinas;
-        private System.Windows.Forms.Button buttonSeleccionarTipoServicio;
         private System.Windows.Forms.ComboBox comboBoxBajaServicio;
         private System.Windows.Forms.Button buttonSeleccionarFechaFueraServicio;
         private System.Windows.Forms.Button buttonSeleccionarFechaReinicioServicio;
@@ -340,5 +327,6 @@
         private System.Windows.Forms.Button buttonCancelar;
         private System.Windows.Forms.Label labelID;
         private System.Windows.Forms.TextBox textBoxID;
+        private System.Windows.Forms.ComboBox comboBoxTipoServicio;
     }
 }

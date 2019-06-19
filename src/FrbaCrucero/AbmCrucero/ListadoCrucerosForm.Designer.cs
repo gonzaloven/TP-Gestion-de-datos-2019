@@ -42,6 +42,7 @@
             this.Eliminar = new System.Windows.Forms.DataGridViewButtonColumn();
             this.buttonLimpiar = new System.Windows.Forms.Button();
             this.buttonBuscar = new System.Windows.Forms.Button();
+            this.buttonAgregar = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewCrucero)).BeginInit();
             this.SuspendLayout();
@@ -200,11 +201,22 @@
             this.buttonBuscar.UseVisualStyleBackColor = true;
             this.buttonBuscar.Click += new System.EventHandler(this.buttonBuscar_Click);
             // 
+            // buttonAgregar
+            // 
+            this.buttonAgregar.Location = new System.Drawing.Point(950, 488);
+            this.buttonAgregar.Name = "buttonAgregar";
+            this.buttonAgregar.Size = new System.Drawing.Size(127, 36);
+            this.buttonAgregar.TabIndex = 7;
+            this.buttonAgregar.Text = "Agregar";
+            this.buttonAgregar.UseVisualStyleBackColor = true;
+            this.buttonAgregar.Click += new System.EventHandler(this.buttonAgregar_Click);
+            // 
             // ListadoCrucerosForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1090, 497);
+            this.ClientSize = new System.Drawing.Size(1090, 529);
+            this.Controls.Add(this.buttonAgregar);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.dataGridViewCrucero);
             this.Controls.Add(this.buttonBuscar);
@@ -235,5 +247,6 @@
         private System.Windows.Forms.Button buttonBuscar;
         private System.Windows.Forms.DataGridViewButtonColumn Modificar;
         private System.Windows.Forms.DataGridViewButtonColumn Eliminar;
+        private System.Windows.Forms.Button buttonAgregar;
     }
 }

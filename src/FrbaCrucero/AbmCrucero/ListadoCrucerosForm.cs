@@ -76,5 +76,11 @@ namespace FrbaCrucero.AbmCrucero
             this.dataGridViewCrucero.Columns["cant_cabinas"].HeaderText = "Cantidad de cabinas";
             dataGridViewCrucero.MultiSelect = false;
         }
+
+        private void buttonAgregar_Click(object sender, EventArgs e)
+        {
+            AgregarCrucero agregarCrucero = new AgregarCrucero(this);
+            agregarCrucero.Show();
+        }
     }
 }

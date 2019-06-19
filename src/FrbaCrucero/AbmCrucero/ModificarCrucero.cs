@@ -21,7 +21,7 @@ namespace FrbaCrucero.AbmCrucero
         {
             InitializeComponent();
             this.listadoCruceros = listadoCruceros;
-            textBoxTipoServicio.ReadOnly = true;
+            comboBoxTipoServicio.Enabled = false;
             textBoxFechaBajaDefinitiva.ReadOnly = true;
             textBoxFechaFueraServicio.ReadOnly = true;
             textBoxFechaReinicioServicio.ReadOnly = true;
@@ -29,7 +29,7 @@ namespace FrbaCrucero.AbmCrucero
             textBoxID.Text = ID;
             ingresarParametroTB(textBoxNombre, tablaCruceros, 3, filaSeleccionada);
             ingresarParametroTB(textBoxModelo, tablaCruceros, 5, filaSeleccionada);
-            ingresarParametroTB(textBoxTipoServicio, tablaCruceros, 7, filaSeleccionada);
+            ingresarParametroCB(comboBoxTipoServicio, tablaCruceros, 7, filaSeleccionada);
             ingresarParametroCB(comboBoxBajaServicio, tablaCruceros, 8, filaSeleccionada);
             ingresarParametroTB(textBoxFechaFueraServicio, tablaCruceros, 10, filaSeleccionada);
             ingresarParametroTB(textBoxFechaReinicioServicio, tablaCruceros, 11, filaSeleccionada);
@@ -61,17 +61,11 @@ namespace FrbaCrucero.AbmCrucero
 
         private void buttonLimpiar_Click(object sender, EventArgs e)
         {
-            textBoxTipoServicio.Text = null;
+            comboBoxTipoServicio.Text = null;
             textBoxFechaFueraServicio.Text = null;
             textBoxFechaBajaDefinitiva.Text = null;
             textBoxFechaReinicioServicio.Text = null;
             numericUpDownCantidadCabinas.Value = 0;
-        }
-
-        private void buttonSeleccionarTipoServicio_Click(object sender, EventArgs e)
-        {
-            SeleccionarTipoServicio seleccionarTipoServicio = new SeleccionarTipoServicio();
-            seleccionarTipoServicio.Show();
         }
 
         private void buttonGuardar_Click(object sender, EventArgs e)
@@ -80,7 +74,7 @@ namespace FrbaCrucero.AbmCrucero
 
             ingresarValor(paramentrosAModificar, "nombre", textBoxNombre.Text);
             ingresarValor(paramentrosAModificar, "modelo", textBoxModelo.Text);
-            ingresarValorConNulos(paramentrosAModificar, "tipo_servicio", textBoxTipoServicio.Text);
+            ingresarValorConNulos(paramentrosAModificar, "tipo_servicio", comboBoxTipoServicio.Text);
             paramentrosAModificar.Add("baja_servicio", comboBoxBajaServicio.Text);
             ingresarValorConNulos(paramentrosAModificar, "fecha_fuera_servicio", textBoxFechaFueraServicio.Text);
             ingresarValorConNulos(paramentrosAModificar, "fecha_reinicio_servicio", textBoxFechaReinicioServicio.Text);

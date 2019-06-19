@@ -25,9 +25,10 @@ namespace FrbaCrucero.Modelos
         public Int16 habilitado { get; set; }
 
         public Crucero(Int32 id, String nombre, DateTime? fecha_alta, String modelo, 
-                       Int32 fabricante_id, String tipo_servicio, Int16 baja_servicio,
-                       Int16 baja_vida_util, DateTime? fecha_fuera_servicio, DateTime? fecha_reinicio_servicio,
-                       DateTime? fecha_baja_definitiva, Int16? cant_cabinas, Int16 habilitado)
+                       Int32 fabricante_id, String tipo_servicio, Int16 baja_servicio, 
+                       Int16 baja_vida_util, DateTime? fecha_fuera_servicio, 
+                       DateTime? fecha_reinicio_servicio, DateTime? fecha_baja_definitiva,
+                       Int16? cant_cabinas, Int16 habilitado)
         {
             this.id = id;
             this.nombre = nombre;

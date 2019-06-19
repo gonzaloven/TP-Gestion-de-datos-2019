@@ -16,7 +16,6 @@ namespace FrbaCrucero.AbmRecorrido
     {
         ListadoRecorridoForm form;
         TextBox textBoxParam;
-        private ListadoRecorridoForm listadoRecorridoForm;
 
         public SeleccionarPuerto(ListadoRecorridoForm form, TextBox textBoxParam)
         {

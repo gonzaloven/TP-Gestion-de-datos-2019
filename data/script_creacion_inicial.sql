@@ -102,6 +102,10 @@ IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.P_Val
 	DROP PROCEDURE FGNN_19.P_ValidarLogin 
 GO
 
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.P_InsertarCrucero') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
+	DROP PROCEDURE FGNN_19.P_InsertarCrucero 
+GO
+
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.P_ViajesValidacion') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
 	DROP PROCEDURE FGNN_19.P_ViajesValidacion
 GO
@@ -499,6 +503,22 @@ COMMIT;
 GO
 
 -- Procedures
+
+CREATE PROCEDURE FGNN_19.P_InsertarCrucero
+@nombre VARCHAR(255),
+@fecha_alta datetime2(3),
+@modelo VARCHAR(255),
+@fabricante_id numeric(18,0),
+@tipo_servicio VARCHAR(255),
+@cant_cabinas smallint
+AS
+BEGIN
+
+INSERT INTO FGNN_19.Cruceros (nombre, fecha_alta, modelo, fabricante_id, tipo_servicio, cant_cabinas)
+VALUES (@nombre, @fecha_alta, @modelo, @fabricante_id, @tipo_servicio, @cant_cabinas)
+
+END;
+GO
 
 CREATE PROCEDURE FGNN_19.P_ValidarLogin 
 @User VARCHAR(255), 

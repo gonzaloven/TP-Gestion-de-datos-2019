@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AbmCrucero\AgregarCrucero.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmCrucero\AgregarCrucero.Designer.cs">
+      <DependentUpon>AgregarCrucero.cs</DependentUpon>
+    </Compile>
     <Compile Include="AbmCrucero\EliminarCrucero.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -64,17 +70,17 @@
     <Compile Include="AbmCrucero\ModificarCrucero.Designer.cs">
       <DependentUpon>ModificarCrucero.cs</DependentUpon>
     </Compile>
+    <Compile Include="AbmCrucero\SeleccionarFabricante.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmCrucero\SeleccionarFabricante.Designer.cs">
+      <DependentUpon>SeleccionarFabricante.cs</DependentUpon>
+    </Compile>
     <Compile Include="AbmCrucero\SeleccionarFecha.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="AbmCrucero\SeleccionarFecha.Designer.cs">
       <DependentUpon>SeleccionarFecha.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AbmCrucero\SeleccionarTipoServicio.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AbmCrucero\SeleccionarTipoServicio.Designer.cs">
-      <DependentUpon>SeleccionarTipoServicio.cs</DependentUpon>
     </Compile>
     <Compile Include="AbmRecorrido\ListadoRecorridoForm.cs">
       <SubType>Form</SubType>
@@ -148,7 +154,9 @@
     <Compile Include="ListadoEstadistico\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Modelos\CrearCrucero.cs" />
     <Compile Include="Modelos\Crucero.cs" />
+    <Compile Include="Modelos\Fabricante.cs" />
     <Compile Include="Modelos\Funcionalidad.cs" />
     <Compile Include="Modelos\Puerto.cs" />
     <Compile Include="Modelos\Recorrido.cs" />
@@ -165,17 +173,24 @@
     <Compile Include="Repositorios\AbstractRepo.cs" />
     <Compile Include="Repositorios\IRepo.cs" />
     <Compile Include="Repositorios\RepoCrucero.cs" />
+    <Compile Include="Repositorios\RepoFabricante.cs" />
     <Compile Include="Repositorios\RepoFuncionalidad.cs" />
     <Compile Include="Repositorios\RepoPuerto.cs" />
     <Compile Include="Repositorios\RepoRecorrido.cs" />
     <Compile Include="Repositorios\RepoRol.cs" />
     <Compile Include="Repositorios\RepoViaje.cs" />
     <Compile Include="Utils\ConexionDB.cs" />
+    <EmbeddedResource Include="AbmCrucero\AgregarCrucero.resx">
+      <DependentUpon>AgregarCrucero.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="AbmCrucero\ListadoCrucerosForm.resx">
       <DependentUpon>ListadoCrucerosForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AbmCrucero\ModificarCrucero.resx">
       <DependentUpon>ModificarCrucero.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmCrucero\SeleccionarFabricante.resx">
+      <DependentUpon>SeleccionarFabricante.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AbmCrucero\SeleccionarFecha.resx">
       <DependentUpon>SeleccionarFecha.cs</DependentUpon>
