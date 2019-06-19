@@ -174,6 +174,10 @@ IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_19.FN_Pu
 	DROP FUNCTION FGNN_19.FN_Puede_cumplir_recorrido
 GO
 
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.P_InsertarCrucero') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
+	DROP PROCEDURE FGNN_19.P_InsertarCrucero
+GO
+
 --Creación de tablas.
 CREATE TABLE [FGNN_19].[Usuarios] (
 	[id] NUMERIC(18, 0) IDENTITY(1, 1),
