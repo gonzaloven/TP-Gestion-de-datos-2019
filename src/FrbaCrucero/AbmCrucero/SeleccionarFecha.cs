@@ -23,6 +23,7 @@ namespace FrbaCrucero.AbmCrucero
         private void buttonGuardar_Click(object sender, EventArgs e)
         {
             textBoxParam.Text = dateTimePickerFecha.Value.ToString();
+            this.Close();
         }
 
     }

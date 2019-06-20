@@ -25,7 +25,6 @@ namespace FrbaCrucero.Repositorios
             cmd.Parameters.Add(new SqlParameter("codigo", recorrido.codigo));
             cmd.Parameters.Add(new SqlParameter("puerto_desde_id", recorrido.puertoDesde));
             cmd.Parameters.Add(new SqlParameter("puerto_hasta_id", recorrido.puertoHasta));
-            cmd.Parameters.Add(new SqlParameter("precio_base", recorrido.precio_base));
             cmd.Parameters.Add(new SqlParameter("habilitado", recorrido.habilitado));
 
             conexionDB.ejecutarQuery(cmd);
@@ -42,14 +41,12 @@ namespace FrbaCrucero.Repositorios
                 String codigo = (String)row["codigo"];
                 String puertoDesde = this.buscarValorID(Convert.ToInt32(row["puerto_desde_id"]));
                 String puertoHasta = this.buscarValorID(Convert.ToInt32(row["puerto_hasta_id"]));
-                Double precio_base = Convert.ToDouble(row["precio_base"]);
                 Int16 habilitado = Convert.ToInt16(row["habilitado"]);
 
-                Recorrido recorrido = new Recorrido(id, codigo, puertoDesde, puertoHasta, precio_base, habilitado);
+                Recorrido recorrido = new Recorrido(id, codigo, puertoDesde, puertoHasta, habilitado);
 
                 recorridos.Add(recorrido);
             }
-
             return recorridos;
         }
 

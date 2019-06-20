@@ -21,6 +21,7 @@ namespace FrbaCrucero.AbmRecorrido
             textBoxPuertDesde.ReadOnly = true;
             textBoxPuertoHasta.ReadOnly = true;
             comboBoxHabilitado.SelectedIndex = 0;
+            dataGridViewRecorrido.ReadOnly = true;
         }
 
         private void buttonLimpiar_Click(object sender, EventArgs e)
@@ -61,7 +62,6 @@ namespace FrbaCrucero.AbmRecorrido
             List<Recorrido> recorridos = RepoRecorrido.instancia
                                                  .EncontrarPorParametros(valorPuertoDesde, valorPuertoHasta, valorHabilitado, hayValorHabilitado);
             dataGridViewRecorrido.DataSource = recorridos;
-            dataGridViewRecorrido.Columns["id"].Visible = false;
             dataGridViewRecorrido.MultiSelect = false;
         }
 

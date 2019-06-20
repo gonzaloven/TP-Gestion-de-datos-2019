@@ -12,16 +12,14 @@ namespace FrbaCrucero.Modelos
         public String codigo { get; set; }
         public String puertoDesde { get; set; }
         public String puertoHasta { get; set; }
-        public Double precio_base { get; set; }
         public Int16 habilitado { get; set; }
 
-        public Recorrido(Int32 id, String codigo, String puertoDesde, String puertoHasta, Double precio_base, Int16 habilitado)
+        public Recorrido(Int32 id, String codigo, String puertoDesde, String puertoHasta, Int16 habilitado)
         {
             this.id = id;
             this.codigo = codigo;
             this.puertoDesde = puertoDesde;
             this.puertoHasta = puertoHasta;
-            this.precio_base = precio_base;
             this.habilitado = habilitado;
         }
     }
