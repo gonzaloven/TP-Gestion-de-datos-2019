@@ -41,21 +41,21 @@ namespace FrbaCrucero.AbmCrucero
         private void buttonSeleccionarFechaFueraServicio_Click(object sender, EventArgs e)
         {
             this.textBoxParam = textBoxFechaFueraServicio;
-            SeleccionarFecha seleccionarFecha = new SeleccionarFecha(this, textBoxParam);
+            SeleccionarFecha seleccionarFecha = new SeleccionarFecha(textBoxParam);
             seleccionarFecha.Show();
         }
 
         private void buttonSeleccionarFechaReinicioServicio_Click(object sender, EventArgs e)
         {
             this.textBoxParam = textBoxFechaReinicioServicio;
-            SeleccionarFecha seleccionarFecha = new SeleccionarFecha(this, textBoxParam);
+            SeleccionarFecha seleccionarFecha = new SeleccionarFecha(textBoxParam);
             seleccionarFecha.Show();
         }
 
         private void buttonSeleccionarFechaBajaDefinitiva_Click(object sender, EventArgs e)
         {
             this.textBoxParam = textBoxFechaBajaDefinitiva;
-            SeleccionarFecha seleccionarFecha = new SeleccionarFecha(this, textBoxParam);
+            SeleccionarFecha seleccionarFecha = new SeleccionarFecha(textBoxParam);
             seleccionarFecha.Show();
         }
 
@@ -84,6 +84,7 @@ namespace FrbaCrucero.AbmCrucero
             RepoCrucero.instancia.Modificar(Int32.Parse(textBoxID.Text), paramentrosAModificar);
             this.Close();
             listadoCruceros.buscar();
+            
         }
 
         private void buttonCancelar_Click(object sender, EventArgs e)

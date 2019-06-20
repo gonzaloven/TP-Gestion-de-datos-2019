@@ -19,7 +19,7 @@ namespace FrbaCrucero.Modelos
         public SqlCommand cmd = new SqlCommand("FGNN_19.P_InsertarCrucero");
 
         public CrearCrucero(String nombre, DateTime fecha_alta, String modelo, 
-                            String Fabricante, String tipo_servicio, Int32? cantidad_cabinas)
+                            String fabricante, String tipo_servicio, Int32? cantidad_cabinas)
         {
             this.nombre = nombre;
             this.fecha_alta = fecha_alta;
@@ -44,15 +44,15 @@ namespace FrbaCrucero.Modelos
 
         public void AgregarFabricante(SqlCommand command, String fabricante)
         {
-            if(!String.IsNullOrWhiteSpace(fabricante))
-            {
-                command.Parameters.Add(new SqlParameter("fabricante_id", Int32.Parse(fabricante)));
-            }
-            else
+            if(String.IsNullOrWhiteSpace(fabricante))
             {
                 command.Parameters.Add(new SqlParameter("fabricante_id", DBNull.Value));
             }
+            else
+            {
+                command.Parameters.Add(new SqlParameter("fabricante_id", Int32.Parse(fabricante)));
+            }
         }
-
+        
     }
 }
