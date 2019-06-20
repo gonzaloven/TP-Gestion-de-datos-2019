@@ -14,8 +14,8 @@ IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_19.Recor
     DROP TABLE FGNN_19.Recorridos_X_Crucero
 GO
 
-IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_19.Recorrido_X_Recorrido'))
-    DROP TABLE FGNN_19.Recorrido_X_Recorrido
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_19.Recorrido_X_Tramo'))
+    DROP TABLE FGNN_19.Recorrido_X_Tramo
 GO
 
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_19.Cabinas'))
@@ -38,12 +38,16 @@ IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_19.Compr
     DROP TABLE FGNN_19.Compras
 GO
 
-IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_19.Recorridos'))
-    DROP TABLE FGNN_19.Recorridos
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_19.Tramos'))
+    DROP TABLE FGNN_19.Tramos
 GO
 
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_19.Cruceros'))
     DROP TABLE FGNN_19.Cruceros
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_19.Recorridos'))
+    DROP TABLE FGNN_19.Recorridos
 GO
 
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_19.Clientes'))
@@ -150,8 +154,8 @@ IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.P_Ins
 	DROP PROCEDURE FGNN_19.P_InsertarCrucero
 GO
 
-IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.Validar_fecha_corrimiento') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
-	DROP PROCEDURE FGNN_19.Validar_fecha_corrimiento
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.Fecha_valida_corrimiento') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
+	DROP PROCEDURE FGNN_19.Fecha_valida_corrimiento
 GO
 
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_19.FN_Calcular_costo_pasaje') AND type in (N'FN', N'IF', N'TF', N'FS', N'FT'))
@@ -296,12 +300,22 @@ CREATE TABLE [FGNN_19].[Cruceros] (
 );
 GO
 
+CREATE TABLE [FGNN_19].[Tramos] (
+	[id] NUMERIC(18,0) IDENTITY(1, 1),
+	[puerto_desde_id] NUMERIC(18, 0) NOT NULL,
+	[puerto_hasta_id] NUMERIC(18,0) NOT NULL,
+	[precio_base] FLOAT NOT NULL,
+	PRIMARY KEY ([id]),
+	FOREIGN KEY (puerto_desde_id) REFERENCES FGNN_19.Puertos(id),
+	FOREIGN KEY (puerto_hasta_id) REFERENCES FGNN_19.Puertos(id)
+);
+GO
+
 CREATE TABLE [FGNN_19].[Recorridos] (
 	[id] NUMERIC(18, 0) IDENTITY(1, 1),
 	[codigo] VARCHAR(255),
 	[puerto_desde_id] NUMERIC(18, 0) NOT NULL,
 	[puerto_hasta_id] NUMERIC(18, 0) NOT NULL,
-	[precio_base] FLOAT NOT NULL,
 	[habilitado] BIT DEFAULT 1 NOT NULL,
 	PRIMARY KEY ([id]),
 	FOREIGN KEY (puerto_desde_id) REFERENCES FGNN_19.Puertos(id),
@@ -363,12 +377,12 @@ CREATE TABLE [FGNN_19].[Cabinas] (
 );
 GO
 
-CREATE TABLE [FGNN_19].[Recorrido_X_Recorrido] (
-	[recorrido_total] NUMERIC(18, 0),
-	[recorrido_tramo] NUMERIC(18, 0),
-	PRIMARY KEY ([recorrido_total], [recorrido_tramo]),
-	FOREIGN KEY (recorrido_total) REFERENCES FGNN_19.Recorridos(id),
-	FOREIGN KEY (recorrido_tramo) REFERENCES FGNN_19.Recorridos(id)
+CREATE TABLE [FGNN_19].[Recorrido_X_Tramo] (
+	[recorrido_id] NUMERIC(18, 0),
+	[tramo_id] NUMERIC(18, 0),
+	PRIMARY KEY ([recorrido_id], [tramo_id]),
+	FOREIGN KEY (recorrido_id) REFERENCES FGNN_19.Recorridos(id),
+	FOREIGN KEY (tramo_id) REFERENCES FGNN_19.Recorridos(id)
 );
 GO
 
@@ -404,8 +418,15 @@ SELECT C.PUERTO_DESDE FROM gd_esquema.Maestra C
 UNION
 SELECT D.PUERTO_HASTA FROM gd_esquema.Maestra D
 
-INSERT INTO FGNN_19.Recorridos (codigo, puerto_desde_id, puerto_hasta_id, precio_base)
-SELECT CONVERT(VARCHAR,M.RECORRIDO_CODIGO), PD.id, PH.id, M.RECORRIDO_PRECIO_BASE
+INSERT INTO FGNN_19.Recorridos (codigo, puerto_desde_id, puerto_hasta_id)
+SELECT CONVERT(VARCHAR,M.RECORRIDO_CODIGO), PD.id, PH.id
+FROM gd_esquema.Maestra M, FGNN_19.Puertos PD, FGNN_19.Puertos PH
+WHERE PD.descripcion = M.PUERTO_DESDE
+AND PH.descripcion = M.PUERTO_HASTA
+GROUP BY CONVERT(VARCHAR,M.RECORRIDO_CODIGO), PD.id, PH.id
+
+INSERT INTO FGNN_19.Tramos(puerto_desde_id, puerto_hasta_id, precio_base)
+SELECT PD.id, PH.id, M.RECORRIDO_PRECIO_BASE
 FROM gd_esquema.Maestra M, FGNN_19.Puertos PD, FGNN_19.Puertos PH
 WHERE PD.descripcion = M.PUERTO_DESDE
 AND PH.descripcion = M.PUERTO_HASTA
@@ -498,6 +519,13 @@ AND f.descripcion = m.CRU_FABRICANTE
 AND r.codigo = CONVERT(VARCHAR,M.RECORRIDO_CODIGO)
 GROUP BY r.id, c.id
 
+INSERT INTO FGNN_19.Recorrido_X_Tramo
+SELECT r.id, t.id
+FROM FGNN_19.Recorridos r, FGNN_19.Tramos t
+WHERE r.puerto_desde_id = t.puerto_desde_id AND r.puerto_hasta_id = t.puerto_hasta_id
+GROUP BY r.id, t.id 
+ 
+
 -- Fin Migracion
 
 -- Roles --
@@ -559,15 +587,11 @@ BEGIN
 
 	DECLARE @PrecioBaseTotal FLOAT
 
-	SET @PrecioBaseTotal = (SELECT SUM(FGNN_19.FN_Calcular_costo_base(rr.recorrido_tramo))
-	FROM FGNN_19.Recorridos r, FGNN_19.Recorrido_X_Recorrido rr
+	SET @PrecioBaseTotal = (SELECT SUM(t.precio_base)
+	FROM FGNN_19.Recorridos r, FGNN_19.Recorrido_X_Tramo rt, FGNN_19.Tramos t
 	WHERE r.id = @idRecorrido
-	AND r.id = rr.recorrido_total)
-
-	IF @PrecioBaseTotal IS NULL
-	BEGIN
-		SET @PrecioBaseTotal = (SELECT r.precio_base FROM FGNN_19.Recorridos r WHERE r.id = @idRecorrido)
-	END
+	AND r.id = rt.recorrido_id AND t.id = rt.tramo_id
+	GROUP BY r.id)
 
 	RETURN @PrecioBaseTotal
 
