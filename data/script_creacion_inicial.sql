@@ -150,8 +150,8 @@ IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.P_Ins
 	DROP PROCEDURE FGNN_19.P_InsertarCrucero
 GO
 
-IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.Validar_fecha_corrimiento') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
-	DROP PROCEDURE FGNN_19.Validar_fecha_corrimiento
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.Fecha_valida_corrimiento') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
+	DROP PROCEDURE FGNN_19.Fecha_valida_corrimiento
 GO
 
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_19.FN_Calcular_costo_pasaje') AND type in (N'FN', N'IF', N'TF', N'FS', N'FT'))
