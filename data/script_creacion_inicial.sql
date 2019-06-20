@@ -146,6 +146,14 @@ IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.TOP5_
 	DROP PROCEDURE FGNN_19.TOP5_cruceros_mas_dias_fuera_servicio
 GO
 
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.P_InsertarCrucero') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
+	DROP PROCEDURE FGNN_19.P_InsertarCrucero
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.Validar_fecha_corrimiento') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
+	DROP PROCEDURE FGNN_19.Validar_fecha_corrimiento
+GO
+
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_19.FN_Calcular_costo_pasaje') AND type in (N'FN', N'IF', N'TF', N'FS', N'FT'))
 	DROP FUNCTION FGNN_19.FN_Calcular_costo_pasaje
 GO
@@ -172,10 +180,6 @@ GO
 
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_19.FN_Puede_cumplir_recorrido') AND type in (N'FN', N'IF', N'TF', N'FS', N'FT'))
 	DROP FUNCTION FGNN_19.FN_Puede_cumplir_recorrido
-GO
-
-IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.P_InsertarCrucero') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
-	DROP PROCEDURE FGNN_19.P_InsertarCrucero
 GO
 
 --Creación de tablas.
@@ -917,6 +921,25 @@ BEGIN
 END
 GO
 
+CREATE PROCEDURE FGNN_19.Fecha_valida_corrimiento(@idCrucero NUMERIC(18,0), @cantidadDias INT, @fecha_reinicio_servicio DATETIME2(3), @Resultado INT OUTPUT)
+AS
+BEGIN
+
+	DECLARE @fecha_pasaje_proximo DATETIME2(3) 
+	
+	SET @fecha_pasaje_proximo = (SELECT TOP 1 fecha_inicio
+		FROM Viajes
+		WHERE crucero_id = @idCrucero AND fecha_inicio > CONVERT(DATETIME2(3),GETDATE())
+		ORDER BY fecha_inicio ASC)
+
+	IF(CONVERT(DATETIME2(3), DATEADD(DAY, @cantidadDias, @fecha_pasaje_proximo)) < @fecha_reinicio_servicio)
+		SET @Resultado = 0
+	ELSE
+		SET @Resultado = 1
+
+	RETURN @Resultado
+END
+GO
 
 -- Triggers
 
