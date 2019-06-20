@@ -82,5 +82,24 @@ namespace FrbaCrucero
             }
         }
 
+        public Int32 ejecutarStoredProcedureConOutput(SqlCommand cmd, String parametroOutput)
+        {
+            try
+            {
+                SqlConnection cnn = crearConexion();
+                cnn.Open();
+
+                cmd.Connection = cnn;
+                int result = cmd.ExecuteNonQuery();
+                Int32 resultado = Convert.ToInt32(cmd.Parameters[parametroOutput].Value);
+                cnn.Close();
+                return resultado;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
 	}
 }

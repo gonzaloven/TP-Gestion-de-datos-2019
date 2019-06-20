@@ -295,7 +295,7 @@
             this.Controls.Add(this.textBoxNombre);
             this.Controls.Add(this.labelNombre);
             this.Name = "ModificarCrucero";
-            this.Text = "ModificarCrucero";
+            this.Text = "j";
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCantidadCabinas)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -313,11 +313,9 @@
         private System.Windows.Forms.Label labelFechaFueraServicio;
         private System.Windows.Forms.TextBox textBoxFechaFueraServicio;
         private System.Windows.Forms.Label labelFechaReinicioServicio;
-        private System.Windows.Forms.TextBox textBoxFechaReinicioServicio;
         private System.Windows.Forms.Label labelFechaBajaDefinitiva;
         private System.Windows.Forms.TextBox textBoxFechaBajaDefinitiva;
         private System.Windows.Forms.Label labelCantidadCabinas;
-        private System.Windows.Forms.ComboBox comboBoxBajaServicio;
         private System.Windows.Forms.Button buttonSeleccionarFechaFueraServicio;
         private System.Windows.Forms.Button buttonSeleccionarFechaReinicioServicio;
         private System.Windows.Forms.Button buttonSeleccionarFechaBajaDefinitiva;
@@ -328,5 +326,7 @@
         private System.Windows.Forms.Label labelID;
         private System.Windows.Forms.TextBox textBoxID;
         private System.Windows.Forms.ComboBox comboBoxTipoServicio;
+        public System.Windows.Forms.TextBox textBoxFechaReinicioServicio;
+        private System.Windows.Forms.ComboBox comboBoxBajaServicio;
     }
 }

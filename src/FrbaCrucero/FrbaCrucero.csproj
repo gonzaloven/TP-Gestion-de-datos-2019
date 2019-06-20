@@ -52,6 +52,24 @@
     <Compile Include="AbmCrucero\AgregarCrucero.Designer.cs">
       <DependentUpon>AgregarCrucero.cs</DependentUpon>
     </Compile>
+    <Compile Include="AbmCrucero\BajaCrucero.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmCrucero\BajaCrucero.Designer.cs">
+      <DependentUpon>BajaCrucero.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AbmCrucero\BajaTemporal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmCrucero\BajaTemporal.Designer.cs">
+      <DependentUpon>BajaTemporal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AbmCrucero\CancelarPasajesOReprogramar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmCrucero\CancelarPasajesOReprogramar.Designer.cs">
+      <DependentUpon>CancelarPasajesOReprogramar.cs</DependentUpon>
+    </Compile>
     <Compile Include="AbmCrucero\ListadoCrucerosForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -63,6 +81,12 @@
     </Compile>
     <Compile Include="AbmCrucero\ModificarCrucero.Designer.cs">
       <DependentUpon>ModificarCrucero.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AbmCrucero\ReprogramarViaje.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmCrucero\ReprogramarViaje.Designer.cs">
+      <DependentUpon>ReprogramarViaje.cs</DependentUpon>
     </Compile>
     <Compile Include="AbmCrucero\SeleccionarFabricante.cs">
       <SubType>Form</SubType>
@@ -179,11 +203,23 @@
     <EmbeddedResource Include="AbmCrucero\AgregarCrucero.resx">
       <DependentUpon>AgregarCrucero.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="AbmCrucero\BajaCrucero.resx">
+      <DependentUpon>BajaCrucero.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmCrucero\BajaTemporal.resx">
+      <DependentUpon>BajaTemporal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmCrucero\CancelarPasajesOReprogramar.resx">
+      <DependentUpon>CancelarPasajesOReprogramar.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="AbmCrucero\ListadoCrucerosForm.resx">
       <DependentUpon>ListadoCrucerosForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AbmCrucero\ModificarCrucero.resx">
       <DependentUpon>ModificarCrucero.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmCrucero\ReprogramarViaje.resx">
+      <DependentUpon>ReprogramarViaje.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AbmCrucero\SeleccionarFabricante.resx">
       <DependentUpon>SeleccionarFabricante.cs</DependentUpon>

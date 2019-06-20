@@ -47,7 +47,9 @@ namespace FrbaCrucero.AbmCrucero
             }
             else if(e.ColumnIndex == 1)
             {
-                throw new NotImplementedException();
+                String id = dataGridViewCrucero[2, e.RowIndex].Value.ToString();
+                BajaCrucero bajaCrucero = new BajaCrucero(this, Int32.Parse(id));
+                bajaCrucero.Show();
             }
         }
 
