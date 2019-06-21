@@ -52,7 +52,8 @@ namespace FrbaCrucero.AbmRol
 
         private void dataGridViewRoles_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            Rol rol = (Rol)dataGridViewRoles.CurrentRow.DataBoundItem;
+            
+            Rol rol = (Rol)dataGridViewRoles.Rows[e.RowIndex].DataBoundItem;
             if (e.ColumnIndex == 1)
             {
                 this.modificarRol(rol);

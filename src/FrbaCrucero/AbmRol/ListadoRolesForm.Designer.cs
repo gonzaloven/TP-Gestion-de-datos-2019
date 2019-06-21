@@ -34,11 +34,11 @@
             this.textBoxRol = new System.Windows.Forms.TextBox();
             this.labelRol = new System.Windows.Forms.Label();
             this.dataGridViewRoles = new System.Windows.Forms.DataGridView();
-            this.buttonEliminar = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.buttonModificar = new System.Windows.Forms.DataGridViewButtonColumn();
             this.buttonLimpiar = new System.Windows.Forms.Button();
             this.buttonBuscar = new System.Windows.Forms.Button();
             this.buttonNuevo = new System.Windows.Forms.Button();
+            this.buttonEliminar = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.buttonModificar = new System.Windows.Forms.DataGridViewButtonColumn();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewRoles)).BeginInit();
             this.SuspendLayout();
@@ -108,20 +108,6 @@
             this.dataGridViewRoles.TabIndex = 3;
             this.dataGridViewRoles.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewRoles_CellContentClick);
             // 
-            // buttonEliminar
-            // 
-            this.buttonEliminar.HeaderText = "Eliminar";
-            this.buttonEliminar.Name = "buttonEliminar";
-            this.buttonEliminar.ReadOnly = true;
-            this.buttonEliminar.Text = "Eliminar";
-            // 
-            // buttonModificar
-            // 
-            this.buttonModificar.HeaderText = "Modificar";
-            this.buttonModificar.Name = "buttonModificar";
-            this.buttonModificar.ReadOnly = true;
-            this.buttonModificar.Text = "Modificar";
-            // 
             // buttonLimpiar
             // 
             this.buttonLimpiar.Location = new System.Drawing.Point(12, 90);
@@ -152,6 +138,22 @@
             this.buttonNuevo.UseVisualStyleBackColor = true;
             this.buttonNuevo.Click += new System.EventHandler(this.buttonNuevo_Click);
             // 
+            // buttonEliminar
+            // 
+            this.buttonEliminar.HeaderText = "Eliminar";
+            this.buttonEliminar.Name = "buttonEliminar";
+            this.buttonEliminar.ReadOnly = true;
+            this.buttonEliminar.Text = "Eliminar";
+            this.buttonEliminar.UseColumnTextForButtonValue = true;
+            // 
+            // buttonModificar
+            // 
+            this.buttonModificar.HeaderText = "Modificar";
+            this.buttonModificar.Name = "buttonModificar";
+            this.buttonModificar.ReadOnly = true;
+            this.buttonModificar.Text = "Modificar";
+            this.buttonModificar.UseColumnTextForButtonValue = true;
+            // 
             // ListadoRolesForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -181,8 +183,8 @@
         private System.Windows.Forms.ComboBox comboBoxHabilitado;
         private System.Windows.Forms.Button buttonLimpiar;
         private System.Windows.Forms.Button buttonBuscar;
+        private System.Windows.Forms.Button buttonNuevo;
         private System.Windows.Forms.DataGridViewButtonColumn buttonEliminar;
         private System.Windows.Forms.DataGridViewButtonColumn buttonModificar;
-        private System.Windows.Forms.Button buttonNuevo;
     }
 }
