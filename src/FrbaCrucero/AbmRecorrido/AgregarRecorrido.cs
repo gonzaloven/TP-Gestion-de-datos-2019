@@ -30,6 +30,20 @@ namespace FrbaCrucero.AbmRecorrido
             {
                 DataGridViewRow fila = dataGridViewTramosTotales.CurrentRow;
                 this.agregarTramo(fila);
+                Repositorios.RepoTramo.instancia.actualizarDatosAgregar(dataGridViewTramosTotales, fila.Cells[3].Value.ToString());
+            }
+        }
+
+        private void dataGridViewTramosActuales_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == 0)
+            {
+                DataGridViewRow fila = dataGridViewTramosActuales.CurrentRow;
+                if (tablaTotal.Rows.Count == 1)
+                    Repositorios.RepoTramo.instancia.llenarDatos(dataGridViewTramosTotales);
+                else
+                    Repositorios.RepoTramo.instancia.actualizarDatosQuitar(dataGridViewTramosTotales, fila.Cells[2].Value.ToString());
+                this.quitarTramo(fila);
             }
         }
 
@@ -39,6 +53,11 @@ namespace FrbaCrucero.AbmRecorrido
            tablaTotal.Rows.Add(datarow.ItemArray);
         }
 
+        private void quitarTramo(DataGridViewRow fila)
+        {
+            var datarow = ((DataRowView)fila.DataBoundItem).Row;
+            tablaTotal.Rows.Remove(datarow);
+        }
 
     }
 }
