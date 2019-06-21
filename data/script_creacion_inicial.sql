@@ -154,6 +154,10 @@ IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.P_Ins
 	DROP PROCEDURE FGNN_19.P_InsertarCrucero
 GO
 
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.P_InsertarViaje') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
+	DROP PROCEDURE FGNN_19.P_InsertarViaje
+GO
+
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.Fecha_valida_corrimiento') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
 	DROP PROCEDURE FGNN_19.Fecha_valida_corrimiento
 GO
@@ -775,27 +779,48 @@ VALUES(@nombre, @fecha_alta, @modelo, @fabricante_id, @tipo_servicio, @cant_cabi
 COMMIT TRANSACTION;
 GO
 
+CREATE PROCEDURE [FGNN_19].[P_InsertarViaje] 
+@idCrucero NUMERIC(18,0), 
+@idRecorrido NUMERIC(18,0),
+@fechaInicio DATETIME2(3),
+@fechaFin DATETIME2(3)
+AS
+BEGIN TRANSACTION
+
+INSERT INTO FGNN_19.Viajes(crucero_id, recorrido_codigo, fecha_inicio, fecha_fin)
+VALUES(@idCrucero, @idRecorrido, @fechaInicio, @fechaFin)
+
+COMMIT TRANSACTION;
+GO
+
 CREATE PROCEDURE FGNN_19.P_Viaje_valido
-@nombreCrucero VARCHAR(255), 
-@puertoDesde VARCHAR(255), 
-@puertoHasta VARCHAR(255),
+@idCrucero NUMERIC(18,0), 
+@idRecorrido NUMERIC(18,0),
 @fechaInicio DATETIME2(3),
 @fechaFin DATETIME2(3),
-@Resultado BIT OUTPUT
+@Resultado INT OUTPUT
 AS
 BEGIN
 	
+	DECLARE @idPuertoDesde NUMERIC(18,0)
+	DECLARE @idPuertoHasta NUMERIC(18,0)
+
+	SELECT @idPuertoDesde = r.puerto_desde_id,
+		   @idPuertoHasta = r.puerto_hasta_id
+	FROM FGNN_19.Recorridos r
+	WHERE r.id = @idRecorrido
+
 	IF @fechaFin < @fechaInicio
 	BEGIN
 		SET @Resultado = 0
 	END
-	ELSE IF @puertoDesde = @puertoHasta
+	ELSE IF @idPuertoDesde = @idPuertoHasta
 	BEGIN
 		SET @Resultado = 0
 	END
 	ELSE IF EXISTS(SELECT id
 				  FROM Cruceros
-				  WHERE nombre = @nombreCrucero
+				  WHERE id = @idCrucero
 					AND FGNN_19.FN_Tiene_fecha_libre(id, @fechaInicio, @fechaFin) = 0)
 	BEGIN
 		SET @Resultado = 0

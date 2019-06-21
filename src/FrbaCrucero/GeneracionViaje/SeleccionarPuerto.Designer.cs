@@ -44,9 +44,9 @@
             this.groupBoxFiltroPuerto.Controls.Add(this.textBoxPuerto);
             this.groupBoxFiltroPuerto.Controls.Add(this.labelPuerto);
             this.groupBoxFiltroPuerto.Location = new System.Drawing.Point(16, 0);
-            this.groupBoxFiltroPuerto.Margin = new System.Windows.Forms.Padding(4);
+            this.groupBoxFiltroPuerto.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBoxFiltroPuerto.Name = "groupBoxFiltroPuerto";
-            this.groupBoxFiltroPuerto.Padding = new System.Windows.Forms.Padding(4);
+            this.groupBoxFiltroPuerto.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBoxFiltroPuerto.Size = new System.Drawing.Size(564, 111);
             this.groupBoxFiltroPuerto.TabIndex = 0;
             this.groupBoxFiltroPuerto.TabStop = false;
@@ -55,7 +55,7 @@
             // textBoxPuerto
             // 
             this.textBoxPuerto.Location = new System.Drawing.Point(67, 46);
-            this.textBoxPuerto.Margin = new System.Windows.Forms.Padding(4);
+            this.textBoxPuerto.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBoxPuerto.Name = "textBoxPuerto";
             this.textBoxPuerto.Size = new System.Drawing.Size(275, 22);
             this.textBoxPuerto.TabIndex = 1;
@@ -73,7 +73,7 @@
             // buttonLimpiar
             // 
             this.buttonLimpiar.Location = new System.Drawing.Point(16, 118);
-            this.buttonLimpiar.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonLimpiar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonLimpiar.Name = "buttonLimpiar";
             this.buttonLimpiar.Size = new System.Drawing.Size(100, 28);
             this.buttonLimpiar.TabIndex = 2;
@@ -84,7 +84,7 @@
             // buttonBuscar
             // 
             this.buttonBuscar.Location = new System.Drawing.Point(480, 118);
-            this.buttonBuscar.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonBuscar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonBuscar.Name = "buttonBuscar";
             this.buttonBuscar.Size = new System.Drawing.Size(100, 28);
             this.buttonBuscar.TabIndex = 3;
@@ -100,12 +100,12 @@
             this.dataGridViewPuertos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Seleccionar});
             this.dataGridViewPuertos.Location = new System.Drawing.Point(16, 154);
-            this.dataGridViewPuertos.Margin = new System.Windows.Forms.Padding(4);
+            this.dataGridViewPuertos.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dataGridViewPuertos.Name = "dataGridViewPuertos";
             this.dataGridViewPuertos.ReadOnly = true;
             this.dataGridViewPuertos.Size = new System.Drawing.Size(564, 274);
             this.dataGridViewPuertos.TabIndex = 4;
-            this.dataGridViewPuertos.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewPuertos_CellContentClick);
+            this.dataGridViewPuertos.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewPuertos_CellContentClick_1);
             // 
             // Seleccionar
             // 
@@ -124,7 +124,7 @@
             this.Controls.Add(this.buttonBuscar);
             this.Controls.Add(this.buttonLimpiar);
             this.Controls.Add(this.groupBoxFiltroPuerto);
-            this.Margin = new System.Windows.Forms.Padding(4);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "SeleccionarPuerto";
             this.Text = "Seleccionar puerto";
             this.groupBoxFiltroPuerto.ResumeLayout(false);

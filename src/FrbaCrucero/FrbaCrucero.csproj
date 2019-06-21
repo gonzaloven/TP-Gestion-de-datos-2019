@@ -136,11 +136,17 @@
     <Compile Include="CompraReservaPasaje\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="GeneracionViaje\SeleccionarCrucero.cs">
+    <Compile Include="GeneracionViaje\ListadoCruceros.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GeneracionViaje\SeleccionarCrucero.Designer.cs">
-      <DependentUpon>SeleccionarCrucero.cs</DependentUpon>
+    <Compile Include="GeneracionViaje\ListadoCruceros.Designer.cs">
+      <DependentUpon>ListadoCruceros.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GeneracionViaje\ListadoRecorrido.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GeneracionViaje\ListadoRecorrido.Designer.cs">
+      <DependentUpon>ListadoRecorrido.cs</DependentUpon>
     </Compile>
     <Compile Include="GeneracionViaje\SeleccionarFecha.cs">
       <SubType>Form</SubType>
@@ -173,6 +179,7 @@
       <DependentUpon>ListadoEstadisticoForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Modelos\CrearCrucero.cs" />
+    <Compile Include="Modelos\CrearViaje.cs" />
     <Compile Include="Modelos\Crucero.cs" />
     <Compile Include="Modelos\Fabricante.cs" />
     <Compile Include="Modelos\Funcionalidad.cs" />
@@ -245,8 +252,11 @@
     <EmbeddedResource Include="GeneracionViaje\FormGenerarViaje.resx">
       <DependentUpon>FormGenerarViaje.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GeneracionViaje\SeleccionarCrucero.resx">
-      <DependentUpon>SeleccionarCrucero.cs</DependentUpon>
+    <EmbeddedResource Include="GeneracionViaje\ListadoCruceros.resx">
+      <DependentUpon>ListadoCruceros.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GeneracionViaje\ListadoRecorrido.resx">
+      <DependentUpon>ListadoRecorrido.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GeneracionViaje\SeleccionarFecha.resx">
       <DependentUpon>SeleccionarFecha.cs</DependentUpon>

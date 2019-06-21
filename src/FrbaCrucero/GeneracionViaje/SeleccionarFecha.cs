@@ -25,6 +25,7 @@ namespace FrbaCrucero.GeneracionViaje
         private void buttonSeleccionarFecha_Click(object sender, EventArgs e)
         {
             form.textBoxParam.Text = dateTimePickerFecha.Value.ToString();
+            this.Close();
         }
     }
 }

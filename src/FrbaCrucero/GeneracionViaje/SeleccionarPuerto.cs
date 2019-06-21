@@ -14,10 +14,10 @@ namespace FrbaCrucero.GeneracionViaje
 {
     public partial class SeleccionarPuerto : Form
     {
-        FormGenerarViaje form;
+        ListadoRecorrido form;
         TextBox textBoxParam;
 
-        public SeleccionarPuerto(FormGenerarViaje form, TextBox textBoxParam)
+        public SeleccionarPuerto(ListadoRecorrido form, TextBox textBoxParam)
         {
             InitializeComponent();
             this.form = form;
@@ -36,10 +36,10 @@ namespace FrbaCrucero.GeneracionViaje
             dataGridViewPuertos.DataSource = puertos;
         }
 
-        private void dataGridViewPuertos_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void dataGridViewPuertos_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
         {
             if (e.ColumnIndex == 0)
-                form.textBoxParam.Text = dataGridViewPuertos[2,e.RowIndex].Value.ToString();
+                form.textBoxParam.Text = dataGridViewPuertos[2, e.RowIndex].Value.ToString();
         }
 
     }
