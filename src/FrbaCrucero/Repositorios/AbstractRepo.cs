@@ -61,7 +61,7 @@ namespace FrbaCrucero.Repositorios
             return ObtenerModeloDesdeTabla(tabla);
         }
 
-        private T ObtenerModeloDesdeTabla(DataTable tabla)
+        protected T ObtenerModeloDesdeTabla(DataTable tabla)
         {
             return ObtenerModelosDesdeTabla(tabla).First();
         }

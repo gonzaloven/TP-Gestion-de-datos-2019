@@ -88,6 +88,12 @@
     <Compile Include="CompraReservaPasaje\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Login.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Login.Designer.cs">
+      <DependentUpon>Login.cs</DependentUpon>
+    </Compile>
     <Compile Include="MenuPrincipal.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -109,6 +115,7 @@
     <Compile Include="Modelos\Funcionalidad.cs" />
     <Compile Include="Modelos\Puerto.cs" />
     <Compile Include="Modelos\Rol.cs" />
+    <Compile Include="Modelos\Usuario.cs" />
     <Compile Include="PagoReserva\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -122,6 +129,7 @@
     <Compile Include="Repositorios\RepoFuncionalidad.cs" />
     <Compile Include="Repositorios\RepoPuerto.cs" />
     <Compile Include="Repositorios\RepoRol.cs" />
+    <Compile Include="Repositorios\RepoUsuario.cs" />
     <Compile Include="Utils\ConexionDB.cs" />
     <EmbeddedResource Include="AbmRecorrido\ListadoRecorridoForm.resx">
       <DependentUpon>ListadoRecorridoForm.cs</DependentUpon>
@@ -137,6 +145,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AbmRol\RolForm.resx">
       <DependentUpon>RolForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Login.resx">
+      <DependentUpon>Login.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MenuPrincipal.resx">
       <DependentUpon>MenuPrincipal.cs</DependentUpon>

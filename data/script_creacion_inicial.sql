@@ -114,7 +114,7 @@ GO
 CREATE TABLE [FGNN_19].[Usuarios] (
 	[id] NUMERIC(18, 0) IDENTITY(1, 1),
 	[username] VARCHAR(255) UNIQUE NOT NULL,
-	[password] BINARY(32) NOT NULL,
+	[password] NVARCHAR(256) NOT NULL,
 	[intentos_fallidos] SMALLINT DEFAULT 0 NOT NULL,
 	[habilitado] BIT DEFAULT 1 NOT NULL,
 	PRIMARY KEY ([id])
@@ -434,15 +434,15 @@ INSERT INTO [FGNN_19].[Funcionalidades_Roles]
 GO
 
 INSERT INTO FGNN_19.Usuarios (username, password, intentos_fallidos, habilitado)
-VALUES ('juanpedro',CONVERT(BINARY(32),HASHBYTES('SHA2_256','w23e')),0,1)
+VALUES ('juanpedro',CONVERT(BINARY(64),HASHBYTES('SHA2_256','w23e')),0,1)
 GO
 
 INSERT INTO FGNN_19.Usuarios (username, password, intentos_fallidos, habilitado)
-VALUES ('pablo18',CONVERT(BINARY(32),HASHBYTES('SHA2_256','w23e')),0,1)
+VALUES ('pablo18',CONVERT(BINARY(64),HASHBYTES('SHA2_256','w23e')),0,1)
 GO
 
 INSERT INTO FGNN_19.Usuarios (username, password, intentos_fallidos, habilitado)
-VALUES ('javiperez67',CONVERT(BINARY(32),HASHBYTES('SHA2_256','w23e')),0,1)
+VALUES ('javiperez67',CONVERT(BINARY(64),HASHBYTES('SHA2_256','w23e')),0,1)
 GO
 
 INSERT INTO FGNN_19.Usuarios_Roles
