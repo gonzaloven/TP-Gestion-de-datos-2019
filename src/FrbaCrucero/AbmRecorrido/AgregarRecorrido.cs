@@ -36,10 +36,7 @@ namespace FrbaCrucero.AbmRecorrido
         private void agregarTramo(DataGridViewRow fila)
         {
            var datarow = ((DataRowView)fila.DataBoundItem).Row;
-           if (!tablaTotal.Rows.Contains(datarow))
-           {
-               tablaTotal.Rows.Add(datarow.ItemArray);
-           }
+           tablaTotal.Rows.Add(datarow.ItemArray);
         }
 
 
