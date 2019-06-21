@@ -47,5 +47,14 @@ namespace FrbaCrucero.Repositorios
         {
             throw new NotImplementedException();
         }
+
+        public String buscarValorID(Int32 id)
+        {
+            string sqlQuery = "SELECT p.descripcion FROM FGNN_19.Puertos p WHERE p.id = @id";
+            SqlCommand cmd = new SqlCommand(sqlQuery);
+            cmd.Parameters.Add(new SqlParameter("id", id));
+            DataTable tabla = conexionDB.obtenerData(cmd);
+            return tabla.Rows[0][0].ToString();
+        }
     }
 }

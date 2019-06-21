@@ -40,6 +40,7 @@
             this.buttonLimpiar = new System.Windows.Forms.Button();
             this.buttonBuscar = new System.Windows.Forms.Button();
             this.dataGridViewRecorrido = new System.Windows.Forms.DataGridView();
+            this.buttonAgregar = new System.Windows.Forms.Button();
             this.groupBoxFiltrosRecorrido.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewRecorrido)).BeginInit();
             this.SuspendLayout();
@@ -47,7 +48,7 @@
             // labelHabilitado
             // 
             this.labelHabilitado.AutoSize = true;
-            this.labelHabilitado.Location = new System.Drawing.Point(28, 41);
+            this.labelHabilitado.Location = new System.Drawing.Point(32, 40);
             this.labelHabilitado.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelHabilitado.Name = "labelHabilitado";
             this.labelHabilitado.Size = new System.Drawing.Size(71, 17);
@@ -70,7 +71,7 @@
             // labelPuertoDesde
             // 
             this.labelPuertoDesde.AutoSize = true;
-            this.labelPuertoDesde.Location = new System.Drawing.Point(28, 84);
+            this.labelPuertoDesde.Location = new System.Drawing.Point(32, 84);
             this.labelPuertoDesde.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelPuertoDesde.Name = "labelPuertoDesde";
             this.labelPuertoDesde.Size = new System.Drawing.Size(93, 17);
@@ -80,7 +81,7 @@
             // labelPuertoHasta
             // 
             this.labelPuertoHasta.AutoSize = true;
-            this.labelPuertoHasta.Location = new System.Drawing.Point(39, 130);
+            this.labelPuertoHasta.Location = new System.Drawing.Point(32, 127);
             this.labelPuertoHasta.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelPuertoHasta.Name = "labelPuertoHasta";
             this.labelPuertoHasta.Size = new System.Drawing.Size(89, 17);
@@ -175,11 +176,22 @@
             this.dataGridViewRecorrido.Size = new System.Drawing.Size(707, 234);
             this.dataGridViewRecorrido.TabIndex = 12;
             // 
+            // buttonAgregar
+            // 
+            this.buttonAgregar.Location = new System.Drawing.Point(623, 475);
+            this.buttonAgregar.Name = "buttonAgregar";
+            this.buttonAgregar.Size = new System.Drawing.Size(100, 40);
+            this.buttonAgregar.TabIndex = 13;
+            this.buttonAgregar.Text = "Agregar";
+            this.buttonAgregar.UseVisualStyleBackColor = true;
+            this.buttonAgregar.Click += new System.EventHandler(this.buttonAgregar_Click);
+            // 
             // ListadoRecorridoForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(739, 492);
+            this.ClientSize = new System.Drawing.Size(739, 521);
+            this.Controls.Add(this.buttonAgregar);
             this.Controls.Add(this.dataGridViewRecorrido);
             this.Controls.Add(this.buttonBuscar);
             this.Controls.Add(this.buttonLimpiar);
@@ -208,5 +220,6 @@
         private System.Windows.Forms.Button buttonLimpiar;
         private System.Windows.Forms.Button buttonBuscar;
         private System.Windows.Forms.DataGridView dataGridViewRecorrido;
+        private System.Windows.Forms.Button buttonAgregar;
     }
 }
