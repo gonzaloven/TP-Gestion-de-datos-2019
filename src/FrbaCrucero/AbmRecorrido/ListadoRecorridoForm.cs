@@ -18,7 +18,7 @@ namespace FrbaCrucero.AbmRecorrido
         public ListadoRecorridoForm()
         {
             InitializeComponent();
-            textBoxPuertDesde.ReadOnly = true;
+            textBoxPuertoDesde.ReadOnly = true;
             textBoxPuertoHasta.ReadOnly = true;
             comboBoxHabilitado.SelectedIndex = 0;
             dataGridViewRecorrido.ReadOnly = true;
@@ -26,14 +26,14 @@ namespace FrbaCrucero.AbmRecorrido
 
         private void buttonLimpiar_Click(object sender, EventArgs e)
         {
-            textBoxPuertDesde.Text = null;
+            textBoxPuertoDesde.Text = null;
             textBoxPuertoHasta.Text = null;
             comboBoxHabilitado.Text = "Todos";
         }
 
         private void buttonSeleccionarDesde_Click(object sender, EventArgs e)
         {
-            this.textBoxParam = textBoxPuertDesde;
+            this.textBoxParam = textBoxPuertoDesde;
             SeleccionarPuerto seleccionarPuerto = new SeleccionarPuerto(this, textBoxParam);
             seleccionarPuerto.Show();
         }
@@ -47,20 +47,18 @@ namespace FrbaCrucero.AbmRecorrido
 
         private void buttonBuscar_Click(object sender, EventArgs e)
         {
-            string valorPuertoDesde = (!String.IsNullOrEmpty(textBoxPuertDesde.Text)) ? textBoxPuertDesde.Text.Trim() : "";
-            string valorPuertoHasta = (!String.IsNullOrEmpty(textBoxPuertoHasta.Text)) ? textBoxPuertoHasta.Text.Trim() : "";
+            string valorPuertoDesde = textBoxPuertoDesde.Text;
+            string valorPuertoHasta = textBoxPuertoHasta.Text;
             string textHabilitado = Convert.ToString(comboBoxHabilitado.SelectedItem);
-            Boolean hayValorHabilitado = false;
-            Int16 valorHabilitado = 0;
+            Int16? valorHabilitado = null;
 
             if (!textHabilitado.Equals("Todos"))
             {
-                hayValorHabilitado = true;
                 valorHabilitado = (textHabilitado.Equals("Si")) ? (Int16)1 : (Int16)0;
             }
 
             List<Recorrido> recorridos = RepoRecorrido.instancia
-                                                 .EncontrarPorParametros(valorPuertoDesde, valorPuertoHasta, valorHabilitado, hayValorHabilitado);
+                                                 .EncontrarPorParametros(valorPuertoDesde, valorPuertoHasta, valorHabilitado);
             dataGridViewRecorrido.DataSource = recorridos;
             dataGridViewRecorrido.MultiSelect = false;
         }

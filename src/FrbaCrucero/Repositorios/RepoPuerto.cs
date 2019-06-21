@@ -36,9 +36,9 @@ namespace FrbaCrucero.Repositorios
 
         public List<Puerto> EncontrarPorDescripcionPuerto(string puerto)
         {
-            string sqlQuery = "SELECT * FROM" + nombreTabla + " WHERE descripcion LIKE @PuertoPattern";
+            string sqlQuery = "SELECT * FROM " + nombreTabla + " WHERE descripcion LIKE @DescripcionPatron";
             SqlCommand cmd = new SqlCommand(sqlQuery);
-            cmd.Parameters.Add(new SqlParameter("PuertoPattern", puerto + "%"));
+            cmd.Parameters.Add(new SqlParameter("DescripcionPatron", "%" + puerto + "%"));
             DataTable tabla = conexionDB.obtenerData(cmd);
             return ObtenerModelosDesdeTabla(tabla);
         }

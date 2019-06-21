@@ -39,7 +39,8 @@ namespace FrbaCrucero.GeneracionViaje
         private void dataGridViewPuertos_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
         {
             if (e.ColumnIndex == 0)
-                form.textBoxParam.Text = dataGridViewPuertos[2, e.RowIndex].Value.ToString();
+                form.textBoxParam.Text = dataGridViewPuertos[1, e.RowIndex].Value.ToString();
+            this.Close();
         }
 
     }
