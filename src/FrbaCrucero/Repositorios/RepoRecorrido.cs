@@ -50,27 +50,26 @@ namespace FrbaCrucero.Repositorios
             return recorridos;
         }
 
-        public List<Recorrido> EncontrarPorParametros(String puertoDesde, String puertoHasta, Int16 habilatado, Boolean filtarPorValor)
+        public List<Recorrido> EncontrarPorParametros(String puertoDesde, String puertoHasta, Int16? habilitado)
         {
-            string sqlQuery;
-            if (!String.IsNullOrWhiteSpace(puertoDesde) && !String.IsNullOrWhiteSpace(puertoHasta))
+            string sqlQuery = "SELECT * FROM " + nombreTabla + " WHERE id > 0";
+            SqlCommand cmd = new SqlCommand(sqlQuery);
+            if (!String.IsNullOrWhiteSpace(puertoDesde))
             {
-                sqlQuery = "SELECT * FROM " + nombreTabla + ", FGNN_19.Puertos p1, FGNN_19.Puertos p2 "
-                                                                 + "WHERE p1.id = puerto_desde_id AND p2.id = puerto_hasta_id "
-                                                                 + "AND p1.descripcion = @puertoDesde OR p2.descripcion = @puertoHasta";
+                cmd.CommandText = cmd.CommandText + " AND puerto_desde_id = @puertoDesde";
+                cmd.Parameters.Add(new SqlParameter("puertoDesde", puertoDesde));
             }
-            else
+
+            if (!String.IsNullOrWhiteSpace(puertoHasta))
             {
-                sqlQuery = "SELECT * FROM " + nombreTabla;
+                cmd.CommandText = cmd.CommandText + " AND puerto_hasta_id = @puertoHasta";
+                cmd.Parameters.Add(new SqlParameter("puertoHasta", puertoHasta));
             }
             
-            SqlCommand cmd = new SqlCommand(sqlQuery);
-            cmd.Parameters.Add(new SqlParameter("puertoDesde", puertoDesde));
-            cmd.Parameters.Add(new SqlParameter("puertoHasta", puertoHasta));
-            if (filtarPorValor)
+            if (habilitado != null)
             {
                 cmd.CommandText = cmd.CommandText + " AND habilitado = @Habilitado";
-                cmd.Parameters.Add(new SqlParameter("Habilitado", habilatado));
+                cmd.Parameters.Add(new SqlParameter("Habilitado", habilitado));
             }
 
             DataTable tabla = conexionDB.obtenerData(cmd);

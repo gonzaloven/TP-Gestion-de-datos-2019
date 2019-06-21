@@ -31,15 +31,18 @@ namespace FrbaCrucero.AbmRecorrido
 
         private void buttonBuscar_Click(object sender, EventArgs e)
         {
-            string descripcionPuerto = textBoxPuerto.Text;
+            string descripcionPuerto = (!String.IsNullOrEmpty(textBoxPuerto.Text)) ? textBoxPuerto.Text.Trim() : "";
             List<Puerto> puertos = RepoPuerto.instancia.EncontrarPorDescripcionPuerto(descripcionPuerto);
             dataGridViewPuertos.DataSource = puertos;
+            dataGridViewPuertos.Columns["id"].Visible = false;
+            dataGridViewPuertos.Columns["descripcion"].HeaderText = "Nombre del puerto";
         }
 
         private void dataGridViewPuertos_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
         {
             if (e.ColumnIndex == 0)
-                form.textBoxParam.Text = dataGridViewPuertos[2, e.RowIndex].Value.ToString();
+                form.textBoxParam.Text = dataGridViewPuertos[1, e.RowIndex].Value.ToString();
+            this.Close();
         }
 
     }

@@ -59,12 +59,12 @@ namespace FrbaCrucero.Repositorios
             return ObtenerModelosDesdeTabla(tabla);
         }
 
-        public List<Crucero> EncontrarCruceroNombreEstadoModeloServicio(string nombre, Int16 baja_servicio, string modelo, string tipo_servicio)
+        public List<Crucero> EncontrarCruceroNombreEstadoModeloServicio(string nombre, Int16? baja_servicio, string modelo, string tipo_servicio)
         {
             string sqlQuery = "SELECT * FROM " + nombreTabla + " WHERE nombre LIKE @DescripcionPatron";
             SqlCommand cmd = new SqlCommand(sqlQuery);
             cmd.Parameters.Add(new SqlParameter("DescripcionPatron", "%" + nombre + "%"));
-            if (baja_servicio != -1)
+            if (baja_servicio != null)
             {
                 cmd.CommandText = cmd.CommandText + " AND baja_servicio = @Baja_servicio";
                 cmd.Parameters.Add(new SqlParameter("Baja_servicio", baja_servicio));
