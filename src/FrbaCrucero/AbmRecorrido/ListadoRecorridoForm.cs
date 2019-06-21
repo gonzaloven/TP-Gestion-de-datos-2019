@@ -63,6 +63,12 @@ namespace FrbaCrucero.AbmRecorrido
             dataGridViewRecorrido.MultiSelect = false;
         }
 
+        private void buttonAgregar_Click(object sender, EventArgs e)
+        {
+            AgregarRecorrido agregarRecorrido = new AgregarRecorrido();
+            agregarRecorrido.Show();
+        }
+
 
     }
 }

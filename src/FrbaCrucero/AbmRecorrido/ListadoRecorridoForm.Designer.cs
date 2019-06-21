@@ -35,6 +35,7 @@
             this.textBoxPuertoDesde = new System.Windows.Forms.TextBox();
             this.buttonSeleccionarDesde = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.buttonAgregar = new System.Windows.Forms.Button();
             this.textBoxPuertoHasta = new System.Windows.Forms.TextBox();
             this.groupBoxFiltrosRecorrido = new System.Windows.Forms.GroupBox();
             this.buttonLimpiar = new System.Windows.Forms.Button();
@@ -154,6 +155,16 @@
             this.buttonBuscar.UseVisualStyleBackColor = true;
             this.buttonBuscar.Click += new System.EventHandler(this.buttonBuscar_Click);
             // 
+            // buttonAgregar
+            // 
+            this.buttonAgregar.Location = new System.Drawing.Point(623, 475);
+            this.buttonAgregar.Name = "buttonAgregar";
+            this.buttonAgregar.Size = new System.Drawing.Size(100, 40);
+            this.buttonAgregar.TabIndex = 13;
+            this.buttonAgregar.Text = "Agregar";
+            this.buttonAgregar.UseVisualStyleBackColor = true;
+            this.buttonAgregar.Click += new System.EventHandler(this.buttonAgregar_Click);
+            // 
             // dataGridViewRecorrido
             // 
             this.dataGridViewRecorrido.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -167,6 +178,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(554, 400);
+            this.Controls.Add(this.buttonAgregar);
             this.Controls.Add(this.dataGridViewRecorrido);
             this.Controls.Add(this.buttonBuscar);
             this.Controls.Add(this.buttonLimpiar);
@@ -177,7 +189,6 @@
             this.groupBoxFiltrosRecorrido.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewRecorrido)).EndInit();
             this.ResumeLayout(false);
-
         }
 
         #endregion
@@ -194,5 +205,6 @@
         private System.Windows.Forms.Button buttonLimpiar;
         private System.Windows.Forms.Button buttonBuscar;
         private System.Windows.Forms.DataGridView dataGridViewRecorrido;
+        private System.Windows.Forms.Button buttonAgregar;
     }
 }

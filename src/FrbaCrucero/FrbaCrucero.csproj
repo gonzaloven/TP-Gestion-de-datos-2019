@@ -100,6 +100,12 @@
     <Compile Include="AbmCrucero\SeleccionarFecha.Designer.cs">
       <DependentUpon>SeleccionarFecha.cs</DependentUpon>
     </Compile>
+    <Compile Include="AbmRecorrido\AgregarRecorrido.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmRecorrido\AgregarRecorrido.Designer.cs">
+      <DependentUpon>AgregarRecorrido.cs</DependentUpon>
+    </Compile>
     <Compile Include="AbmRecorrido\ListadoRecorridoForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -187,6 +193,7 @@
     <Compile Include="Modelos\Recorrido.cs" />
     <Compile Include="Modelos\Rol.cs" />
     <Compile Include="Modelos\Top5.cs" />
+    <Compile Include="Modelos\Tramo.cs" />
     <Compile Include="Modelos\Viaje.cs" />
     <Compile Include="PagoReserva\Form1.cs">
       <SubType>Form</SubType>
@@ -205,6 +212,7 @@
     <Compile Include="Repositorios\RepoPuerto.cs" />
     <Compile Include="Repositorios\RepoRecorrido.cs" />
     <Compile Include="Repositorios\RepoRol.cs" />
+    <Compile Include="Repositorios\RepoTramo.cs" />
     <Compile Include="Repositorios\RepoViaje.cs" />
     <Compile Include="Utils\ConexionDB.cs" />
     <EmbeddedResource Include="AbmCrucero\AgregarCrucero.resx">
@@ -233,6 +241,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AbmCrucero\SeleccionarFecha.resx">
       <DependentUpon>SeleccionarFecha.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmRecorrido\AgregarRecorrido.resx">
+      <DependentUpon>AgregarRecorrido.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AbmRecorrido\ListadoRecorridoForm.resx">
       <DependentUpon>ListadoRecorridoForm.cs</DependentUpon>
