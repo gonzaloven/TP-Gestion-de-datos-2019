@@ -111,6 +111,16 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // buttonAgregar
+            // 
+            this.buttonAgregar.Location = new System.Drawing.Point(442, 386);
+            this.buttonAgregar.Name = "buttonAgregar";
+            this.buttonAgregar.Size = new System.Drawing.Size(100, 40);
+            this.buttonAgregar.TabIndex = 13;
+            this.buttonAgregar.Text = "Agregar";
+            this.buttonAgregar.UseVisualStyleBackColor = true;
+            this.buttonAgregar.Click += new System.EventHandler(this.buttonAgregar_Click);
+            // 
             // textBoxPuertoHasta
             // 
             this.textBoxPuertoHasta.Location = new System.Drawing.Point(102, 103);
@@ -155,16 +165,6 @@
             this.buttonBuscar.UseVisualStyleBackColor = true;
             this.buttonBuscar.Click += new System.EventHandler(this.buttonBuscar_Click);
             // 
-            // buttonAgregar
-            // 
-            this.buttonAgregar.Location = new System.Drawing.Point(623, 475);
-            this.buttonAgregar.Name = "buttonAgregar";
-            this.buttonAgregar.Size = new System.Drawing.Size(100, 40);
-            this.buttonAgregar.TabIndex = 13;
-            this.buttonAgregar.Text = "Agregar";
-            this.buttonAgregar.UseVisualStyleBackColor = true;
-            this.buttonAgregar.Click += new System.EventHandler(this.buttonAgregar_Click);
-            // 
             // dataGridViewRecorrido
             // 
             this.dataGridViewRecorrido.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -177,7 +177,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(554, 400);
+            this.ClientSize = new System.Drawing.Size(554, 436);
             this.Controls.Add(this.buttonAgregar);
             this.Controls.Add(this.dataGridViewRecorrido);
             this.Controls.Add(this.buttonBuscar);
@@ -189,6 +189,7 @@
             this.groupBoxFiltrosRecorrido.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewRecorrido)).EndInit();
             this.ResumeLayout(false);
+
         }
 
         #endregion
