@@ -47,6 +47,17 @@ namespace FrbaCrucero.AbmRecorrido
 
         private void buttonBuscar_Click(object sender, EventArgs e)
         {
+            this.Buscar();
+        }
+
+        private void buttonAgregar_Click(object sender, EventArgs e)
+        {
+            AgregarRecorrido agregarRecorrido = new AgregarRecorrido(this);
+            agregarRecorrido.Show();
+        }
+
+        public void Buscar()
+        {
             string valorPuertoDesde = textBoxPuertoDesde.Text;
             string valorPuertoHasta = textBoxPuertoHasta.Text;
             string textHabilitado = Convert.ToString(comboBoxHabilitado.SelectedItem);
@@ -61,12 +72,6 @@ namespace FrbaCrucero.AbmRecorrido
                                                  .EncontrarPorParametros(valorPuertoDesde, valorPuertoHasta, valorHabilitado);
             dataGridViewRecorrido.DataSource = recorridos;
             dataGridViewRecorrido.MultiSelect = false;
-        }
-
-        private void buttonAgregar_Click(object sender, EventArgs e)
-        {
-            AgregarRecorrido agregarRecorrido = new AgregarRecorrido();
-            agregarRecorrido.Show();
         }
 
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FrbaCrucero.Modelos;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,9 +14,11 @@ namespace FrbaCrucero.AbmRecorrido
     public partial class AgregarRecorrido : Form
     {
         DataTable tablaTotal = new DataTable();
-        public AgregarRecorrido()
+        ListadoRecorridoForm listadoRecorridos;
+        public AgregarRecorrido(ListadoRecorridoForm listadoRecorridos)
         {
             InitializeComponent();
+            this.listadoRecorridos = listadoRecorridos;
             Repositorios.RepoTramo.instancia.llenarDatos(dataGridViewTramosTotales);
             tablaTotal.Columns.Add("id", typeof(Int32));
             tablaTotal.Columns.Add("puertoDesde", typeof(String));
@@ -57,6 +60,34 @@ namespace FrbaCrucero.AbmRecorrido
         {
             var datarow = ((DataRowView)fila.DataBoundItem).Row;
             tablaTotal.Rows.Remove(datarow);
+        }
+
+        private void buttonCancelar_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void buttonGuardar_Click(object sender, EventArgs e)
+        {
+            String codigo = textBoxCodigo.Text;
+            Int32 idPuertoDesde = Int32.Parse(dataGridViewTramosActuales[2, 0].Value.ToString());
+            Int32 indiceUltimaFila = dataGridViewTramosActuales.Rows.Count - 1;
+            Int32 idPuertoHasta = Int32.Parse(dataGridViewTramosActuales[3, indiceUltimaFila].Value.ToString());
+
+            CrearRecorrido nuevoRecorrido = new CrearRecorrido(codigo, idPuertoDesde, idPuertoHasta);
+            Int32 idRecorridoCreado = nuevoRecorrido.Crear();
+
+            foreach (DataGridViewRow fila in dataGridViewTramosActuales.Rows)
+            {
+                Int32 idTramo = Int32.Parse(fila.Cells[1].Value.ToString());
+                CrearRecorridoXTramo crearNuevoRecorridoXTramo = new CrearRecorridoXTramo(idRecorridoCreado, idTramo);
+                crearNuevoRecorridoXTramo.Crear();
+            }
+
+            MessageBox.Show("Se ha ingresado el recorrido con exito.", "Exito",
+                                MessageBoxButtons.OK, MessageBoxIcon.None);
+            this.Close();
+            listadoRecorridos.Buscar();
         }
 
     }

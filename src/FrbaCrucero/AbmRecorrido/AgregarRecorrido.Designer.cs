@@ -35,9 +35,9 @@
             this.dataGridViewTramosActuales = new System.Windows.Forms.DataGridView();
             this.Quitar = new System.Windows.Forms.DataGridViewButtonColumn();
             this.labelTramos = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.labelTodosLosTramos = new System.Windows.Forms.Label();
             this.labelCodigo = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBoxCodigo = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTramosTotales)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTramosActuales)).BeginInit();
             this.SuspendLayout();
@@ -49,12 +49,12 @@
             this.dataGridViewTramosTotales.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewTramosTotales.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Agregar});
-            this.dataGridViewTramosTotales.Location = new System.Drawing.Point(434, 72);
-            this.dataGridViewTramosTotales.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dataGridViewTramosTotales.Location = new System.Drawing.Point(579, 89);
+            this.dataGridViewTramosTotales.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dataGridViewTramosTotales.Name = "dataGridViewTramosTotales";
             this.dataGridViewTramosTotales.ReadOnly = true;
             this.dataGridViewTramosTotales.RowTemplate.Height = 24;
-            this.dataGridViewTramosTotales.Size = new System.Drawing.Size(442, 334);
+            this.dataGridViewTramosTotales.Size = new System.Drawing.Size(589, 411);
             this.dataGridViewTramosTotales.TabIndex = 0;
             this.dataGridViewTramosTotales.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewTramosTotales_CellContentClick);
             // 
@@ -68,23 +68,25 @@
             // 
             // buttonGuardar
             // 
-            this.buttonGuardar.Location = new System.Drawing.Point(790, 411);
-            this.buttonGuardar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonGuardar.Location = new System.Drawing.Point(1053, 506);
+            this.buttonGuardar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buttonGuardar.Name = "buttonGuardar";
-            this.buttonGuardar.Size = new System.Drawing.Size(86, 29);
+            this.buttonGuardar.Size = new System.Drawing.Size(115, 36);
             this.buttonGuardar.TabIndex = 1;
             this.buttonGuardar.Text = "Guardar";
             this.buttonGuardar.UseVisualStyleBackColor = true;
+            this.buttonGuardar.Click += new System.EventHandler(this.buttonGuardar_Click);
             // 
             // buttonCancelar
             // 
-            this.buttonCancelar.Location = new System.Drawing.Point(700, 411);
-            this.buttonCancelar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonCancelar.Location = new System.Drawing.Point(933, 506);
+            this.buttonCancelar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buttonCancelar.Name = "buttonCancelar";
-            this.buttonCancelar.Size = new System.Drawing.Size(86, 29);
+            this.buttonCancelar.Size = new System.Drawing.Size(115, 36);
             this.buttonCancelar.TabIndex = 3;
             this.buttonCancelar.Text = "Cancelar";
             this.buttonCancelar.UseVisualStyleBackColor = true;
+            this.buttonCancelar.Click += new System.EventHandler(this.buttonCancelar_Click);
             // 
             // dataGridViewTramosActuales
             // 
@@ -93,12 +95,12 @@
             this.dataGridViewTramosActuales.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewTramosActuales.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Quitar});
-            this.dataGridViewTramosActuales.Location = new System.Drawing.Point(9, 72);
-            this.dataGridViewTramosActuales.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dataGridViewTramosActuales.Location = new System.Drawing.Point(12, 89);
+            this.dataGridViewTramosActuales.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dataGridViewTramosActuales.Name = "dataGridViewTramosActuales";
             this.dataGridViewTramosActuales.ReadOnly = true;
             this.dataGridViewTramosActuales.RowTemplate.Height = 24;
-            this.dataGridViewTramosActuales.Size = new System.Drawing.Size(376, 334);
+            this.dataGridViewTramosActuales.Size = new System.Drawing.Size(501, 411);
             this.dataGridViewTramosActuales.TabIndex = 4;
             this.dataGridViewTramosActuales.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewTramosActuales_CellContentClick);
             // 
@@ -113,55 +115,52 @@
             // labelTramos
             // 
             this.labelTramos.AutoSize = true;
-            this.labelTramos.Location = new System.Drawing.Point(7, 48);
-            this.labelTramos.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelTramos.Location = new System.Drawing.Point(9, 59);
             this.labelTramos.Name = "labelTramos";
-            this.labelTramos.Size = new System.Drawing.Size(106, 13);
+            this.labelTramos.Size = new System.Drawing.Size(144, 17);
             this.labelTramos.TabIndex = 5;
             this.labelTramos.Text = "Tramos del recorrido:";
             // 
-            // label1
+            // labelTodosLosTramos
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(432, 48);
-            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(90, 13);
-            this.label1.TabIndex = 6;
-            this.label1.Text = "Todos los tramos:";
+            this.labelTodosLosTramos.AutoSize = true;
+            this.labelTodosLosTramos.Location = new System.Drawing.Point(576, 59);
+            this.labelTodosLosTramos.Name = "labelTodosLosTramos";
+            this.labelTodosLosTramos.Size = new System.Drawing.Size(121, 17);
+            this.labelTodosLosTramos.TabIndex = 6;
+            this.labelTodosLosTramos.Text = "Todos los tramos:";
             // 
             // labelCodigo
             // 
             this.labelCodigo.AutoSize = true;
-            this.labelCodigo.Location = new System.Drawing.Point(7, 20);
-            this.labelCodigo.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelCodigo.Location = new System.Drawing.Point(9, 25);
             this.labelCodigo.Name = "labelCodigo";
-            this.labelCodigo.Size = new System.Drawing.Size(101, 13);
+            this.labelCodigo.Size = new System.Drawing.Size(136, 17);
             this.labelCodigo.TabIndex = 7;
             this.labelCodigo.Text = "Codigo del recorrido";
             // 
-            // textBox1
+            // textBoxCodigo
             // 
-            this.textBox1.Location = new System.Drawing.Point(113, 20);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(147, 20);
-            this.textBox1.TabIndex = 8;
+            this.textBoxCodigo.Location = new System.Drawing.Point(151, 25);
+            this.textBoxCodigo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.textBoxCodigo.Name = "textBoxCodigo";
+            this.textBoxCodigo.Size = new System.Drawing.Size(195, 22);
+            this.textBoxCodigo.TabIndex = 8;
             // 
             // AgregarRecorrido
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(886, 450);
-            this.Controls.Add(this.textBox1);
+            this.ClientSize = new System.Drawing.Size(1181, 554);
+            this.Controls.Add(this.textBoxCodigo);
             this.Controls.Add(this.labelCodigo);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.labelTodosLosTramos);
             this.Controls.Add(this.labelTramos);
             this.Controls.Add(this.dataGridViewTramosActuales);
             this.Controls.Add(this.buttonCancelar);
             this.Controls.Add(this.buttonGuardar);
             this.Controls.Add(this.dataGridViewTramosTotales);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "AgregarRecorrido";
             this.Text = "AgregarRecorrido";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTramosTotales)).EndInit();
@@ -179,9 +178,9 @@
         private System.Windows.Forms.DataGridView dataGridViewTramosActuales;
         private System.Windows.Forms.DataGridViewButtonColumn Quitar;
         private System.Windows.Forms.Label labelTramos;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label labelTodosLosTramos;
         private System.Windows.Forms.Label labelCodigo;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBoxCodigo;
         private System.Windows.Forms.DataGridViewButtonColumn Agregar;
     }
 }

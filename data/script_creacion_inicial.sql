@@ -162,6 +162,10 @@ IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.P_Ing
 	DROP PROCEDURE FGNN_19.P_IngresarRecorrido
 GO
 
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.P_IngresarRecorrido_X_Tramo') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
+	DROP PROCEDURE FGNN_19.P_IngresarRecorrido_X_Tramo
+GO
+
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.Fecha_valida_corrimiento') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
 	DROP PROCEDURE FGNN_19.Fecha_valida_corrimiento
 GO
@@ -742,6 +746,18 @@ VALUES(@Codigo, @idPuertoDesde, @idPuertoHasta)
 SET @idRecorridoIngresado = SCOPE_IDENTITY()
 
 RETURN @idRecorridoIngresado
+
+END;
+GO
+
+CREATE PROCEDURE FGNN_19.P_IngresarRecorrido_X_Tramo
+@idRecorrido NUMERIC(18,0),
+@idTramo NUMERIC(18,0)
+AS
+BEGIN
+
+INSERT INTO FGNN_19.Recorrido_X_Tramo
+VALUES(@idRecorrido, @idTramo)
 
 END;
 GO

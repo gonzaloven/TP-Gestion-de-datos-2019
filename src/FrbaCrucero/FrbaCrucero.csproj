@@ -185,6 +185,8 @@
       <DependentUpon>ListadoEstadisticoForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Modelos\CrearCrucero.cs" />
+    <Compile Include="Modelos\CrearRecorrido.cs" />
+    <Compile Include="Modelos\CrearRecorridoXTramo.cs" />
     <Compile Include="Modelos\CrearViaje.cs" />
     <Compile Include="Modelos\Crucero.cs" />
     <Compile Include="Modelos\Fabricante.cs" />
