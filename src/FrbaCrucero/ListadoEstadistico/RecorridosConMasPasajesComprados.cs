@@ -13,15 +13,19 @@ namespace FrbaCrucero.ListadoEstadistico
     public partial class RecorridosConMasPasajesComprados : Form
     {
 
-        private List<string> semestres = new List<string> { "Seleccione semestre", "Primer semestre", "Segundo semestre" };
+        private List<string> semestres = new List<string> { "Seleccione un semestre", "Primer semestre", "Segundo semestre" };
+        private List<string> anios = new List<string> { "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio" };
 
         public RecorridosConMasPasajesComprados()
         {
             InitializeComponent();
+            initialize();
         }
 
         private void initialize() {
-            this.comboSemestre.Enabled = false;
+            this.comboSemestre.Enabled = true;
+            this.comboAnio.Enabled = true;
+            comboAnio.DataSource = anios;
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)
@@ -66,9 +70,26 @@ namespace FrbaCrucero.ListadoEstadistico
             }
         }
 
-        private void showErrorMessage(string message)
+        public void showErrorMessage(string message)
         {
             MessageBox.Show(message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        public void showRecorridos(List<RecorridosConMasPasajesAux> recorridos)
+        {
+            this.buscarButton.Enabled = true;
+            this.limpiarButton.Enabled = true;
+            this.comboAnio.Enabled = true;
+            this.comboSemestre.Enabled = true;
+
+            this.resultadosTop5Grid.DataSource = recorridos.Select(
+                recorrido => new
+                {
+                    PuertoSalida = recorrido.PuertoSalida,
+                    PuertoLlegada = recorrido.PuertoLlegada,
+                    Cantidad = recorrido.CantidadVendida
+                }
+            ).ToList();
         }
 
         private void limpiarButton_Click(object sender, EventArgs e)

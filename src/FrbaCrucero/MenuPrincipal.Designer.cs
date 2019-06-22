@@ -34,8 +34,10 @@
             this.toolABMLabel = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabelRecorrido = new System.Windows.Forms.ToolStripLabel();
-            this.toolABMRolesLabel2 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
+            this.toolABMRolesLabel2 = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -51,12 +53,15 @@
             // 
             // toolStrip1
             // 
+            this.toolStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolABMLabel,
             this.toolStripSeparator2,
             this.toolStripLabelRecorrido,
             this.toolStripSeparator1,
-            this.toolStripLabel2});
+            this.toolStripLabel2,
+            this.toolStripSeparator3,
+            this.toolStripLabel3});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(1076, 25);
@@ -84,17 +89,29 @@
             this.toolStripLabelRecorrido.Text = "Recorrido";
             this.toolStripLabelRecorrido.Click += new System.EventHandler(this.toolStripLabelRecorrido_Click);
             // 
-            // toolABMRolesLabel2
-            // 
-            this.toolABMRolesLabel2.Name = "toolABMRolesLabel2";
-            this.toolABMRolesLabel2.Size = new System.Drawing.Size(23, 23);
-            // 
             // toolStripLabel2
             // 
             this.toolStripLabel2.Name = "toolStripLabel2";
             this.toolStripLabel2.Size = new System.Drawing.Size(98, 22);
             this.toolStripLabel2.Text = "Generar Viaje";
             this.toolStripLabel2.Click += new System.EventHandler(this.toolStripLabel2_Click);
+            // 
+            // toolStripLabel3
+            // 
+            this.toolStripLabel3.Name = "toolStripLabel3";
+            this.toolStripLabel3.Size = new System.Drawing.Size(178, 22);
+            this.toolStripLabel3.Text = "Top 5 pasajes comprados";
+            this.toolStripLabel3.Click += new System.EventHandler(this.toolStripLabel3_Click);
+            // 
+            // toolABMRolesLabel2
+            // 
+            this.toolABMRolesLabel2.Name = "toolABMRolesLabel2";
+            this.toolABMRolesLabel2.Size = new System.Drawing.Size(23, 23);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
             // 
             // MenuPrincipal
             // 
@@ -123,6 +140,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripLabel toolStripLabelRecorrido;
         private System.Windows.Forms.ToolStripLabel toolStripLabel2;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel3;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
     }
 }
 

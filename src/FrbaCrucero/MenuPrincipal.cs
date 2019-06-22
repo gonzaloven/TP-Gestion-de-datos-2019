@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using FrbaCrucero.AbmRol;
 using FrbaCrucero.AbmRecorrido;
 using FrbaCrucero.GeneracionViaje;
+using FrbaCrucero.ListadoEstadistico;
 
 namespace FrbaCrucero
 {
@@ -50,5 +51,12 @@ namespace FrbaCrucero
             generarViaje.Show();
         }
 
+        private void toolStripLabel3_Click(object sender, EventArgs e)
+        {
+            this.IsMdiContainer = true;
+            RecorridosConMasPasajesComprados recorridosConMasPasajes = new RecorridosConMasPasajesComprados();
+            recorridosConMasPasajes.MdiParent = this;
+            recorridosConMasPasajes.Show();
+        }
     }
 }

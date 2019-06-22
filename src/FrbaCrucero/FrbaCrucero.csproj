@@ -106,6 +106,7 @@
     <Compile Include="GeneracionViaje\SeleccionarPuerto.Designer.cs">
       <DependentUpon>SeleccionarPuerto.cs</DependentUpon>
     </Compile>
+    <Compile Include="ListadoEstadistico\RecorridosConMasPasajes.cs" />
     <Compile Include="MenuPrincipal.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -141,8 +142,11 @@
     <Compile Include="Repositorios\RepoCrucero.cs" />
     <Compile Include="Repositorios\RepoFuncionalidad.cs" />
     <Compile Include="Repositorios\RepoPuerto.cs" />
+    <Compile Include="Repositorios\RepoRecorridosConMasPasajes.cs" />
     <Compile Include="Repositorios\RepoRol.cs" />
     <Compile Include="Utils\ConexionDB.cs" />
+    <Compile Include="Utils\ProcessHandler.cs" />
+    <Compile Include="Utils\SPContent.cs" />
     <EmbeddedResource Include="AbmRecorrido\ListadoRecorridoForm.resx">
       <DependentUpon>ListadoRecorridoForm.cs</DependentUpon>
     </EmbeddedResource>
