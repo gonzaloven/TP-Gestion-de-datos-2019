@@ -145,7 +145,6 @@
     <Compile Include="Repositorios\RepoRecorridosConMasPasajes.cs" />
     <Compile Include="Repositorios\RepoRol.cs" />
     <Compile Include="Utils\ConexionDB.cs" />
-    <Compile Include="Utils\ProcessHandler.cs" />
     <Compile Include="Utils\SPContent.cs" />
     <EmbeddedResource Include="AbmRecorrido\ListadoRecorridoForm.resx">
       <DependentUpon>ListadoRecorridoForm.cs</DependentUpon>

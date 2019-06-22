@@ -14,12 +14,16 @@ namespace FrbaCrucero.ListadoEstadistico
     {
 
         private List<string> semestres = new List<string> { "Seleccione un semestre", "Primer semestre", "Segundo semestre" };
-        private List<string> anios = new List<string> { "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio" };
+        private List<string> anios = new List<string> { "2001", "2002", "2003", "2014", "2015", "2016" };
+
+        private RecorridosConMasPasajes recorridosConMasPasajes;
 
         public RecorridosConMasPasajesComprados()
         {
+            this.recorridosConMasPasajes = new RecorridosConMasPasajes(this);
             InitializeComponent();
             initialize();
+
         }
 
         private void initialize() {
@@ -53,6 +57,7 @@ namespace FrbaCrucero.ListadoEstadistico
                 resultadosTop5Grid.DataSource = null;
                 comboAnio.Enabled = false;
                 comboSemestre.Enabled = false;
+                this.recorridosConMasPasajes.GetRecorridosConFiltros(anio, semestre);
             }
         }
 

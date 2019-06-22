@@ -39,7 +39,7 @@ namespace FrbaCrucero.Repositorios
                 List<SPContent> parametros = new List<SPContent>();
                 parametros.Add(parametro1);
                 parametros.Add(parametro2);
-
+                this.conexionDB.crearConexion();
                 this.conexionDB.abrirConexion();
 
                 SqlCommand procedure = CreateProcedure("FGNN_19.TOP5_recorridos_mas_comprados", parametros);
