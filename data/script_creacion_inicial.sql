@@ -158,6 +158,10 @@ IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.P_Ins
 	DROP PROCEDURE FGNN_19.P_InsertarViaje
 GO
 
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.P_IngresarRecorrido') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
+	DROP PROCEDURE FGNN_19.P_IngresarRecorrido
+GO
+
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.Fecha_valida_corrimiento') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
 	DROP PROCEDURE FGNN_19.Fecha_valida_corrimiento
 GO
@@ -723,6 +727,24 @@ END
 GO
 
 -- Procedures
+
+CREATE PROCEDURE FGNN_19.P_IngresarRecorrido
+@Codigo VARCHAR(255),
+@idPuertoDesde NUMERIC(18,0),
+@idPuertoHasta NUMERIC(18,0),
+@idRecorridoIngresado NUMERIC(18,0) OUTPUT
+AS
+BEGIN
+
+INSERT INTO FGNN_19.Recorridos (codigo, puerto_desde_id, puerto_hasta_id)
+VALUES(@Codigo, @idPuertoDesde, @idPuertoHasta)
+
+SET @idRecorridoIngresado = SCOPE_IDENTITY()
+
+RETURN @idRecorridoIngresado
+
+END;
+GO
 
 CREATE PROCEDURE FGNN_19.P_ValidarLogin 
 @User VARCHAR(255), 
