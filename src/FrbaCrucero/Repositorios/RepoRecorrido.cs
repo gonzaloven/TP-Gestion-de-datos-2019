@@ -31,6 +31,15 @@ namespace FrbaCrucero.Repositorios
 
         }
 
+        public Int32 Baja(Int32 id)
+        {
+            String sqlQuery = "UPDATE " + nombreTabla + " SET habilitado = 0 WHERE id = @idRecorrido SELECT @@ROWCOUNT";
+            SqlCommand cmd = new SqlCommand(sqlQuery);
+            cmd.Parameters.Add(new SqlParameter("idRecorrido", id));
+            DataTable resultado = conexionDB.obtenerData(cmd);
+            return Int32.Parse(resultado.Rows[0][0].ToString());      
+        }
+
         public override List<Recorrido> ObtenerModelosDesdeTabla(DataTable table)
         {
             List<Recorrido> recorridos = new List<Recorrido>();

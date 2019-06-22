@@ -74,6 +74,33 @@ namespace FrbaCrucero.AbmRecorrido
             dataGridViewRecorrido.MultiSelect = false;
         }
 
+        private void dataGridViewRecorrido_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == 0)
+            {
+                ModificarRecorrido modificarRecorrido = new ModificarRecorrido();
+                modificarRecorrido.Show();
+            }
+            else if (e.ColumnIndex == 1)
+            {
+                Int32 id = Int32.Parse(dataGridViewRecorrido[2,e.RowIndex].Value.ToString());
+                Int32 filasCambiadas = RepoRecorrido.instancia.Baja(id);
+                if (filasCambiadas == 0)
+                {
+                    MessageBox.Show("El recorrido no puede darse de baja ya que tiene viajes pendientes.", "Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    this.Buscar();
+                }
+                else
+                {
+                    MessageBox.Show("Se ha dado de baja el recorrido correctamente.", "Exito",
+                                MessageBoxButtons.OK, MessageBoxIcon.None);
+                    this.Buscar();
+                }
+
+            }
+        }
+
 
     }
 }
