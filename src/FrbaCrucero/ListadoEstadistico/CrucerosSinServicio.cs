@@ -28,7 +28,7 @@ namespace FrbaCrucero.ListadoEstadistico
             }
             else
             {
-                CrucerosConMasDiasSinServicio.showErrorMessage("No se pudieron encontrar afiliados que coincidan con su busqueda.");
+                CrucerosConMasDiasSinServicio.showErrorMessage("No se pudieron encontrar cruceros que coincidan con su busqueda.");
             }
 
         }

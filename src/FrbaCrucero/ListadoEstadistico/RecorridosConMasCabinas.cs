@@ -28,7 +28,7 @@ namespace FrbaCrucero.ListadoEstadistico
             }
             else
             {
-                RecorridosConMasCabinasLibres.showErrorMessage("No se pudieron encontrar afiliados que coincidan con su busqueda.");
+                RecorridosConMasCabinasLibres.showErrorMessage("No se pudieron encontrar recorridos que coincidan con su busqueda.");
             }
 
         }

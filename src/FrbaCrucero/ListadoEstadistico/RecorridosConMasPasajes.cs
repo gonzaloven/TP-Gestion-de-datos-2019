@@ -37,7 +37,7 @@ namespace FrbaCrucero.ListadoEstadistico
             }
             else
             {
-                this.form.showErrorMessage("No se pudieron encontrar afiliados que coincidan con su busqueda.");
+                this.form.showErrorMessage("No se pudieron encontrar recorridos que coincidan con su busqueda.");
             }
 
         }
