@@ -69,26 +69,41 @@ namespace FrbaCrucero.AbmRecorrido
 
         private void buttonGuardar_Click(object sender, EventArgs e)
         {
-            String codigo = textBoxCodigo.Text;
-            Int32 idPuertoDesde = Int32.Parse(dataGridViewTramosActuales[2, 0].Value.ToString());
-            Int32 indiceUltimaFila = dataGridViewTramosActuales.Rows.Count - 1;
-            Int32 idPuertoHasta = Int32.Parse(dataGridViewTramosActuales[3, indiceUltimaFila].Value.ToString());
-
-            CrearRecorrido nuevoRecorrido = new CrearRecorrido(codigo, idPuertoDesde, idPuertoHasta);
-            Int32 idRecorridoCreado = nuevoRecorrido.Crear();
-
-            foreach (DataGridViewRow fila in dataGridViewTramosActuales.Rows)
+            if (this.hayFilas())
             {
-                Int32 idTramo = Int32.Parse(fila.Cells[1].Value.ToString());
-                CrearRecorridoXTramo crearNuevoRecorridoXTramo = new CrearRecorridoXTramo(idRecorridoCreado, idTramo);
-                crearNuevoRecorridoXTramo.Crear();
-            }
+                String codigo = textBoxCodigo.Text;
+                String idPuertoDesde = dataGridViewTramosActuales[2, 0].Value.ToString();
+                Int32 indiceUltimaFila = dataGridViewTramosActuales.Rows.Count - 1;
+                String idPuertoHasta = dataGridViewTramosActuales[3, indiceUltimaFila].Value.ToString();
 
-            MessageBox.Show("Se ha ingresado el recorrido con exito.", "Exito",
+                CrearRecorrido nuevoRecorrido = new CrearRecorrido(codigo, Int32.Parse(idPuertoDesde), Int32.Parse(idPuertoHasta));
+                Int32 idRecorridoCreado = nuevoRecorrido.Crear();
+
+                foreach (DataGridViewRow fila in dataGridViewTramosActuales.Rows)
+                {
+                    Int32 idTramo = Int32.Parse(fila.Cells[1].Value.ToString());
+                    CrearRecorridoXTramo crearNuevoRecorridoXTramo = new CrearRecorridoXTramo(idRecorridoCreado, idTramo);
+                    crearNuevoRecorridoXTramo.Crear();
+                }
+                
+                MessageBox.Show("Se ha ingresado el recorrido con exito.", "Exito",
                                 MessageBoxButtons.OK, MessageBoxIcon.None);
-            this.Close();
-            listadoRecorridos.Buscar();
+                
+                this.Close();
+                listadoRecorridos.Buscar();
+            }
+            else
+            {
+                MessageBox.Show("No se puede crear un recorrido sin origen y destino.", "Error",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.Close();
+            }
         }
 
+        private bool hayFilas()
+        {
+            return dataGridViewTramosActuales.Rows.Count != 0;
+        }
+  
     }
 }
