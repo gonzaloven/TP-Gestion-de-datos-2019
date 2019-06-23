@@ -66,5 +66,13 @@ namespace FrbaCrucero
             recorridosConMasPasajes.MdiParent = this;
             recorridosConMasPasajes.Show();
         }
+
+        private void toolStripLabel5_Click(object sender, EventArgs e)
+        {
+            this.IsMdiContainer = true;
+            CrucerosConMasDiasSinServicio recorridosConMasPasajes = new CrucerosConMasDiasSinServicio();
+            recorridosConMasPasajes.MdiParent = this;
+            recorridosConMasPasajes.Show();
+        }
     }
 }
