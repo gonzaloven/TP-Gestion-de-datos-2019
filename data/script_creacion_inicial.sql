@@ -162,6 +162,10 @@ IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.P_Ing
 	DROP PROCEDURE FGNN_19.P_IngresarRecorrido
 GO
 
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.P_TramosDelRecorrido') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
+	DROP PROCEDURE FGNN_19.P_TramosDelRecorrido
+GO
+
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.P_IngresarRecorrido_X_Tramo') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
 	DROP PROCEDURE FGNN_19.P_IngresarRecorrido_X_Tramo
 GO
@@ -731,6 +735,35 @@ END
 GO
 
 -- Procedures
+
+CREATE PROCEDURE FGNN_19.P_TramoRecorridoOriginal
+@idTramo NUMERIC(18,0),
+@idRecorrido NUMERIC(18,0)
+AS
+BEGIN
+
+SELECT t.id FROM FGNN_19.Tramos t, FGNN_19.Recorridos r, FGNN_19.Recorrido_X_Tramo rt
+WHERE t.id = rt.tramo_id
+AND r.id = rt.recorrido_id
+AND t.id = @idTramo
+AND r.id = @idRecorrido
+	
+END;
+GO
+
+CREATE PROCEDURE FGNN_19.P_TramosDelRecorrido
+@idRecorrido NUMERIC(18,0)
+AS
+BEGIN
+
+SELECT t.id, t.puerto_desde_id, t.puerto_hasta_id, t.precio_base
+FROM FGNN_19.Tramos t, FGNN_19.Recorrido_X_Tramo rt, FGNN_19.Recorridos r
+WHERE t.id = rt.tramo_id
+AND r.id = rt.recorrido_id
+AND r.id = @idRecorrido
+
+END;
+GO
 
 CREATE PROCEDURE FGNN_19.P_IngresarRecorrido
 @Codigo VARCHAR(255),

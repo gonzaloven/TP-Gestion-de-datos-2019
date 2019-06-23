@@ -44,6 +44,37 @@ namespace FrbaCrucero.Repositorios
             tablaTramosTotales.DataSource = tabla;
         }
 
+        public DataTable tramosActuales(DataGridView tablaTramosActuales, Int32 idRecorrido, DataTable tabla)
+        {
+            String sqlQuery = "FGNN_19.P_TramosDelRecorrido";
+            SqlCommand cmd = new SqlCommand(sqlQuery);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add(new SqlParameter("idRecorrido", idRecorrido));
+            tabla = conexionDB.obtenerData(cmd);
+            return tabla;
+        }
+
+        public bool tramoRecorridoOriginal(Int32 idTramo, Int32 idRecorrido)
+        {
+            String sqlQuery = "FGNN_19.P_TramoRecorridoOriginal";
+            SqlCommand cmd = new SqlCommand(sqlQuery);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add(new SqlParameter("idTramo", idTramo));
+            cmd.Parameters.Add(new SqlParameter("idRecorrido", idRecorrido));
+            DataTable tabla = conexionDB.obtenerData(cmd);
+            return tabla.Rows.Count == 1;
+            
+        }
+
+        public void eliminarTramo(Int32 idRecorrido, Int32 idTramo)
+        {
+            String sqlQuery = "DELETE FROM FGNN_19.Recorrido_X_Tramo WHERE recorrido_id = @idRecorrido AND tramo_id = @idTramo";
+            SqlCommand cmd = new SqlCommand(sqlQuery);
+            cmd.Parameters.Add(new SqlParameter("idRecorrido", idRecorrido));
+            cmd.Parameters.Add(new SqlParameter("idTramo", idTramo));
+            conexionDB.ejecutarQuery(cmd);
+        }
+
         public void actualizarDatosAgregar(DataGridView tablaTramos, String idPuertoDesde)
         {
             String sqlQuery = "Select * from " + nombreTabla + " WHERE puerto_desde_id = @idPuertoDesde";

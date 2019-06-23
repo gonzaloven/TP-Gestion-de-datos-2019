@@ -78,7 +78,9 @@ namespace FrbaCrucero.AbmRecorrido
         {
             if (e.ColumnIndex == 0)
             {
-                ModificarRecorrido modificarRecorrido = new ModificarRecorrido();
+                String codigo = dataGridViewRecorrido[3, e.RowIndex].Value.ToString();
+                Int32 id = Int32.Parse(dataGridViewRecorrido[2, e.RowIndex].Value.ToString());
+                ModificarRecorrido modificarRecorrido = new ModificarRecorrido(this, id, codigo);
                 modificarRecorrido.Show();
             }
             else if (e.ColumnIndex == 1)
