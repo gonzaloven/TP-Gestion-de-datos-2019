@@ -15,7 +15,6 @@ namespace FrbaCrucero.ListadoEstadistico
     {
 
         private List<string> semestres = new List<string> { "Seleccione un semestre", "Primer semestre", "Segundo semestre" };
-        private List<string> anios = new List<string> { "2001", "2002", "2003", "2014", "2015", "2016" };
         private RecorridosConMasCabinas recorridosConMasCabinas;
 
         public RecorridosConMasCabinasLibres()
@@ -29,7 +28,7 @@ namespace FrbaCrucero.ListadoEstadistico
         {
             this.comboSemestre.Enabled = true;
             this.comboAnio.Enabled = true;
-            comboAnio.DataSource = anios;
+            this.recorridosConMasCabinas.GetAnios();
         }
 
         private void buscarButton_Click(object sender, EventArgs e)
@@ -54,6 +53,12 @@ namespace FrbaCrucero.ListadoEstadistico
         public void showErrorMessage(string message)
         {
             MessageBox.Show(message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        public void showInformationMessage(string message)
+        {
+            MessageBox.Show(message, "Informacion",
+            MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         public void showRecorridos(List<ListadosEstadisticos> recorridos)
@@ -92,6 +97,12 @@ namespace FrbaCrucero.ListadoEstadistico
                 comboSemestre.DataSource = null;
                 comboSemestre.Enabled = false;
             }
+        }
+
+        public void initializeAnios(List<string> anios)
+        {
+            anios.Insert(0, "Seleccione un año");
+            comboAnio.DataSource = anios;
         }
     }
 }

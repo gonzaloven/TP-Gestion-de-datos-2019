@@ -862,6 +862,16 @@ DECLARE @QUERY_5 VARCHAR(200) = ' GROUP BY r.id, ps.descripcion, pl.descripcion 
 END
 GO
 
+CREATE PROCEDURE FGNN_19.Anios_TOP5_recorridos_mas_comprados
+AS
+BEGIN
+	SELECT DISTINCT YEAR(c.fecha) AS anio
+	FROM FGNN_19.Compras c 
+	JOIN FGNN_19.Pasajes p
+	ON (c.codigo = p.compra_codigo)
+END
+GO
+
 CREATE PROCEDURE FGNN_19.TOP5_recorridos_mas_cabinas_libres(@anio INT, @semestre INT)
 AS
 BEGIN
@@ -883,6 +893,16 @@ DECLARE @QUERY_6 VARCHAR(200) = ' GROUP BY r.codigo, ps.descripcion, pl.descripc
 END
 GO
 
+CREATE PROCEDURE FGNN_19.Anios_TOP5_recorridos_mas_cabinas_libres
+AS
+BEGIN
+	SELECT DISTINCT YEAR(v.fecha_fin) AS anio
+	FROM FGNN_19.Viajes v 
+	JOIN FGNN_19.Pasajes p
+	ON (v.codigo = p.viaje_codigo)
+END
+GO
+
 CREATE PROCEDURE FGNN_19.TOP5_cruceros_mas_dias_fuera_servicio(@anio INT, @semestre INT)
 AS
 BEGIN
@@ -899,6 +919,14 @@ DECLARE @QUERY_4 VARCHAR(200) = ' GROUP BY id, nombre, modelo, fecha_fuera_servi
 	SET @QUERY_FINAL = @QUERY_1 + @QUERY_2 + @QUERY_3 + @QUERY_4
 	EXEC sp_executesql @QUERY_FINAL, N'@anio INT, @semestre INT', @anio, @semestre
 
+END
+GO
+
+CREATE PROCEDURE FGNN_19.Anios_TOP5_cruceros_mas_dias_fuera_servicio
+AS
+BEGIN
+	SELECT DISTINCT YEAR(fecha_fuera_servicio) AS anio
+	FROM FGNN_19.Cruceros
 END
 GO
 
