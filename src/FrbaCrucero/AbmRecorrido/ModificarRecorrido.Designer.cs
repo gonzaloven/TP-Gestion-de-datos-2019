@@ -33,11 +33,11 @@
             this.labelTodosLosTramos = new System.Windows.Forms.Label();
             this.labelTramos = new System.Windows.Forms.Label();
             this.dataGridViewTramosActuales = new System.Windows.Forms.DataGridView();
-            this.Quitar = new System.Windows.Forms.DataGridViewButtonColumn();
             this.buttonCancelar = new System.Windows.Forms.Button();
             this.buttonGuardar = new System.Windows.Forms.Button();
             this.dataGridViewTramosTotales = new System.Windows.Forms.DataGridView();
             this.Agregar = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.QuitarButton = new System.Windows.Forms.DataGridViewButtonColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTramosActuales)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTramosTotales)).BeginInit();
             this.SuspendLayout();
@@ -83,7 +83,7 @@
             this.dataGridViewTramosActuales.AllowUserToDeleteRows = false;
             this.dataGridViewTramosActuales.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewTramosActuales.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Quitar});
+            this.QuitarButton});
             this.dataGridViewTramosActuales.Location = new System.Drawing.Point(15, 84);
             this.dataGridViewTramosActuales.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dataGridViewTramosActuales.Name = "dataGridViewTramosActuales";
@@ -92,14 +92,6 @@
             this.dataGridViewTramosActuales.Size = new System.Drawing.Size(501, 411);
             this.dataGridViewTramosActuales.TabIndex = 12;
             this.dataGridViewTramosActuales.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewTramosActuales_CellContentClick);
-            // 
-            // Quitar
-            // 
-            this.Quitar.HeaderText = "";
-            this.Quitar.Name = "Quitar";
-            this.Quitar.ReadOnly = true;
-            this.Quitar.Text = "Quitar";
-            this.Quitar.UseColumnTextForButtonValue = true;
             // 
             // buttonCancelar
             // 
@@ -147,6 +139,14 @@
             this.Agregar.Text = "Agregar";
             this.Agregar.UseColumnTextForButtonValue = true;
             // 
+            // QuitarButton
+            // 
+            this.QuitarButton.HeaderText = "";
+            this.QuitarButton.Name = "QuitarButton";
+            this.QuitarButton.ReadOnly = true;
+            this.QuitarButton.Text = "Quitar";
+            this.QuitarButton.UseColumnTextForButtonValue = true;
+            // 
             // ModificarRecorrido
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -175,11 +175,11 @@
         private System.Windows.Forms.Label labelCodigo;
         private System.Windows.Forms.Label labelTodosLosTramos;
         private System.Windows.Forms.Label labelTramos;
-        private System.Windows.Forms.DataGridView dataGridViewTramosActuales;
-        private System.Windows.Forms.DataGridViewButtonColumn Quitar;
         private System.Windows.Forms.Button buttonCancelar;
         private System.Windows.Forms.Button buttonGuardar;
         private System.Windows.Forms.DataGridView dataGridViewTramosTotales;
         private System.Windows.Forms.DataGridViewButtonColumn Agregar;
+        private System.Windows.Forms.DataGridViewButtonColumn QuitarButton;
+        private System.Windows.Forms.DataGridView dataGridViewTramosActuales;
     }
 }

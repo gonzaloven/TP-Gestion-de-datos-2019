@@ -12,11 +12,13 @@ namespace FrbaCrucero.Modelos
     {
         public Int32 idRecorrido { get; set; }
         public Int32 idTramo { get; set; }
+        public Int32 orden { get; set; }
 
-        public CrearRecorridoXTramo(Int32 idRecorrido, Int32 idTramo)
+        public CrearRecorridoXTramo(Int32 idRecorrido, Int32 idTramo, Int32 orden)
         {
             this.idRecorrido = idRecorrido;
             this.idTramo = idTramo;
+            this.orden = orden;
         }
 
         public void Crear()
@@ -30,6 +32,7 @@ namespace FrbaCrucero.Modelos
             cmdInsertar.CommandType = CommandType.StoredProcedure;
             cmdInsertar.Parameters.Add(new SqlParameter("idRecorrido", idRecorrido));
             cmdInsertar.Parameters.Add(new SqlParameter("idTramo", idTramo));
+            cmdInsertar.Parameters.Add(new SqlParameter("orden", orden));
             ConexionDB.instancia.ejecutarQuery(cmdInsertar);
         }
     }

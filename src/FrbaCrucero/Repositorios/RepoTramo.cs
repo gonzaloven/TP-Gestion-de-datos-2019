@@ -75,20 +75,50 @@ namespace FrbaCrucero.Repositorios
             conexionDB.ejecutarQuery(cmd);
         }
 
-        public void actualizarDatosAgregar(DataGridView tablaTramos, String idPuertoDesde)
+        public void actualizarDatosAgregar(List<Int32> tramos, DataGridView tablaTramos, String idPuertoDesde)
         {
-            String sqlQuery = "Select * from " + nombreTabla + " WHERE puerto_desde_id = @idPuertoDesde";
-            SqlCommand cmd = new SqlCommand(sqlQuery);
+            String sqlQuery = "Select * from " + nombreTabla + " WHERE puerto_desde_id = @idPuertoDesde AND id NOT IN ({0})";
+            String[] parametros = tramos.Select((s, i) => "@id" + i.ToString()).ToArray();
+
+            String inClause = String.Join(", ", parametros);
+            SqlCommand cmd = new SqlCommand(String.Format(sqlQuery, inClause));
             cmd.Parameters.AddWithValue("idPuertoDesde", idPuertoDesde);
+            using (cmd)
+            {
+                for (int i = 0; i < parametros.Length; i++)
+                {
+                    cmd.Parameters.Add(new SqlParameter(parametros[i], tramos[i]));
+                }
+            }
             DataTable tabla = conexionDB.obtenerData(cmd);
             tablaTramos.DataSource = tabla;
         }
 
-        public void actualizarDatosQuitar(DataGridView tablaTramos, String idPuertoHasta)
+        public void actualizarDatosQuitar(List<Int32> tramos, DataGridView tablaTramos, String idPuertoHasta)
         {
-            String sqlQuery = "Select * from " + nombreTabla + " WHERE puerto_desde_id = @idPuertoHasta";
-            SqlCommand cmd = new SqlCommand(sqlQuery);
+            String sqlQuery = "Select * from " + nombreTabla + " WHERE puerto_desde_id = @idPuertoHasta AND id NOT IN ({0})";
+            String[] parametros = tramos.Select((s, i) => "@id" + i.ToString()).ToArray();
+
+            String inClause = String.Join(", ", parametros);
+            SqlCommand cmd = new SqlCommand(String.Format(sqlQuery, inClause));
             cmd.Parameters.AddWithValue("idPuertoHasta", idPuertoHasta);
+            using (cmd)
+            {
+                for (int i = 0; i < parametros.Length; i++)
+                {
+                    cmd.Parameters.Add(new SqlParameter(parametros[i], tramos[i]));
+                }
+            }
+            DataTable tabla = conexionDB.obtenerData(cmd);
+            tablaTramos.DataSource = tabla;
+        }
+
+        public void actualizarDatos(DataGridView tablaTramos, String idPuertoDesde)
+        {
+            String sqlQuery = "Select * from " + nombreTabla
+                            + " WHERE puerto_desde_id = @idPuertoDesde";
+            SqlCommand cmd = new SqlCommand(sqlQuery);
+            cmd.Parameters.AddWithValue("idPuertoDesde", idPuertoDesde);
             DataTable tabla = conexionDB.obtenerData(cmd);
             tablaTramos.DataSource = tabla;
         }
@@ -96,6 +126,14 @@ namespace FrbaCrucero.Repositorios
         public override void Crear(Tramo tramo)
         {
             throw new NotImplementedException();
+        }
+
+        public void vaciarRegistro(Int32 idRecorrido)
+        {
+            String sqlQuery = "DELETE FROM FGNN_19.Recorrido_X_Tramo WHERE recorrido_id = @idRecorrido";
+            SqlCommand cmd = new SqlCommand(sqlQuery);
+            cmd.Parameters.Add(new SqlParameter("idRecorrido", idRecorrido));
+            conexionDB.ejecutarQuery(cmd);
         }
     }
 }

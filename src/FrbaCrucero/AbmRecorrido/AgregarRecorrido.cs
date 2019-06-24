@@ -15,6 +15,7 @@ namespace FrbaCrucero.AbmRecorrido
     {
         DataTable tablaTotal = new DataTable();
         ListadoRecorridoForm listadoRecorridos;
+        List<Int32> tramosActuales = new List<Int32>();
         public AgregarRecorrido(ListadoRecorridoForm listadoRecorridos)
         {
             InitializeComponent();
@@ -31,9 +32,11 @@ namespace FrbaCrucero.AbmRecorrido
         {
             if (e.ColumnIndex == 0)
             {
+                Int32 idTramo = Int32.Parse(dataGridViewTramosTotales[1, e.RowIndex].Value.ToString());
                 DataGridViewRow fila = dataGridViewTramosTotales.CurrentRow;
                 this.agregarTramo(fila);
-                Repositorios.RepoTramo.instancia.actualizarDatosAgregar(dataGridViewTramosTotales, fila.Cells[3].Value.ToString());
+                this.tramosActuales.Add(idTramo);
+                Repositorios.RepoTramo.instancia.actualizarDatosAgregar(tramosActuales, dataGridViewTramosTotales, fila.Cells[3].Value.ToString());
             }
         }
 
@@ -41,12 +44,21 @@ namespace FrbaCrucero.AbmRecorrido
         {
             if (e.ColumnIndex == 0)
             {
-                DataGridViewRow fila = dataGridViewTramosActuales.CurrentRow;
-                if (tablaTotal.Rows.Count == 1)
-                    Repositorios.RepoTramo.instancia.llenarDatos(dataGridViewTramosTotales);
-                else
-                    Repositorios.RepoTramo.instancia.actualizarDatosQuitar(dataGridViewTramosTotales, fila.Cells[2].Value.ToString());
-                this.quitarTramo(fila);
+                if (e.RowIndex == dataGridViewTramosActuales.Rows.Count - 1)
+                {
+                    Int32 idTramo = Int32.Parse(dataGridViewTramosActuales[1, e.RowIndex].Value.ToString());
+                    DataGridViewRow fila = dataGridViewTramosActuales.CurrentRow;
+                    if (tablaTotal.Rows.Count == 1)
+                    {
+                        Repositorios.RepoTramo.instancia.llenarDatos(dataGridViewTramosTotales);
+                    }
+                    else
+                    {
+                        this.tramosActuales.Remove(idTramo);
+                        Repositorios.RepoTramo.instancia.actualizarDatosQuitar(tramosActuales, dataGridViewTramosTotales, fila.Cells[2].Value.ToString());
+                    }
+                    this.quitarTramo(fila);
+                }
             }
         }
 
@@ -79,11 +91,13 @@ namespace FrbaCrucero.AbmRecorrido
                 CrearRecorrido nuevoRecorrido = new CrearRecorrido(codigo, Int32.Parse(idPuertoDesde), Int32.Parse(idPuertoHasta));
                 Int32 idRecorridoCreado = nuevoRecorrido.Crear();
 
+                Int32 orden = 1;
                 foreach (DataGridViewRow fila in dataGridViewTramosActuales.Rows)
                 {
                     Int32 idTramo = Int32.Parse(fila.Cells[1].Value.ToString());
-                    CrearRecorridoXTramo crearNuevoRecorridoXTramo = new CrearRecorridoXTramo(idRecorridoCreado, idTramo);
+                    CrearRecorridoXTramo crearNuevoRecorridoXTramo = new CrearRecorridoXTramo(idRecorridoCreado, idTramo, orden);
                     crearNuevoRecorridoXTramo.Crear();
+                    orden = orden + 1;
                 }
                 
                 MessageBox.Show("Se ha ingresado el recorrido con exito.", "Exito",

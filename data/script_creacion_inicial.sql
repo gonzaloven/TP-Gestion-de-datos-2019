@@ -540,8 +540,8 @@ AND f.descripcion = m.CRU_FABRICANTE
 AND r.codigo = CONVERT(VARCHAR,M.RECORRIDO_CODIGO)
 GROUP BY r.id, c.id
 
-INSERT INTO FGNN_19.Recorrido_X_Tramo (recorrido_id, tramo_id)
-SELECT r.id, t.id
+INSERT INTO FGNN_19.Recorrido_X_Tramo (recorrido_id, tramo_id, orden)
+SELECT r.id, t.id, 1
 FROM FGNN_19.Recorridos r, FGNN_19.Tramos t
 WHERE r.puerto_desde_id = t.puerto_desde_id AND r.puerto_hasta_id = t.puerto_hasta_id
 GROUP BY r.id, t.id 
@@ -766,6 +766,7 @@ FROM FGNN_19.Tramos t, FGNN_19.Recorrido_X_Tramo rt, FGNN_19.Recorridos r
 WHERE t.id = rt.tramo_id
 AND r.id = rt.recorrido_id
 AND r.id = @idRecorrido
+ORDER BY rt.orden ASC
 
 END;
 GO
@@ -790,19 +791,13 @@ GO
 
 CREATE PROCEDURE FGNN_19.P_IngresarRecorrido_X_Tramo
 @idRecorrido NUMERIC(18,0),
-@idTramo NUMERIC(18,0)
+@idTramo NUMERIC(18,0),
+@orden NUMERIC(18,0)
 AS
 BEGIN
 
-	IF NOT EXISTS(SELECT 1 FROM FGNN_19.Tramos t, FGNN_19.Recorridos r, FGNN_19.Recorrido_X_Tramo rt
-				 WHERE t.id = rt.tramo_id
-				 AND r.id = rt.recorrido_id
-				 AND r.id = @idRecorrido
-				 AND t.id = @idTramo)
-	BEGIN
-		INSERT INTO FGNN_19.Recorrido_X_Tramo (recorrido_id, tramo_id)
-		VALUES(@idRecorrido, @idTramo)
-	END
+INSERT INTO FGNN_19.Recorrido_X_Tramo (recorrido_id, tramo_id, orden)
+VALUES(@idRecorrido, @idTramo, @orden)
 
 END;
 GO
