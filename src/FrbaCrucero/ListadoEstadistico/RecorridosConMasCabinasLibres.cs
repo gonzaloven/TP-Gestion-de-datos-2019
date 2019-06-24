@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FrbaCrucero.Modelos;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -55,7 +56,7 @@ namespace FrbaCrucero.ListadoEstadistico
             MessageBox.Show(message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
-        public void showRecorridos(List<RecorridosConMasCabinasAux> recorridos)
+        public void showRecorridos(List<ListadosEstadisticos> recorridos)
         {
             this.buscarButton.Enabled = true;
             this.limpiarButton.Enabled = true;
@@ -65,9 +66,9 @@ namespace FrbaCrucero.ListadoEstadistico
             this.resultadosTop5Grid.DataSource = recorridos.Select(
                 recorrido => new
                 {
-                    recorrido.PuertoSalida,
-                    recorrido.PuertoLlegada,
-                    Cantidad = recorrido.CantidadCabinas
+                    PuertoSalida = recorrido.PrimeraColumna,
+                    PuertoLlegada = recorrido.SegundaColumna,
+                    CantidadDeCabinas = recorrido.TerceraColumna
                 }
             ).ToList();
         }

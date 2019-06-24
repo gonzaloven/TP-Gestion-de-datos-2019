@@ -1,4 +1,5 @@
-﻿using FrbaCrucero.Repositorios;
+﻿using FrbaCrucero.Modelos;
+using FrbaCrucero.Repositorios;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,8 +20,8 @@ namespace FrbaCrucero.ListadoEstadistico
         internal void GetCrucerosConFiltros(string anioSeleccionado, string semestreSeleccionado)
         {
             semestreSeleccionado = semestreSeleccionado.Equals("Primer semestre") ? "1" : "2";
-            RepoCrucerosConMasDiasSinServicio repo = new RepoCrucerosConMasDiasSinServicio("recorridos_con_mas_cabinas");
-            List<CrucerosConMasDiasSinServicioAux> cruceros = repo.getCruceros(anioSeleccionado, semestreSeleccionado);
+            RepoTop5 repo = new RepoTop5("listado_estadistico");
+            List<ListadosEstadisticos> cruceros = repo.getCrucerosConMasDiasFueraDeServicio(anioSeleccionado, semestreSeleccionado);
 
             if (cruceros != null)
             {
@@ -33,13 +34,6 @@ namespace FrbaCrucero.ListadoEstadistico
 
         }
 
-    }
-
-    public class CrucerosConMasDiasSinServicioAux
-    {
-        public string Nombre { get; set; }
-        public string Modelo { get; set; }
-        public int DiasFueraDeServicio { get; set; }
     }
 }
 

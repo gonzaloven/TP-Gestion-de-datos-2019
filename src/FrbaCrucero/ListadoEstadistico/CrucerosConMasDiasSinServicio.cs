@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FrbaCrucero.Modelos;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -55,7 +56,7 @@ namespace FrbaCrucero.ListadoEstadistico
             MessageBox.Show(message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
-        public void showRecorridos(List<CrucerosConMasDiasSinServicioAux> cruceros)
+        public void showRecorridos(List<ListadosEstadisticos> cruceros)
         {
             this.buscarButton.Enabled = true;
             this.limpiarButton.Enabled = true;
@@ -65,9 +66,9 @@ namespace FrbaCrucero.ListadoEstadistico
             this.resultadosTop5Grid.DataSource = cruceros.Select(
                 crucero => new
                 {
-                    crucero.Nombre,
-                    crucero.Modelo,
-                    crucero.DiasFueraDeServicio
+                    Nombre = crucero.PrimeraColumna,
+                    Modelo = crucero.SegundaColumna,
+                    DiasFueraDeServicio = crucero.TerceraColumna
                 }
             ).ToList();
         }

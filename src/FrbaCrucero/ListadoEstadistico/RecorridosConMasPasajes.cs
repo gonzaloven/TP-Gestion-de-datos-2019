@@ -1,4 +1,5 @@
-﻿using FrbaCrucero.Repositorios;
+﻿using FrbaCrucero.Modelos;
+using FrbaCrucero.Repositorios;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,8 +29,8 @@ namespace FrbaCrucero.ListadoEstadistico
         internal void GetRecorridosConFiltros(string anioSeleccionado, string semestreSeleccionado)
         {
             semestreSeleccionado = semestreSeleccionado.Equals("Primer semestre") ? "1" : "2";
-            RepoRecorridosConMasPasajes repo = new RepoRecorridosConMasPasajes("recorridos_con_mas_pasajes");
-            List<RecorridosConMasPasajesAux> recorridos = repo.getRecorridosConMasCompras(anioSeleccionado, semestreSeleccionado);
+            RepoTop5 repo = new RepoTop5("listado_estadistico");
+            List<ListadosEstadisticos> recorridos = repo.getRecorridosConPasajesMasComprados(anioSeleccionado, semestreSeleccionado);
 
             if (recorridos != null)
             {
@@ -42,12 +43,5 @@ namespace FrbaCrucero.ListadoEstadistico
 
         }
 
-    }
-
-    public class RecorridosConMasPasajesAux
-    {
-        public string PuertoSalida { get; set; }
-        public string PuertoLlegada { get; set; }
-        public int CantidadVendida { get; set; }
     }
 }

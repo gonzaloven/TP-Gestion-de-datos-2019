@@ -890,7 +890,7 @@ DECLARE @QUERY_FINAL NVARCHAR(1500)
 DECLARE @QUERY_1 VARCHAR(200) = 'SELECT TOP 5 nombre, modelo, DATEDIFF(DAY, fecha_fuera_servicio, CONVERT(DATETIME2(3),GETDATE())) AS [Dias fuera de servicio]'
 DECLARE @QUERY_2 VARCHAR(200) = ' FROM FGNN_19.Cruceros WHERE fecha_reinicio_servicio < CONVERT(DATETIME2(3),GETDATE()) AND ' 
 DECLARE @QUERY_3 VARCHAR(200)
-DECLARE @QUERY_4 VARCHAR(200) = ' GROUP BY id, nombre, modelo, fecha_fuera_servicio ORDER BY [Dias fuera de serivicio] DESC'
+DECLARE @QUERY_4 VARCHAR(200) = ' GROUP BY id, nombre, modelo, fecha_fuera_servicio ORDER BY [Dias fuera de servicio] DESC'
 
 	IF @semestre = 1
 			SET @QUERY_3 = 'YEAR(fecha_fuera_servicio) = @anio AND MONTH(fecha_fuera_servicio) IN (1, 2, 3, 4, 5, 6)'
