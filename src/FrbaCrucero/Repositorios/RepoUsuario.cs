@@ -25,7 +25,7 @@ namespace FrbaCrucero.Repositorios
             {
                 Int32 id = Convert.ToInt32(row["id"]);
                 string userName = (String)row["username"];
-                string password = (String)(row["password"]);
+                string password = Convert.ToString(row["password"]);
                 Int16 intentosFallidos = Convert.ToInt16(row["intentos_fallidos"]);
                 Int16 habilitado = Convert.ToInt16(row["habilitado"]);
 

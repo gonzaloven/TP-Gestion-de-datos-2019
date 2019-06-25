@@ -34,31 +34,56 @@ namespace FrbaCrucero
         {
             string valorUsuario = textBoxAdmUsario.Text;
             string valorPassword = textBoxAdmPassword.Text;
-            bool errorLogin = false;
 
-            StringBuilder descripcion = new StringBuilder();
+            try {
 
-            if(String.IsNullOrEmpty(valorUsuario) || String.IsNullOrWhiteSpace(valorUsuario) 
-                || String.IsNullOrEmpty(valorPassword) || String.IsNullOrEmpty(valorPassword))  
-            {
-                descripcion.Append("Usuario o password incorrecto\n");
-                errorLogin = true;
-            } else {
+                if (String.IsNullOrEmpty(valorUsuario) || String.IsNullOrWhiteSpace(valorUsuario)
+                || String.IsNullOrEmpty(valorPassword) || String.IsNullOrEmpty(valorPassword))
+                {
+                    throw new Exception("Usuario o password incorrecto\n");
+                }
+
                 Usuario usuario = RepoUsuario.instancia.EncontrarPorUserName(valorUsuario);
-            }
-          
-            if(errorLogin)
-            {
-                DialogResult dr = MessageBox.Show(
-                descripcion.ToString(), 
-                "Validacion", 
-                MessageBoxButtons.OK, 
-                MessageBoxIcon.Error);
-            } else {
-                MenuPrincipalForm menuPrincipalForm = new MenuPrincipalForm();
+                
+                validarLogin(usuario, valorPassword);
+                usuario.LoginExitoso();
+
+                Dictionary<string,object> param = new Dictionary<string,object>();
+                param.Add("intentos_fallidos", usuario.intentosFallidos);
+                param.Add("habilitado", usuario.habilitado);
+                RepoUsuario.instancia.Modificar(usuario.id, param);
+
+                Rol rol = RepoRol.instancia.EncontrarPorUsuario(usuario);
+                MenuPrincipalForm menuPrincipalForm = new MenuPrincipalForm(rol);
                 menuPrincipalForm.Show();
+
+            } catch(Exception ex) {
+                DialogResult dr = MessageBox.Show(
+                ex.Message.ToString(),
+                "Validacion",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
             }
 
+        }
+
+        private void validarLogin(Usuario usuario, string valorPassword)
+        {
+
+            if (!usuario.EstaHabilitado())
+            {
+                throw new Exception("Usuario inhabilitado. Contacte a un administrador");
+            }
+
+            if (!usuario.ValidarPassword(valorPassword))
+            {
+                usuario.AumentarIntentoFallido();
+                Dictionary<string, object> param = new Dictionary<string, object>();
+                param.Add("intentos_fallidos", usuario.intentosFallidos);
+                param.Add("habilitado", usuario.habilitado);
+                RepoUsuario.instancia.Modificar(usuario.id, param);
+                throw new Exception("Password incorrecto\n");
+            }
         }
     }
 }

@@ -59,7 +59,7 @@ namespace FrbaCrucero
             foreach (Funcionalidad func in rol.GetFuncionalidades())
                 if (!funcLabelBarra.ContainsKey(func.descripcion))
                 {
-                    funcLabelBarra[func.descripcion].Visible = false;
+                    //funcLabelBarra[func.descripcion].Visible = false;
                 }
         }
 

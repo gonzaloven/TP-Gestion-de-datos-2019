@@ -129,6 +129,15 @@ namespace FrbaCrucero.Repositorios
             conexionDB.ejecutarQuery(cmd);
         }
 
+        public Rol EncontrarPorUsuario(Usuario usuario)
+        {
+            Int32 idUsuario = usuario.id;
+            string sqlQuery = "SELECT t1.* FROM " + nombreTabla + " t1, " + TABLA_USUARIOS_ROLES + " t2 WHERE t2.usuario_id = @IdUsuario"; 
+            SqlCommand cmd = new SqlCommand(sqlQuery);
+            cmd.Parameters.Add(new SqlParameter("IdUsuario", idUsuario));
 
+            DataTable tabla = conexionDB.obtenerData(cmd);
+            return ObtenerModeloDesdeTabla(tabla);
+        }
     }
 }
