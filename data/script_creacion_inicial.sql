@@ -174,6 +174,10 @@ IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.P_Ing
 	DROP PROCEDURE FGNN_19.P_IngresarRecorrido_X_Tramo
 GO
 
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.P_CabinasDelCrucero') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
+	DROP PROCEDURE FGNN_19.P_CabinasDelCrucero
+GO
+
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.Fecha_valida_corrimiento') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
 	DROP PROCEDURE FGNN_19.Fecha_valida_corrimiento
 GO
@@ -376,7 +380,7 @@ CREATE TABLE [FGNN_19].[Cabinas] (
 	[numero] NUMERIC(18, 0),
 	[piso] NUMERIC(18, 0) NOT NULL,
 	[tipo_id] NUMERIC(18, 0),
-	[estado] BIT,
+	[estado] BIT DEFAULT 1,
 	PRIMARY KEY ([codigo]),
 	FOREIGN KEY (crucero_id) REFERENCES FGNN_19.Cruceros(id),
 	FOREIGN KEY (tipo_id) REFERENCES FGNN_19.Tipos_Cabinas(id)
@@ -1104,6 +1108,19 @@ BEGIN
 		SET @Resultado = 1
 
 	RETURN @Resultado
+END
+GO
+
+CREATE PROCEDURE FGNN_19.P_CabinasDelCrucero
+@idCrucero NUMERIC(18,0)
+AS
+BEGIN
+
+SELECT codigo, numero, piso, tipo_id
+FROM FGNN_19.Cabinas
+WHERE estado = 1
+AND crucero_id = @idCrucero
+
 END
 GO
 

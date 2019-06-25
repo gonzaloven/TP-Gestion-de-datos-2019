@@ -7,6 +7,7 @@ using System.Data.SqlTypes;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace FrbaCrucero.Repositorios
 {
@@ -48,6 +49,16 @@ namespace FrbaCrucero.Repositorios
             }
 
             return cruceros;
+        }
+
+        public DataTable cabinasDisponibles(DataGridView dataGridViewCabinas, Int32 idCrucero, DataTable tabla)
+        {
+            String sqlQuery = "FGNN_19.P_CabinasDelCrucero";
+            SqlCommand cmd = new SqlCommand(sqlQuery);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add(new SqlParameter("idCrucero", idCrucero));
+            tabla = conexionDB.obtenerData(cmd);
+            return tabla;
         }
 
         public List<Crucero> EncontrarCruceroNombre(string nombre)
