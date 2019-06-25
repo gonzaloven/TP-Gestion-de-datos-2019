@@ -41,7 +41,7 @@ namespace FrbaCrucero.GeneracionViaje
         {
             string valorDescripcion = (!String.IsNullOrEmpty(textBoxCrucero.Text)) ? textBoxCrucero.Text.Trim() : "";
             string textEstado = Convert.ToString(comboBoxEstado.SelectedItem);
-            Int16 valorFueraServicio = -1;
+            Int16? valorFueraServicio = null;
             string textModelo = textBoxModelo.Text.Trim();
             string textServicio = Convert.ToString(comboBoxServicio.SelectedItem);
 

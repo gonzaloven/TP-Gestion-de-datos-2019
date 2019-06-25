@@ -12,6 +12,7 @@ using FrbaCrucero.AbmRecorrido;
 using FrbaCrucero.GeneracionViaje;
 using FrbaCrucero.AbmCrucero;
 using FrbaCrucero.ListadoEstadistico;
+using FrbaCrucero.CompraPasaje;
 
 namespace FrbaCrucero
 {
@@ -66,6 +67,14 @@ namespace FrbaCrucero
             ListadoEstadisticoForm listadoEstadistico = new ListadoEstadisticoForm();
             listadoEstadistico.MdiParent = this;
             listadoEstadistico.Show();
+        }
+
+        private void toolStripLabel5_Click(object sender, EventArgs e)
+        {
+            this.IsMdiContainer = true;
+            CompraReservaPasaje compraReservaPasaje = new CompraReservaPasaje();
+            compraReservaPasaje.MdiParent = this;
+            compraReservaPasaje.Show();
         }
 
     }

@@ -13,9 +13,9 @@ namespace FrbaCrucero.Modelos
         public Int32 recorrido_codigo { get; set; }
         public DateTime fecha_inicio { get; set; }
         public DateTime fecha_fin { get; set; }
-        public DateTime fecha_fin_estimada { get; set; }
+        public DateTime? fecha_fin_estimada { get; set; }
 
-        public Viaje(Int32 id, Int32 crucero_id, Int32 recorrido_codigo, DateTime fecha_inicio, DateTime fecha_fin, DateTime fecha_fin_estimada)
+        public Viaje(Int32 id, Int32 crucero_id, Int32 recorrido_codigo, DateTime fecha_inicio, DateTime fecha_fin, DateTime? fecha_fin_estimada)
         {
             this.id = id;
             this.crucero_id = crucero_id;

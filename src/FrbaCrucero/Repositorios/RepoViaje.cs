@@ -42,7 +42,7 @@ namespace FrbaCrucero.Repositorios
                 Int32 recorrido_codigo = Convert.ToInt32(row["recorrido_codigo"]);
                 DateTime fecha_inicio = Convert.ToDateTime(row["fecha_inicio"]);
                 DateTime fecha_fin = Convert.ToDateTime(row["fecha_fin"]);
-                DateTime fecha_fin_estimada = Convert.ToDateTime(row["fecha_fin_estimada"]);
+                DateTime? fecha_fin_estimada = row.Field<DateTime?>("fecha_fin_estimada");
 
                 Viaje viaje = new Viaje(id, crucero_id, recorrido_codigo, fecha_inicio, fecha_fin, fecha_fin_estimada);
 
@@ -52,28 +52,47 @@ namespace FrbaCrucero.Repositorios
             return viajes;
         }
 
-        /*public Int32 GenerarViaje(TextBox textBoxCrucero, TextBox textBoxPuertoDesde, 
-                                    TextBox textBoxPuertoHasta, TextBox textBoxFechaInicio,
-                                    TextBox textBoxFechaFin)
+        public List<Viaje> EncontrarPorParametros(String puertoDesde, String puertoHasta, String fechaInicio, String fechaFin)
         {
-            string sqlQuery = "FGNN_19.P_ViajesValidacion";
-            SqlCommand cmd = new SqlCommand(sqlQuery);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.Add(new SqlParameter("nombre", textBoxCrucero.Text));
-            cmd.Parameters.Add(new SqlParameter("puertoD", textBoxPuertoDesde.Text));
-            cmd.Parameters.Add(new SqlParameter("puertoH", textBoxPuertoHasta.Text));
-            cmd.Parameters.Add(new SqlParameter("fechaI", textBoxFechaInicio.Text));
-            cmd.Parameters.Add(new SqlParameter("fechaF", textBoxFechaFin.Text));
-
-            if (conexionDB.obtenerData(cmd).Rows[0][0].ToString() == "1")
+            string sqlQuery;
+            if (String.IsNullOrWhiteSpace(puertoDesde) && String.IsNullOrWhiteSpace(puertoHasta))
             {
-                throw new System.ArgumentException("No se puede ingresar el viaje");
+                sqlQuery = "SELECT v.codigo, v.crucero_id, v.recorrido_codigo, v.fecha_inicio, v.fecha_fin, v.fecha_fin_estimada"
+                                + " FROM FGNN_19.Viajes v WHERE v.codigo > 0";
             }
             else
             {
-                Viaje viaje = new Viaje(
-                Repositorios.RepoViaje.instancia.Crear(viaje);
+                sqlQuery = "SELECT v.codigo, v.crucero_id, v.recorrido_codigo, v.fecha_inicio, v.fecha_fin, v.fecha_fin_estimada"
+                                + " FROM FGNN_19.Viajes v, FGNN_19.Recorridos r WHERE v.codigo > 0 AND v.recorrido_codigo = r.id";
             }
-        }*/
+            SqlCommand cmd = new SqlCommand(sqlQuery);
+
+            if (!String.IsNullOrWhiteSpace(puertoDesde))
+            {
+                cmd.CommandText = cmd.CommandText + " AND r.puerto_desde_id = @puertoDesde";
+                cmd.Parameters.Add(new SqlParameter("puertoDesde", Int32.Parse(puertoDesde)));
+            }
+
+            if (!String.IsNullOrWhiteSpace(puertoHasta))
+            {
+                cmd.CommandText = cmd.CommandText + " AND r.puerto_hasta_id = @puertoHasta";
+                cmd.Parameters.Add(new SqlParameter("puertoHasta", Int32.Parse(puertoHasta)));
+            }
+
+            if (!String.IsNullOrWhiteSpace(fechaInicio))
+            {
+                cmd.CommandText = cmd.CommandText + " AND v.fecha_inicio = @fechaInicio";
+                cmd.Parameters.Add(new SqlParameter("fechaInicio", Convert.ToDateTime(fechaInicio)));
+            }
+
+            if (!String.IsNullOrWhiteSpace(fechaFin))
+            {
+                cmd.CommandText = cmd.CommandText + " AND v.fecha_fin = @fechaFin";
+                cmd.Parameters.Add(new SqlParameter("fechaFin", Convert.ToDateTime(fechaFin)));
+            }
+
+            DataTable tabla = conexionDB.obtenerData(cmd);
+            return ObtenerModelosDesdeTabla(tabla);  
+        }
     }
 }

@@ -142,11 +142,23 @@
     <Compile Include="AbmRol\RolForm.Designer.cs">
       <DependentUpon>RolForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="CompraReservaPasaje\Form1.cs">
+    <Compile Include="CompraReservaPasaje\CompraReservaPasaje.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CompraReservaPasaje\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="CompraReservaPasaje\CompraReservaPasaje.Designer.cs">
+      <DependentUpon>CompraReservaPasaje.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CompraReservaPasaje\SeleccionarFecha.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CompraReservaPasaje\SeleccionarFecha.Designer.cs">
+      <DependentUpon>SeleccionarFecha.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CompraReservaPasaje\SeleccionarPuerto.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CompraReservaPasaje\SeleccionarPuerto.Designer.cs">
+      <DependentUpon>SeleccionarPuerto.cs</DependentUpon>
     </Compile>
     <Compile Include="GeneracionViaje\ListadoCruceros.cs">
       <SubType>Form</SubType>
@@ -270,6 +282,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AbmRol\RolForm.resx">
       <DependentUpon>RolForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CompraReservaPasaje\CompraReservaPasaje.resx">
+      <DependentUpon>CompraReservaPasaje.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CompraReservaPasaje\SeleccionarFecha.resx">
+      <DependentUpon>SeleccionarFecha.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CompraReservaPasaje\SeleccionarPuerto.resx">
+      <DependentUpon>SeleccionarPuerto.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GeneracionViaje\FormGenerarViaje.resx">
       <DependentUpon>FormGenerarViaje.cs</DependentUpon>
