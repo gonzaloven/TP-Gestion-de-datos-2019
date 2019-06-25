@@ -18,16 +18,16 @@ IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_19.Recor
     DROP TABLE FGNN_19.Recorrido_X_Tramo
 GO
 
-IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_19.Cabinas'))
-    DROP TABLE FGNN_19.Cabinas
-GO
-
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_19.Pasajes_Cancelados'))
     DROP TABLE FGNN_19.Pasajes_Cancelados
 GO
 
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_19.Pasajes'))
     DROP TABLE FGNN_19.Pasajes
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_19.Cabinas'))
+    DROP TABLE FGNN_19.Cabinas
 GO
 
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_19.Viajes'))
@@ -206,6 +206,10 @@ IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_19.FN_Pu
 	DROP FUNCTION FGNN_19.FN_Puede_cumplir_recorrido
 GO
 
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_19.FN_Cabina_reemplazante') AND type in (N'FN', N'IF', N'TF', N'FS', N'FT'))
+	DROP FUNCTION FGNN_19.FN_Cabina_reemplazante
+GO
+
 --Creación de tablas.
 CREATE TABLE [FGNN_19].[Usuarios] (
 	[id] NUMERIC(18, 0) IDENTITY(1, 1),
@@ -366,22 +370,6 @@ CREATE TABLE [FGNN_19].[Viajes] (
 );
 GO
 
-CREATE TABLE [FGNN_19].[Pasajes] (
-	[id] NUMERIC(18, 0) IDENTITY(1, 1),
-	[reserva_codigo] NUMERIC(18, 0),
-	[cliente_id] NUMERIC(18, 0),
-	[compra_codigo] NUMERIC(18, 0),
-	[viaje_codigo] NUMERIC(18, 0),
-	[precio] FLOAT,
-	[codigo] NUMERIC(18,0)
-	PRIMARY KEY ([id]),
-	FOREIGN KEY (reserva_codigo) REFERENCES FGNN_19.Reservas(codigo),
-	FOREIGN KEY (cliente_id) REFERENCES FGNN_19.Clientes(id),
-	FOREIGN KEY (compra_codigo) REFERENCES FGNN_19.Compras(codigo),
-	FOREIGN KEY (viaje_codigo) REFERENCES FGNN_19.Viajes(codigo)
-);
-GO
-
 CREATE TABLE [FGNN_19].[Cabinas] (
 	[codigo] NUMERIC(18, 0) IDENTITY(1, 1),
 	[crucero_id] NUMERIC(18, 0),
@@ -389,11 +377,27 @@ CREATE TABLE [FGNN_19].[Cabinas] (
 	[piso] NUMERIC(18, 0) NOT NULL,
 	[tipo_id] NUMERIC(18, 0),
 	[estado] BIT,
-	[pasaje_codigo] NUMERIC(18, 0),
 	PRIMARY KEY ([codigo]),
 	FOREIGN KEY (crucero_id) REFERENCES FGNN_19.Cruceros(id),
-	FOREIGN KEY (tipo_id) REFERENCES FGNN_19.Tipos_Cabinas(id),
-	FOREIGN KEY (pasaje_codigo) REFERENCES FGNN_19.Pasajes(id)
+	FOREIGN KEY (tipo_id) REFERENCES FGNN_19.Tipos_Cabinas(id)
+);
+GO
+
+CREATE TABLE [FGNN_19].[Pasajes] (
+	[id] NUMERIC(18, 0) IDENTITY(1, 1),
+	[reserva_codigo] NUMERIC(18, 0),
+	[cliente_id] NUMERIC(18, 0),
+	[compra_codigo] NUMERIC(18, 0),
+	[viaje_codigo] NUMERIC(18, 0),
+	[cabina_id] NUMERIC(18,0),
+	[precio] FLOAT,
+	[codigo] NUMERIC(18,0),
+	PRIMARY KEY ([id]),
+	FOREIGN KEY (reserva_codigo) REFERENCES FGNN_19.Reservas(codigo),
+	FOREIGN KEY (cliente_id) REFERENCES FGNN_19.Clientes(id),
+	FOREIGN KEY (compra_codigo) REFERENCES FGNN_19.Compras(codigo),
+	FOREIGN KEY (viaje_codigo) REFERENCES FGNN_19.Viajes(codigo),
+	FOREIGN KEY (cabina_id) REFERENCES FGNN_19.Cabinas(codigo)
 );
 GO
 
@@ -493,8 +497,22 @@ INSERT INTO FGNN_19.Compras(codigo_pasaje, fecha)
 SELECT m.PASAJE_CODIGO, m.PASAJE_FECHA_COMPRA
 FROM gd_esquema.Maestra m
 WHERE m.PASAJE_CODIGO IS NOT NULL
+GROUP BY m.PASAJE_CODIGO, m.PASAJE_FECHA_COMPRA
 
-INSERT INTO FGNN_19.Pasajes(reserva_codigo, cliente_id, compra_codigo, viaje_codigo, precio, codigo)
+INSERT INTO FGNN_19.Cabinas(crucero_id, numero, piso, tipo_id)
+SELECT 
+(SELECT cru.id
+FROM FGNN_19.Cruceros cru 
+	JOIN FGNN_19.Fabricantes f ON cru.fabricante_id = f.id
+WHERE m.CRUCERO_IDENTIFICADOR = cru.nombre AND m.CRUCERO_MODELO = cru.modelo AND m.CRU_FABRICANTE = f.descripcion) AS crucero_id,
+ m.CABINA_NRO, m.CABINA_PISO, 
+ (SELECT tc.id
+ FROM FGNN_19.Tipos_Cabinas tc
+ WHERE tc.descripcion = m.CABINA_TIPO AND tc.porcentaje_adicional = m.CABINA_TIPO_PORC_RECARGO) AS tipo_cabina_id
+FROM gd_esquema.Maestra m
+GROUP BY m.CRUCERO_IDENTIFICADOR, m.CRUCERO_MODELO, m.CRU_FABRICANTE, m.CABINA_NRO, m.CABINA_PISO, m.CABINA_TIPO, m.CABINA_TIPO_PORC_RECARGO
+
+INSERT INTO FGNN_19.Pasajes(reserva_codigo, cliente_id, compra_codigo, viaje_codigo, cabina_id, precio, codigo)
 SELECT m.RESERVA_CODIGO, 
 	(SELECT c.id
 	FROM FGNN_19.Clientes c
@@ -505,18 +523,14 @@ SELECT m.RESERVA_CODIGO,
 		AND m.CLI_MAIL = c.mail
 		AND m.CLI_NOMBRE = c.nombre
 		AND m.CLI_TELEFONO = c.telefono
-	GROUP BY c.id),
+	GROUP BY c.id) cliente_id,
 (SELECT co.codigo
 	FROM FGNN_19.Compras co
 	WHERE co.codigo_pasaje = m.PASAJE_CODIGO
-	GROUP BY co.codigo),
+	GROUP BY co.codigo) compra_codigo,
 (SELECT v.codigo
-	FROM FGNN_19.Viajes v, FGNN_19.Cruceros cru, FGNN_19.Fabricantes f, FGNN_19.Recorridos r, FGNN_19.Puertos pd, FGNN_19.Puertos ph
-	WHERE cru.nombre = m.CRUCERO_IDENTIFICADOR
-		AND cru.modelo = m.CRUCERO_MODELO
-		AND f.descripcion = m.CRU_FABRICANTE
-		AND cru.fabricante_id = f.id
-		AND v.crucero_id = cru.id
+	FROM FGNN_19.Viajes v, FGNN_19.Recorridos r, FGNN_19.Puertos pd, FGNN_19.Puertos ph
+	WHERE v.crucero_id = cru.id
 		AND r.codigo = CONVERT(varchar,m.RECORRIDO_CODIGO)
 		AND pd.descripcion = m.PUERTO_DESDE
 		AND ph.descripcion = m.PUERTO_HASTA
@@ -526,30 +540,18 @@ SELECT m.RESERVA_CODIGO,
 		AND v.fecha_inicio = m.FECHA_SALIDA
 		AND v.fecha_fin = m.FECHA_LLEGADA
 		AND v.fecha_fin_estimada = m.FECHA_LLEGADA_ESTIMADA
-	GROUP BY v.codigo),
+	GROUP BY v.codigo) viaje_codigo,
+	(SELECT c.codigo
+	FROM FGNN_19.Cabinas c, FGNN_19.Tipos_Cabinas tc
+	WHERE  c.crucero_id = cru.id AND c.numero = m.CABINA_NRO AND c.piso = m.CABINA_PISO
+	AND tc.descripcion = m.CABINA_TIPO AND tc.porcentaje_adicional = m.CABINA_TIPO_PORC_RECARGO AND tc.id = c.tipo_id),
   m.PASAJE_PRECIO, m.PASAJE_CODIGO
-FROM gd_esquema.Maestra m
+FROM gd_esquema.Maestra m, FGNN_19.Cruceros cru, FGNN_19.Fabricantes f
+WHERE cru.nombre = m.CRUCERO_IDENTIFICADOR AND cru.modelo = m.CRUCERO_MODELO AND f.descripcion = m.CRU_FABRICANTE
+	AND cru.fabricante_id = f.id
 GROUP BY m.CABINA_NRO, m.CABINA_PISO, m.CABINA_TIPO, m.CABINA_TIPO_PORC_RECARGO, m.CLI_APELLIDO, m.CLI_DIRECCION, m.CLI_DNI, m.CLI_FECHA_NAC, m.CLI_MAIL, 
-	m.CLI_NOMBRE, m.CLI_TELEFONO, m.CRU_FABRICANTE, m.CRUCERO_IDENTIFICADOR, m.CRUCERO_MODELO, m.FECHA_LLEGADA, m.FECHA_LLEGADA_ESTIMADA, m.FECHA_SALIDA, 
-	m.PASAJE_CODIGO, m.PASAJE_FECHA_COMPRA, m.PASAJE_PRECIO, m.PUERTO_DESDE, m.PUERTO_HASTA, m.RECORRIDO_CODIGO, m.RECORRIDO_PRECIO_BASE, m.RESERVA_CODIGO, m.RESERVA_FECHA
-
-INSERT INTO FGNN_19.Cabinas(crucero_id, numero, piso, tipo_id, pasaje_codigo)
-SELECT 
-(SELECT cru.id
-FROM FGNN_19.Cruceros cru 
-	JOIN FGNN_19.Fabricantes f ON cru.fabricante_id = f.id
-WHERE m.CRUCERO_IDENTIFICADOR = cru.nombre AND m.CRUCERO_MODELO = cru.modelo AND m.CRU_FABRICANTE = f.descripcion) AS crucero_id,
- m.CABINA_NRO, m.CABINA_PISO, 
- (SELECT tc.id
- FROM FGNN_19.Tipos_Cabinas tc
- WHERE tc.descripcion = m.CABINA_TIPO AND tc.porcentaje_adicional = m.CABINA_TIPO_PORC_RECARGO) AS tipo_cabina_id,
-(SELECT p.id
-FROM FGNN_19.Pasajes p
-WHERE p.codigo = m.PASAJE_CODIGO) AS pasaje_id
-FROM gd_esquema.Maestra m
-GROUP BY m.CABINA_NRO, m.CABINA_PISO, m.CABINA_TIPO, m.CABINA_TIPO_PORC_RECARGO, m.CLI_APELLIDO, m.CLI_DIRECCION, m.CLI_DNI, m.CLI_FECHA_NAC, m.CLI_MAIL, 
-	m.CLI_NOMBRE, m.CLI_TELEFONO, m.CRU_FABRICANTE, m.CRUCERO_IDENTIFICADOR, m.CRUCERO_MODELO, m.FECHA_LLEGADA, m.FECHA_LLEGADA_ESTIMADA, m.FECHA_SALIDA, 
-	m.PASAJE_CODIGO, m.PASAJE_FECHA_COMPRA, m.PASAJE_PRECIO, m.PUERTO_DESDE, m.PUERTO_HASTA, m.RECORRIDO_CODIGO, m.RECORRIDO_PRECIO_BASE, m.RESERVA_CODIGO, m.RESERVA_FECHA
+	m.CLI_NOMBRE, m.CLI_TELEFONO, cru.id, m.FECHA_LLEGADA, m.FECHA_LLEGADA_ESTIMADA, m.FECHA_SALIDA, m.PASAJE_CODIGO, m.PASAJE_FECHA_COMPRA, m.PASAJE_PRECIO,
+	 m.PUERTO_DESDE, m.PUERTO_HASTA, m.RECORRIDO_CODIGO, m.RECORRIDO_PRECIO_BASE, m.RESERVA_CODIGO, m.RESERVA_FECHA
 
 INSERT INTO FGNN_19.Recorridos_X_Crucero 
 SELECT r.id, c.id
@@ -757,6 +759,22 @@ BEGIN
 			AND cr.modelo = co.modelo AND cr.tipo_servicio = co.tipo_servicio)
 
 	RETURN @idCruceroReemplazo
+END
+GO
+
+CREATE FUNCTION FGNN_19.FN_Cabina_reemplazante(@idCrucero NUMERIC(18,0), @idCabinaVieja NUMERIC(18,0))
+RETURNS NUMERIC(18,0)
+AS
+BEGIN
+
+	DECLARE @numero NUMERIC(18,0) = (SELECT numero FROM Cabinas WHERE codigo = @idCabinaVieja)
+	DECLARE @piso NUMERIC(18,0) = (SELECT piso FROM Cabinas WHERE codigo = @idCabinaVieja)
+	DECLARE @tipo_id NUMERIC(18,0) = (SELECT tipo_id FROM Cabinas WHERE codigo = @idCabinaVieja)
+
+	RETURN (SELECT codigo
+		FROM Cabinas 
+		WHERE crucero_id = @idCrucero AND numero = @numero AND piso = @piso AND tipo_id = @tipo_id)
+
 END
 GO
 
@@ -972,9 +990,10 @@ AS
 BEGIN TRANSACTION
 	
 	INSERT INTO FGNN_19.Pasajes_Cancelados(id_pasaje, fecha_cancelacion, motivo)
-	SELECT pasaje_codigo, CONVERT(datetime2(3), GETDATE()), @motivo
-	FROM Cabinas
-	WHERE crucero_id = @idCrucero
+	SELECT p.id, CONVERT(datetime2(3), GETDATE()), @motivo
+	FROM Pasajes p
+		JOIN Cabinas c ON c.codigo = p.cabina_id
+	WHERE c.crucero_id = @idCrucero
 
 COMMIT TRANSACTION;
 GO
@@ -983,25 +1002,24 @@ CREATE PROCEDURE FGNN_19.Reemplazar_crucero(@idCrucero NUMERIC(18,0))
 AS
 BEGIN TRANSACTION
 
-	DECLARE @idReemplazo NUMERIC(18,0)
+	DECLARE @idCruceroReemplazo NUMERIC(18,0)
 
-	SET @idReemplazo = FGNN_19.FN_Crucero_reemplazante(@idCrucero)
+	SET @idCruceroReemplazo = FGNN_19.FN_Crucero_reemplazante(@idCrucero)
 
-	IF(@idReemplazo IS NULL)
+	IF(@idCruceroReemplazo IS NULL)
 		BEGIN
 			RAISERROR('ERROR: El crucero no puede ser reemplazado por ningun crucero existente, debe dar de alta uno nuevo para poder reemplazarlo',1,1)
 			RETURN -1
 		END
 
-	UPDATE Cabinas
-	SET crucero_id = @idReemplazo
-	WHERE crucero_id = @idCrucero AND (SELECT v.fecha_inicio
-		FROM Pasajes p
-			JOIN Viajes v ON v.codigo = p.viaje_codigo
-		WHERE p.id = pasaje_codigo) >= CONVERT(datetime2(3), GETDATE()) AND FGNN_19.FN_Pasaje_no_cancelado(pasaje_codigo) = 1
+	UPDATE Pasajes 
+	SET cabina_id = FGNN_19.FN_Cabina_reemplazante(@idCruceroReemplazo, cabina_id)
+	WHERE EXISTS(SELECT 1 FROM Cabinas c WHERE c.codigo = cabina_id AND c.crucero_id = @idCrucero) 
+		AND EXISTS(SELECT 1 FROM Viajes v WHERE v.codigo = viaje_codigo AND v.fecha_inicio >= CONVERT(datetime2(3), GETDATE()))
+		AND FGNN_19.FN_Pasaje_no_cancelado(id) = 1
 
 	UPDATE Viajes
-	SET crucero_id = @idReemplazo
+	SET crucero_id = @idCruceroReemplazo
 	WHERE crucero_id = @idCrucero AND fecha_inicio >= CONVERT(datetime2(3), GETDATE()) AND EXISTS(SELECT 1 FROM Pasajes WHERE viaje_codigo = codigo AND FGNN_19.FN_Pasaje_no_cancelado(id) = 1)
 
 COMMIT TRANSACTION;
@@ -1043,13 +1061,13 @@ BEGIN
 
 	SELECT TOP 5 ps.descripcion AS [Puerto de salida], pl.descripcion AS [Puerto de llegada],
 		COUNT(*) AS [Cantidad de cabinas libres]
-	FROM FGNN_19.Cabinas c
-		JOIN FGNN_19.Pasajes p ON p.id = c.pasaje_codigo
+	FROM FGNN_19.Pasajes p
+		JOIN FGNN_19.Cabinas c ON c.codigo = p.cabina_id
 		JOIN FGNN_19.Viajes v ON v.codigo = p.viaje_codigo
 		JOIN FGNN_19.Recorridos r ON r.codigo = v.recorrido_codigo
 		JOIN FGNN_19.Puertos ps ON ps.id = r.puerto_desde_id
 		JOIN FGNN_19.Puertos pl ON pl.id = r.puerto_hasta_id
-	WHERE c.estado = 0 AND v.fecha_fin BETWEEN @fecha AND DATEADD(MONTH, 6, @fecha)
+	WHERE p.compra_codigo IS NULL AND v.fecha_fin BETWEEN @fecha AND DATEADD(MONTH, 6, @fecha)
 	GROUP BY r.codigo, ps.descripcion, pl.descripcion
 	ORDER BY [Cantidad de cabinas libres] DESC
 
