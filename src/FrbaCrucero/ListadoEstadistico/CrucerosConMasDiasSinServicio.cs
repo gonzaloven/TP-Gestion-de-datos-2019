@@ -21,14 +21,17 @@ namespace FrbaCrucero.ListadoEstadistico
         {
             this.crucerosSinServicio = new CrucerosSinServicio(this);
             InitializeComponent();
-            initialize();
+            this.Shown += (s, e1) =>
+            {
+                this.crucerosSinServicio.GetAnios();
+                this.initialize();
+            };
         }
 
         private void initialize()
         {
             this.comboSemestre.Enabled = true;
             this.comboAnio.Enabled = true;
-            this.crucerosSinServicio.GetAnios();
         }
 
         private void buscarButton_Click(object sender, EventArgs e)

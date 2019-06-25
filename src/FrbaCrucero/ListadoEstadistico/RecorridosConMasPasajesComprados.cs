@@ -22,14 +22,18 @@ namespace FrbaCrucero.ListadoEstadistico
         {
             this.recorridosConMasPasajes = new RecorridosConMasPasajes(this);
             InitializeComponent();
-            initialize();
+            this.Shown += (s, e1) =>
+            {
+                this.recorridosConMasPasajes.GetAnios();
+                this.initialize();
+            };
+            
 
         }
 
         private void initialize() {
             this.comboSemestre.Enabled = true;
             this.comboAnio.Enabled = true;
-            this.recorridosConMasPasajes.GetAnios();
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)
