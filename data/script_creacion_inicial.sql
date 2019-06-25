@@ -495,28 +495,43 @@ FROM gd_esquema.Maestra m
 WHERE m.PASAJE_CODIGO IS NOT NULL
 
 INSERT INTO FGNN_19.Pasajes(reserva_codigo, cliente_id, compra_codigo, viaje_codigo, precio, codigo)
-SELECT m.RESERVA_CODIGO, c.id, co.codigo, v.codigo, m.PASAJE_PRECIO, m.PASAJE_CODIGO
-FROM gd_esquema.Maestra m, FGNN_19.Clientes c, FGNN_19.Viajes v, FGNN_19.Cruceros cru, FGNN_19.Fabricantes f, FGNN_19.Recorridos r, FGNN_19.Puertos pd, FGNN_19.Puertos ph, FGNN_19.Compras co
-WHERE m.CLI_APELLIDO = c.apellido
-AND m.CLI_DIRECCION = c.direccion
-AND m.CLI_DNI = c.dni
-AND m.CLI_FECHA_NAC = c.fecha_nac
-AND m.CLI_MAIL = c.mail
-AND m.CLI_NOMBRE = c.nombre
-AND m.CLI_TELEFONO = c.telefono
-AND cru.nombre = m.CRUCERO_IDENTIFICADOR
-AND cru.modelo = m.CRUCERO_MODELO
-AND f.descripcion = m.CRU_FABRICANTE
-AND cru.fabricante_id = f.id
-AND v.crucero_id = cru.id
-AND r.codigo = CONVERT(varchar,m.RECORRIDO_CODIGO)
-AND r.puerto_desde_id = pd.id
-AND r.puerto_hasta_id = ph.id
-AND pd.descripcion = m.PUERTO_DESDE
-AND ph.descripcion = m.PUERTO_HASTA
-AND v.recorrido_codigo = r.id
-AND co.codigo_pasaje = m.PASAJE_CODIGO
-GROUP BY m.RESERVA_CODIGO, c.id, co.codigo, v.codigo, m.PASAJE_PRECIO, m.PASAJE_CODIGO
+SELECT m.RESERVA_CODIGO, 
+	(SELECT c.id
+	FROM FGNN_19.Clientes c
+	WHERE m.CLI_APELLIDO = c.apellido
+		AND m.CLI_DIRECCION = c.direccion
+		AND m.CLI_DNI = c.dni
+		AND m.CLI_FECHA_NAC = c.fecha_nac
+		AND m.CLI_MAIL = c.mail
+		AND m.CLI_NOMBRE = c.nombre
+		AND m.CLI_TELEFONO = c.telefono
+	GROUP BY c.id),
+(SELECT co.codigo
+	FROM FGNN_19.Compras co
+	WHERE co.codigo_pasaje = m.PASAJE_CODIGO
+	GROUP BY co.codigo),
+(SELECT v.codigo
+	FROM FGNN_19.Viajes v, FGNN_19.Cruceros cru, FGNN_19.Fabricantes f, FGNN_19.Recorridos r, FGNN_19.Puertos pd, FGNN_19.Puertos ph
+	WHERE cru.nombre = m.CRUCERO_IDENTIFICADOR
+		AND cru.modelo = m.CRUCERO_MODELO
+		AND f.descripcion = m.CRU_FABRICANTE
+		AND cru.fabricante_id = f.id
+		AND v.crucero_id = cru.id
+		AND r.codigo = CONVERT(varchar,m.RECORRIDO_CODIGO)
+		AND pd.descripcion = m.PUERTO_DESDE
+		AND ph.descripcion = m.PUERTO_HASTA
+		AND r.puerto_desde_id = pd.id
+		AND r.puerto_hasta_id = ph.id
+		AND v.recorrido_codigo = r.id
+		AND v.fecha_inicio = m.FECHA_SALIDA
+		AND v.fecha_fin = m.FECHA_LLEGADA
+		AND v.fecha_fin_estimada = m.FECHA_LLEGADA_ESTIMADA
+	GROUP BY v.codigo),
+  m.PASAJE_PRECIO, m.PASAJE_CODIGO
+FROM gd_esquema.Maestra m
+GROUP BY m.CABINA_NRO, m.CABINA_PISO, m.CABINA_TIPO, m.CABINA_TIPO_PORC_RECARGO, m.CLI_APELLIDO, m.CLI_DIRECCION, m.CLI_DNI, m.CLI_FECHA_NAC, m.CLI_MAIL, 
+	m.CLI_NOMBRE, m.CLI_TELEFONO, m.CRU_FABRICANTE, m.CRUCERO_IDENTIFICADOR, m.CRUCERO_MODELO, m.FECHA_LLEGADA, m.FECHA_LLEGADA_ESTIMADA, m.FECHA_SALIDA, 
+	m.PASAJE_CODIGO, m.PASAJE_FECHA_COMPRA, m.PASAJE_PRECIO, m.PUERTO_DESDE, m.PUERTO_HASTA, m.RECORRIDO_CODIGO, m.RECORRIDO_PRECIO_BASE, m.RESERVA_CODIGO, m.RESERVA_FECHA
 
 INSERT INTO FGNN_19.Cabinas(crucero_id, numero, piso, tipo_id, pasaje_codigo)
 SELECT cru.id, m.CABINA_NRO, m.CABINA_PISO, tc.id, p.id
