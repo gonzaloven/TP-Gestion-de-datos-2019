@@ -36,7 +36,7 @@
             this.labelIDPuertoOrigen = new System.Windows.Forms.Label();
             this.textBoxPuertoDestino = new System.Windows.Forms.TextBox();
             this.labelPuertoDestino = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBoxFiltroCompraReservaPasaje = new System.Windows.Forms.GroupBox();
             this.dataGridViewViajes = new System.Windows.Forms.DataGridView();
             this.Seleccionar = new System.Windows.Forms.DataGridViewButtonColumn();
             this.buttonBuscar = new System.Windows.Forms.Button();
@@ -45,7 +45,7 @@
             this.buttonSeleccionarFechaFin = new System.Windows.Forms.Button();
             this.buttonSeleccionarPuertoOrigen = new System.Windows.Forms.Button();
             this.buttonSeleccionarPuertoDestino = new System.Windows.Forms.Button();
-            this.groupBox1.SuspendLayout();
+            this.groupBoxFiltroCompraReservaPasaje.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewViajes)).BeginInit();
             this.SuspendLayout();
             // 
@@ -113,26 +113,26 @@
             this.labelPuertoDestino.TabIndex = 7;
             this.labelPuertoDestino.Text = "Puerto destino";
             // 
-            // groupBox1
+            // groupBoxFiltroCompraReservaPasaje
             // 
-            this.groupBox1.Controls.Add(this.buttonSeleccionarPuertoDestino);
-            this.groupBox1.Controls.Add(this.buttonSeleccionarPuertoOrigen);
-            this.groupBox1.Controls.Add(this.buttonSeleccionarFechaFin);
-            this.groupBox1.Controls.Add(this.buttonSeleccionarFechaInicio);
-            this.groupBox1.Controls.Add(this.labelIDPuertoOrigen);
-            this.groupBox1.Controls.Add(this.labelPuertoDestino);
-            this.groupBox1.Controls.Add(this.textBoxFechaInicio);
-            this.groupBox1.Controls.Add(this.textBoxPuertoDestino);
-            this.groupBox1.Controls.Add(this.textBoxFechaFin);
-            this.groupBox1.Controls.Add(this.labelFechaInicio);
-            this.groupBox1.Controls.Add(this.textBoxPuertoOrigen);
-            this.groupBox1.Controls.Add(this.labelFechaFin);
-            this.groupBox1.Location = new System.Drawing.Point(12, 12);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(785, 91);
-            this.groupBox1.TabIndex = 8;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "groupBox1";
+            this.groupBoxFiltroCompraReservaPasaje.Controls.Add(this.buttonSeleccionarPuertoDestino);
+            this.groupBoxFiltroCompraReservaPasaje.Controls.Add(this.buttonSeleccionarPuertoOrigen);
+            this.groupBoxFiltroCompraReservaPasaje.Controls.Add(this.buttonSeleccionarFechaFin);
+            this.groupBoxFiltroCompraReservaPasaje.Controls.Add(this.buttonSeleccionarFechaInicio);
+            this.groupBoxFiltroCompraReservaPasaje.Controls.Add(this.labelIDPuertoOrigen);
+            this.groupBoxFiltroCompraReservaPasaje.Controls.Add(this.labelPuertoDestino);
+            this.groupBoxFiltroCompraReservaPasaje.Controls.Add(this.textBoxFechaInicio);
+            this.groupBoxFiltroCompraReservaPasaje.Controls.Add(this.textBoxPuertoDestino);
+            this.groupBoxFiltroCompraReservaPasaje.Controls.Add(this.textBoxFechaFin);
+            this.groupBoxFiltroCompraReservaPasaje.Controls.Add(this.labelFechaInicio);
+            this.groupBoxFiltroCompraReservaPasaje.Controls.Add(this.textBoxPuertoOrigen);
+            this.groupBoxFiltroCompraReservaPasaje.Controls.Add(this.labelFechaFin);
+            this.groupBoxFiltroCompraReservaPasaje.Location = new System.Drawing.Point(12, 12);
+            this.groupBoxFiltroCompraReservaPasaje.Name = "groupBoxFiltroCompraReservaPasaje";
+            this.groupBoxFiltroCompraReservaPasaje.Size = new System.Drawing.Size(785, 91);
+            this.groupBoxFiltroCompraReservaPasaje.TabIndex = 8;
+            this.groupBoxFiltroCompraReservaPasaje.TabStop = false;
+            this.groupBoxFiltroCompraReservaPasaje.Text = "Filtro viajes";
             // 
             // dataGridViewViajes
             // 
@@ -224,11 +224,11 @@
             this.Controls.Add(this.buttonLimpiar);
             this.Controls.Add(this.buttonBuscar);
             this.Controls.Add(this.dataGridViewViajes);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.groupBoxFiltroCompraReservaPasaje);
             this.Name = "CompraReservaPasaje";
             this.Text = "Compra y reserva de pasaje";
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.groupBoxFiltroCompraReservaPasaje.ResumeLayout(false);
+            this.groupBoxFiltroCompraReservaPasaje.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewViajes)).EndInit();
             this.ResumeLayout(false);
 
@@ -244,7 +244,7 @@
         private System.Windows.Forms.Label labelIDPuertoOrigen;
         private System.Windows.Forms.TextBox textBoxPuertoDestino;
         private System.Windows.Forms.Label labelPuertoDestino;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox groupBoxFiltroCompraReservaPasaje;
         private System.Windows.Forms.DataGridView dataGridViewViajes;
         private System.Windows.Forms.DataGridViewButtonColumn Seleccionar;
         private System.Windows.Forms.Button buttonBuscar;

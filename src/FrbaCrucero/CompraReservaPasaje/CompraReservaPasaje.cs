@@ -63,6 +63,7 @@ namespace FrbaCrucero.CompraPasaje
                                           .EncontrarPorParametros(valorPuertoDesde, valorPuertoHasta, fechaInicio, fechaFin);
             dataGridViewViajes.DataSource = viajes;
             dataGridViewViajes.MultiSelect = false;
+            this.dataGridViewViajes.Columns["fecha_fin_estimada"].Visible = false;
         }
 
         private void buttonLimpiar_Click(object sender, EventArgs e)
