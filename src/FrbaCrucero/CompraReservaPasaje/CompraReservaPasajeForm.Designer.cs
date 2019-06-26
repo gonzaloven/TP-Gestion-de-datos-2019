@@ -1,6 +1,6 @@
 ﻿namespace FrbaCrucero.CompraPasaje
 {
-    partial class CompraReservaPasaje
+    partial class CompraReservaPasajeForm
     {
         /// <summary>
         /// Required designer variable.
@@ -147,6 +147,7 @@
             this.dataGridViewViajes.RowTemplate.Height = 24;
             this.dataGridViewViajes.Size = new System.Drawing.Size(785, 379);
             this.dataGridViewViajes.TabIndex = 9;
+            this.dataGridViewViajes.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewViajes_CellContentClick);
             // 
             // Seleccionar
             // 

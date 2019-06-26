@@ -1,4 +1,5 @@
-﻿using FrbaCrucero.Modelos;
+﻿using FrbaCrucero.CompraReservaPasaje;
+using FrbaCrucero.Modelos;
 using FrbaCrucero.Repositorios;
 using System;
 using System.Collections.Generic;
@@ -12,9 +13,9 @@ using System.Windows.Forms;
 
 namespace FrbaCrucero.CompraPasaje
 {
-    public partial class CompraReservaPasaje : Form
+    public partial class CompraReservaPasajeForm : Form
     {
-        public CompraReservaPasaje()
+        public CompraReservaPasajeForm()
         {
             InitializeComponent();
             this.textBoxFechaInicio.ReadOnly = true;
@@ -72,6 +73,20 @@ namespace FrbaCrucero.CompraPasaje
             this.textBoxFechaFin.Text = null;
             this.textBoxPuertoOrigen.Text = null;
             this.textBoxPuertoDestino.Text = null;
+        }
+
+        private void dataGridViewViajes_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == 0)
+            {
+                Int32 idCrucero = Int32.Parse(dataGridViewViajes[2, e.RowIndex].Value.ToString());
+                Int32 idViaje = Int32.Parse(dataGridViewViajes[1, e.RowIndex].Value.ToString());
+                CrearPasaje nuevoPasaje = new CrearPasaje();
+                nuevoPasaje.viaje_codigo = idViaje;
+                SeleccionarCabina seleccionarCabina = new SeleccionarCabina(idCrucero, nuevoPasaje);
+                seleccionarCabina.Show();
+
+            }        
         }
     }
 }

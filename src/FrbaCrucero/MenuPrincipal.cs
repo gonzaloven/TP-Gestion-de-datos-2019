@@ -72,7 +72,7 @@ namespace FrbaCrucero
         private void toolStripLabel5_Click(object sender, EventArgs e)
         {
             this.IsMdiContainer = true;
-            CompraReservaPasaje compraReservaPasaje = new CompraReservaPasaje();
+            CompraReservaPasajeForm compraReservaPasaje = new CompraReservaPasajeForm();
             compraReservaPasaje.MdiParent = this;
             compraReservaPasaje.Show();
         }
