@@ -27,9 +27,16 @@ namespace FrbaCrucero.AbmCrucero
             bajaTemporal.Show();
         }
 
+        private void buttonBajaDefinitiva_Click(object sender, EventArgs e)
+        {
+            BajaDefinitiva bajaDefinitiva = new BajaDefinitiva(this, id);
+            bajaDefinitiva.Show();
+        }
+
         private void buttonCancelar_Click(object sender, EventArgs e)
         {
             this.Close();
         }
+
     }
 }

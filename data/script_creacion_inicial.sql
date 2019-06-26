@@ -685,10 +685,11 @@ CREATE FUNCTION FGNN_19.FN_Tiene_fecha_libre(@idCrucero NUMERIC(18,0), @fecha_in
 RETURNS INT
 AS
 BEGIN
+	
 
 	IF NOT EXISTS (SELECT 1
 		FROM Viajes v
-			JOIN Pasajes p ON p.viaje_codigo = v.codigo 
+			JOIN Pasajes p ON p.viaje_codigo = v.codigo
 		WHERE v.crucero_id = @idCrucero AND v.fecha_inicio < @fecha_fin AND v.fecha_fin > @fecha_inicio AND FGNN_19.FN_Pasaje_no_cancelado(p.id) = 1)
 		RETURN 1
 
@@ -717,27 +718,29 @@ RETURNS BIT
 AS
 BEGIN
 
-	DECLARE @cantidad_viajes_cumple_fecha INT
-	DECLARE @cantidad_viajes_cumple_recorrido INT
-	DECLARE @cantidad_viajes_existentes INT
+	DECLARE @cantidad_pasajes_cumple_fecha INT
+	DECLARE @cantidad_pasajes_cumple_recorrido INT
+	DECLARE @cantidad_pasajes_existentes INT
 
-	SET @cantidad_viajes_cumple_fecha = (SELECT ISNULL(SUM(FGNN_19.FN_Tiene_fecha_libre(@idCruceroReemplazo, fecha_inicio, fecha_fin)),0)
-		FROM FGNN_19.Viajes 
-		WHERE crucero_id = @idCruceroOriginal
-		GROUP BY crucero_id)
-		
-	SET @cantidad_viajes_cumple_recorrido = (SELECT ISNULL(SUM(FGNN_19.FN_Puede_cumplir_recorrido(@idCruceroReemplazo, recorrido_codigo)),0)
-		FROM FGNN_19.Viajes 
-		WHERE crucero_id = @idCruceroOriginal
-		GROUP BY crucero_id)
-
-	SET @cantidad_viajes_existentes = (SELECT COUNT(v.codigo)
+	SET @cantidad_pasajes_cumple_fecha = (SELECT ISNULL(SUM(FGNN_19.FN_Tiene_fecha_libre(@idCruceroReemplazo, fecha_inicio, fecha_fin)),0)
 		FROM FGNN_19.Viajes v
-			JOIN Pasajes p ON p.viaje_codigo = v.codigo
+			JOIN FGNN_19.Pasajes p ON p.viaje_codigo = v.codigo
+		WHERE v.crucero_id = @idCruceroOriginal AND v.fecha_inicio >=  CONVERT(datetime2(3), GETDATE()) AND FGNN_19.FN_Pasaje_no_cancelado(p.id) = 1
+		GROUP BY v.crucero_id)
+		
+	SET @cantidad_pasajes_cumple_recorrido = (SELECT ISNULL(SUM(FGNN_19.FN_Puede_cumplir_recorrido(@idCruceroReemplazo, recorrido_codigo)),0)
+		FROM FGNN_19.Viajes v
+			JOIN FGNN_19.Pasajes p ON p.viaje_codigo = v.codigo
 		WHERE v.crucero_id = @idCruceroOriginal AND v.fecha_inicio >=  CONVERT(datetime2(3), GETDATE()) AND FGNN_19.FN_Pasaje_no_cancelado(p.id) = 1
 		GROUP BY v.crucero_id)
 
-	IF(@cantidad_viajes_cumple_fecha = @cantidad_viajes_existentes AND @cantidad_viajes_cumple_recorrido = @cantidad_viajes_existentes)
+	SET @cantidad_pasajes_existentes = (SELECT COUNT(v.codigo)
+		FROM FGNN_19.Viajes v
+			JOIN FGNN_19.Pasajes p ON p.viaje_codigo = v.codigo
+		WHERE v.crucero_id = @idCruceroOriginal AND v.fecha_inicio >=  CONVERT(datetime2(3), GETDATE()) AND FGNN_19.FN_Pasaje_no_cancelado(p.id) = 1
+		GROUP BY v.crucero_id)
+
+	IF(@cantidad_pasajes_cumple_fecha = @cantidad_pasajes_existentes AND @cantidad_pasajes_cumple_recorrido = @cantidad_pasajes_existentes)
 		RETURN 1
 
 	RETURN 0
@@ -753,8 +756,8 @@ BEGIN
 	DECLARE @idCruceroReemplazo NUMERIC(18,0)
 
 	SET @idCruceroReemplazo = (SELECT TOP 1 cr.id
-		FROM Cruceros co
-			JOIN Cruceros cr ON co.id != cr.id
+		FROM FGNN_19.Cruceros co
+			JOIN FGNN_19.Cruceros cr ON co.id != cr.id
 		WHERE co.id = @idCruceroOriginal AND cr.baja_servicio = 0 AND cr.baja_vida_util = 0 AND FGNN_19.FN_Puede_cumplir_sus_viajes(@idCruceroOriginal, cr.id) = 1
 			AND cr.modelo = co.modelo AND cr.tipo_servicio = co.tipo_servicio)
 
@@ -998,18 +1001,19 @@ BEGIN TRANSACTION
 COMMIT TRANSACTION;
 GO
 
-CREATE PROCEDURE FGNN_19.Reemplazar_crucero(@idCrucero NUMERIC(18,0))
+CREATE PROCEDURE FGNN_19.Reemplazar_crucero(@idCrucero NUMERIC(18,0), @resultado INT OUTPUT)
 AS
 BEGIN TRANSACTION
 
 	DECLARE @idCruceroReemplazo NUMERIC(18,0)
 
+	SET @resultado = 0
+
 	SET @idCruceroReemplazo = FGNN_19.FN_Crucero_reemplazante(@idCrucero)
 
 	IF(@idCruceroReemplazo IS NULL)
 		BEGIN
-			RAISERROR('ERROR: El crucero no puede ser reemplazado por ningun crucero existente, debe dar de alta uno nuevo para poder reemplazarlo',1,1)
-			RETURN -1
+			SET @resultado = 1
 		END
 
 	UPDATE Pasajes 
