@@ -49,7 +49,7 @@ namespace FrbaCrucero.Repositorios
         }
 
 
-        public override void Crear(Funcionalidad entidad)
+        public override int Crear(Funcionalidad entidad)
         {
             throw new NotImplementedException();
         }

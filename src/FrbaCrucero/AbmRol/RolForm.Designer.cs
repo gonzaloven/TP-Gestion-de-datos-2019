@@ -33,7 +33,6 @@
             this.labelHabilitado = new System.Windows.Forms.Label();
             this.checkBoxHabilitado = new System.Windows.Forms.CheckBox();
             this.dataGridViewFuncionalidades = new System.Windows.Forms.DataGridView();
-            this.buttonEditar = new System.Windows.Forms.Button();
             this.buttonCancelar = new System.Windows.Forms.Button();
             this.buttonAceptar = new System.Windows.Forms.Button();
             this.buttonEliminarFunc = new System.Windows.Forms.Button();
@@ -86,19 +85,9 @@
             this.dataGridViewFuncionalidades.Size = new System.Drawing.Size(285, 180);
             this.dataGridViewFuncionalidades.TabIndex = 4;
             // 
-            // buttonEditar
-            // 
-            this.buttonEditar.Location = new System.Drawing.Point(12, 368);
-            this.buttonEditar.Name = "buttonEditar";
-            this.buttonEditar.Size = new System.Drawing.Size(75, 23);
-            this.buttonEditar.TabIndex = 5;
-            this.buttonEditar.Text = "Editar";
-            this.buttonEditar.UseVisualStyleBackColor = true;
-            this.buttonEditar.Click += new System.EventHandler(this.buttonEditar_Click);
-            // 
             // buttonCancelar
             // 
-            this.buttonCancelar.Location = new System.Drawing.Point(140, 368);
+            this.buttonCancelar.Location = new System.Drawing.Point(12, 368);
             this.buttonCancelar.Name = "buttonCancelar";
             this.buttonCancelar.Size = new System.Drawing.Size(75, 23);
             this.buttonCancelar.TabIndex = 6;
@@ -145,7 +134,6 @@
             this.Controls.Add(this.buttonEliminarFunc);
             this.Controls.Add(this.buttonAceptar);
             this.Controls.Add(this.buttonCancelar);
-            this.Controls.Add(this.buttonEditar);
             this.Controls.Add(this.dataGridViewFuncionalidades);
             this.Controls.Add(this.checkBoxHabilitado);
             this.Controls.Add(this.labelHabilitado);
@@ -167,7 +155,6 @@
         private System.Windows.Forms.Label labelHabilitado;
         private System.Windows.Forms.CheckBox checkBoxHabilitado;
         private System.Windows.Forms.DataGridView dataGridViewFuncionalidades;
-        private System.Windows.Forms.Button buttonEditar;
         private System.Windows.Forms.Button buttonCancelar;
         private System.Windows.Forms.Button buttonAceptar;
         private System.Windows.Forms.Button buttonEliminarFunc;

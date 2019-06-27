@@ -89,5 +89,24 @@ namespace FrbaCrucero
             return sp;
         }
 
-    }
+        public Int32 ejecutarQueryInsert(SqlCommand cmd)
+        {
+            try
+            {
+                SqlConnection cnn = crearConexion();
+                cnn.Open();
+
+                cmd.Connection = cnn;
+                Int32 id = Convert.ToInt32(cmd.ExecuteScalar());
+                cnn.Close();
+
+                return id;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+	  }
 }

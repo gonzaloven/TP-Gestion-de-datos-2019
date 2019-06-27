@@ -1,6 +1,6 @@
 ﻿namespace FrbaCrucero
 {
-    partial class MenuPrincipal
+    partial class MenuPrincipalForm
     {
         /// <summary>
         /// Variable del diseñador requerida.
@@ -43,6 +43,12 @@
             this.toolStripLabel5 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStrip1.SuspendLayout();
+            this.toolStripBarraMenu = new System.Windows.Forms.ToolStrip();
+            this.toolStripLabelABM = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripLabelRecorrido = new System.Windows.Forms.ToolStripLabel();
+            this.toolABMRolesLabel2 = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripBarraMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStripLabel1
@@ -55,7 +61,7 @@
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
-            // toolStrip1
+            // toolStripBarraMenu
             // 
             this.toolStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -75,8 +81,18 @@
             this.toolStrip1.Size = new System.Drawing.Size(1076, 25);
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
+            this.toolStripBarraMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripLabelABM,
+            this.toolStripSeparator2,
+            this.toolStripLabelRecorrido,
+            this.toolStripSeparator1});
+            this.toolStripBarraMenu.Location = new System.Drawing.Point(0, 0);
+            this.toolStripBarraMenu.Name = "toolStripBarraMenu";
+            this.toolStripBarraMenu.Size = new System.Drawing.Size(807, 25);
+            this.toolStripBarraMenu.TabIndex = 1;
+            this.toolStripBarraMenu.Text = "toolStrip1";
             // 
-            // toolABMLabel
+            // toolStripLabelABM
             // 
             this.toolABMLabel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolABMLabel.Name = "toolABMLabel";
@@ -84,6 +100,12 @@
             this.toolABMLabel.Text = "Roles";
             this.toolABMLabel.ToolTipText = "ABM Roles";
             this.toolABMLabel.Click += new System.EventHandler(this.toolStripLabel2_Click_1);
+            this.toolStripLabelABM.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripLabelABM.Name = "toolStripLabelABM";
+            this.toolStripLabelABM.Size = new System.Drawing.Size(35, 22);
+            this.toolStripLabelABM.Text = "Roles";
+            this.toolStripLabelABM.ToolTipText = "ABM Roles";
+            this.toolStripLabelABM.Click += new System.EventHandler(this.toolStripLabel2_Click_1);
             // 
             // toolStripSeparator2
             // 
@@ -145,7 +167,12 @@
             this.toolStripSeparator5.Name = "toolStripSeparator5";
             this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
             // 
-            // MenuPrincipal
+            // toolABMRolesLabel2
+            // 
+            this.toolABMRolesLabel2.Name = "toolABMRolesLabel2";
+            this.toolABMRolesLabel2.Size = new System.Drawing.Size(23, 23);
+            // 
+            // MenuPrincipalForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -154,9 +181,13 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MenuPrincipal";
             this.Text = "Form1";
+            this.ClientSize = new System.Drawing.Size(807, 387);
+            this.Controls.Add(this.toolStripBarraMenu);
+            this.Name = "MenuPrincipalForm";
+            this.Text = "MenuPrincipal Crucero";
             this.Load += new System.EventHandler(this.Form1_Load);
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
+            this.toolStripBarraMenu.ResumeLayout(false);
+            this.toolStripBarraMenu.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -166,8 +197,8 @@
 
         private System.Windows.Forms.ToolStripButton toolStripLabel1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripLabel toolABMLabel;
+        private System.Windows.Forms.ToolStrip toolStripBarraMenu;
+        private System.Windows.Forms.ToolStripLabel toolStripLabelABM;
         private System.Windows.Forms.ToolStripLabel toolABMRolesLabel2;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripLabel toolStripLabelRecorrido;

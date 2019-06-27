@@ -121,6 +121,12 @@
       <DependentUpon>RecorridosConMasCabinasLibres.cs</DependentUpon>
     </Compile>
     <Compile Include="ListadoEstadistico\RecorridosConMasPasajes.cs" />
+    <Compile Include="Login.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Login.Designer.cs">
+      <DependentUpon>Login.cs</DependentUpon>
+    </Compile>
     <Compile Include="MenuPrincipal.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -144,6 +150,7 @@
     <Compile Include="Modelos\ListadosEstadisticos.cs" />
     <Compile Include="Modelos\Puerto.cs" />
     <Compile Include="Modelos\Rol.cs" />
+    <Compile Include="Modelos\Usuario.cs" />
     <Compile Include="PagoReserva\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -159,6 +166,7 @@
     <Compile Include="Repositorios\RepoPuerto.cs" />
     <Compile Include="Repositorios\RepoRol.cs" />
     <Compile Include="Repositorios\RepoTop5.cs" />
+    <Compile Include="Repositorios\RepoUsuario.cs" />
     <Compile Include="Utils\ConexionDB.cs" />
     <Compile Include="Utils\SPContent.cs" />
     <EmbeddedResource Include="AbmRecorrido\ListadoRecorridoForm.resx">
@@ -196,6 +204,8 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ListadoEstadistico\RecorridosConMasPasajesComprados.resx">
       <DependentUpon>RecorridosConMasPasajesComprados.cs</DependentUpon>
+    <EmbeddedResource Include="Login.resx">
+      <DependentUpon>Login.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MenuPrincipal.resx">
       <DependentUpon>MenuPrincipal.cs</DependentUpon>

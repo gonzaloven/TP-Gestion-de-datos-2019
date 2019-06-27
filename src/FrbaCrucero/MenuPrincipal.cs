@@ -11,15 +11,24 @@ using FrbaCrucero.AbmRol;
 using FrbaCrucero.AbmRecorrido;
 using FrbaCrucero.GeneracionViaje;
 using FrbaCrucero.ListadoEstadistico;
+using FrbaCrucero.Modelos;
 
 namespace FrbaCrucero
 {
-    public partial class MenuPrincipal : Form
+    public partial class MenuPrincipalForm : Form
     {
 
-        public MenuPrincipal()
+
+        public MenuPrincipalForm(Rol rol)
         {
             InitializeComponent();
+            mostrarMenuPrincipalPorRol(rol);
+        }
+
+        public MenuPrincipalForm()
+        {
+            InitializeComponent();
+            mostrarMenuPrincipalCliente();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -73,6 +82,25 @@ namespace FrbaCrucero
             CrucerosConMasDiasSinServicio recorridosConMasPasajes = new CrucerosConMasDiasSinServicio();
             recorridosConMasPasajes.MdiParent = this;
             recorridosConMasPasajes.Show();
+        }
+        
+        private void mostrarMenuPrincipalPorRol(Rol rol)
+        {
+            Dictionary<string, ToolStripLabel> funcLabelBarra = new Dictionary<string, ToolStripLabel>();
+            funcLabelBarra.Add("ABM Roles", toolStripLabelABM);
+            funcLabelBarra.Add("ABM Recorridos", toolStripLabelRecorrido);
+           
+            foreach (Funcionalidad func in rol.GetFuncionalidades())
+                if (!funcLabelBarra.ContainsKey(func.descripcion))
+                {
+                    //funcLabelBarra[func.descripcion].Visible = false;
+                }
+        }
+
+        private void mostrarMenuPrincipalCliente()
+        {
+            toolStripLabelABM.Visible = false;
+            toolStripLabelRecorrido.Visible = false;
         }
     }
 }
