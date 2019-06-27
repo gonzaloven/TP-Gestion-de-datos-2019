@@ -20,7 +20,7 @@ namespace FrbaCrucero.Repositorios
             throw new NotImplementedException();
         }
 
-        public override void Crear(ListadosEstadisticos entidad)
+        public override int Crear(ListadosEstadisticos entidad)
         {
             throw new NotImplementedException();
         }

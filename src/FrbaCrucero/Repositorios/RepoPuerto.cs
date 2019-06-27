@@ -43,7 +43,7 @@ namespace FrbaCrucero.Repositorios
             return ObtenerModelosDesdeTabla(tabla);
         }
 
-        public override void Crear(Puerto entidad)
+        public override int Crear(Puerto entidad)
         {
             throw new NotImplementedException();
         }
