@@ -82,6 +82,13 @@ namespace FrbaCrucero
             }
         }
 
+        public SqlCommand getStoreProcedure(string storeProcedureName)
+        {
+            SqlCommand sp = new SqlCommand(storeProcedureName, this.cnn);
+            sp.CommandType = CommandType.StoredProcedure;
+            return sp;
+        }
+
         public Int32 ejecutarQueryInsert(SqlCommand cmd)
         {
             try
@@ -101,5 +108,5 @@ namespace FrbaCrucero
             }
         }
 
-	}
+	  }
 }

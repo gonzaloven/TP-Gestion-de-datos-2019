@@ -88,6 +88,39 @@
     <Compile Include="CompraReservaPasaje\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="GeneracionViaje\SeleccionarCrucero.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GeneracionViaje\SeleccionarCrucero.Designer.cs">
+      <DependentUpon>SeleccionarCrucero.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GeneracionViaje\SeleccionarFecha.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GeneracionViaje\SeleccionarFecha.Designer.cs">
+      <DependentUpon>SeleccionarFecha.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GeneracionViaje\SeleccionarPuerto.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GeneracionViaje\SeleccionarPuerto.Designer.cs">
+      <DependentUpon>SeleccionarPuerto.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ListadoEstadistico\CrucerosConMasDiasSinServicio.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ListadoEstadistico\CrucerosConMasDiasSinServicio.Designer.cs">
+      <DependentUpon>CrucerosConMasDiasSinServicio.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ListadoEstadistico\CrucerosSinServicio.cs" />
+    <Compile Include="ListadoEstadistico\RecorridosConMasCabinas.cs" />
+    <Compile Include="ListadoEstadistico\RecorridosConMasCabinasLibres.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ListadoEstadistico\RecorridosConMasCabinasLibres.Designer.cs">
+      <DependentUpon>RecorridosConMasCabinasLibres.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ListadoEstadistico\RecorridosConMasPasajes.cs" />
     <Compile Include="Login.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -100,19 +133,21 @@
     <Compile Include="MenuPrincipal.Designer.cs">
       <DependentUpon>MenuPrincipal.cs</DependentUpon>
     </Compile>
-    <Compile Include="GeneracionViaje\Form1.cs">
+    <Compile Include="GeneracionViaje\FormGenerarViaje.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GeneracionViaje\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="GeneracionViaje\FormGenerarViaje.Designer.cs">
+      <DependentUpon>FormGenerarViaje.cs</DependentUpon>
     </Compile>
-    <Compile Include="ListadoEstadistico\Form1.cs">
+    <Compile Include="ListadoEstadistico\RecorridosConMasPasajesComprados.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ListadoEstadistico\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="ListadoEstadistico\RecorridosConMasPasajesComprados.Designer.cs">
+      <DependentUpon>RecorridosConMasPasajesComprados.cs</DependentUpon>
     </Compile>
+    <Compile Include="Modelos\Crucero.cs" />
     <Compile Include="Modelos\Funcionalidad.cs" />
+    <Compile Include="Modelos\ListadosEstadisticos.cs" />
     <Compile Include="Modelos\Puerto.cs" />
     <Compile Include="Modelos\Rol.cs" />
     <Compile Include="Modelos\Usuario.cs" />
@@ -126,11 +161,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositorios\AbstractRepo.cs" />
     <Compile Include="Repositorios\IRepo.cs" />
+    <Compile Include="Repositorios\RepoCrucero.cs" />
     <Compile Include="Repositorios\RepoFuncionalidad.cs" />
     <Compile Include="Repositorios\RepoPuerto.cs" />
     <Compile Include="Repositorios\RepoRol.cs" />
+    <Compile Include="Repositorios\RepoTop5.cs" />
     <Compile Include="Repositorios\RepoUsuario.cs" />
     <Compile Include="Utils\ConexionDB.cs" />
+    <Compile Include="Utils\SPContent.cs" />
     <EmbeddedResource Include="AbmRecorrido\ListadoRecorridoForm.resx">
       <DependentUpon>ListadoRecorridoForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -146,6 +184,26 @@
     <EmbeddedResource Include="AbmRol\RolForm.resx">
       <DependentUpon>RolForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="GeneracionViaje\FormGenerarViaje.resx">
+      <DependentUpon>FormGenerarViaje.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GeneracionViaje\SeleccionarCrucero.resx">
+      <DependentUpon>SeleccionarCrucero.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GeneracionViaje\SeleccionarFecha.resx">
+      <DependentUpon>SeleccionarFecha.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GeneracionViaje\SeleccionarPuerto.resx">
+      <DependentUpon>SeleccionarPuerto.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ListadoEstadistico\CrucerosConMasDiasSinServicio.resx">
+      <DependentUpon>CrucerosConMasDiasSinServicio.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ListadoEstadistico\RecorridosConMasCabinasLibres.resx">
+      <DependentUpon>RecorridosConMasCabinasLibres.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ListadoEstadistico\RecorridosConMasPasajesComprados.resx">
+      <DependentUpon>RecorridosConMasPasajesComprados.cs</DependentUpon>
     <EmbeddedResource Include="Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
     </EmbeddedResource>

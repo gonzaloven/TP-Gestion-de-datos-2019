@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using FrbaCrucero.AbmRol;
 using FrbaCrucero.AbmRecorrido;
+using FrbaCrucero.GeneracionViaje;
+using FrbaCrucero.ListadoEstadistico;
 using FrbaCrucero.Modelos;
 
 namespace FrbaCrucero
@@ -50,6 +52,38 @@ namespace FrbaCrucero
             listadoRecorrido.Show();
         }
 
+        private void toolStripLabel2_Click(object sender, EventArgs e)
+        {
+            this.IsMdiContainer = true;
+            FormGenerarViaje generarViaje = new FormGenerarViaje();
+            generarViaje.MdiParent = this;
+            generarViaje.Show();
+        }
+
+        private void toolStripLabel3_Click(object sender, EventArgs e)
+        {
+            this.IsMdiContainer = true;
+            RecorridosConMasPasajesComprados recorridosConMasPasajes = new RecorridosConMasPasajesComprados();
+            recorridosConMasPasajes.MdiParent = this;
+            recorridosConMasPasajes.Show();
+        }
+
+        private void toolStripLabel4_Click(object sender, EventArgs e)
+        {
+            this.IsMdiContainer = true;
+            RecorridosConMasCabinasLibres recorridosConMasPasajes = new RecorridosConMasCabinasLibres();
+            recorridosConMasPasajes.MdiParent = this;
+            recorridosConMasPasajes.Show();
+        }
+
+        private void toolStripLabel5_Click(object sender, EventArgs e)
+        {
+            this.IsMdiContainer = true;
+            CrucerosConMasDiasSinServicio recorridosConMasPasajes = new CrucerosConMasDiasSinServicio();
+            recorridosConMasPasajes.MdiParent = this;
+            recorridosConMasPasajes.Show();
+        }
+        
         private void mostrarMenuPrincipalPorRol(Rol rol)
         {
             Dictionary<string, ToolStripLabel> funcLabelBarra = new Dictionary<string, ToolStripLabel>();

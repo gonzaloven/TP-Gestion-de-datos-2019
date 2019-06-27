@@ -51,7 +51,8 @@
             this.groupBox1.Controls.Add(this.labelRol);
             this.groupBox1.Location = new System.Drawing.Point(0, 8);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(389, 76);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Size = new System.Drawing.Size(519, 94);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Filtros de búsqueda";
@@ -65,7 +66,7 @@
             "No"});
             this.comboBoxHabilitado.Location = new System.Drawing.Point(262, 30);
             this.comboBoxHabilitado.Name = "comboBoxHabilitado";
-            this.comboBoxHabilitado.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxHabilitado.Size = new System.Drawing.Size(160, 24);
             this.comboBoxHabilitado.TabIndex = 7;
             // 
             // labelHabilitado
@@ -73,7 +74,7 @@
             this.labelHabilitado.AutoSize = true;
             this.labelHabilitado.Location = new System.Drawing.Point(202, 33);
             this.labelHabilitado.Name = "labelHabilitado";
-            this.labelHabilitado.Size = new System.Drawing.Size(54, 13);
+            this.labelHabilitado.Size = new System.Drawing.Size(71, 17);
             this.labelHabilitado.TabIndex = 4;
             this.labelHabilitado.Text = "Habilitado";
             // 
@@ -81,7 +82,7 @@
             // 
             this.textBoxRol.Location = new System.Drawing.Point(35, 29);
             this.textBoxRol.Name = "textBoxRol";
-            this.textBoxRol.Size = new System.Drawing.Size(100, 20);
+            this.textBoxRol.Size = new System.Drawing.Size(132, 22);
             this.textBoxRol.TabIndex = 2;
             // 
             // labelRol
@@ -89,7 +90,7 @@
             this.labelRol.AutoSize = true;
             this.labelRol.Location = new System.Drawing.Point(6, 33);
             this.labelRol.Name = "labelRol";
-            this.labelRol.Size = new System.Drawing.Size(23, 13);
+            this.labelRol.Size = new System.Drawing.Size(29, 17);
             this.labelRol.TabIndex = 1;
             this.labelRol.Text = "Rol";
             // 
@@ -104,7 +105,7 @@
             this.dataGridViewRoles.Location = new System.Drawing.Point(11, 119);
             this.dataGridViewRoles.Name = "dataGridViewRoles";
             this.dataGridViewRoles.ReadOnly = true;
-            this.dataGridViewRoles.Size = new System.Drawing.Size(367, 238);
+            this.dataGridViewRoles.Size = new System.Drawing.Size(489, 293);
             this.dataGridViewRoles.TabIndex = 3;
             this.dataGridViewRoles.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewRoles_CellContentClick);
             // 
@@ -112,7 +113,7 @@
             // 
             this.buttonLimpiar.Location = new System.Drawing.Point(12, 90);
             this.buttonLimpiar.Name = "buttonLimpiar";
-            this.buttonLimpiar.Size = new System.Drawing.Size(75, 23);
+            this.buttonLimpiar.Size = new System.Drawing.Size(100, 28);
             this.buttonLimpiar.TabIndex = 5;
             this.buttonLimpiar.Text = "Limpiar";
             this.buttonLimpiar.UseVisualStyleBackColor = true;
@@ -122,7 +123,7 @@
             // 
             this.buttonBuscar.Location = new System.Drawing.Point(303, 90);
             this.buttonBuscar.Name = "buttonBuscar";
-            this.buttonBuscar.Size = new System.Drawing.Size(75, 23);
+            this.buttonBuscar.Size = new System.Drawing.Size(100, 28);
             this.buttonBuscar.TabIndex = 6;
             this.buttonBuscar.Text = "Buscar";
             this.buttonBuscar.UseVisualStyleBackColor = true;
@@ -156,7 +157,7 @@
             // 
             // ListadoRolesForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(390, 393);
             this.Controls.Add(this.buttonNuevo);
@@ -164,6 +165,7 @@
             this.Controls.Add(this.buttonLimpiar);
             this.Controls.Add(this.dataGridViewRoles);
             this.Controls.Add(this.groupBox1);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "ListadoRolesForm";
             this.Text = "ListadoRoles";
             this.groupBox1.ResumeLayout(false);

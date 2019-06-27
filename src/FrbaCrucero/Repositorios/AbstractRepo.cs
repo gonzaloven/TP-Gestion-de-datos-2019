@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Data;
+using FrbaCrucero.Utils;
 
 namespace FrbaCrucero.Repositorios
 {
@@ -92,6 +93,30 @@ namespace FrbaCrucero.Repositorios
 
             return sql.ToString();
         }
+
+        public SqlCommand CreateProcedure(string storeProcedureName, List<SPContent> parameters)
+        {
+            SqlCommand storeProcedure = this.conexionDB.getStoreProcedure(storeProcedureName);
+            if (parameters != null)
+            {
+                parameters.ForEach(delegate (SPContent parameter)
+                {
+                    if (parameter.Valor != null)
+                    {
+                        SqlParameter sqlParameter = new SqlParameter("@" + parameter.Nombre, parameter.Valor);
+                        storeProcedure.Parameters.Add(sqlParameter);
+                    }
+                    else
+                    {
+                        SqlParameter sqlParameter = new SqlParameter("@" + parameter.Nombre, parameter.Tipo);
+                        sqlParameter.Direction = ParameterDirection.Output;
+                        storeProcedure.Parameters.Add(sqlParameter);
+                    }
+                }
+                );
+            }
+            return storeProcedure;
+          }
 
         public void EliminacionLogica(Int32 id)
         {
