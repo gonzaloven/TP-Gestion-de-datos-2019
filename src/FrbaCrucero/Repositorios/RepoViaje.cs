@@ -19,7 +19,7 @@ namespace FrbaCrucero.Repositorios
         {
         }
 
-        public override void Crear(Viaje viaje)
+        public override int Crear(Viaje viaje)
         {
             string sqlQuery = "INSERT INTO " + nombreTabla + "(crucero_id, recorrido_codigo, fecha_inicio, fecha_fin) VALUES (@crucero_id, @recorrido_codigo, @fecha_inicio, @fecha_fin)";
             SqlCommand cmd = new SqlCommand(sqlQuery);
@@ -29,6 +29,7 @@ namespace FrbaCrucero.Repositorios
             cmd.Parameters.Add(new SqlParameter("fecha_fin", viaje.fecha_fin));
             conexionDB.ejecutarQuery(cmd);
 
+            return 1;
         }
 
         public override List<Viaje> ObtenerModelosDesdeTabla(DataTable table)

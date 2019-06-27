@@ -123,7 +123,7 @@ namespace FrbaCrucero.Repositorios
             tablaTramos.DataSource = tabla;
         }
 
-        public override void Crear(Tramo tramo)
+        public override int Crear(Tramo tramo)
         {
             throw new NotImplementedException();
         }

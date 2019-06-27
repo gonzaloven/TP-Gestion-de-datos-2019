@@ -12,6 +12,8 @@ using FrbaCrucero.AbmRecorrido;
 using FrbaCrucero.GeneracionViaje;
 using FrbaCrucero.ListadoEstadistico;
 using FrbaCrucero.Modelos;
+using FrbaCrucero.AbmCrucero;
+using FrbaCrucero.CompraPasaje;
 
 namespace FrbaCrucero
 {
@@ -44,14 +46,6 @@ namespace FrbaCrucero
             listadoRoles.Show();
         }
         
-        private void toolStripLabelRecorrido_Click(object sender, EventArgs e)
-        {
-            this.IsMdiContainer = true;
-            ListadoRecorridoForm listadoRecorrido = new ListadoRecorridoForm();
-            listadoRecorrido.MdiParent = this;
-            listadoRecorrido.Show();
-        }
-
         private void toolStripLabel2_Click(object sender, EventArgs e)
         {
             this.IsMdiContainer = true;
@@ -88,7 +82,7 @@ namespace FrbaCrucero
         {
             Dictionary<string, ToolStripLabel> funcLabelBarra = new Dictionary<string, ToolStripLabel>();
             funcLabelBarra.Add("ABM Roles", toolStripLabelABM);
-            funcLabelBarra.Add("ABM Recorridos", toolStripLabelRecorrido);
+            funcLabelBarra.Add("ABM Recorridos", toolStripCompreReserva);
            
             foreach (Funcionalidad func in rol.GetFuncionalidades())
                 if (!funcLabelBarra.ContainsKey(func.descripcion))
@@ -100,7 +94,63 @@ namespace FrbaCrucero
         private void mostrarMenuPrincipalCliente()
         {
             toolStripLabelABM.Visible = false;
-            toolStripLabelRecorrido.Visible = false;
+            toolStripCompreReserva.Visible = false;
+        }
+
+        private void toolStripLabelGenerarViaje_Click(object sender, EventArgs e)
+        {
+            this.IsMdiContainer = true;
+            FormGenerarViaje generarViaje = new FormGenerarViaje();
+            generarViaje.MdiParent = this;
+            generarViaje.Show();
+        }
+
+        private void toolStripLabelCrucero_Click(object sender, EventArgs e)
+        {
+            this.IsMdiContainer = true;
+            ListadoCrucerosForm listadoCruceros = new ListadoCrucerosForm();
+            listadoCruceros.MdiParent = this;
+            listadoCruceros.Show();
+        }
+
+        private void toolStripCompreReserva_Click(object sender, EventArgs e)
+        {
+            this.IsMdiContainer = true;
+            CompraReservaPasajeForm compraReservaPasaje = new CompraReservaPasajeForm();
+            compraReservaPasaje.MdiParent = this;
+            compraReservaPasaje.Show();
+        }
+
+        private void toolStripLabelRecorrido_Click(object sender, EventArgs e)
+        {
+            this.IsMdiContainer = true;
+            ListadoRecorridoForm listadoRecorrido = new ListadoRecorridoForm();
+            listadoRecorrido.MdiParent = this;
+            listadoRecorrido.Show();
+        }
+
+        private void toolStripLabelTopPasaje_Click(object sender, EventArgs e)
+        {
+            this.IsMdiContainer = true;
+            RecorridosConMasPasajesComprados recorridosConMasPasajes = new RecorridosConMasPasajesComprados();
+            recorridosConMasPasajes.MdiParent = this;
+            recorridosConMasPasajes.Show();
+        }
+
+        private void toolStripLabelTop5CabinaLibres_Click(object sender, EventArgs e)
+        {
+            this.IsMdiContainer = true;
+            RecorridosConMasCabinasLibres recorridosConMasPasajes = new RecorridosConMasCabinasLibres();
+            recorridosConMasPasajes.MdiParent = this;
+            recorridosConMasPasajes.Show();
+        }
+
+        private void toolStripLabelTop5CrucerosSinServicio_Click(object sender, EventArgs e)
+        {
+            this.IsMdiContainer = true;
+            CrucerosConMasDiasSinServicio recorridosConMasPasajes = new CrucerosConMasDiasSinServicio();
+            recorridosConMasPasajes.MdiParent = this;
+            recorridosConMasPasajes.Show();
         }
     }
 }

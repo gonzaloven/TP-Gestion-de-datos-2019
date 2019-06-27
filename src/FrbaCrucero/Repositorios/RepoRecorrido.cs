@@ -17,7 +17,7 @@ namespace FrbaCrucero.Repositorios
         {
         }
 
-        public override void Crear(Recorrido recorrido)
+        public override int Crear(Recorrido recorrido)
         {
             string sqlQuery = "INSERT INTO " + nombreTabla + "(codigo, puerto_desde_id, puerto_hasta_id, precio_base, habilitado) "
                                              + "VALUES (@codigo, @puerto_desde_id, @puerto_hasta_id, @precio_base, @habilitado)";
@@ -29,6 +29,7 @@ namespace FrbaCrucero.Repositorios
 
             conexionDB.ejecutarQuery(cmd);
 
+            return 1;
         }
 
         public Int32 Baja(Int32 id)

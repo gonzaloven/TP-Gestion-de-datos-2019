@@ -208,20 +208,38 @@
     <Compile Include="GeneracionViaje\SeleccionarPuerto.Designer.cs">
       <DependentUpon>SeleccionarPuerto.cs</DependentUpon>
     </Compile>
-    <Compile Include="ListadoEstadistico\CrucerosConMasDiasSinServicio.cs" />
+    <Compile Include="ListadoEstadistico\CrucerosConMasDiasSinServicio.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="ListadoEstadistico\CrucerosConMasDiasSinServicio.Designer.cs">
       <DependentUpon>CrucerosConMasDiasSinServicio.cs</DependentUpon>
     </Compile>
-    <Compile Include="ListadoEstadistico\CrucerosSinServicio.cs" />
-    <Compile Include="ListadoEstadistico\RecorridosConMasCabinas.cs" />
-    <Compile Include="ListadoEstadistico\RecorridosConMasCabinasLibres.cs" />
+    <Compile Include="ListadoEstadistico\CrucerosSinServicio.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ListadoEstadistico\RecorridosConMasCabinas.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ListadoEstadistico\RecorridosConMasCabinasLibres.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="ListadoEstadistico\RecorridosConMasCabinasLibres.Designer.cs">
       <DependentUpon>RecorridosConMasCabinasLibres.cs</DependentUpon>
     </Compile>
-    <Compile Include="ListadoEstadistico\RecorridosConMasPasajes.cs" />
-    <Compile Include="ListadoEstadistico\RecorridosConMasPasajesComprados.cs" />
+    <Compile Include="ListadoEstadistico\RecorridosConMasPasajes.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ListadoEstadistico\RecorridosConMasPasajesComprados.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="ListadoEstadistico\RecorridosConMasPasajesComprados.Designer.cs">
       <DependentUpon>RecorridosConMasPasajesComprados.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Login.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Login.Designer.cs">
+      <DependentUpon>Login.cs</DependentUpon>
     </Compile>
     <Compile Include="MenuPrincipal.cs">
       <SubType>Form</SubType>
@@ -243,11 +261,12 @@
     <Compile Include="Modelos\Fabricante.cs" />
     <Compile Include="Modelos\Funcionalidad.cs" />
     <Compile Include="Modelos\CrearPasaje.cs" />
+    <Compile Include="Modelos\ListadosEstadisticos.cs" />
     <Compile Include="Modelos\Puerto.cs" />
     <Compile Include="Modelos\Recorrido.cs" />
     <Compile Include="Modelos\Rol.cs" />
-    <Compile Include="Modelos\Top5.cs" />
     <Compile Include="Modelos\Tramo.cs" />
+    <Compile Include="Modelos\Usuario.cs" />
     <Compile Include="Modelos\Viaje.cs" />
     <Compile Include="PagoReserva\Form1.cs">
       <SubType>Form</SubType>
@@ -267,8 +286,12 @@
     <Compile Include="Repositorios\RepoRecorrido.cs" />
     <Compile Include="Repositorios\RepoRol.cs" />
     <Compile Include="Repositorios\RepoTramo.cs" />
+    <Compile Include="Repositorios\RepoUsuario.cs" />
     <Compile Include="Repositorios\RepoViaje.cs" />
-    <Compile Include="Utils\ConexionDB.cs" />
+    <Compile Include="Utils\ConexionDB.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\SPContent.cs" />
     <EmbeddedResource Include="AbmCrucero\AgregarCrucero.resx">
       <DependentUpon>AgregarCrucero.cs</DependentUpon>
     </EmbeddedResource>
@@ -361,6 +384,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ListadoEstadistico\RecorridosConMasPasajesComprados.resx">
       <DependentUpon>RecorridosConMasPasajesComprados.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Login.resx">
+      <DependentUpon>Login.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MenuPrincipal.resx">
       <DependentUpon>MenuPrincipal.cs</DependentUpon>
