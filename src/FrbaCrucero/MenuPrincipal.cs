@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -35,7 +35,7 @@ namespace FrbaCrucero
         {
 
         }
-
+        
         private void toolStripLabel2_Click_1(object sender, EventArgs e)
         {
             this.IsMdiContainer = true;
@@ -43,7 +43,7 @@ namespace FrbaCrucero
             listadoRoles.MdiParent = this;
             listadoRoles.Show();
         }
-
+        
         private void toolStripLabelRecorrido_Click(object sender, EventArgs e)
         {
             this.IsMdiContainer = true;

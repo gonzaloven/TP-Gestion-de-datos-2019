@@ -1,7 +1,9 @@
-﻿using System;
+﻿using FrbaCrucero.Modelos;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -17,8 +19,7 @@ namespace FrbaCrucero.GeneracionViaje
         {
             InitializeComponent();
             textBoxCrucero.ReadOnly = true;
-            textBoxPuertoDesde.ReadOnly = true;
-            textBoxPuertoHasta.ReadOnly = true;
+            textBoxIDRecorrido.ReadOnly = true;
             textBoxFechaInicio.ReadOnly = true;
             textBoxFechaFin.ReadOnly = true;
         }
@@ -29,23 +30,8 @@ namespace FrbaCrucero.GeneracionViaje
 
         private void buttonSeleccionarCrucero_Click(object sender, EventArgs e)
         {
-            this.textBoxParam = textBoxCrucero;
-            SeleccionarCrucero seleccionarCrucero = new SeleccionarCrucero(this, textBoxParam);
-            seleccionarCrucero.Show();
-        }
-
-        private void buttonSeleccionarPuertoDesde_Click(object sender, EventArgs e)
-        {
-            this.textBoxParam = textBoxPuertoDesde;
-            SeleccionarPuerto seleccionarPuerto = new SeleccionarPuerto(this, textBoxParam);
-            seleccionarPuerto.Show();
-        }
-
-        private void buttonSeleccionarPuertoHasta_Click(object sender, EventArgs e)
-        {
-            this.textBoxParam = textBoxPuertoHasta;
-            SeleccionarPuerto seleccionarPuerto = new SeleccionarPuerto(this, textBoxParam);
-            seleccionarPuerto.Show();
+            ListadoCruceros listadoCruceros = new ListadoCruceros(this);
+            listadoCruceros.Show();
         }
 
         private void buttonSeleccionarFechaInicio_Click(object sender, EventArgs e)
@@ -62,6 +48,30 @@ namespace FrbaCrucero.GeneracionViaje
             SeleccionarFecha seleccionarFecha = new SeleccionarFecha(this, textBoxParam);
             seleccionarFecha.MdiParent = this.MdiParent;
             seleccionarFecha.Show();
+        }
+
+        private void buttonGenerarViaje_Click(object sender, EventArgs e)
+        {
+            Int32 idCrucero = Int32.Parse(textBoxCrucero.Text);
+            Int32 idRecorrido = Int32.Parse(textBoxIDRecorrido.Text);
+            DateTime fecha_inicio = Convert.ToDateTime(textBoxFechaInicio.Text);
+            DateTime fecha_fin = Convert.ToDateTime(textBoxFechaFin.Text);
+            CrearViaje crearViaje = new CrearViaje(idCrucero, idRecorrido, fecha_inicio, fecha_fin);
+            crearViaje.Crear();
+            MessageBox.Show("Se ha ingresado el viaje con exito.", "Exito",
+                                MessageBoxButtons.OK, MessageBoxIcon.None);
+            
+        }
+
+        private void buttonSeleccionarPuertoHasta_Click(object sender, EventArgs e)
+        {
+            ListadoRecorrido listadoRecorrido = new ListadoRecorrido(this);
+            listadoRecorrido.Show();
+        }
+
+        private void buttonCancelar_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

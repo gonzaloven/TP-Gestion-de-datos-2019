@@ -7,6 +7,7 @@ using System.Data.SqlTypes;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace FrbaCrucero.Repositorios
 {
@@ -18,11 +19,11 @@ namespace FrbaCrucero.Repositorios
         {
         }
 
-        public override List<Crucero> ObtenerModelosDesdeTabla(DataTable tabla)
+        public override List<Crucero> ObtenerModelosDesdeTabla(DataTable table)
         {
             List<Crucero> cruceros = new List<Crucero>();
 
-            foreach (DataRow row in tabla.Rows)
+            foreach (DataRow row in table.Rows)
             {
 
                 Int32 id = Convert.ToInt32(row["id"]);
@@ -50,24 +51,46 @@ namespace FrbaCrucero.Repositorios
             return cruceros;
         }
 
-        public List<Crucero> EncontrarPorNombreCrucero(string nombre)
+        public DataTable cabinasDisponibles(DataGridView dataGridViewCabinas, Int32 idCrucero, DataTable tabla)
         {
-            string sqlQuery = "SELECT * FROM" + nombreTabla + " WHERE nombre LIKE @CruceroPattern";
+            String sqlQuery = "FGNN_19.P_CabinasDelCrucero";
             SqlCommand cmd = new SqlCommand(sqlQuery);
-            cmd.Parameters.Add(new SqlParameter("CruceroPattern", nombre + "%"));
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add(new SqlParameter("idCrucero", idCrucero));
+            tabla = conexionDB.obtenerData(cmd);
+            return tabla;
+        }
+
+        public List<Crucero> EncontrarCruceroNombre(string nombre)
+        {
+            string sqlQuery = "SELECT * FROM " + nombreTabla + " WHERE nombre LIKE @DescripcionPatron AND baja_vida_util = 0";
+            SqlCommand cmd = new SqlCommand(sqlQuery);
+            cmd.Parameters.Add(new SqlParameter("DescripcionPatron", "%" + nombre + "%"));
             DataTable tabla = conexionDB.obtenerData(cmd);
             return ObtenerModelosDesdeTabla(tabla);
         }
 
-        public List<Crucero> EncontrarPorDescripcionYHabilitado(String nombre, Int16 habilitado, Boolean filtrarPorValor)
+        public List<Crucero> EncontrarCruceroNombreEstadoModeloServicio(string nombre, Int16? baja_servicio, string modelo, string tipo_servicio)
         {
-            string sqlQuery = "SELECT * FROM " + nombreTabla + " WHERE nombre like @DescripcionPatron";
+            string sqlQuery = "SELECT * FROM " + nombreTabla + " WHERE nombre LIKE @DescripcionPatron";
             SqlCommand cmd = new SqlCommand(sqlQuery);
-            cmd.Parameters.Add(new SqlParameter("DescripcionPatron", nombre + "%"));
-            if (filtrarPorValor)
+            cmd.Parameters.Add(new SqlParameter("DescripcionPatron", "%" + nombre + "%"));
+            if (baja_servicio != null)
             {
-                cmd.CommandText = cmd.CommandText + " AND habilitado = @Habilitado";
-                cmd.Parameters.Add(new SqlParameter("Habilitado", habilitado));
+                cmd.CommandText = cmd.CommandText + " AND baja_servicio = @Baja_servicio";
+                cmd.Parameters.Add(new SqlParameter("Baja_servicio", baja_servicio));
+            }
+
+            if (!String.IsNullOrWhiteSpace(modelo))
+            {
+                cmd.CommandText = cmd.CommandText + " AND modelo LIKE @Modelo";
+                cmd.Parameters.Add(new SqlParameter("Modelo", "%" + modelo + "%"));
+            }
+
+            if (!String.IsNullOrWhiteSpace(tipo_servicio))
+            {
+                cmd.CommandText = cmd.CommandText + " AND tipo_servicio = @Tipo_servicio";
+                cmd.Parameters.Add(new SqlParameter("Tipo_servicio", tipo_servicio));
             }
 
             DataTable tabla = conexionDB.obtenerData(cmd);
@@ -78,5 +101,6 @@ namespace FrbaCrucero.Repositorios
         {
             throw new NotImplementedException();
         }
+
     }
 }
