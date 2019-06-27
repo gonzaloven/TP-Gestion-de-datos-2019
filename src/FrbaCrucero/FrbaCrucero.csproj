@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -208,6 +208,21 @@
     <Compile Include="GeneracionViaje\SeleccionarPuerto.Designer.cs">
       <DependentUpon>SeleccionarPuerto.cs</DependentUpon>
     </Compile>
+    <Compile Include="ListadoEstadistico\CrucerosConMasDiasSinServicio.cs" />
+    <Compile Include="ListadoEstadistico\CrucerosConMasDiasSinServicio.Designer.cs">
+      <DependentUpon>CrucerosConMasDiasSinServicio.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ListadoEstadistico\CrucerosSinServicio.cs" />
+    <Compile Include="ListadoEstadistico\RecorridosConMasCabinas.cs" />
+    <Compile Include="ListadoEstadistico\RecorridosConMasCabinasLibres.cs" />
+    <Compile Include="ListadoEstadistico\RecorridosConMasCabinasLibres.Designer.cs">
+      <DependentUpon>RecorridosConMasCabinasLibres.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ListadoEstadistico\RecorridosConMasPasajes.cs" />
+    <Compile Include="ListadoEstadistico\RecorridosConMasPasajesComprados.cs" />
+    <Compile Include="ListadoEstadistico\RecorridosConMasPasajesComprados.Designer.cs">
+      <DependentUpon>RecorridosConMasPasajesComprados.cs</DependentUpon>
+    </Compile>
     <Compile Include="MenuPrincipal.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -219,12 +234,6 @@
     </Compile>
     <Compile Include="GeneracionViaje\FormGenerarViaje.Designer.cs">
       <DependentUpon>FormGenerarViaje.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ListadoEstadistico\ListadoEstadisticoForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ListadoEstadistico\ListadoEstadisticoForm.Designer.cs">
-      <DependentUpon>ListadoEstadisticoForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Modelos\CrearCrucero.cs" />
     <Compile Include="Modelos\CrearRecorrido.cs" />
@@ -344,8 +353,14 @@
     <EmbeddedResource Include="GeneracionViaje\SeleccionarPuerto.resx">
       <DependentUpon>SeleccionarPuerto.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ListadoEstadistico\ListadoEstadisticoForm.resx">
-      <DependentUpon>ListadoEstadisticoForm.cs</DependentUpon>
+    <EmbeddedResource Include="ListadoEstadistico\CrucerosConMasDiasSinServicio.resx">
+      <DependentUpon>CrucerosConMasDiasSinServicio.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ListadoEstadistico\RecorridosConMasCabinasLibres.resx">
+      <DependentUpon>RecorridosConMasCabinasLibres.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ListadoEstadistico\RecorridosConMasPasajesComprados.resx">
+      <DependentUpon>RecorridosConMasPasajesComprados.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MenuPrincipal.resx">
       <DependentUpon>MenuPrincipal.cs</DependentUpon>
