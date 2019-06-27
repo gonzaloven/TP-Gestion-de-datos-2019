@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FrbaCrucero.Modelos;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -8,13 +9,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace FrbaCrucero.AbmCrucero
+namespace FrbaCrucero.CompraReservaPasaje
 {
-    public partial class Form1 : Form
+    public partial class CompletarDatosCliente : Form
     {
-        public Form1()
+        CrearPasaje pasaje;
+        public CompletarDatosCliente(CrearPasaje pasaje)
         {
             InitializeComponent();
+            this.pasaje = pasaje;
         }
     }
 }

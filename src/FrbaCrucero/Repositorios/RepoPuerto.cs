@@ -1,4 +1,4 @@
-﻿using FrbaCrucero.Modelos;
+using FrbaCrucero.Modelos;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -36,16 +36,25 @@ namespace FrbaCrucero.Repositorios
 
         public List<Puerto> EncontrarPorDescripcionPuerto(string puerto)
         {
-            string sqlQuery = "SELECT * FROM" + nombreTabla + " WHERE descripcion LIKE @PuertoPattern";
+            string sqlQuery = "SELECT * FROM " + nombreTabla + " WHERE descripcion LIKE @DescripcionPatron";
             SqlCommand cmd = new SqlCommand(sqlQuery);
-            cmd.Parameters.Add(new SqlParameter("PuertoPattern", puerto + "%"));
+            cmd.Parameters.Add(new SqlParameter("DescripcionPatron", "%" + puerto + "%"));
             DataTable tabla = conexionDB.obtenerData(cmd);
             return ObtenerModelosDesdeTabla(tabla);
         }
 
-        public override void Crear(Puerto entidad)
+        public override int Crear(Puerto entidad)
         {
             throw new NotImplementedException();
+        }
+
+        public String buscarValorID(Int32 id)
+        {
+            string sqlQuery = "SELECT p.descripcion FROM FGNN_19.Puertos p WHERE p.id = @id";
+            SqlCommand cmd = new SqlCommand(sqlQuery);
+            cmd.Parameters.Add(new SqlParameter("id", id));
+            DataTable tabla = conexionDB.obtenerData(cmd);
+            return tabla.Rows[0][0].ToString();
         }
     }
 }

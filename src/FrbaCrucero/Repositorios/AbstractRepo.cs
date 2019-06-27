@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Data;
+using FrbaCrucero.Utils;
 
 namespace FrbaCrucero.Repositorios
 {
@@ -19,7 +20,7 @@ namespace FrbaCrucero.Repositorios
         }
 
         public abstract List<T> ObtenerModelosDesdeTabla(DataTable tabla);
-        public abstract void Crear(T entidad);
+        public abstract Int32 Crear(T entidad);
         
         public void Eliminar(Int32 id)
         {
@@ -35,7 +36,7 @@ namespace FrbaCrucero.Repositorios
 
             foreach (string key in parametros.Keys) 
             {
-                cmd.Parameters.Add(new SqlParameter(key, parametros[key]));
+                 cmd.Parameters.Add(new SqlParameter(key, parametros[key]));
             }
 
             cmd.Parameters.Add(new SqlParameter("Id", id));
@@ -61,7 +62,7 @@ namespace FrbaCrucero.Repositorios
             return ObtenerModeloDesdeTabla(tabla);
         }
 
-        private T ObtenerModeloDesdeTabla(DataTable tabla)
+        protected T ObtenerModeloDesdeTabla(DataTable tabla)
         {
             return ObtenerModelosDesdeTabla(tabla).First();
         }
@@ -91,6 +92,38 @@ namespace FrbaCrucero.Repositorios
             sql.Append(" WHERE id = @Id");
 
             return sql.ToString();
+        }
+
+        public SqlCommand CreateProcedure(string storeProcedureName, List<SPContent> parameters)
+        {
+            SqlCommand storeProcedure = this.conexionDB.getStoreProcedure(storeProcedureName);
+            if (parameters != null)
+            {
+                parameters.ForEach(delegate (SPContent parameter)
+                {
+                    if (parameter.Valor != null)
+                    {
+                        SqlParameter sqlParameter = new SqlParameter("@" + parameter.Nombre, parameter.Valor);
+                        storeProcedure.Parameters.Add(sqlParameter);
+                    }
+                    else
+                    {
+                        SqlParameter sqlParameter = new SqlParameter("@" + parameter.Nombre, parameter.Tipo);
+                        sqlParameter.Direction = ParameterDirection.Output;
+                        storeProcedure.Parameters.Add(sqlParameter);
+                    }
+                }
+                );
+            }
+            return storeProcedure;
+          }
+
+        public void EliminacionLogica(Int32 id)
+        {
+            String sqlQuery = "UPDATE " + nombreTabla + " SET habilitado = 0 WHERE id = @Id";
+            SqlCommand cmd = new SqlCommand(sqlQuery);
+            cmd.Parameters.Add(new SqlParameter("Id", id));
+            conexionDB.ejecutarQuery(cmd);
         }
 
     }   

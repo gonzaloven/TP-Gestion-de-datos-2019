@@ -21,6 +21,11 @@ namespace FrbaCrucero.Modelos
             this.funcionalidades = new List<Funcionalidad>();
         }
 
+        public Rol() 
+        {
+            this.funcionalidades = new List<Funcionalidad>();
+        }
+
         public List<Funcionalidad> GetFuncionalidades()
         {
             return funcionalidades;
