@@ -182,6 +182,30 @@ IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.Fecha
 	DROP PROCEDURE FGNN_19.Fecha_valida_corrimiento
 GO
 
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.TOP5_recorridos_mas_comprados') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
+	DROP PROCEDURE FGNN_19.TOP5_recorridos_mas_comprados
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.Anios_TOP5_recorridos_mas_comprados') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
+	DROP PROCEDURE FGNN_19.Anios_TOP5_recorridos_mas_comprados
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.TOP5_recorridos_mas_cabinas_libres') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
+	DROP PROCEDURE FGNN_19.TOP5_recorridos_mas_cabinas_libres
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.Anios_TOP5_recorridos_mas_cabinas_libres') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
+	DROP PROCEDURE FGNN_19.Anios_TOP5_recorridos_mas_cabinas_libres
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.TOP5_cruceros_mas_dias_fuera_servicio') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
+	DROP PROCEDURE FGNN_19.TOP5_cruceros_mas_dias_fuera_servicio
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.Anios_TOP5_cruceros_mas_dias_fuera_servicio') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
+	DROP PROCEDURE FGNN_19.Anios_TOP5_cruceros_mas_dias_fuera_servicio
+GO
+
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_19.FN_Calcular_costo_pasaje') AND type in (N'FN', N'IF', N'TF', N'FS', N'FT'))
 	DROP FUNCTION FGNN_19.FN_Calcular_costo_pasaje
 GO
@@ -1037,57 +1061,6 @@ BEGIN TRANSACTION
 	WHERE crucero_id = @idCrucero AND fecha_inicio >= CONVERT(datetime2(3), GETDATE()) AND EXISTS(SELECT 1 FROM Pasajes WHERE viaje_codigo = codigo AND FGNN_19.FN_Pasaje_no_cancelado(id) = 1)
 
 COMMIT TRANSACTION;
-GO
-
-CREATE PROCEDURE FGNN_19.TOP5_recorridos_mas_comprados(@fecha datetime2(3))
-AS
-BEGIN
-
-	SELECT TOP 5 ps.descripcion AS [Puerto de salida],
-		pl.descripcion [Puerto de llegada], COUNT(*) AS [Cantidad de pasajes vendidos]
-	FROM FGNN_19.Pasajes p
-		JOIN FGNN_19.Viajes v ON v.codigo = p.viaje_codigo
-		JOIN FGNN_19.Recorridos r ON r.id = v.recorrido_codigo
-		JOIN FGNN_19.Compras c ON c.codigo = p.compra_codigo
-		JOIN FGNN_19.Puertos ps ON ps.id = r.puerto_desde_id
-		JOIN FGNN_19.Puertos pl ON pl.id = r.puerto_hasta_id
-	WHERE c.fecha BETWEEN @fecha AND DATEADD(MONTH, 6, @fecha)
-	GROUP BY r.id, ps.descripcion, pl.descripcion
-	ORDER BY [Cantidad de pasajes vendidos] DESC
-
-END
-GO
-
-CREATE PROCEDURE FGNN_19.TOP5_recorridos_mas_cabinas_libres(@fecha datetime2(3))
-AS
-BEGIN
-
-	SELECT TOP 5 ps.descripcion AS [Puerto de salida], pl.descripcion AS [Puerto de llegada],
-		COUNT(*) AS [Cantidad de cabinas libres]
-	FROM FGNN_19.Pasajes p
-		JOIN FGNN_19.Cabinas c ON c.codigo = p.cabina_id
-		JOIN FGNN_19.Viajes v ON v.codigo = p.viaje_codigo
-		JOIN FGNN_19.Recorridos r ON r.codigo = v.recorrido_codigo
-		JOIN FGNN_19.Puertos ps ON ps.id = r.puerto_desde_id
-		JOIN FGNN_19.Puertos pl ON pl.id = r.puerto_hasta_id
-	WHERE p.compra_codigo IS NULL AND v.fecha_fin BETWEEN @fecha AND DATEADD(MONTH, 6, @fecha)
-	GROUP BY r.codigo, ps.descripcion, pl.descripcion
-	ORDER BY [Cantidad de cabinas libres] DESC
-
-END
-GO
-
-CREATE PROCEDURE FGNN_19.TOP5_cruceros_mas_dias_fuera_servicio(@fecha datetime2(3))
-AS
-BEGIN
-
-	SELECT TOP 5 nombre, modelo, DATEDIFF(DAY, fecha_fuera_servicio, CONVERT(DATETIME2(3),GETDATE())) AS [Dias fuera de serivicio]
-	FROM FGNN_19.Cruceros 
-	WHERE fecha_reinicio_servicio < CONVERT(DATETIME2(3),GETDATE()) AND fecha_fuera_servicio BETWEEN @fecha AND DATEADD(MONTH, 6, @fecha)
-	GROUP BY id, nombre, modelo, fecha_fuera_servicio
-	ORDER BY [Dias fuera de serivicio] DESC
-
-END
 GO
 
 CREATE PROCEDURE FGNN_19.Fecha_valida_corrimiento(@idCrucero NUMERIC(18,0), @cantidadDias INT, @fecha_reinicio_servicio DATETIME2(3), @Resultado INT OUTPUT)
