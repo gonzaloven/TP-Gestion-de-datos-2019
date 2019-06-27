@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,25 +10,32 @@ using System.Windows.Forms;
 using FrbaCrucero.AbmRol;
 using FrbaCrucero.AbmRecorrido;
 using FrbaCrucero.GeneracionViaje;
-using FrbaCrucero.AbmCrucero;
 using FrbaCrucero.ListadoEstadistico;
-using FrbaCrucero.CompraPasaje;
+using FrbaCrucero.Modelos;
 
 namespace FrbaCrucero
 {
-    public partial class MenuPrincipal : Form
+    public partial class MenuPrincipalForm : Form
     {
 
-        public MenuPrincipal()
+
+        public MenuPrincipalForm(Rol rol)
         {
             InitializeComponent();
+            mostrarMenuPrincipalPorRol(rol);
+        }
+
+        public MenuPrincipalForm()
+        {
+            InitializeComponent();
+            mostrarMenuPrincipalCliente();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
 
         }
-
+        
         private void toolStripLabel2_Click_1(object sender, EventArgs e)
         {
             this.IsMdiContainer = true;
@@ -36,7 +43,7 @@ namespace FrbaCrucero
             listadoRoles.MdiParent = this;
             listadoRoles.Show();
         }
-
+        
         private void toolStripLabelRecorrido_Click(object sender, EventArgs e)
         {
             this.IsMdiContainer = true;
@@ -56,26 +63,44 @@ namespace FrbaCrucero
         private void toolStripLabel3_Click(object sender, EventArgs e)
         {
             this.IsMdiContainer = true;
-            ListadoCrucerosForm listadoCruceros = new ListadoCrucerosForm();
-            listadoCruceros.MdiParent = this;
-            listadoCruceros.Show();
+            RecorridosConMasPasajesComprados recorridosConMasPasajes = new RecorridosConMasPasajesComprados();
+            recorridosConMasPasajes.MdiParent = this;
+            recorridosConMasPasajes.Show();
         }
 
         private void toolStripLabel4_Click(object sender, EventArgs e)
         {
             this.IsMdiContainer = true;
-            ListadoEstadisticoForm listadoEstadistico = new ListadoEstadisticoForm();
-            listadoEstadistico.MdiParent = this;
-            listadoEstadistico.Show();
+            RecorridosConMasCabinasLibres recorridosConMasPasajes = new RecorridosConMasCabinasLibres();
+            recorridosConMasPasajes.MdiParent = this;
+            recorridosConMasPasajes.Show();
         }
 
         private void toolStripLabel5_Click(object sender, EventArgs e)
         {
             this.IsMdiContainer = true;
-            CompraReservaPasajeForm compraReservaPasaje = new CompraReservaPasajeForm();
-            compraReservaPasaje.MdiParent = this;
-            compraReservaPasaje.Show();
+            CrucerosConMasDiasSinServicio recorridosConMasPasajes = new CrucerosConMasDiasSinServicio();
+            recorridosConMasPasajes.MdiParent = this;
+            recorridosConMasPasajes.Show();
+        }
+        
+        private void mostrarMenuPrincipalPorRol(Rol rol)
+        {
+            Dictionary<string, ToolStripLabel> funcLabelBarra = new Dictionary<string, ToolStripLabel>();
+            funcLabelBarra.Add("ABM Roles", toolStripLabelABM);
+            funcLabelBarra.Add("ABM Recorridos", toolStripLabelRecorrido);
+           
+            foreach (Funcionalidad func in rol.GetFuncionalidades())
+                if (!funcLabelBarra.ContainsKey(func.descripcion))
+                {
+                    //funcLabelBarra[func.descripcion].Visible = false;
+                }
         }
 
+        private void mostrarMenuPrincipalCliente()
+        {
+            toolStripLabelABM.Visible = false;
+            toolStripLabelRecorrido.Visible = false;
+        }
     }
 }

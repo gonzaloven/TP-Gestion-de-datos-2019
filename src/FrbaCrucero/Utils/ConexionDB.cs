@@ -81,19 +81,26 @@ namespace FrbaCrucero
                 throw ex;
             }
         }
-
-        public Int32 ejecutarStoredProcedureConOutput(SqlCommand cmd, String parametroOutput)
+    
+        public SqlCommand getStoreProcedure(string storeProcedureName)
+        {
+            SqlCommand sp = new SqlCommand(storeProcedureName, this.cnn);
+            sp.CommandType = CommandType.StoredProcedure;
+            return sp;
+        }
+    
+       public Int32 ejecutarQueryInsert(SqlCommand cmd)
         {
             try
             {
                 SqlConnection cnn = crearConexion();
                 cnn.Open();
 
-                cmd.Connection = cnn;
-                int result = cmd.ExecuteNonQuery();
-                Int32 resultado = Convert.ToInt32(cmd.Parameters[parametroOutput].Value);
+                 cmd.Connection = cnn;
+                Int32 id = Convert.ToInt32(cmd.ExecuteScalar());
                 cnn.Close();
-                return resultado;
+
+                 return id;
             }
             catch (Exception ex)
             {
@@ -101,5 +108,25 @@ namespace FrbaCrucero
             }
         }
 
-	}
+        public Int32 ejecutarStoredProcedureConOutput(SqlCommand cmd, String parametroOutput)
+        {
+            try
+            {
+                SqlConnection cnn = crearConexion();
+                cnn.Open();
+              
+                cmd.Connection = cnn;
+              
+                int result = cmd.ExecuteNonQuery();
+                Int32 resultado = Convert.ToInt32(cmd.Parameters[parametroOutput].Value);
+                cnn.Close();
+                return resultado;
+              
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }    
+    }
 }

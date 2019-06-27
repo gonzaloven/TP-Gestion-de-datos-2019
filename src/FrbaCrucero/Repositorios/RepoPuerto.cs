@@ -1,4 +1,4 @@
-﻿using FrbaCrucero.Modelos;
+using FrbaCrucero.Modelos;
 using System;
 using System.Collections.Generic;
 using System.Data;
