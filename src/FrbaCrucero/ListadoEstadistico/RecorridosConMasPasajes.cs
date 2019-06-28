@@ -11,10 +11,10 @@ namespace FrbaCrucero.ListadoEstadistico
     public class RecorridosConMasPasajes
     {
 
-        private RecorridosConMasPasajesComprados form;
+        private ListadoEstadisticoForm form;
         private RepoTop5 repo;
 
-        public RecorridosConMasPasajesComprados Form
+        public ListadoEstadisticoForm Form
         {
             get { return form; }
             set { form = value; }
@@ -22,7 +22,7 @@ namespace FrbaCrucero.ListadoEstadistico
 
         
 
-        public RecorridosConMasPasajes(RecorridosConMasPasajesComprados form)
+        public RecorridosConMasPasajes(ListadoEstadisticoForm form)
         {
             Form = form;
             repo = new RepoTop5("listado_estadistico");

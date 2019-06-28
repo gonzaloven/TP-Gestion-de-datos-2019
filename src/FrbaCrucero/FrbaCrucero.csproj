@@ -208,32 +208,20 @@
     <Compile Include="GeneracionViaje\SeleccionarPuerto.Designer.cs">
       <DependentUpon>SeleccionarPuerto.cs</DependentUpon>
     </Compile>
-    <Compile Include="ListadoEstadistico\CrucerosConMasDiasSinServicio.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ListadoEstadistico\CrucerosConMasDiasSinServicio.Designer.cs">
-      <DependentUpon>CrucerosConMasDiasSinServicio.cs</DependentUpon>
-    </Compile>
     <Compile Include="ListadoEstadistico\CrucerosSinServicio.cs">
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ListadoEstadistico\ListadoEstadisticoForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ListadoEstadistico\ListadoEstadisticoForm.Designer.cs">
+      <DependentUpon>ListadoEstadisticoForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ListadoEstadistico\RecorridosConMasCabinas.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ListadoEstadistico\RecorridosConMasCabinasLibres.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ListadoEstadistico\RecorridosConMasCabinasLibres.Designer.cs">
-      <DependentUpon>RecorridosConMasCabinasLibres.cs</DependentUpon>
-    </Compile>
     <Compile Include="ListadoEstadistico\RecorridosConMasPasajes.cs">
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ListadoEstadistico\RecorridosConMasPasajesComprados.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ListadoEstadistico\RecorridosConMasPasajesComprados.Designer.cs">
-      <DependentUpon>RecorridosConMasPasajesComprados.cs</DependentUpon>
     </Compile>
     <Compile Include="Login.cs">
       <SubType>Form</SubType>
@@ -376,14 +364,8 @@
     <EmbeddedResource Include="GeneracionViaje\SeleccionarPuerto.resx">
       <DependentUpon>SeleccionarPuerto.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ListadoEstadistico\CrucerosConMasDiasSinServicio.resx">
-      <DependentUpon>CrucerosConMasDiasSinServicio.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ListadoEstadistico\RecorridosConMasCabinasLibres.resx">
-      <DependentUpon>RecorridosConMasCabinasLibres.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ListadoEstadistico\RecorridosConMasPasajesComprados.resx">
-      <DependentUpon>RecorridosConMasPasajesComprados.cs</DependentUpon>
+    <EmbeddedResource Include="ListadoEstadistico\ListadoEstadisticoForm.resx">
+      <DependentUpon>ListadoEstadisticoForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Login.resx">
       <DependentUpon>Login.cs</DependentUpon>

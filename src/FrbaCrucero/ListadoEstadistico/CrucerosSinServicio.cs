@@ -10,10 +10,10 @@ namespace FrbaCrucero.ListadoEstadistico
 {
     public class CrucerosSinServicio
     {
-        public CrucerosConMasDiasSinServicio CrucerosConMasDiasSinServicio { get; set; }
+        public ListadoEstadisticoForm CrucerosConMasDiasSinServicio { get; set; }
         private RepoTop5 repo;
 
-        public CrucerosSinServicio(CrucerosConMasDiasSinServicio form)
+        public CrucerosSinServicio(ListadoEstadisticoForm form)
         {
             CrucerosConMasDiasSinServicio = form;
             repo = new RepoTop5("listado_estadistico");
