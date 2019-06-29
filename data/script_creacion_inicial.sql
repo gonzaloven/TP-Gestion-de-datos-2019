@@ -206,6 +206,10 @@ IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.Anios
 	DROP PROCEDURE FGNN_19.Anios_TOP5_cruceros_mas_dias_fuera_servicio
 GO
 
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.Datos_cliente') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
+	DROP PROCEDURE FGNN_19.Datos_cliente
+GO
+
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_19.FN_Calcular_costo_pasaje') AND type in (N'FN', N'IF', N'TF', N'FS', N'FT'))
 	DROP FUNCTION FGNN_19.FN_Calcular_costo_pasaje
 GO
@@ -1183,6 +1187,19 @@ BEGIN
 	SELECT DISTINCT YEAR(fecha_fuera_servicio) AS anio
 	FROM FGNN_19.Cruceros
 END
+GO
+
+CREATE PROCEDURE FGNN_19.Datos_cliente(@dni NUMERIC(18,0), @id NUMERIC(18,0) OUTPUT, @nombre VARCHAR(255) OUTPUT, @apellido VARCHAR(255) OUTPUT, @direccion VARCHAR(255) OUTPUT, @telefono NUMERIC(18,0) OUTPUT,
+	@fecha_nac DATETIME2(3) OUTPUT, @mail VARCHAR(255) OUTPUT)
+AS
+BEGIN
+
+	SELECT @id = id, @nombre = nombre, @apellido = apellido, @direccion = direccion,
+		@telefono = telefono, @fecha_nac = fecha_nac, @mail = mail
+	FROM FGNN_19.Clientes
+	WHERE dni = @dni
+
+END;
 GO
 
 -- Triggers
