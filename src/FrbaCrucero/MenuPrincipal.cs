@@ -83,7 +83,7 @@ namespace FrbaCrucero
             Dictionary<string, ToolStripLabel> funcLabelBarra = new Dictionary<string, ToolStripLabel>();
             funcLabelBarra.Add("ABM Roles", toolStripLabelABM);
             funcLabelBarra.Add("ABM Recorridos", toolStripCompreReserva);
-           
+
             foreach (Funcionalidad func in rol.GetFuncionalidades())
                 if (!funcLabelBarra.ContainsKey(func.descripcion))
                 {
@@ -94,7 +94,12 @@ namespace FrbaCrucero
         private void mostrarMenuPrincipalCliente()
         {
             toolStripLabelABM.Visible = false;
-            toolStripCompreReserva.Visible = false;
+            toolStripLabelRecorrido.Visible = false;
+            toolStripLabelGenerarViaje.Visible = false;
+            toolStripLabelCrucero.Visible = false;
+            toolStripLabelTopPasaje.Visible = false;
+            toolStripLabelTop5CabinaLibres.Visible = false;
+            toolStripLabelTop5CrucerosSinServicio.Visible = false;
         }
 
         private void toolStripLabelGenerarViaje_Click(object sender, EventArgs e)
