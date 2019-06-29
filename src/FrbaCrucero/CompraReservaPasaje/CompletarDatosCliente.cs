@@ -18,6 +18,17 @@ namespace FrbaCrucero.CompraReservaPasaje
         {
             InitializeComponent();
             this.pasaje = pasaje;
+            textBoxNombre.ReadOnly = true;
+            textBoxApellido.ReadOnly = true;
+            textBoxDireccion.ReadOnly = true;
+            textBoxTelefono.ReadOnly = true;
+            textBoxFechaNacimiento.ReadOnly = true;
+            textBoxMail.ReadOnly = true;
+        }
+
+        private void buttonEditar_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
