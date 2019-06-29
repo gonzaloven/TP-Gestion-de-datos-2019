@@ -29,12 +29,19 @@ namespace FrbaCrucero.ListadoEstadistico
             dateTimePicker1.Format = DateTimePickerFormat.Custom;
             dateTimePicker1.CustomFormat = "yyyy";
             dateTimePicker1.ShowUpDown = true;
+            this.initialize();
+        }
+
+        private void initialize() 
+        {
+            this.comboSemestre.Enabled = true;
+            this.comboSemestre.DataSource = semestres;
         }
 
         private void buttonRecorridosMasPasajes_Click(object sender, EventArgs e)
         {
             string semestre = (string)comboSemestre.SelectedItem;
-            string anio = dateTimePicker1.Value.ToString();
+            string anio = dateTimePicker1.Value.ToString("yyyy");
             if (anio.Equals("Seleccione un año") || semestre.Equals("Seleccione un semestre"))
             {
                 showErrorMessage("Seleccione los filtros correctamente.");
@@ -66,24 +73,53 @@ namespace FrbaCrucero.ListadoEstadistico
             this.comboSemestre.Enabled = true;
 
             this.resultadosTop5Grid.DataSource = resultados.Select(
-                crucero => new
+                resultado => new
                 {
-                    Nombre = crucero.PrimeraColumna,
-                    Modelo = crucero.SegundaColumna,
-                    DiasFueraDeServicio = crucero.TerceraColumna
+                    resultado.PrimeraColumna,
+                    resultado.SegundaColumna,
+                    resultado.TerceraColumna
                 }
             ).ToList();
         }
 
-        public void initializeAnios(List<string> anios)
-        {
-            anios.Insert(0, "Seleccione un año");
-        }
-
         private void limpiarButton_Click(object sender, EventArgs e)
         {
-            comboSemestre.Enabled = false;
+            comboSemestre.SelectedItem = semestres[0];
             resultadosTop5Grid.DataSource = null;
+        }
+
+        private void buttonRecorridosMasCabinasLibres_Click(object sender, EventArgs e)
+        {
+            string semestre = (string)comboSemestre.SelectedItem;
+            string anio = dateTimePicker1.Value.ToString("yyyy");
+            if (anio.Equals("Seleccione un año") || semestre.Equals("Seleccione un semestre"))
+            {
+                showErrorMessage("Seleccione los filtros correctamente.");
+            }
+            else
+            {
+                limpiarButton.Enabled = false;
+                resultadosTop5Grid.DataSource = null;
+                comboSemestre.Enabled = false;
+                this.recorridosConMasCabinas.GetRecorridosConFiltros(anio, semestre);
+            }
+        }
+
+        private void buttonCrucerosDiasSinServicio_Click(object sender, EventArgs e)
+        {
+            string semestre = (string)comboSemestre.SelectedItem;
+            string anio = dateTimePicker1.Value.ToString("yyyy");
+            if (anio.Equals("Seleccione un año") || semestre.Equals("Seleccione un semestre"))
+            {
+                showErrorMessage("Seleccione los filtros correctamente.");
+            }
+            else
+            {
+                limpiarButton.Enabled = false;
+                resultadosTop5Grid.DataSource = null;
+                comboSemestre.Enabled = false;
+                this.crucerosSinServicio.GetCrucerosConFiltros(anio, semestre);
+            }
         }
     }
 }

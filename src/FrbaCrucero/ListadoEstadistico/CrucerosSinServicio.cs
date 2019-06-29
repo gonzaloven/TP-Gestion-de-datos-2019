@@ -35,31 +35,6 @@ namespace FrbaCrucero.ListadoEstadistico
 
         }
 
-        internal void GetAnios()
-        {
-
-            List<int> anios = repo.GetAniosCrucerosMasDiasFueraServicio();
-
-            if (anios != null)
-            {
-                if (anios.Count > 0)
-                {
-                    List<string> aniosEnString = anios.ConvertAll<string>(delegate (int i) { return i.ToString(); });
-                    CrucerosConMasDiasSinServicio.initializeAnios(aniosEnString);
-                }
-                else
-                {
-                    CrucerosConMasDiasSinServicio.showInformationMessage("No se pudieron encontrar años.");
-                    CrucerosConMasDiasSinServicio.Close();
-                }
-            }
-            else
-            {
-                CrucerosConMasDiasSinServicio.showErrorMessage("Ocurrió un error al buscar las fechas de consulta.");
-                CrucerosConMasDiasSinServicio.Close();
-            }
-        }
-
     }
 }
 

@@ -35,31 +35,6 @@ namespace FrbaCrucero.ListadoEstadistico
 
         }
 
-        internal void GetAnios()
-        {
-            
-            List<int> anios = repo.GetAniosRecorridosMasCabinasLibres();
-
-            if (anios != null)
-            {
-                if (anios.Count > 0)
-                {
-                    List<string> aniosEnString = anios.ConvertAll<string>(delegate (int i) { return i.ToString(); });
-                    RecorridosConMasCabinasLibres.initializeAnios(aniosEnString);
-                }
-                else
-                {
-                    RecorridosConMasCabinasLibres.showInformationMessage("No se pudieron encontrar años.");
-                    RecorridosConMasCabinasLibres.Close();
-                }
-            }
-            else
-            {
-                RecorridosConMasCabinasLibres.showErrorMessage("Ocurrió un error al buscar las fechas de consulta.");
-                RecorridosConMasCabinasLibres.Close();
-            }
-        }
-
     }
 
 }

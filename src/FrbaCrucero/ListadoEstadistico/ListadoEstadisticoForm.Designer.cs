@@ -42,9 +42,10 @@
             // 
             // buttonRecorridosMasPasajes
             // 
-            this.buttonRecorridosMasPasajes.Location = new System.Drawing.Point(2, 125);
+            this.buttonRecorridosMasPasajes.Location = new System.Drawing.Point(11, 102);
+            this.buttonRecorridosMasPasajes.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.buttonRecorridosMasPasajes.Name = "buttonRecorridosMasPasajes";
-            this.buttonRecorridosMasPasajes.Size = new System.Drawing.Size(230, 48);
+            this.buttonRecorridosMasPasajes.Size = new System.Drawing.Size(172, 39);
             this.buttonRecorridosMasPasajes.TabIndex = 0;
             this.buttonRecorridosMasPasajes.Text = "Recorridos con más pasajes vendidos";
             this.buttonRecorridosMasPasajes.UseVisualStyleBackColor = true;
@@ -52,85 +53,85 @@
             // 
             // buttonRecorridosMasCabinasLibres
             // 
-            this.buttonRecorridosMasCabinasLibres.Location = new System.Drawing.Point(266, 125);
+            this.buttonRecorridosMasCabinasLibres.Location = new System.Drawing.Point(209, 102);
+            this.buttonRecorridosMasCabinasLibres.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.buttonRecorridosMasCabinasLibres.Name = "buttonRecorridosMasCabinasLibres";
-            this.buttonRecorridosMasCabinasLibres.Size = new System.Drawing.Size(233, 48);
+            this.buttonRecorridosMasCabinasLibres.Size = new System.Drawing.Size(175, 39);
             this.buttonRecorridosMasCabinasLibres.TabIndex = 1;
             this.buttonRecorridosMasCabinasLibres.Text = "Recorridos con más cabinas libres";
             this.buttonRecorridosMasCabinasLibres.UseVisualStyleBackColor = true;
+            this.buttonRecorridosMasCabinasLibres.Click += new System.EventHandler(this.buttonRecorridosMasCabinasLibres_Click);
             // 
             // buttonCrucerosDiasSinServicio
             // 
-            this.buttonCrucerosDiasSinServicio.Location = new System.Drawing.Point(537, 125);
+            this.buttonCrucerosDiasSinServicio.Location = new System.Drawing.Point(415, 102);
+            this.buttonCrucerosDiasSinServicio.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.buttonCrucerosDiasSinServicio.Name = "buttonCrucerosDiasSinServicio";
-            this.buttonCrucerosDiasSinServicio.Size = new System.Drawing.Size(232, 48);
+            this.buttonCrucerosDiasSinServicio.Size = new System.Drawing.Size(174, 39);
             this.buttonCrucerosDiasSinServicio.TabIndex = 2;
             this.buttonCrucerosDiasSinServicio.Text = "Cruceros con más días sin servicio";
             this.buttonCrucerosDiasSinServicio.UseVisualStyleBackColor = true;
+            this.buttonCrucerosDiasSinServicio.Click += new System.EventHandler(this.buttonCrucerosDiasSinServicio_Click);
             // 
             // dateTimePicker1
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(117, 34);
+            this.dateTimePicker1.Location = new System.Drawing.Point(88, 28);
+            this.dateTimePicker1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(200, 22);
+            this.dateTimePicker1.Size = new System.Drawing.Size(151, 20);
             this.dateTimePicker1.TabIndex = 3;
             // 
             // comboSemestre
             // 
             this.comboSemestre.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboSemestre.FormattingEnabled = true;
-            this.comboSemestre.Location = new System.Drawing.Point(446, 35);
-            this.comboSemestre.Margin = new System.Windows.Forms.Padding(4);
+            this.comboSemestre.Location = new System.Drawing.Point(334, 28);
             this.comboSemestre.Name = "comboSemestre";
-            this.comboSemestre.Size = new System.Drawing.Size(184, 24);
+            this.comboSemestre.Size = new System.Drawing.Size(139, 21);
             this.comboSemestre.TabIndex = 7;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(353, 35);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Location = new System.Drawing.Point(266, 31);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(68, 17);
+            this.label2.Size = new System.Drawing.Size(51, 13);
             this.label2.TabIndex = 6;
             this.label2.Text = "Semestre";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(59, 35);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(44, 28);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(33, 17);
+            this.label1.Size = new System.Drawing.Size(26, 13);
             this.label1.TabIndex = 8;
             this.label1.Text = "Año";
             // 
             // resultadosTop5Grid
             // 
             this.resultadosTop5Grid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.resultadosTop5Grid.Location = new System.Drawing.Point(62, 197);
-            this.resultadosTop5Grid.Margin = new System.Windows.Forms.Padding(4);
+            this.resultadosTop5Grid.Location = new System.Drawing.Point(46, 160);
             this.resultadosTop5Grid.Name = "resultadosTop5Grid";
-            this.resultadosTop5Grid.Size = new System.Drawing.Size(674, 279);
+            this.resultadosTop5Grid.Size = new System.Drawing.Size(506, 227);
             this.resultadosTop5Grid.TabIndex = 26;
             // 
             // limpiarButton
             // 
             this.limpiarButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.limpiarButton.Location = new System.Drawing.Point(669, 28);
-            this.limpiarButton.Margin = new System.Windows.Forms.Padding(4);
+            this.limpiarButton.Location = new System.Drawing.Point(502, 23);
             this.limpiarButton.Name = "limpiarButton";
-            this.limpiarButton.Size = new System.Drawing.Size(100, 37);
+            this.limpiarButton.Size = new System.Drawing.Size(75, 30);
             this.limpiarButton.TabIndex = 27;
             this.limpiarButton.Text = "Limpiar";
             this.limpiarButton.UseVisualStyleBackColor = true;
             this.limpiarButton.Click += new System.EventHandler(this.limpiarButton_Click);
             // 
-            // ListadoEstadistico
+            // ListadoEstadisticoForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 489);
+            this.ClientSize = new System.Drawing.Size(600, 397);
             this.Controls.Add(this.limpiarButton);
             this.Controls.Add(this.resultadosTop5Grid);
             this.Controls.Add(this.label1);
@@ -140,7 +141,8 @@
             this.Controls.Add(this.buttonCrucerosDiasSinServicio);
             this.Controls.Add(this.buttonRecorridosMasCabinasLibres);
             this.Controls.Add(this.buttonRecorridosMasPasajes);
-            this.Name = "ListadoEstadistico";
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Name = "ListadoEstadisticoForm";
             this.Text = "ListadoEstadistico";
             ((System.ComponentModel.ISupportInitialize)(this.resultadosTop5Grid)).EndInit();
             this.ResumeLayout(false);

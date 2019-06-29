@@ -33,7 +33,7 @@ namespace FrbaCrucero.ListadoEstadistico
             semestreSeleccionado = semestreSeleccionado.Equals("Primer semestre") ? "1" : "2";
             List<ListadosEstadisticos> recorridos = repo.getRecorridosConPasajesMasComprados(anioSeleccionado, semestreSeleccionado);
 
-            if (recorridos != null)
+            if (recorridos != null && recorridos.Count > 0)
             {
                 this.form.showRecorridos(recorridos);
             }
@@ -42,31 +42,6 @@ namespace FrbaCrucero.ListadoEstadistico
                 this.form.showErrorMessage("No se pudieron encontrar recorridos que coincidan con su busqueda.");
             }
 
-        }
-
-        internal void GetAnios()
-        {
-            
-            List<int> anios = repo.GetAniosRecorridosMasComprados();
-
-            if (anios != null)
-            {
-                if(anios.Count > 0)
-                {
-                    List<string> aniosEnString = anios.ConvertAll<string>(delegate (int i) { return i.ToString(); });
-                    this.form.initializeAnios(aniosEnString);
-                }
-                else
-                {
-                    this.form.showInformationMessage("No se pudieron encontrar años.");
-                    this.form.Close();
-                }
-            }
-            else
-            {
-                this.form.showErrorMessage("Ocurrió un error al buscar las fechas de consulta.");
-                this.form.Close();
-            }
         }
 
     }

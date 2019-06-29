@@ -186,24 +186,12 @@ IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.TOP5_
 	DROP PROCEDURE FGNN_19.TOP5_recorridos_mas_comprados
 GO
 
-IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.Anios_TOP5_recorridos_mas_comprados') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
-	DROP PROCEDURE FGNN_19.Anios_TOP5_recorridos_mas_comprados
-GO
-
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.TOP5_recorridos_mas_cabinas_libres') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
 	DROP PROCEDURE FGNN_19.TOP5_recorridos_mas_cabinas_libres
 GO
 
-IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.Anios_TOP5_recorridos_mas_cabinas_libres') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
-	DROP PROCEDURE FGNN_19.Anios_TOP5_recorridos_mas_cabinas_libres
-GO
-
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.TOP5_cruceros_mas_dias_fuera_servicio') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
 	DROP PROCEDURE FGNN_19.TOP5_cruceros_mas_dias_fuera_servicio
-GO
-
-IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.Anios_TOP5_cruceros_mas_dias_fuera_servicio') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
-	DROP PROCEDURE FGNN_19.Anios_TOP5_cruceros_mas_dias_fuera_servicio
 GO
 
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_19.FN_Calcular_costo_pasaje') AND type in (N'FN', N'IF', N'TF', N'FS', N'FT'))
@@ -1116,15 +1104,6 @@ DECLARE @QUERY_5 VARCHAR(200) = ' GROUP BY r.id, ps.descripcion, pl.descripcion 
 END
 GO
 
-CREATE PROCEDURE FGNN_19.Anios_TOP5_recorridos_mas_comprados
-AS
-BEGIN
-	SELECT DISTINCT YEAR(c.fecha) AS anio
-	FROM FGNN_19.Compras c 
-	JOIN FGNN_19.Pasajes p
-	ON (c.codigo = p.compra_codigo)
-END
-GO
 
 CREATE PROCEDURE FGNN_19.TOP5_recorridos_mas_cabinas_libres(@anio INT, @semestre INT)
 AS
@@ -1147,15 +1126,6 @@ DECLARE @QUERY_6 VARCHAR(200) = ' GROUP BY r.codigo, ps.descripcion, pl.descripc
 END
 GO
 
-CREATE PROCEDURE FGNN_19.Anios_TOP5_recorridos_mas_cabinas_libres
-AS
-BEGIN
-	SELECT DISTINCT YEAR(v.fecha_fin) AS anio
-	FROM FGNN_19.Viajes v 
-	JOIN FGNN_19.Pasajes p
-	ON (v.codigo = p.viaje_codigo)
-END
-GO
 
 CREATE PROCEDURE FGNN_19.TOP5_cruceros_mas_dias_fuera_servicio(@anio INT, @semestre INT)
 AS
@@ -1176,13 +1146,6 @@ DECLARE @QUERY_4 VARCHAR(200) = ' GROUP BY id, nombre, modelo, fecha_fuera_servi
 END
 GO
 
-CREATE PROCEDURE FGNN_19.Anios_TOP5_cruceros_mas_dias_fuera_servicio
-AS
-BEGIN
-	SELECT DISTINCT YEAR(fecha_fuera_servicio) AS anio
-	FROM FGNN_19.Cruceros
-END
-GO
 
 -- Triggers
 
@@ -1216,3 +1179,4 @@ WHERE id IN (SELECT i.id FROM INSERTED i, FGNN_19.Viajes v
 
 COMMIT TRANSACTION;
 GO
+
