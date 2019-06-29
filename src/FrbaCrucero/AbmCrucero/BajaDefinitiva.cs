@@ -32,7 +32,7 @@ namespace FrbaCrucero.AbmCrucero
 
         private void cancelarPasajes(Int32 id)
         {
-            String sqlQuery = "FGNN_19.Cancelar_pasajes_crucero";
+            String sqlQuery = "FGNN_19.Cancelar_pasajes_crucero_definitiva";
             SqlCommand cmd = new SqlCommand(sqlQuery);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.Add(new SqlParameter("idCrucero", id));

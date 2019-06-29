@@ -210,6 +210,10 @@ IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.Datos
 	DROP PROCEDURE FGNN_19.Datos_cliente
 GO
 
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.Cancelar_pasajes_crucero_definitiva') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
+	DROP PROCEDURE FGNN_19.Cancelar_pasajes_crucero_definitiva
+GO
+
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_19.FN_Calcular_costo_pasaje') AND type in (N'FN', N'IF', N'TF', N'FS', N'FT'))
 	DROP FUNCTION FGNN_19.FN_Calcular_costo_pasaje
 GO
@@ -279,7 +283,7 @@ GO
 CREATE TABLE [FGNN_19].[Metodos_Pago] (
 	[id] NUMERIC(18, 0) IDENTITY(1, 1),
 	[descripcion] VARCHAR(255) NOT NULL,
-	[cuotas] BIT NOT NULL,
+	[cuotas] INT NOT NULL,
 	PRIMARY KEY ([id])
 );
 GO
@@ -1029,6 +1033,23 @@ BEGIN TRANSACTION
 COMMIT TRANSACTION;
 GO
 
+CREATE PROCEDURE FGNN_19.Cancelar_pasajes_crucero_definitiva(@idCrucero NUMERIC(18,0), @motivo VARCHAR(255))
+AS
+BEGIN TRANSACTION
+	
+	INSERT INTO FGNN_19.Pasajes_Cancelados(id_pasaje, fecha_cancelacion, motivo)
+	SELECT p.id, CONVERT(datetime2(3), GETDATE()), @motivo
+	FROM Pasajes p
+		JOIN Cabinas c ON c.codigo = p.cabina_id
+	WHERE c.crucero_id = @idCrucero
+
+	UPDATE Cruceros
+	SET baja_vida_util = 1
+	WHERE id = @idCrucero 
+
+COMMIT TRANSACTION;
+GO
+
 CREATE PROCEDURE FGNN_19.Reemplazar_crucero(@idCrucero NUMERIC(18,0), @resultado INT OUTPUT)
 AS
 BEGIN TRANSACTION
@@ -1053,6 +1074,10 @@ BEGIN TRANSACTION
 	UPDATE Viajes
 	SET crucero_id = @idCruceroReemplazo
 	WHERE crucero_id = @idCrucero AND fecha_inicio >= CONVERT(datetime2(3), GETDATE()) AND EXISTS(SELECT 1 FROM Pasajes WHERE viaje_codigo = codigo AND FGNN_19.FN_Pasaje_no_cancelado(id) = 1)
+
+	UPDATE Cruceros
+	SET baja_vida_util = 1
+	WHERE id = @idCrucero 
 
 COMMIT TRANSACTION;
 GO
@@ -1200,6 +1225,30 @@ BEGIN
 	WHERE dni = @dni
 
 END;
+GO
+
+CREATE PROCEDURE FGNN_19.Insertar_Compra(@metodo_pago NUMERIC(18,0), @codigo NUMERIC(18,0) OUTPUT)
+AS
+BEGIN TRANSACTION
+
+	INSERT INTO Compras(metodo_pago, fecha)
+	VALUES(@metodo_pago, CONVERT(DATETIME2(3),GETDATE()))
+
+	SET @codigo = SCOPE_IDENTITY()
+
+COMMIT TRANSACTION;
+GO
+
+CREATE PROCEDURE FGNN_19.Insertar_Metodo_pago(@descripcion VARCHAR(255), @cuotas INT, @id NUMERIC(18,0))
+AS
+BEGIN TRANSACTION
+
+	INSERT INTO Metodos_Pago(descripcion, cuotas)
+	VALUES(@descripcion, @cuotas)
+
+	SET @id = SCOPE_IDENTITY()
+
+COMMIT TRANSACTION;
 GO
 
 -- Triggers
