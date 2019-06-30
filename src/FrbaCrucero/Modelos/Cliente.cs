@@ -30,7 +30,7 @@ namespace FrbaCrucero.Modelos
             this.mail = mail;
         }
 
-        public void Crear()
+        public void Crear(Int32 idCliente)
         {
             this.crearCliente(idCliente);
         }

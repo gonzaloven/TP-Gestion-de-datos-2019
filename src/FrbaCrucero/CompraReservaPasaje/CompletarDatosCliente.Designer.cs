@@ -46,6 +46,7 @@
             this.buttonVerificar = new System.Windows.Forms.Button();
             this.buttonEditar = new System.Windows.Forms.Button();
             this.buttonLimpiar = new System.Windows.Forms.Button();
+            this.buttonSeleccionarFecha = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // labelDNI
@@ -200,11 +201,22 @@
             this.buttonLimpiar.UseVisualStyleBackColor = true;
             this.buttonLimpiar.Click += new System.EventHandler(this.buttonLimpiar_Click);
             // 
+            // buttonSeleccionarFecha
+            // 
+            this.buttonSeleccionarFecha.Location = new System.Drawing.Point(361, 220);
+            this.buttonSeleccionarFecha.Name = "buttonSeleccionarFecha";
+            this.buttonSeleccionarFecha.Size = new System.Drawing.Size(101, 23);
+            this.buttonSeleccionarFecha.TabIndex = 18;
+            this.buttonSeleccionarFecha.Text = "Seleccionar";
+            this.buttonSeleccionarFecha.UseVisualStyleBackColor = true;
+            this.buttonSeleccionarFecha.Click += new System.EventHandler(this.buttonSeleccionarFecha_Click);
+            // 
             // CompletarDatosCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(491, 379);
+            this.Controls.Add(this.buttonSeleccionarFecha);
             this.Controls.Add(this.buttonLimpiar);
             this.Controls.Add(this.buttonEditar);
             this.Controls.Add(this.buttonVerificar);
@@ -250,5 +262,6 @@
         private System.Windows.Forms.Button buttonVerificar;
         private System.Windows.Forms.Button buttonEditar;
         private System.Windows.Forms.Button buttonLimpiar;
+        private System.Windows.Forms.Button buttonSeleccionarFecha;
     }
 }

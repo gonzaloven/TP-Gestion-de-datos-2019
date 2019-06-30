@@ -1,4 +1,5 @@
-﻿using FrbaCrucero.Modelos;
+﻿using FrbaCrucero.CompraPasaje;
+using FrbaCrucero.Modelos;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -26,6 +27,7 @@ namespace FrbaCrucero.CompraReservaPasaje
             textBoxTelefono.ReadOnly = true;
             textBoxFechaNacimiento.ReadOnly = true;
             textBoxMail.ReadOnly = true;
+            buttonSeleccionarFecha.Enabled = false;
         }
 
         private void buttonEditar_Click(object sender, EventArgs e)
@@ -39,8 +41,8 @@ namespace FrbaCrucero.CompraReservaPasaje
             textBoxApellido.ReadOnly = false;
             textBoxDireccion.ReadOnly = false;
             textBoxTelefono.ReadOnly = false;
-            textBoxFechaNacimiento.ReadOnly = false;
             textBoxMail.ReadOnly = false;
+            buttonSeleccionarFecha.Enabled = true;
         }
 
         private void limpiarDatos()
@@ -167,7 +169,14 @@ namespace FrbaCrucero.CompraReservaPasaje
             else
             {
                 Cliente cliente = new Cliente(nombre, apellido, Int32.Parse(dni), direccion, Int32.Parse(telefono), Convert.ToDateTime(fecha_nac), mail);
-                cliente.Modificar(idCliente);
+                if (this.existeElCliente(dni))
+                {
+                    cliente.Modificar(idCliente);
+                }
+                else
+                {
+                    cliente.Crear(idCliente);
+                }
                 MessageBox.Show("Se ha modificado con exito.", "Exito",
                                     MessageBoxButtons.OK, MessageBoxIcon.None);
                 pasaje.cliente_id = idCliente;
@@ -177,9 +186,24 @@ namespace FrbaCrucero.CompraReservaPasaje
             }
         }
 
+        private bool existeElCliente(string dni)
+        {
+            String sqlQuery = "select * from FGNN_19.Clientes WHERE dni = @dni";
+            SqlCommand cmd = new SqlCommand(sqlQuery);
+            cmd.Parameters.Add(new SqlParameter("dni", Int32.Parse(dni)));
+            DataTable resultado = ConexionDB.instancia.obtenerData(cmd);
+            return resultado.Rows.Count == 1;
+        }
+
         private bool ValidarNulo(String parametro)
         {
             return String.IsNullOrWhiteSpace(parametro);
+        }
+
+        private void buttonSeleccionarFecha_Click(object sender, EventArgs e)
+        {
+            SeleccionarFecha seleccionarFecha = new SeleccionarFecha(textBoxFechaNacimiento);
+            seleccionarFecha.Show();
         }
 
 
