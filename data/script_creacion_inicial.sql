@@ -214,6 +214,22 @@ IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.Cance
 	DROP PROCEDURE FGNN_19.Cancelar_pasajes_crucero_definitiva
 GO
 
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.Insertar_Compra') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
+	DROP PROCEDURE FGNN_19.Insertar_Compra
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.Insertar_Metodo_pago') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
+	DROP PROCEDURE FGNN_19.Insertar_Metodo_pago
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.Calcular_costo_pasaje') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
+	DROP PROCEDURE FGNN_19.Calcular_costo_pasaje
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.Insertar_pasaje') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
+	DROP PROCEDURE FGNN_19.Insertar_pasaje
+GO
+
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_19.FN_Calcular_costo_pasaje') AND type in (N'FN', N'IF', N'TF', N'FS', N'FT'))
 	DROP FUNCTION FGNN_19.FN_Calcular_costo_pasaje
 GO
@@ -674,30 +690,6 @@ BEGIN
 END;
 GO
 
-CREATE FUNCTION FGNN_19.FN_Calcular_costo_pasaje(@idViaje NUMERIC(18,0), @idCabina NUMERIC(18,0))
-RETURNS FLOAT
-AS
-BEGIN
-	
-	DECLARE @idRecorrido NUMERIC(18,0)
-	DECLARE @PorcAdicional FLOAT
-	DECLARE @PrecioBaseTotal FLOAT
-
-	SET @idRecorrido = (SELECT v.recorrido_codigo
-		FROM FGNN_19.Viajes v
-		WHERE v.codigo = @idViaje)
-
-	SET @PorcAdicional = (SELECT tc.porcentaje_adicional
-		FROM FGNN_19.Cabinas c
-			JOIN FGNN_19.Tipos_Cabinas tc ON tc.id = c.tipo_id
-			WHERE c.codigo = @idCabina)
-
-	SET @PrecioBaseTotal = FGNN_19.FN_Calcular_costo_base(@idRecorrido)
-
-	RETURN @PrecioBaseTotal * @PorcAdicional
-END
-GO
-
 CREATE FUNCTION FGNN_19.FN_Pasaje_no_cancelado(@idPasaje NUMERIC(18,0))
 RETURNS BIT
 AS
@@ -835,13 +827,11 @@ CREATE PROCEDURE FGNN_19.P_TramosDelRecorrido
 AS
 BEGIN
 
-SELECT t.id, t.puerto_desde_id, t.puerto_hasta_id, pd.descripcion, ph.descripcion, t.precio_base
-FROM FGNN_19.Tramos t, FGNN_19.Recorrido_X_Tramo rt, FGNN_19.Recorridos r, FGNN_19.Puertos pd, FGNN_19.Puertos ph
+SELECT t.id, t.puerto_desde_id, t.puerto_hasta_id, t.precio_base
+FROM FGNN_19.Tramos t, FGNN_19.Recorrido_X_Tramo rt, FGNN_19.Recorridos r
 WHERE t.id = rt.tramo_id
 AND r.id = rt.recorrido_id
 AND r.id = @idRecorrido
-AND pd.id = t.puerto_desde_id
-AND ph.id = t.puerto_hasta_id
 ORDER BY rt.orden ASC
 
 END;
@@ -1216,15 +1206,8 @@ BEGIN
 END
 GO
 
-CREATE PROCEDURE FGNN_19.Datos_cliente
-@dni NUMERIC(18,0), 
-@id NUMERIC(18,0) OUTPUT, 
-@nombre VARCHAR(255) OUTPUT, 
-@apellido VARCHAR(255) OUTPUT, 
-@direccion VARCHAR(255) OUTPUT, 
-@telefono NUMERIC(18,0) OUTPUT,
-@fecha_nac DATETIME2(3) OUTPUT, 
-@mail VARCHAR(255) OUTPUT
+CREATE PROCEDURE FGNN_19.Datos_cliente(@dni NUMERIC(18,0), @id NUMERIC(18,0) OUTPUT, @nombre VARCHAR(255) OUTPUT, @apellido VARCHAR(255) OUTPUT, @direccion VARCHAR(255) OUTPUT, @telefono NUMERIC(18,0) OUTPUT,
+	@fecha_nac DATETIME2(3) OUTPUT, @mail VARCHAR(255) OUTPUT)
 AS
 BEGIN
 
@@ -1248,7 +1231,7 @@ BEGIN TRANSACTION
 COMMIT TRANSACTION;
 GO
 
-CREATE PROCEDURE FGNN_19.Insertar_Metodo_pago(@descripcion VARCHAR(255), @cuotas INT, @id NUMERIC(18,0))
+CREATE PROCEDURE FGNN_19.Insertar_Metodo_pago(@descripcion VARCHAR(255), @cuotas INT, @id NUMERIC(18,0) OUTPUT)
 AS
 BEGIN TRANSACTION
 
@@ -1256,6 +1239,40 @@ BEGIN TRANSACTION
 	VALUES(@descripcion, @cuotas)
 
 	SET @id = SCOPE_IDENTITY()
+
+COMMIT TRANSACTION;
+GO
+
+CREATE PROCEDURE FGNN_19.Calcular_costo_pasaje(@idViaje NUMERIC(18,0), @idCabina NUMERIC(18,0), @precio_final NUMERIC(18,0) OUTPUT)
+AS
+BEGIN
+	
+	DECLARE @idRecorrido NUMERIC(18,0)
+	DECLARE @PorcAdicional FLOAT
+	DECLARE @PrecioBaseTotal FLOAT
+
+	SET @idRecorrido = (SELECT v.recorrido_codigo
+		FROM FGNN_19.Viajes v
+		WHERE v.codigo = @idViaje)
+
+	SET @PorcAdicional = (SELECT tc.porcentaje_adicional
+		FROM FGNN_19.Cabinas c
+			JOIN FGNN_19.Tipos_Cabinas tc ON tc.id = c.tipo_id
+			WHERE c.codigo = @idCabina)
+
+	SET @PrecioBaseTotal = FGNN_19.FN_Calcular_costo_base(@idRecorrido)
+
+	SET @precio_final = @PrecioBaseTotal * @PorcAdicional
+END
+GO
+
+CREATE PROCEDURE FGNN_19.Insertar_pasaje(@reserva_codigo NUMERIC(18,0) = NULL, @cliente_id NUMERIC(18,0), 
+	@compra_codigo NUMERIC(18,0) = NULL, @viaje_codigo NUMERIC(18,0), @cabina_codigo NUMERIC(18,0), @precio float)
+AS
+BEGIN TRANSACTION
+
+	INSERT INTO Pasajes(reserva_codigo, cliente_id, compra_codigo, viaje_codigo, cabina_id, precio)
+	VALUES(@reserva_codigo, @cliente_id, @compra_codigo, @viaje_codigo, @cabina_codigo, @precio)
 
 COMMIT TRANSACTION;
 GO

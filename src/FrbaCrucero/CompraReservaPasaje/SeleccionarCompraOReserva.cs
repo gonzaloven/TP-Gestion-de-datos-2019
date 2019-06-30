@@ -22,9 +22,14 @@ namespace FrbaCrucero.CompraReservaPasaje
 
         private void buttonComprar_Click(object sender, EventArgs e)
         {
-            SeleccionarMetodoDePago seleccionarMetodoDePago = new SeleccionarMetodoDePago(pasaje);
-            seleccionarMetodoDePago.Show();
+            Comprar compra = new Comprar(pasaje);
+            compra.Show();
             this.Close();
+        }
+
+        private void buttonReservar_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

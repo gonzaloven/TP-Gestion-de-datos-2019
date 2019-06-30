@@ -36,17 +36,19 @@
             // labelCompraOReserva
             // 
             this.labelCompraOReserva.AutoSize = true;
-            this.labelCompraOReserva.Location = new System.Drawing.Point(103, 57);
+            this.labelCompraOReserva.Location = new System.Drawing.Point(77, 46);
+            this.labelCompraOReserva.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelCompraOReserva.Name = "labelCompraOReserva";
-            this.labelCompraOReserva.Size = new System.Drawing.Size(314, 17);
+            this.labelCompraOReserva.Size = new System.Drawing.Size(234, 13);
             this.labelCompraOReserva.TabIndex = 0;
             this.labelCompraOReserva.Text = "¿Desea hacer una reserva o comprar el pasaje?";
             // 
             // buttonComprar
             // 
-            this.buttonComprar.Location = new System.Drawing.Point(69, 120);
+            this.buttonComprar.Location = new System.Drawing.Point(52, 98);
+            this.buttonComprar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.buttonComprar.Name = "buttonComprar";
-            this.buttonComprar.Size = new System.Drawing.Size(110, 40);
+            this.buttonComprar.Size = new System.Drawing.Size(82, 32);
             this.buttonComprar.TabIndex = 1;
             this.buttonComprar.Text = "Comprar";
             this.buttonComprar.UseVisualStyleBackColor = true;
@@ -54,21 +56,24 @@
             // 
             // buttonReservar
             // 
-            this.buttonReservar.Location = new System.Drawing.Point(342, 120);
+            this.buttonReservar.Location = new System.Drawing.Point(256, 98);
+            this.buttonReservar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.buttonReservar.Name = "buttonReservar";
-            this.buttonReservar.Size = new System.Drawing.Size(110, 40);
+            this.buttonReservar.Size = new System.Drawing.Size(82, 32);
             this.buttonReservar.TabIndex = 2;
             this.buttonReservar.Text = "Reservar";
             this.buttonReservar.UseVisualStyleBackColor = true;
+            this.buttonReservar.Click += new System.EventHandler(this.buttonReservar_Click);
             // 
             // SeleccionarCompraOReserva
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(529, 197);
+            this.ClientSize = new System.Drawing.Size(397, 160);
             this.Controls.Add(this.buttonReservar);
             this.Controls.Add(this.buttonComprar);
             this.Controls.Add(this.labelCompraOReserva);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "SeleccionarCompraOReserva";
             this.Text = "SeleccionarCompraOReserva";
             this.ResumeLayout(false);
