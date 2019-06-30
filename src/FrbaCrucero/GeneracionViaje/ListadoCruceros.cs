@@ -60,6 +60,7 @@ namespace FrbaCrucero.GeneracionViaje
             this.dataGridViewCrucero.Columns["fecha_reinicio_servicio"].HeaderText = "Fecha reinicio servicio";
             this.dataGridViewCrucero.Columns["cant_cabinas"].HeaderText = "Cantidad de cabinas";
             dataGridViewCrucero.MultiSelect = false;
+            dataGridViewCrucero.Columns["id"].Visible = false;
         }
 
         private void dataGridViewCrucero_CellContentClick(object sender, DataGridViewCellEventArgs e)

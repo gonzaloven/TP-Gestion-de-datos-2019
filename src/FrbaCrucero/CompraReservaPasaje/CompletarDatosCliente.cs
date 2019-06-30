@@ -76,6 +76,7 @@ namespace FrbaCrucero.CompraReservaPasaje
                     textBoxTelefono.Text = datosDelCliente[4].ToString();
                     textBoxFechaNacimiento.Text = datosDelCliente[5].ToString();
                     textBoxMail.Text = datosDelCliente[6].ToString();
+                    textBoxDNI.ReadOnly = true;
                 }
                 else
                 {
@@ -205,7 +206,5 @@ namespace FrbaCrucero.CompraReservaPasaje
             SeleccionarFecha seleccionarFecha = new SeleccionarFecha(textBoxFechaNacimiento);
             seleccionarFecha.Show();
         }
-
-
     }
 }

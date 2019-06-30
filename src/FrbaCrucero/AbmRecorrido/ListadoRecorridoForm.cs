@@ -72,6 +72,7 @@ namespace FrbaCrucero.AbmRecorrido
                                                  .EncontrarPorParametros(valorPuertoDesde, valorPuertoHasta, valorHabilitado);
             dataGridViewRecorrido.DataSource = recorridos;
             dataGridViewRecorrido.MultiSelect = false;
+            dataGridViewRecorrido.Columns["id"].Visible = false;
         }
 
         private void dataGridViewRecorrido_CellContentClick(object sender, DataGridViewCellEventArgs e)
