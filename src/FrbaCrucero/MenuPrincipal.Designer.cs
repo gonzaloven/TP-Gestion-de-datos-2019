@@ -39,13 +39,15 @@
             this.toolStripLabelCrucero = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripCompreReserva = new System.Windows.Forms.ToolStripLabel();
-            this.toolABMRolesLabel2 = new System.Windows.Forms.ToolStripLabel();
-            this.toolStripLabelTopPasaje = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripLabelTopPasaje = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabelTop5CabinaLibres = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabelTop5CrucerosSinServicio = new System.Windows.Forms.ToolStripLabel();
+            this.toolABMRolesLabel2 = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripPagoReserva = new System.Windows.Forms.ToolStripLabel();
             this.toolStripBarraMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -76,10 +78,12 @@
             this.toolStripSeparator6,
             this.toolStripLabelTop5CabinaLibres,
             this.toolStripSeparator7,
-            this.toolStripLabelTop5CrucerosSinServicio});
+            this.toolStripLabelTop5CrucerosSinServicio,
+            this.toolStripSeparator8,
+            this.toolStripPagoReserva});
             this.toolStripBarraMenu.Location = new System.Drawing.Point(0, 0);
             this.toolStripBarraMenu.Name = "toolStripBarraMenu";
-            this.toolStripBarraMenu.Size = new System.Drawing.Size(807, 25);
+            this.toolStripBarraMenu.Size = new System.Drawing.Size(936, 25);
             this.toolStripBarraMenu.TabIndex = 1;
             this.toolStripBarraMenu.Text = "toolStrip1";
             // 
@@ -135,10 +139,10 @@
             this.toolStripCompreReserva.Text = "Compra y Reserva";
             this.toolStripCompreReserva.Click += new System.EventHandler(this.toolStripCompreReserva_Click);
             // 
-            // toolABMRolesLabel2
+            // toolStripSeparator5
             // 
-            this.toolABMRolesLabel2.Name = "toolABMRolesLabel2";
-            this.toolABMRolesLabel2.Size = new System.Drawing.Size(23, 23);
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
             // 
             // toolStripLabelTopPasaje
             // 
@@ -146,11 +150,6 @@
             this.toolStripLabelTopPasaje.Size = new System.Drawing.Size(142, 22);
             this.toolStripLabelTopPasaje.Text = "Top 5 Pasajes Comprados";
             this.toolStripLabelTopPasaje.Click += new System.EventHandler(this.toolStripLabelTopPasaje_Click);
-            // 
-            // toolStripSeparator5
-            // 
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
             // 
             // toolStripSeparator6
             // 
@@ -176,11 +175,28 @@
             this.toolStripLabelTop5CrucerosSinServicio.Text = "Top 5 Cruceros Sin Servicio";
             this.toolStripLabelTop5CrucerosSinServicio.Click += new System.EventHandler(this.toolStripLabelTop5CrucerosSinServicio_Click);
             // 
+            // toolABMRolesLabel2
+            // 
+            this.toolABMRolesLabel2.Name = "toolABMRolesLabel2";
+            this.toolABMRolesLabel2.Size = new System.Drawing.Size(23, 23);
+            // 
+            // toolStripSeparator8
+            // 
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            this.toolStripSeparator8.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripPagoReserva
+            // 
+            this.toolStripPagoReserva.Name = "toolStripPagoReserva";
+            this.toolStripPagoReserva.Size = new System.Drawing.Size(77, 22);
+            this.toolStripPagoReserva.Text = "Pago Reserva";
+            this.toolStripPagoReserva.Click += new System.EventHandler(this.toolStripPagoReserva_Click);
+            // 
             // MenuPrincipalForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(807, 387);
+            this.ClientSize = new System.Drawing.Size(936, 387);
             this.Controls.Add(this.toolStripBarraMenu);
             this.Name = "MenuPrincipalForm";
             this.Text = "MenuPrincipal Crucero";
@@ -212,5 +228,7 @@
         private System.Windows.Forms.ToolStripLabel toolStripLabelTop5CabinaLibres;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripLabel toolStripLabelTop5CrucerosSinServicio;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
+        private System.Windows.Forms.ToolStripLabel toolStripPagoReserva;
     }
 }
