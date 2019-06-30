@@ -12,4 +12,10 @@ namespace FrbaCrucero.Modelos
         public string SegundaColumna { get; set; }
         public int TerceraColumna { get; set; }
     }
+
+    public class ShowListado
+    {
+        public List<ListadosEstadisticos> Listado { get; set; }
+        public int Descripcion { get; set; }
+    }
 }

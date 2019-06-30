@@ -66,20 +66,47 @@ namespace FrbaCrucero.ListadoEstadistico
             MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        public void showRecorridos(List<ListadosEstadisticos> resultados)
+        public void showRecorridos(ShowListado resultados)
         {
             this.limpiarButton.Enabled = true;
             this.dateTimePicker1.Enabled = true;
             this.comboSemestre.Enabled = true;
 
-            this.resultadosTop5Grid.DataSource = resultados.Select(
+            switch (resultados.Descripcion)
+            {
+                case 1:
+                    this.resultadosTop5Grid.DataSource = resultados.Listado.Select(
                 resultado => new
                 {
-                    resultado.PrimeraColumna,
-                    resultado.SegundaColumna,
-                    resultado.TerceraColumna
+                    PuertoSalida = resultado.PrimeraColumna,
+                    PuertoLlegada = resultado.SegundaColumna,
+                    CantidadDePasajes = resultado.TerceraColumna
                 }
             ).ToList();
+                    break;
+                case 2:
+                    this.resultadosTop5Grid.DataSource = resultados.Listado.Select(
+                resultado => new
+                {
+                    PuertoSalida = resultado.PrimeraColumna,
+                    PuertoLlegada = resultado.SegundaColumna,
+                    CantidadDeCabinas = resultado.TerceraColumna
+                }
+            ).ToList();
+                    break;
+                case 3:
+                    this.resultadosTop5Grid.DataSource = resultados.Listado.Select(
+                resultado => new
+                {
+                    Nombre = resultado.PrimeraColumna,
+                    Modelo = resultado.SegundaColumna,
+                    CantidadDeCruceros = resultado.TerceraColumna
+                }
+            ).ToList();
+                    break;
+            }
+
+            
         }
 
         private void limpiarButton_Click(object sender, EventArgs e)

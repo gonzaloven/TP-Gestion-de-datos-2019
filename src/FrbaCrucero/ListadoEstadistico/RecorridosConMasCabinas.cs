@@ -22,9 +22,9 @@ namespace FrbaCrucero.ListadoEstadistico
         internal void GetRecorridosConFiltros(string anioSeleccionado, string semestreSeleccionado)
         {
             semestreSeleccionado = semestreSeleccionado.Equals("Primer semestre") ? "1" : "2";
-            List<ListadosEstadisticos> recorridos = repo.getRecorridosConMasCabinasLibres(anioSeleccionado, semestreSeleccionado);
+            ShowListado recorridos = repo.getRecorridosConMasCabinasLibres(anioSeleccionado, semestreSeleccionado);
 
-            if (recorridos != null)
+            if (recorridos.Listado != null)
             {
                 RecorridosConMasCabinasLibres.showRecorridos(recorridos);
             }

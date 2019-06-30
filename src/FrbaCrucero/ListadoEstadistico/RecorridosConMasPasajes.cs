@@ -31,9 +31,9 @@ namespace FrbaCrucero.ListadoEstadistico
         internal void GetRecorridosConFiltros(string anioSeleccionado, string semestreSeleccionado)
         {
             semestreSeleccionado = semestreSeleccionado.Equals("Primer semestre") ? "1" : "2";
-            List<ListadosEstadisticos> recorridos = repo.getRecorridosConPasajesMasComprados(anioSeleccionado, semestreSeleccionado);
+            ShowListado recorridos = repo.getRecorridosConPasajesMasComprados(anioSeleccionado, semestreSeleccionado);
 
-            if (recorridos != null && recorridos.Count > 0)
+            if (recorridos.Listado != null)
             {
                 this.form.showRecorridos(recorridos);
             }
