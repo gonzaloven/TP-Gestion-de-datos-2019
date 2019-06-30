@@ -173,13 +173,16 @@ namespace FrbaCrucero.CompraReservaPasaje
                 if (this.existeElCliente(dni))
                 {
                     cliente.Modificar(idCliente);
+                    MessageBox.Show("Se ha modificado con exito.", "Exito",
+                                    MessageBoxButtons.OK, MessageBoxIcon.None);
                 }
                 else
                 {
-                    cliente.Crear(idCliente);
-                }
-                MessageBox.Show("Se ha modificado con exito.", "Exito",
+                    idCliente = cliente.Crear();
+                    MessageBox.Show("Se ha creado con exito.", "Exito",
                                     MessageBoxButtons.OK, MessageBoxIcon.None);
+                }
+                
                 pasaje.cliente_id = idCliente;
                 SeleccionarCompraOReserva seleccionarCompraOReserva = new SeleccionarCompraOReserva(pasaje);
                 seleccionarCompraOReserva.Show();
