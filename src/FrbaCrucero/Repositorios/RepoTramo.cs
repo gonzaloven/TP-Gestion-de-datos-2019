@@ -38,10 +38,14 @@ namespace FrbaCrucero.Repositorios
 
         public void llenarDatos(DataGridView tablaTramosTotales)
         {
-            String sqlQuery = "Select * from " + nombreTabla;
+            String sqlQuery = "Select t.id, t.puerto_desde_id, t.puerto_hasta_id, pd.descripcion, ph.descripcion, t.precio_base from " 
+                            + nombreTabla + " t, FGNN_19.Puertos pd, FGNN_19.Puertos ph WHERE pd.id = t.puerto_desde_id AND ph.id = t.puerto_hasta_id";
             SqlCommand cmd = new SqlCommand(sqlQuery);
             DataTable tabla = conexionDB.obtenerData(cmd);
             tablaTramosTotales.DataSource = tabla;
+            tablaTramosTotales.Columns[1].Visible = false;
+            tablaTramosTotales.Columns["puerto_desde_id"].Visible = false;
+            tablaTramosTotales.Columns["puerto_hasta_id"].Visible = false;
         }
 
         public DataTable tramosActuales(DataGridView tablaTramosActuales, Int32 idRecorrido, DataTable tabla)
@@ -77,7 +81,9 @@ namespace FrbaCrucero.Repositorios
 
         public void actualizarDatosAgregar(List<Int32> tramos, DataGridView tablaTramos, String idPuertoDesde)
         {
-            String sqlQuery = "Select * from " + nombreTabla + " WHERE puerto_desde_id = @idPuertoDesde AND id NOT IN ({0})";
+            String sqlQuery = "Select t.id, t.puerto_desde_id, t.puerto_hasta_id, pd.descripcion, ph.descripcion, t.precio_base from "
+                            + nombreTabla + " t, FGNN_19.Puertos pd, FGNN_19.Puertos ph WHERE pd.id = t.puerto_desde_id "
+                            + "AND ph.id = t.puerto_hasta_id AND puerto_desde_id = @idPuertoDesde AND t.id NOT IN ({0})";
             String[] parametros = tramos.Select((s, i) => "@id" + i.ToString()).ToArray();
 
             String inClause = String.Join(", ", parametros);
@@ -96,7 +102,9 @@ namespace FrbaCrucero.Repositorios
 
         public void actualizarDatosQuitar(List<Int32> tramos, DataGridView tablaTramos, String idPuertoHasta)
         {
-            String sqlQuery = "Select * from " + nombreTabla + " WHERE puerto_desde_id = @idPuertoHasta AND id NOT IN ({0})";
+            String sqlQuery = "Select t.id, t.puerto_desde_id, t.puerto_hasta_id, pd.descripcion, ph.descripcion, t.precio_base from "
+                            + nombreTabla + " t, FGNN_19.Puertos pd, FGNN_19.Puertos ph WHERE pd.id = t.puerto_desde_id "
+                            + "AND ph.id = t.puerto_hasta_id AND puerto_desde_id = @idPuertoHasta AND t.id NOT IN ({0})";
             String[] parametros = tramos.Select((s, i) => "@id" + i.ToString()).ToArray();
 
             String inClause = String.Join(", ", parametros);
@@ -115,8 +123,9 @@ namespace FrbaCrucero.Repositorios
 
         public void actualizarDatos(DataGridView tablaTramos, String idPuertoDesde)
         {
-            String sqlQuery = "Select * from " + nombreTabla
-                            + " WHERE puerto_desde_id = @idPuertoDesde";
+            String sqlQuery = "Select t.id, t.puerto_desde_id, t.puerto_hasta_id, pd.descripcion, ph.descripcion, t.precio_base from "
+                            + nombreTabla + " t, FGNN_19.Puertos pd, FGNN_19.Puertos ph WHERE pd.id = t.puerto_desde_id "
+                            + "AND ph.id = t.puerto_hasta_id AND t.puerto_desde_id = @idPuertoDesde";
             SqlCommand cmd = new SqlCommand(sqlQuery);
             cmd.Parameters.AddWithValue("idPuertoDesde", idPuertoDesde);
             DataTable tabla = conexionDB.obtenerData(cmd);

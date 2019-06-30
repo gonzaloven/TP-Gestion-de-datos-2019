@@ -76,6 +76,7 @@ namespace FrbaCrucero.AbmCrucero
             this.dataGridViewCrucero.Columns["fecha_reinicio_servicio"].HeaderText = "Fecha reinicio servicio";
             this.dataGridViewCrucero.Columns["cant_cabinas"].HeaderText = "Cantidad de cabinas";
             dataGridViewCrucero.MultiSelect = false;
+            dataGridViewCrucero.Columns["id"].Visible = false;
         }
 
         private void buttonAgregar_Click(object sender, EventArgs e)
