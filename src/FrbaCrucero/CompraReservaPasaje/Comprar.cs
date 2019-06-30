@@ -27,8 +27,8 @@ namespace FrbaCrucero.CompraReservaPasaje
         {
             String metodoDePagoDesc = comboBoxMetodoDePago.Text;
             Int32 cuotas = metodoDePagoDesc == "Tarjeta de crédito" ? Decimal.ToInt32(numericUpDownCuotas.Value) : 0;
-            Int32 idMetodoPago = new CrearMetodoDePago(metodoDePagoDesc, cuotas).Crear();
-            Int32 idCompra = new CrearCompra(idMetodoPago).Crear();
+            Int32 idMetodoPago = this.obtenerIDMetodoPago(comboBoxMetodoDePago.Text);
+            Int32 idCompra = new CrearCompra(idMetodoPago, cuotas).Crear();
             while (pasaje.pasajeros > 0)
             {
                 new CrearPasaje(null, pasaje.cliente_id, idCompra, pasaje.viaje_codigo, pasaje.cabina_id).Crear();
@@ -62,5 +62,16 @@ namespace FrbaCrucero.CompraReservaPasaje
             cmdInsertar.Parameters.Add(parametroOutput, SqlDbType.Decimal).Direction = ParameterDirection.Output;
             return ConexionDB.instancia.ejecutarStoredProcedureConOutput(cmdInsertar, parametroOutput);
         }
+
+        private Int32 obtenerIDMetodoPago(String descripcion)
+        {
+            String parametroOutput = "id";
+            SqlCommand cmdInsertar = new SqlCommand("FGNN_19.Obtener_id_metodo_pago");
+            cmdInsertar.CommandType = CommandType.StoredProcedure;
+            cmdInsertar.Parameters.Add(new SqlParameter("descripcion", descripcion));
+            cmdInsertar.Parameters.Add(parametroOutput, SqlDbType.Decimal).Direction = ParameterDirection.Output;
+            return ConexionDB.instancia.ejecutarStoredProcedureConOutput(cmdInsertar, parametroOutput);
+        }
+
     }
 }

@@ -69,7 +69,6 @@
             this.comboBoxMetodoDePago.Name = "comboBoxMetodoDePago";
             this.comboBoxMetodoDePago.Size = new System.Drawing.Size(121, 21);
             this.comboBoxMetodoDePago.TabIndex = 2;
-            this.comboBoxMetodoDePago.SelectedIndex = 0;
             this.comboBoxMetodoDePago.SelectedIndexChanged += new System.EventHandler(this.comboBoxMetodoDePago_SelectedIndexChanged);
             // 
             // numericUpDownCuotas
@@ -86,6 +85,7 @@
             0,
             0});
             this.numericUpDownCuotas.Name = "numericUpDownCuotas";
+            this.numericUpDownCuotas.ReadOnly = true;
             this.numericUpDownCuotas.Size = new System.Drawing.Size(120, 20);
             this.numericUpDownCuotas.TabIndex = 3;
             this.numericUpDownCuotas.Value = new decimal(new int[] {
