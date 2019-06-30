@@ -18,6 +18,8 @@ namespace FrbaCrucero.Modelos
         public Double precio { get; set; }
         public Int32 pasajeros { get; set; }
 
+        public CrearPasaje() { }
+
         public CrearPasaje(Int32? reserva_codigo, Int32 cliente_id, Int32? compra_codigo, Int32 viaje_codigo, Int32 cabina_id)
         {
             this.reserva_codigo = reserva_codigo;
@@ -32,18 +34,18 @@ namespace FrbaCrucero.Modelos
         {
             SqlCommand cmdInsertar = new SqlCommand("FGNN_19.Insertar_pasaje");
             cmdInsertar.CommandType = CommandType.StoredProcedure;
-            cmdInsertar.Parameters.Add(new SqlParameter("reserva_codigo", reserva_codigo));
-            cmdInsertar.Parameters.Add(new SqlParameter("cliente_id", cliente_id));
-            cmdInsertar.Parameters.Add(new SqlParameter("compra_codigo", compra_codigo));
-            cmdInsertar.Parameters.Add(new SqlParameter("viaje_codigo", viaje_codigo));
-            cmdInsertar.Parameters.Add(new SqlParameter("cabina_id", cabina_id));
-            cmdInsertar.Parameters.Add(new SqlParameter("precio", precio));
-            ConexionDB.instancia.ejecutarQueryInsert(cmdInsertar);
+            cmdInsertar.Parameters.Add(new SqlParameter("@reserva_codigo", reserva_codigo));
+            cmdInsertar.Parameters.Add(new SqlParameter("@cliente_id", cliente_id));
+            cmdInsertar.Parameters.Add(new SqlParameter("@compra_codigo", compra_codigo));
+            cmdInsertar.Parameters.Add(new SqlParameter("@viaje_codigo", viaje_codigo));
+            cmdInsertar.Parameters.Add(new SqlParameter("@cabina_codigo", cabina_id));
+            cmdInsertar.Parameters.Add(new SqlParameter("@precio", precio));
+            ConexionDB.instancia.ejecutarQuery(cmdInsertar);
         }
 
         private Double calcularPrecioPasaje()
         {
-            String parametroOutput = "@precio_final";
+            String parametroOutput = "precio_final";
             SqlCommand cmdInsertar = new SqlCommand("FGNN_19.Calcular_costo_pasaje");
             cmdInsertar.CommandType = CommandType.StoredProcedure;
             cmdInsertar.Parameters.Add(new SqlParameter("idViaje", viaje_codigo));

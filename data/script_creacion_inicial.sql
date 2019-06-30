@@ -1231,7 +1231,7 @@ BEGIN TRANSACTION
 COMMIT TRANSACTION;
 GO
 
-CREATE PROCEDURE FGNN_19.Insertar_Metodo_pago(@descripcion VARCHAR(255), @cuotas INT, @id NUMERIC(18,0))
+CREATE PROCEDURE FGNN_19.Insertar_Metodo_pago(@descripcion VARCHAR(255), @cuotas INT, @id NUMERIC(18,0) OUTPUT)
 AS
 BEGIN TRANSACTION
 
@@ -1267,12 +1267,12 @@ END
 GO
 
 CREATE PROCEDURE FGNN_19.Insertar_pasaje(@reserva_codigo NUMERIC(18,0), @cliente_id NUMERIC(18,0), 
-	@compra_codigo NUMERIC(18,0), @viaje_codigo NUMERIC(18,0), @precio float)
+	@compra_codigo NUMERIC(18,0), @viaje_codigo NUMERIC(18,0), @cabina_codigo NUMERIC(18,0), @precio float)
 AS
 BEGIN TRANSACTION
 
-	INSERT INTO Pasajes(reserva_codigo, cliente_id, compra_codigo, viaje_codigo, precio)
-	VALUES(@reserva_codigo, @cliente_id, @compra_codigo, @viaje_codigo, @precio)
+	INSERT INTO Pasajes(reserva_codigo, cliente_id, compra_codigo, viaje_codigo, cabina_id, precio)
+	VALUES(@reserva_codigo, @cliente_id, @compra_codigo, @viaje_codigo, @cabina_codigo, @precio)
 
 COMMIT TRANSACTION;
 GO

@@ -21,7 +21,7 @@ namespace FrbaCrucero.Modelos
 
         public Int32 Crear()
         {
-            String parametroOutput = "@id";
+            String parametroOutput = "id";
             SqlCommand cmdInsertar = new SqlCommand("FGNN_19.Insertar_Metodo_pago");
             cmdInsertar.CommandType = CommandType.StoredProcedure;
             cmdInsertar.Parameters.Add(new SqlParameter("descripcion", descripcion));

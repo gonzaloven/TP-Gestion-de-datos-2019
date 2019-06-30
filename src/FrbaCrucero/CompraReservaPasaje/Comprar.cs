@@ -33,5 +33,13 @@ namespace FrbaCrucero.CompraReservaPasaje
                                 MessageBoxButtons.OK, MessageBoxIcon.None);
             this.Close();
         }
+
+        private void comboBoxMetodoDePago_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBoxMetodoDePago.Text != "Tarjeta de crédito")
+                numericUpDownCuotas.ReadOnly = true;
+            else
+                numericUpDownCuotas.ReadOnly = false;
+        }
     }
 }
