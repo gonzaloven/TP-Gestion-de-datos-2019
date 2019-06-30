@@ -1,6 +1,6 @@
 ﻿namespace FrbaCrucero.CompraReservaPasaje
 {
-    partial class SeleccionarMetodoDePago
+    partial class Comprar
     {
         /// <summary>
         /// Required designer variable.

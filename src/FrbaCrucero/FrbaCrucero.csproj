@@ -166,12 +166,6 @@
     <Compile Include="CompraReservaPasaje\SeleccionarCabina.Designer.cs">
       <DependentUpon>SeleccionarCabina.cs</DependentUpon>
     </Compile>
-    <Compile Include="CompraReservaPasaje\SeleccionarCompraOReserva.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="CompraReservaPasaje\SeleccionarCompraOReserva.Designer.cs">
-      <DependentUpon>SeleccionarCompraOReserva.cs</DependentUpon>
-    </Compile>
     <Compile Include="CompraReservaPasaje\SeleccionarFecha.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -265,7 +259,6 @@
     <Compile Include="GeneracionViaje\FormGenerarViaje.Designer.cs">
       <DependentUpon>FormGenerarViaje.cs</DependentUpon>
     </Compile>
-    <Compile Include="Modelos\Cliente.cs" />
     <Compile Include="Modelos\CrearCompra.cs" />
     <Compile Include="Modelos\CrearCrucero.cs" />
     <Compile Include="Modelos\CrearMetodoDePago.cs" />
@@ -366,9 +359,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CompraReservaPasaje\SeleccionarCabina.resx">
       <DependentUpon>SeleccionarCabina.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="CompraReservaPasaje\SeleccionarCompraOReserva.resx">
-      <DependentUpon>SeleccionarCompraOReserva.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CompraReservaPasaje\SeleccionarFecha.resx">
       <DependentUpon>SeleccionarFecha.cs</DependentUpon>

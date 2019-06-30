@@ -214,6 +214,22 @@ IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.Cance
 	DROP PROCEDURE FGNN_19.Cancelar_pasajes_crucero_definitiva
 GO
 
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.Insertar_Compra') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
+	DROP PROCEDURE FGNN_19.Insertar_Compra
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.Insertar_Metodo_pago') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
+	DROP PROCEDURE FGNN_19.Insertar_Metodo_pago
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.Calcular_costo_pasaje') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
+	DROP PROCEDURE FGNN_19.Calcular_costo_pasaje
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.Insertar_pasaje') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
+	DROP PROCEDURE FGNN_19.Insertar_pasaje
+GO
+
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_19.FN_Calcular_costo_pasaje') AND type in (N'FN', N'IF', N'TF', N'FS', N'FT'))
 	DROP FUNCTION FGNN_19.FN_Calcular_costo_pasaje
 GO
@@ -1190,15 +1206,8 @@ BEGIN
 END
 GO
 
-CREATE PROCEDURE FGNN_19.Datos_cliente
-@dni NUMERIC(18,0), 
-@id NUMERIC(18,0) OUTPUT, 
-@nombre VARCHAR(255) OUTPUT, 
-@apellido VARCHAR(255) OUTPUT, 
-@direccion VARCHAR(255) OUTPUT, 
-@telefono NUMERIC(18,0) OUTPUT,
-@fecha_nac DATETIME2(3) OUTPUT, 
-@mail VARCHAR(255) OUTPUT
+CREATE PROCEDURE FGNN_19.Datos_cliente(@dni NUMERIC(18,0), @id NUMERIC(18,0) OUTPUT, @nombre VARCHAR(255) OUTPUT, @apellido VARCHAR(255) OUTPUT, @direccion VARCHAR(255) OUTPUT, @telefono NUMERIC(18,0) OUTPUT,
+	@fecha_nac DATETIME2(3) OUTPUT, @mail VARCHAR(255) OUTPUT)
 AS
 BEGIN
 

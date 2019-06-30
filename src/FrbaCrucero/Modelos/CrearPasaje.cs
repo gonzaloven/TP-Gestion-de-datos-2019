@@ -10,15 +10,15 @@ namespace FrbaCrucero.Modelos
 {
     public class CrearPasaje
     {
-        public Int32 reserva_codigo { get; set; }
+        public Int32? reserva_codigo { get; set; }
         public Int32 cliente_id { get; set; }
-        public Int32 compra_codigo { get; set; }
+        public Int32? compra_codigo { get; set; }
         public Int32 viaje_codigo { get; set; }
         public Int32 cabina_id { get; set; }
         public Double precio { get; set; }
         public Int32 pasajeros { get; set; }
 
-        public CrearPasaje(Int32 reserva_codigo, Int32 cliente_id, Int32 compra_codigo, Int32 viaje_codigo, Int32 cabina_id)
+        public CrearPasaje(Int32? reserva_codigo, Int32 cliente_id, Int32? compra_codigo, Int32 viaje_codigo, Int32 cabina_id)
         {
             this.reserva_codigo = reserva_codigo;
             this.cliente_id = cliente_id;
@@ -43,7 +43,7 @@ namespace FrbaCrucero.Modelos
 
         private Double calcularPrecioPasaje()
         {
-            String parametroOutput = "precio_final";
+            String parametroOutput = "@precio_final";
             SqlCommand cmdInsertar = new SqlCommand("FGNN_19.Calcular_costo_pasaje");
             cmdInsertar.CommandType = CommandType.StoredProcedure;
             cmdInsertar.Parameters.Add(new SqlParameter("idViaje", viaje_codigo));

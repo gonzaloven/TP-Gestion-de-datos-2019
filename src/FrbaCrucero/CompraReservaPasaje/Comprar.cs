@@ -11,11 +11,11 @@ using FrbaCrucero.Modelos;
 
 namespace FrbaCrucero.CompraReservaPasaje
 {
-    public partial class SeleccionarMetodoDePago : Form
+    public partial class Comprar : Form
     {
         CrearPasaje pasaje;
 
-        public SeleccionarMetodoDePago(CrearPasaje pasaje)
+        public Comprar(CrearPasaje pasaje)
         {
             InitializeComponent();
             this.pasaje = pasaje;
@@ -26,7 +26,11 @@ namespace FrbaCrucero.CompraReservaPasaje
             String metodoDePagoDesc = comboBoxMetodoDePago.Text;
             Int32 cuotas = Decimal.ToInt32(numericUpDownCuotas.Value);
             Int32 idMetodoPago = new CrearMetodoDePago(metodoDePagoDesc, cuotas).Crear();
-            pasaje.compra_codigo = new CrearCompra(idMetodoPago).Crear();
+            Int32 idCompra = new CrearCompra(idMetodoPago).Crear();
+            new CrearPasaje(null, pasaje.cliente_id, idCompra, pasaje.viaje_codigo, pasaje.cabina_id).Crear();
+
+            MessageBox.Show("La compra del pasaje resulto exitosa.", "Exito",
+                                MessageBoxButtons.OK, MessageBoxIcon.None);
             this.Close();
         }
     }
