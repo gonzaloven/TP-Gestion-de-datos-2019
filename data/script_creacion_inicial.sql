@@ -674,30 +674,6 @@ BEGIN
 END;
 GO
 
-CREATE FUNCTION FGNN_19.FN_Calcular_costo_pasaje(@idViaje NUMERIC(18,0), @idCabina NUMERIC(18,0))
-RETURNS FLOAT
-AS
-BEGIN
-	
-	DECLARE @idRecorrido NUMERIC(18,0)
-	DECLARE @PorcAdicional FLOAT
-	DECLARE @PrecioBaseTotal FLOAT
-
-	SET @idRecorrido = (SELECT v.recorrido_codigo
-		FROM FGNN_19.Viajes v
-		WHERE v.codigo = @idViaje)
-
-	SET @PorcAdicional = (SELECT tc.porcentaje_adicional
-		FROM FGNN_19.Cabinas c
-			JOIN FGNN_19.Tipos_Cabinas tc ON tc.id = c.tipo_id
-			WHERE c.codigo = @idCabina)
-
-	SET @PrecioBaseTotal = FGNN_19.FN_Calcular_costo_base(@idRecorrido)
-
-	RETURN @PrecioBaseTotal * @PorcAdicional
-END
-GO
-
 CREATE FUNCTION FGNN_19.FN_Pasaje_no_cancelado(@idPasaje NUMERIC(18,0))
 RETURNS BIT
 AS
@@ -1247,6 +1223,40 @@ BEGIN TRANSACTION
 	VALUES(@descripcion, @cuotas)
 
 	SET @id = SCOPE_IDENTITY()
+
+COMMIT TRANSACTION;
+GO
+
+CREATE PROCEDURE FGNN_19.Calcular_costo_pasaje(@idViaje NUMERIC(18,0), @idCabina NUMERIC(18,0), @precio_final NUMERIC(18,0) OUTPUT)
+AS
+BEGIN
+	
+	DECLARE @idRecorrido NUMERIC(18,0)
+	DECLARE @PorcAdicional FLOAT
+	DECLARE @PrecioBaseTotal FLOAT
+
+	SET @idRecorrido = (SELECT v.recorrido_codigo
+		FROM FGNN_19.Viajes v
+		WHERE v.codigo = @idViaje)
+
+	SET @PorcAdicional = (SELECT tc.porcentaje_adicional
+		FROM FGNN_19.Cabinas c
+			JOIN FGNN_19.Tipos_Cabinas tc ON tc.id = c.tipo_id
+			WHERE c.codigo = @idCabina)
+
+	SET @PrecioBaseTotal = FGNN_19.FN_Calcular_costo_base(@idRecorrido)
+
+	SET @precio_final = @PrecioBaseTotal * @PorcAdicional
+END
+GO
+
+CREATE PROCEDURE FGNN_19.Insertar_pasaje(@reserva_codigo NUMERIC(18,0), @cliente_id NUMERIC(18,0), 
+	@compra_codigo NUMERIC(18,0), @viaje_codigo NUMERIC(18,0), @precio float)
+AS
+BEGIN TRANSACTION
+
+	INSERT INTO Pasajes(reserva_codigo, cliente_id, compra_codigo, viaje_codigo, precio)
+	VALUES(@reserva_codigo, @cliente_id, @compra_codigo, @viaje_codigo, @precio)
 
 COMMIT TRANSACTION;
 GO

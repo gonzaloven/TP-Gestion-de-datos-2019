@@ -27,6 +27,5 @@ namespace FrbaCrucero.Modelos
             Int32 codigo = ConexionDB.instancia.ejecutarStoredProcedureConOutput(cmdInsertar, parametroOutput);
             return codigo;
         }
-
     }
 }
