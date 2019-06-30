@@ -827,13 +827,11 @@ CREATE PROCEDURE FGNN_19.P_TramosDelRecorrido
 AS
 BEGIN
 
-SELECT t.id, t.puerto_desde_id, t.puerto_hasta_id, pd.descripcion, ph.descripcion, t.precio_base
-FROM FGNN_19.Tramos t, FGNN_19.Recorrido_X_Tramo rt, FGNN_19.Recorridos r, FGNN_19.Puertos pd, FGNN_19.Puertos ph
+SELECT t.id, t.puerto_desde_id, t.puerto_hasta_id, t.precio_base
+FROM FGNN_19.Tramos t, FGNN_19.Recorrido_X_Tramo rt, FGNN_19.Recorridos r
 WHERE t.id = rt.tramo_id
 AND r.id = rt.recorrido_id
 AND r.id = @idRecorrido
-AND pd.id = t.puerto_desde_id
-AND ph.id = t.puerto_hasta_id
 ORDER BY rt.orden ASC
 
 END;
@@ -1268,8 +1266,8 @@ BEGIN
 END
 GO
 
-CREATE PROCEDURE FGNN_19.Insertar_pasaje(@reserva_codigo NUMERIC(18,0), @cliente_id NUMERIC(18,0), 
-	@compra_codigo NUMERIC(18,0), @viaje_codigo NUMERIC(18,0), @cabina_codigo NUMERIC(18,0), @precio float)
+CREATE PROCEDURE FGNN_19.Insertar_pasaje(@reserva_codigo NUMERIC(18,0) = NULL, @cliente_id NUMERIC(18,0), 
+	@compra_codigo NUMERIC(18,0) = NULL, @viaje_codigo NUMERIC(18,0), @cabina_codigo NUMERIC(18,0), @precio float)
 AS
 BEGIN TRANSACTION
 
