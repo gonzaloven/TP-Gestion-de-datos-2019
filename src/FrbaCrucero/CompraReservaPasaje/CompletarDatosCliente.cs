@@ -64,10 +64,10 @@ namespace FrbaCrucero.CompraReservaPasaje
             {
                 Int32 dniCliente = Int32.Parse(textBoxDNI.Text);
                 List<object> datosDelCliente = this.datosCliente(dniCliente);
-                this.idCliente = Int32.Parse(datosDelCliente[0].ToString());
 
                 if (!this.todosSonNulos(datosDelCliente))
                 {
+                    idCliente = Int32.Parse(datosDelCliente[0].ToString());
                     textBoxNombre.Text = datosDelCliente[1].ToString();
                     textBoxApellido.Text = datosDelCliente[2].ToString();
                     textBoxDireccion.Text = datosDelCliente[3].ToString();
@@ -140,7 +140,46 @@ namespace FrbaCrucero.CompraReservaPasaje
 
         private void buttonGuardar_Click(object sender, EventArgs e)
         {
+            String nombre = textBoxNombre.Text;
+            String apellido = textBoxApellido.Text;
+            String dni = textBoxDNI.Text;
+            String direccion = textBoxDireccion.Text;
+            String telefono = textBoxTelefono.Text;
+            String fecha_nac = textBoxFechaNacimiento.Text;
+            String mail = textBoxMail.Text;
 
+            Dictionary<String, string> parametrosObligatorios = new Dictionary<String, string>();
+            parametrosObligatorios.Add("nombre", nombre);
+            parametrosObligatorios.Add("apellido", apellido);
+            parametrosObligatorios.Add("dni", dni);
+            parametrosObligatorios.Add("direccion", direccion);
+            parametrosObligatorios.Add("telefono", telefono);
+            parametrosObligatorios.Add("fecha de nacimiento", fecha_nac);
+            if (parametrosObligatorios.Any(parametro => this.ValidarNulo(parametro.Value)))
+            {
+                foreach (KeyValuePair<string, string> parametro in parametrosObligatorios)
+                {
+                    if (this.ValidarNulo(parametro.Value))
+                        MessageBox.Show("No se puede dejar el campo " + parametro.Key + " vacio.", "Error",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                Cliente cliente = new Cliente(nombre, apellido, Int32.Parse(dni), direccion, Int32.Parse(telefono), Convert.ToDateTime(fecha_nac), mail);
+                cliente.Modificar(idCliente);
+                MessageBox.Show("Se ha modificado con exito.", "Exito",
+                                    MessageBoxButtons.OK, MessageBoxIcon.None);
+                pasaje.cliente_id = idCliente;
+                SeleccionarCompraOReserva seleccionarCompraOReserva = new SeleccionarCompraOReserva(pasaje);
+                seleccionarCompraOReserva.Show();
+                this.Close();
+            }
+        }
+
+        private bool ValidarNulo(String parametro)
+        {
+            return String.IsNullOrWhiteSpace(parametro);
         }
 
 
