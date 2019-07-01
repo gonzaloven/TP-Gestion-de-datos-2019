@@ -166,17 +166,23 @@
     <Compile Include="CompraReservaPasaje\SeleccionarCabina.Designer.cs">
       <DependentUpon>SeleccionarCabina.cs</DependentUpon>
     </Compile>
+    <Compile Include="CompraReservaPasaje\SeleccionarCompraOReserva.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CompraReservaPasaje\SeleccionarCompraOReserva.Designer.cs">
+      <DependentUpon>SeleccionarCompraOReserva.cs</DependentUpon>
+    </Compile>
     <Compile Include="CompraReservaPasaje\SeleccionarFecha.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="CompraReservaPasaje\SeleccionarFecha.Designer.cs">
       <DependentUpon>SeleccionarFecha.cs</DependentUpon>
     </Compile>
-    <Compile Include="CompraReservaPasaje\SeleccionarMetodoDePago.cs">
+    <Compile Include="CompraReservaPasaje\Comprar.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CompraReservaPasaje\SeleccionarMetodoDePago.Designer.cs">
-      <DependentUpon>SeleccionarMetodoDePago.cs</DependentUpon>
+    <Compile Include="CompraReservaPasaje\Comprar.Designer.cs">
+      <DependentUpon>Comprar.cs</DependentUpon>
     </Compile>
     <Compile Include="CompraReservaPasaje\SeleccionarPasajeros.cs">
       <SubType>Form</SubType>
@@ -259,6 +265,7 @@
     <Compile Include="GeneracionViaje\FormGenerarViaje.Designer.cs">
       <DependentUpon>FormGenerarViaje.cs</DependentUpon>
     </Compile>
+    <Compile Include="Modelos\Cliente.cs" />
     <Compile Include="Modelos\CrearCompra.cs" />
     <Compile Include="Modelos\CrearCrucero.cs" />
     <Compile Include="Modelos\CrearMetodoDePago.cs" />
@@ -368,11 +375,14 @@
     <EmbeddedResource Include="CompraReservaPasaje\SeleccionarCabina.resx">
       <DependentUpon>SeleccionarCabina.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="CompraReservaPasaje\SeleccionarCompraOReserva.resx">
+      <DependentUpon>SeleccionarCompraOReserva.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CompraReservaPasaje\SeleccionarFecha.resx">
       <DependentUpon>SeleccionarFecha.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CompraReservaPasaje\SeleccionarMetodoDePago.resx">
-      <DependentUpon>SeleccionarMetodoDePago.cs</DependentUpon>
+    <EmbeddedResource Include="CompraReservaPasaje\Comprar.resx">
+      <DependentUpon>Comprar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CompraReservaPasaje\SeleccionarPasajeros.resx">
       <DependentUpon>SeleccionarPasajeros.cs</DependentUpon>

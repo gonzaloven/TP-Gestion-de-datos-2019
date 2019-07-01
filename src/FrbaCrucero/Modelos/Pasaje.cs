@@ -9,14 +9,25 @@ namespace FrbaCrucero.Modelos
     class Pasaje
     {
         public Int32 id { get; set; }
-        public Int32 reservaCodigo { get; set; }
+        public Reserva reserva { get; set; }
         public Cliente cliente { get; set; }
-        public Int32 compra_codigo { get; set; }
-        public Int32 viaje_codigo { get; set; }
-        public Int32 cabina_id { get; set; }
+        public Compra compra { get; set; }
+        public Viaje viaje { get; set; }
+        public Cabina cabina { get; set; }
         public Double precio { get; set; }
-        public Int32 pasajeros { get; set; }
+        public Int32 codigo { get; set; }
 
-
+        public Pasaje(Int32 id, Reserva reserva, Cliente cliente, Compra compra, Viaje viaje, Cabina cabina,
+            Double precio, Int32 codigo)
+        {
+            this.id = id;
+            this.reserva = reserva;
+            this.cliente = cliente;
+            this.compra = compra;
+            this.viaje = viaje;
+            this.cabina = cabina;
+            this.precio = precio;
+            this.codigo = codigo;
+        }
     }
 }

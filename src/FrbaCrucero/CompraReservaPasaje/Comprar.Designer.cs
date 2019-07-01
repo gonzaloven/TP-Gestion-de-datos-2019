@@ -1,6 +1,6 @@
 ﻿namespace FrbaCrucero.CompraReservaPasaje
 {
-    partial class SeleccionarMetodoDePago
+    partial class Comprar
     {
         /// <summary>
         /// Required designer variable.
@@ -61,12 +61,14 @@
             this.comboBoxMetodoDePago.FormattingEnabled = true;
             this.comboBoxMetodoDePago.Items.AddRange(new object[] {
             "Efectivo",
-            "Tarjeta de crédito",
-            "Tarjeta de débito"});
+            "Tarjeta de débito",
+            "Tarjeta de crédito"});
             this.comboBoxMetodoDePago.Location = new System.Drawing.Point(97, 23);
             this.comboBoxMetodoDePago.Name = "comboBoxMetodoDePago";
             this.comboBoxMetodoDePago.Size = new System.Drawing.Size(121, 21);
             this.comboBoxMetodoDePago.TabIndex = 2;
+            this.comboBoxMetodoDePago.SelectedIndex = 0;
+            this.comboBoxMetodoDePago.SelectedIndexChanged += new System.EventHandler(this.comboBoxMetodoDePago_SelectedIndexChanged);
             // 
             // numericUpDownCuotas
             // 
@@ -77,6 +79,7 @@
             0,
             0});
             this.numericUpDownCuotas.Name = "numericUpDownCuotas";
+            this.numericUpDownCuotas.ReadOnly = true;
             this.numericUpDownCuotas.Size = new System.Drawing.Size(120, 20);
             this.numericUpDownCuotas.TabIndex = 3;
             // 
@@ -103,14 +106,14 @@
             this.buttonGuardar.UseVisualStyleBackColor = true;
             this.buttonGuardar.Click += new System.EventHandler(this.buttonGuardar_Click);
             // 
-            // SeleccionarMetodoDePago
+            // Comprar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(294, 155);
             this.Controls.Add(this.buttonGuardar);
             this.Controls.Add(this.groupBoxPago);
-            this.Name = "SeleccionarMetodoDePago";
+            this.Name = "Comprar";
             this.Text = "SeleccionarMetodoDePago";
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCuotas)).EndInit();
             this.groupBoxPago.ResumeLayout(false);

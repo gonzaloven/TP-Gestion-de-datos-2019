@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace FrbaCrucero.Modelos
 {
@@ -29,5 +35,46 @@ namespace FrbaCrucero.Modelos
             this.fechaNacimiento = fechaNacimiento;
         }
 
+        public void Crear(Int32 idCliente)
+        {
+            this.crearCliente(idCliente);
+        }
+
+        public void Modificar(Int32 idCliente)
+        {
+            this.modificarCliente(idCliente);
+        }
+
+        private void modificarCliente(Int32 idCliente)
+        {
+            String sqlQuery = "UPDATE FGNN_19.Clientes SET nombre = @nombre, "
+                            + "apellido = @apellido, direccion = @direccion, "
+                            + "telefono = @telefono, fecha_nac = @fecha_nac, mail = @mail "
+                            + "WHERE id = @idCliente";
+            SqlCommand cmd = new SqlCommand(sqlQuery);
+            cmd.Parameters.Add(new SqlParameter("nombre", this.nombre));
+            cmd.Parameters.Add(new SqlParameter("apellido", this.apellido));
+            cmd.Parameters.Add(new SqlParameter("direccion", this.direccion));
+            cmd.Parameters.Add(new SqlParameter("telefono", this.telefono));
+            cmd.Parameters.Add(new SqlParameter("fecha_nac", this.fechaNacimiento));
+            cmd.Parameters.Add(new SqlParameter("mail", this.mail));
+            cmd.Parameters.Add(new SqlParameter("idCliente", idCliente));
+            ConexionDB.instancia.ejecutarQuery(cmd);
+        }
+
+        private void crearCliente(Int32 idCliente)
+        {
+            String sqlQuery = "INSERT INTO FGNN_19.Clientes (nombre, apellido, dni, direccion, telefono, fecha_nac, mail) "
+                            + "VALUES(@nombre,@apellido,@dni,@direccion,@telefono,@fecha_nac,@mail)";
+            SqlCommand cmd = new SqlCommand(sqlQuery);
+            cmd.Parameters.Add(new SqlParameter("nombre", this.nombre));
+            cmd.Parameters.Add(new SqlParameter("apellido", this.apellido));
+            cmd.Parameters.Add(new SqlParameter("direccion", this.direccion));
+            cmd.Parameters.Add(new SqlParameter("telefono", this.telefono));
+            cmd.Parameters.Add(new SqlParameter("fecha_nac", this.fechaNacimiento));
+            cmd.Parameters.Add(new SqlParameter("mail", this.mail));
+            cmd.Parameters.Add(new SqlParameter("dni", this.dni));
+            ConexionDB.instancia.ejecutarQuery(cmd);
+        }
     }
 }

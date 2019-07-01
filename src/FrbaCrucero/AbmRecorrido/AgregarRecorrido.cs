@@ -20,13 +20,24 @@ namespace FrbaCrucero.AbmRecorrido
         {
             InitializeComponent();
             this.listadoRecorridos = listadoRecorridos;
+            this.llenarDatos();  
+        }
+
+        private void llenarDatos()
+        {
             Repositorios.RepoTramo.instancia.llenarDatos(dataGridViewTramosTotales);
             tablaTotal.Columns.Add("id", typeof(Int32));
             tablaTotal.Columns.Add("puertoDesde", typeof(String));
             tablaTotal.Columns.Add("puertoHasta", typeof(String));
+            tablaTotal.Columns.Add("puertoDesdeDesc", typeof(String));
+            tablaTotal.Columns.Add("puertoHastaDesc", typeof(String));
             tablaTotal.Columns.Add("precio_base", typeof(Double));
             dataGridViewTramosActuales.DataSource = tablaTotal;
+            dataGridViewTramosActuales.Columns[1].Visible = false;
+            dataGridViewTramosActuales.Columns[2].Visible = false;
+            dataGridViewTramosActuales.Columns[3].Visible = false;
         }
+
 
         private void dataGridViewTramosTotales_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {

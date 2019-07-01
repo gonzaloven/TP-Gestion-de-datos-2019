@@ -73,5 +73,13 @@ namespace FrbaCrucero.GeneracionViaje
         {
             this.Close();
         }
+
+        private void buttonLimpiar_Click(object sender, EventArgs e)
+        {
+            textBoxIDRecorrido.Text = null;
+            textBoxCrucero.Text = null;
+            textBoxFechaFin.Text = null;
+            textBoxFechaInicio.Text = null;
+        }
     }
 }

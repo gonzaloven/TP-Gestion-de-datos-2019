@@ -19,7 +19,7 @@ namespace FrbaCrucero.Modelos
 
         public Int32 Crear()
         {
-            String parametroOutput = "codigo";
+            String parametroOutput = "@codigo";
             SqlCommand cmdInsertar = new SqlCommand("FGNN_19.Insertar_Compra");
             cmdInsertar.CommandType = CommandType.StoredProcedure;
             cmdInsertar.Parameters.Add(new SqlParameter("metodo_pago", metodo_pago));
@@ -27,6 +27,5 @@ namespace FrbaCrucero.Modelos
             Int32 codigo = ConexionDB.instancia.ejecutarStoredProcedureConOutput(cmdInsertar, parametroOutput);
             return codigo;
         }
-
     }
 }
