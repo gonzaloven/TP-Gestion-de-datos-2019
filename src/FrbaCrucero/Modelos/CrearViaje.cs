@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace FrbaCrucero.Modelos
 {
@@ -28,6 +29,13 @@ namespace FrbaCrucero.Modelos
             if (this.validarViaje())
             {
                 this.InsertarViaje();
+                MessageBox.Show("Se ha ingresado el viaje con exito.", "Exito",
+                                MessageBoxButtons.OK, MessageBoxIcon.None);
+            }
+            else
+            {
+                MessageBox.Show("El viaje ingresado tiene algunos parametros no validos.", "Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
