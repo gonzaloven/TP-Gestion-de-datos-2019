@@ -169,7 +169,10 @@ namespace FrbaCrucero.CompraReservaPasaje
             }
             else
             {
-                Cliente cliente = new Cliente(nombre, apellido, Int32.Parse(dni), direccion, Int32.Parse(telefono), Convert.ToDateTime(fecha_nac), mail);
+                Cliente cliente = new Cliente(nombre, apellido, 
+                                             Int32.Parse(dni), direccion, 
+                                             Int32.Parse(telefono), 
+                                             Convert.ToDateTime(fecha_nac), mail);
                 if (this.existeElCliente(dni))
                 {
                     cliente.Modificar(idCliente);
