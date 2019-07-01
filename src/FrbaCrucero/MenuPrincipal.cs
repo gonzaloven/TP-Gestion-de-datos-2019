@@ -54,29 +54,7 @@ namespace FrbaCrucero
             generarViaje.Show();
         }
 
-        private void toolStripLabel3_Click(object sender, EventArgs e)
-        {
-            this.IsMdiContainer = true;
-            RecorridosConMasPasajesComprados recorridosConMasPasajes = new RecorridosConMasPasajesComprados();
-            recorridosConMasPasajes.MdiParent = this;
-            recorridosConMasPasajes.Show();
-        }
-
-        private void toolStripLabel4_Click(object sender, EventArgs e)
-        {
-            this.IsMdiContainer = true;
-            RecorridosConMasCabinasLibres recorridosConMasPasajes = new RecorridosConMasCabinasLibres();
-            recorridosConMasPasajes.MdiParent = this;
-            recorridosConMasPasajes.Show();
-        }
-
-        private void toolStripLabel5_Click(object sender, EventArgs e)
-        {
-            this.IsMdiContainer = true;
-            CrucerosConMasDiasSinServicio recorridosConMasPasajes = new CrucerosConMasDiasSinServicio();
-            recorridosConMasPasajes.MdiParent = this;
-            recorridosConMasPasajes.Show();
-        }
+  
         
         private void mostrarMenuPrincipalPorRol(Rol rol)
         {
@@ -137,23 +115,7 @@ namespace FrbaCrucero
         private void toolStripLabelTopPasaje_Click(object sender, EventArgs e)
         {
             this.IsMdiContainer = true;
-            RecorridosConMasPasajesComprados recorridosConMasPasajes = new RecorridosConMasPasajesComprados();
-            recorridosConMasPasajes.MdiParent = this;
-            recorridosConMasPasajes.Show();
-        }
-
-        private void toolStripLabelTop5CabinaLibres_Click(object sender, EventArgs e)
-        {
-            this.IsMdiContainer = true;
-            RecorridosConMasCabinasLibres recorridosConMasPasajes = new RecorridosConMasCabinasLibres();
-            recorridosConMasPasajes.MdiParent = this;
-            recorridosConMasPasajes.Show();
-        }
-
-        private void toolStripLabelTop5CrucerosSinServicio_Click(object sender, EventArgs e)
-        {
-            this.IsMdiContainer = true;
-            CrucerosConMasDiasSinServicio recorridosConMasPasajes = new CrucerosConMasDiasSinServicio();
+            ListadoEstadisticoForm recorridosConMasPasajes = new ListadoEstadisticoForm();
             recorridosConMasPasajes.MdiParent = this;
             recorridosConMasPasajes.Show();
         }

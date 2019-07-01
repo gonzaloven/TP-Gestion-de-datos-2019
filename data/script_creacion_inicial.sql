@@ -186,16 +186,8 @@ IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.TOP5_
 	DROP PROCEDURE FGNN_19.TOP5_recorridos_mas_comprados
 GO
 
-IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.Anios_TOP5_recorridos_mas_comprados') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
-	DROP PROCEDURE FGNN_19.Anios_TOP5_recorridos_mas_comprados
-GO
-
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.TOP5_recorridos_mas_cabinas_libres') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
 	DROP PROCEDURE FGNN_19.TOP5_recorridos_mas_cabinas_libres
-GO
-
-IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.Anios_TOP5_recorridos_mas_cabinas_libres') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
-	DROP PROCEDURE FGNN_19.Anios_TOP5_recorridos_mas_cabinas_libres
 GO
 
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.TOP5_cruceros_mas_dias_fuera_servicio') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
@@ -1178,15 +1170,6 @@ DECLARE @QUERY_5 VARCHAR(200) = ' GROUP BY r.id, ps.descripcion, pl.descripcion 
 END
 GO
 
-CREATE PROCEDURE FGNN_19.Anios_TOP5_recorridos_mas_comprados
-AS
-BEGIN
-	SELECT DISTINCT YEAR(c.fecha) AS anio
-	FROM FGNN_19.Compras c 
-	JOIN FGNN_19.Pasajes p
-	ON (c.codigo = p.compra_codigo)
-END
-GO
 
 CREATE PROCEDURE FGNN_19.TOP5_recorridos_mas_cabinas_libres(@anio INT, @semestre INT)
 AS
@@ -1209,15 +1192,6 @@ DECLARE @QUERY_6 VARCHAR(200) = ' GROUP BY r.codigo, ps.descripcion, pl.descripc
 END
 GO
 
-CREATE PROCEDURE FGNN_19.Anios_TOP5_recorridos_mas_cabinas_libres
-AS
-BEGIN
-	SELECT DISTINCT YEAR(v.fecha_fin) AS anio
-	FROM FGNN_19.Viajes v 
-	JOIN FGNN_19.Pasajes p
-	ON (v.codigo = p.viaje_codigo)
-END
-GO
 
 CREATE PROCEDURE FGNN_19.TOP5_cruceros_mas_dias_fuera_servicio(@anio INT, @semestre INT)
 AS
@@ -1238,13 +1212,6 @@ DECLARE @QUERY_4 VARCHAR(200) = ' GROUP BY id, nombre, modelo, fecha_fuera_servi
 END
 GO
 
-CREATE PROCEDURE FGNN_19.Anios_TOP5_cruceros_mas_dias_fuera_servicio
-AS
-BEGIN
-	SELECT DISTINCT YEAR(fecha_fuera_servicio) AS anio
-	FROM FGNN_19.Cruceros
-END
-GO
 
 CREATE PROCEDURE FGNN_19.Datos_cliente(@dni NUMERIC(18,0), @id NUMERIC(18,0) OUTPUT, @nombre VARCHAR(255) OUTPUT, @apellido VARCHAR(255) OUTPUT, @direccion VARCHAR(255) OUTPUT, @telefono NUMERIC(18,0) OUTPUT,
 	@fecha_nac DATETIME2(3) OUTPUT, @mail VARCHAR(255) OUTPUT)
@@ -1358,3 +1325,4 @@ WHERE id IN (SELECT i.id FROM INSERTED i, FGNN_19.Viajes v
 
 COMMIT TRANSACTION;
 GO
+

@@ -67,65 +67,28 @@ namespace FrbaCrucero.Repositorios
             return listado;
         }
 
-        internal List<ListadosEstadisticos> getCrucerosConMasDiasFueraDeServicio(string anio, string semestre) 
+        internal ShowListado getCrucerosConMasDiasFueraDeServicio(string anio, string semestre) 
         {
-            return this.getListado(anio, semestre, "FGNN_19.TOP5_cruceros_mas_dias_fuera_servicio");
+            ShowListado showListado = new ShowListado();
+            showListado.Descripcion = 3;
+            showListado.Listado = this.getListado(anio, semestre, "FGNN_19.TOP5_cruceros_mas_dias_fuera_servicio");
+            return showListado;
         }
 
-        internal List<ListadosEstadisticos> getRecorridosConMasCabinasLibres(string anio, string semestre)
+        internal ShowListado getRecorridosConMasCabinasLibres(string anio, string semestre)
         {
-            return this.getListado(anio, semestre, "FGNN_19.TOP5_recorridos_mas_cabinas_libres");
+            ShowListado showListado = new ShowListado();
+            showListado.Descripcion = 2;
+            showListado.Listado = this.getListado(anio, semestre, "FGNN_19.TOP5_recorridos_mas_cabinas_libres");
+            return showListado;
         }
 
-        internal List<ListadosEstadisticos> getRecorridosConPasajesMasComprados(string anio, string semestre)
+        internal ShowListado getRecorridosConPasajesMasComprados(string anio, string semestre)
         {
-            return this.getListado(anio, semestre, "FGNN_19.TOP5_recorridos_mas_comprados");
-        }
-
-        private List<int> GetAnios(string store)
-        {
-            List<int> anios = new List<int>();
-
-            try
-            {
-                this.conexionDB.crearConexion();
-                this.conexionDB.abrirConexion();
-
-                SqlCommand procedure = CreateProcedure(store, null);
-                SqlDataReader sqlReader = procedure.ExecuteReader();
-
-                if (sqlReader.HasRows)
-                {
-                    while (sqlReader.Read())
-                    {
-                        anios.Add(sqlReader.GetInt32(0));
-                    }
-                }
-            }
-            catch(Exception e)
-            {
-                anios = null;
-            }
-            finally
-            {
-                this.conexionDB.cerrarConexion();
-            }
-            return anios;
-        }
-
-        internal List<int> GetAniosRecorridosMasComprados()
-        {
-            return GetAnios("FGNN_19.Anios_TOP5_recorridos_mas_comprados");
-        }
-
-        internal List<int> GetAniosRecorridosMasCabinasLibres()
-        {
-            return GetAnios("FGNN_19.Anios_TOP5_recorridos_mas_cabinas_libres");
-        }
-
-        internal List<int> GetAniosCrucerosMasDiasFueraServicio()
-        {
-            return GetAnios("FGNN_19.Anios_TOP5_cruceros_mas_dias_fuera_servicio");
+            ShowListado showListado = new ShowListado();
+            showListado.Descripcion = 1;
+            showListado.Listado = this.getListado(anio, semestre, "FGNN_19.TOP5_recorridos_mas_comprados");
+            return showListado;
         }
     }
 }

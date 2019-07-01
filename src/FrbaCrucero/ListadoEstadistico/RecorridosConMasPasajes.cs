@@ -11,10 +11,10 @@ namespace FrbaCrucero.ListadoEstadistico
     public class RecorridosConMasPasajes
     {
 
-        private RecorridosConMasPasajesComprados form;
+        private ListadoEstadisticoForm form;
         private RepoTop5 repo;
 
-        public RecorridosConMasPasajesComprados Form
+        public ListadoEstadisticoForm Form
         {
             get { return form; }
             set { form = value; }
@@ -22,7 +22,7 @@ namespace FrbaCrucero.ListadoEstadistico
 
         
 
-        public RecorridosConMasPasajes(RecorridosConMasPasajesComprados form)
+        public RecorridosConMasPasajes(ListadoEstadisticoForm form)
         {
             Form = form;
             repo = new RepoTop5("listado_estadistico");
@@ -31,9 +31,9 @@ namespace FrbaCrucero.ListadoEstadistico
         internal void GetRecorridosConFiltros(string anioSeleccionado, string semestreSeleccionado)
         {
             semestreSeleccionado = semestreSeleccionado.Equals("Primer semestre") ? "1" : "2";
-            List<ListadosEstadisticos> recorridos = repo.getRecorridosConPasajesMasComprados(anioSeleccionado, semestreSeleccionado);
+            ShowListado recorridos = repo.getRecorridosConPasajesMasComprados(anioSeleccionado, semestreSeleccionado);
 
-            if (recorridos != null)
+            if (recorridos.Listado != null)
             {
                 this.form.showRecorridos(recorridos);
             }
@@ -42,31 +42,6 @@ namespace FrbaCrucero.ListadoEstadistico
                 this.form.showErrorMessage("No se pudieron encontrar recorridos que coincidan con su busqueda.");
             }
 
-        }
-
-        internal void GetAnios()
-        {
-            
-            List<int> anios = repo.GetAniosRecorridosMasComprados();
-
-            if (anios != null)
-            {
-                if(anios.Count > 0)
-                {
-                    List<string> aniosEnString = anios.ConvertAll<string>(delegate (int i) { return i.ToString(); });
-                    this.form.initializeAnios(aniosEnString);
-                }
-                else
-                {
-                    this.form.showInformationMessage("No se pudieron encontrar años.");
-                    this.form.Close();
-                }
-            }
-            else
-            {
-                this.form.showErrorMessage("Ocurrió un error al buscar las fechas de consulta.");
-                this.form.Close();
-            }
         }
 
     }
