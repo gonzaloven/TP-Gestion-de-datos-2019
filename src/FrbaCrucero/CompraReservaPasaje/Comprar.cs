@@ -35,6 +35,7 @@ namespace FrbaCrucero.CompraReservaPasaje
             Int32 cuotas = metodoDePagoDesc == "Tarjeta de crédito" ? Decimal.ToInt32(numericUpDownCuotas.Value) : 0;
             Int32 idMetodoPago = this.obtenerIDMetodoPago(comboBoxMetodoDePago.Text);
             Int32 idCompra = new CrearCompra(idMetodoPago, cuotas).Crear();
+            Int32 pasajeros = pasaje.pasajeros;
             while (pasaje.pasajeros > 0)
             {
                 new CrearPasaje(null, pasaje.cliente_id, idCompra, pasaje.viaje_codigo, pasaje.cabina_id).Crear();
@@ -43,10 +44,10 @@ namespace FrbaCrucero.CompraReservaPasaje
 
             this.setDatosMostrarPasaje(pasaje.viaje_codigo, pasaje.cabina_id);
 
-            MessageBox.Show("La compra del pasaje resulto exitosa. /n Datos de la compra: /n " + 
-                "- Puerto de salida: " + descPuertoSalida + "/n - Puerto de llegada: " + descPuertoLlegada + "/n - Fecha de salida: " + fechaSalida + 
-                "/n - Fecha de llegada: " + fechaLlegada + "/n - Crucero: " + cruceroNombre + "/n - Cabina numero: " + cabinaNumero +
-                "/n - Cantidad de pasajeros: " + pasaje.pasajeros + "/n - Metodo de pago: " + comboBoxMetodoDePago.Text, 
+            MessageBox.Show("La compra del pasaje resulto exitosa. \n Datos de la compra: \n " +
+                "- Puerto de salida: " + descPuertoSalida + "\n - Puerto de llegada: " + descPuertoLlegada + "\n - Fecha de salida: " + fechaSalida +
+                "\n - Fecha de llegada: " + fechaLlegada + "\n - Crucero: " + cruceroNombre + "\n - Cabina numero: " + cabinaNumero +
+                "\n - Cantidad de pasajeros: " + pasajeros + "\n - Metodo de pago: " + comboBoxMetodoDePago.Text, 
                 "Exito", MessageBoxButtons.OK, MessageBoxIcon.None);
             this.Close();
         }
@@ -97,11 +98,11 @@ namespace FrbaCrucero.CompraReservaPasaje
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.Add(new SqlParameter("id_viaje", idViaje));
             cmd.Parameters.Add(new SqlParameter("id_cabina", idCabina));
-            cmd.Parameters.Add(parametroOutputPS, SqlDbType.VarChar).Direction = ParameterDirection.Output;
-            cmd.Parameters.Add(parametroOutputPL, SqlDbType.VarChar).Direction = ParameterDirection.Output;
+            cmd.Parameters.Add(parametroOutputPS, SqlDbType.VarChar, 255).Direction = ParameterDirection.Output;
+            cmd.Parameters.Add(parametroOutputPL, SqlDbType.VarChar, 255).Direction = ParameterDirection.Output;
             cmd.Parameters.Add(parametroOutputFS, SqlDbType.DateTime2).Direction = ParameterDirection.Output;
             cmd.Parameters.Add(parametroOutputFL, SqlDbType.DateTime2).Direction = ParameterDirection.Output;
-            cmd.Parameters.Add(parametrOutputCN, SqlDbType.VarChar).Direction = ParameterDirection.Output;
+            cmd.Parameters.Add(parametrOutputCN, SqlDbType.VarChar, 255).Direction = ParameterDirection.Output;
             cmd.Parameters.Add(parametroOutputCabN, SqlDbType.Int).Direction = ParameterDirection.Output;
             List<String> parametros = new List<String>(new String [] {parametroOutputPS, parametroOutputPL, parametroOutputFS, parametroOutputFL, parametrOutputCN, parametroOutputCabN});
             List<object> listDatosPasaje = ConexionDB.instancia.ejecutarStoredProcedureConOutputs(cmd, parametros);

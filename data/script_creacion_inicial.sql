@@ -1303,15 +1303,15 @@ CREATE PROCEDURE FGNN_19.Obtener_datos_mostrar_pasaje(@id_viaje DECIMAL(18,0), @
 AS
 BEGIN
 
-	SET @descripcionPS = (SELECT p.descripcion
+	(SELECT @descripcionPS = p.descripcion
 		FROM FGNN_19.Viajes v
-			JOIN FGNN_19.Recorridos r ON r.codigo = v.recorrido_codigo
+			JOIN FGNN_19.Recorridos r ON r.id = v.recorrido_codigo
 			JOIN FGNN_19.Puertos p ON p.id = r.puerto_desde_id
 		WHERE v.codigo = @id_viaje)
 
-	SET @descripcionPL = (SELECT p.descripcion
+	(SELECT @descripcionPL = p.descripcion
 		FROM FGNN_19.Viajes v
-			JOIN FGNN_19.Recorridos r ON r.codigo = v.recorrido_codigo
+			JOIN FGNN_19.Recorridos r ON r.id = v.recorrido_codigo
 			JOIN FGNN_19.Puertos p ON p.id = r.puerto_hasta_id
 		WHERE v.codigo = @id_viaje)
 

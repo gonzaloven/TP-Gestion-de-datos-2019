@@ -36,7 +36,7 @@ namespace FrbaCrucero.CompraReservaPasaje
                 pasaje.pasajeros--;
             }
 
-            MessageBox.Show("La reserva del pasaje resulto exitosa. El codigo para su pago es " + idReserva, "Exito",
+            MessageBox.Show("La reserva del pasaje resulto exitosa. \nEl codigo de la reserva es " + idReserva + ". \nTiene hasta 3 dias desde la fecha actual para realizar el pago", "Exito",
                                 MessageBoxButtons.OK, MessageBoxIcon.None);
             this.Close();
         }

@@ -32,10 +32,7 @@ namespace FrbaCrucero.Modelos
 
         public void Crear()
         {
-            Int32 contador = pasajeros;
-            while (contador > 0)
-            {
-                SqlCommand cmdInsertar = new SqlCommand("FGNN_19.Insertar_pasaje");
+            SqlCommand cmdInsertar = new SqlCommand("FGNN_19.Insertar_pasaje");
                 cmdInsertar.CommandType = CommandType.StoredProcedure;
                 cmdInsertar.Parameters.Add(new SqlParameter("@reserva_codigo", reserva_codigo));
                 cmdInsertar.Parameters.Add(new SqlParameter("@cliente_id", cliente_id));
@@ -44,8 +41,6 @@ namespace FrbaCrucero.Modelos
                 cmdInsertar.Parameters.Add(new SqlParameter("@cabina_codigo", cabina_id));
                 cmdInsertar.Parameters.Add(new SqlParameter("@precio", precio));
                 ConexionDB.instancia.ejecutarQuery(cmdInsertar);
-                contador = contador - 1;
-            }
         }
 
         private Double calcularPrecioPasaje()
