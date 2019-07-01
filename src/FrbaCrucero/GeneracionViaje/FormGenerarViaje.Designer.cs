@@ -42,6 +42,7 @@
             this.textBoxIDRecorrido = new System.Windows.Forms.TextBox();
             this.labelRecorrido = new System.Windows.Forms.Label();
             this.buttonCancelar = new System.Windows.Forms.Button();
+            this.buttonLimpiar = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // textBoxCrucero
@@ -169,11 +170,22 @@
             this.buttonCancelar.UseVisualStyleBackColor = true;
             this.buttonCancelar.Click += new System.EventHandler(this.buttonCancelar_Click);
             // 
+            // buttonLimpiar
+            // 
+            this.buttonLimpiar.Location = new System.Drawing.Point(133, 197);
+            this.buttonLimpiar.Name = "buttonLimpiar";
+            this.buttonLimpiar.Size = new System.Drawing.Size(84, 23);
+            this.buttonLimpiar.TabIndex = 20;
+            this.buttonLimpiar.Text = "Limpiar";
+            this.buttonLimpiar.UseVisualStyleBackColor = true;
+            this.buttonLimpiar.Click += new System.EventHandler(this.buttonLimpiar_Click);
+            // 
             // FormGenerarViaje
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(553, 243);
+            this.Controls.Add(this.buttonLimpiar);
             this.Controls.Add(this.buttonCancelar);
             this.Controls.Add(this.labelRecorrido);
             this.Controls.Add(this.textBoxIDRecorrido);
@@ -211,5 +223,6 @@
         private System.Windows.Forms.Button buttonCancelar;
         public System.Windows.Forms.TextBox textBoxCrucero;
         public System.Windows.Forms.TextBox textBoxIDRecorrido;
+        private System.Windows.Forms.Button buttonLimpiar;
     }
 }

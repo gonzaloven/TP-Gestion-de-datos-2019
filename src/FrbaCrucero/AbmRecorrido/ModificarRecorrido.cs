@@ -30,9 +30,14 @@ namespace FrbaCrucero.AbmRecorrido
             tablaTotal.Columns.Add("id", typeof(Int32));
             tablaTotal.Columns.Add("puertoDesde", typeof(String));
             tablaTotal.Columns.Add("puertoHasta", typeof(String));
+            tablaTotal.Columns.Add("puertoDesdeDesc", typeof(String));
+            tablaTotal.Columns.Add("puertoHastaDesc", typeof(String));
             tablaTotal.Columns.Add("precio_base", typeof(Double));
             tablaTotal = Repositorios.RepoTramo.instancia.tramosActuales(dataGridViewTramosActuales, idRecorrido, tablaTotal);
             dataGridViewTramosActuales.DataSource = tablaTotal;
+            dataGridViewTramosActuales.Columns[1].Visible = false;
+            dataGridViewTramosActuales.Columns[2].Visible = false;
+            dataGridViewTramosActuales.Columns[3].Visible = false;
             this.actualizarTramosActuales();
             this.llenarListaActual();
         }
@@ -174,7 +179,5 @@ namespace FrbaCrucero.AbmRecorrido
         {
             return dataGridViewTramosActuales.Rows.Count != 0;
         }
-
-
     }
 }

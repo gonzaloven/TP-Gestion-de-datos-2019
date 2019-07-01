@@ -11,6 +11,9 @@ namespace FrbaCrucero.Modelos
         public Int32 id { get; set; }
         public Int32 crucero_id { get; set; }
         public Int32 recorrido_codigo { get; set; }
+        public String crucero_nombre { get; set; }
+        public String puertoDesde { get; set; }
+        public String puertoHasta { get; set; }
         public DateTime fecha_inicio { get; set; }
         public DateTime fecha_fin { get; set; }
         public DateTime? fecha_fin_estimada { get; set; }

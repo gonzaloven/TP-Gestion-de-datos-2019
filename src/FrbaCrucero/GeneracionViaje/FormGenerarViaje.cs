@@ -52,15 +52,38 @@ namespace FrbaCrucero.GeneracionViaje
 
         private void buttonGenerarViaje_Click(object sender, EventArgs e)
         {
-            Int32 idCrucero = Int32.Parse(textBoxCrucero.Text);
-            Int32 idRecorrido = Int32.Parse(textBoxIDRecorrido.Text);
-            DateTime fecha_inicio = Convert.ToDateTime(textBoxFechaInicio.Text);
-            DateTime fecha_fin = Convert.ToDateTime(textBoxFechaFin.Text);
-            CrearViaje crearViaje = new CrearViaje(idCrucero, idRecorrido, fecha_inicio, fecha_fin);
-            crearViaje.Crear();
-            MessageBox.Show("Se ha ingresado el viaje con exito.", "Exito",
-                                MessageBoxButtons.OK, MessageBoxIcon.None);
-            
+            String idCrucero = textBoxCrucero.Text;
+            String idRecorrido = textBoxIDRecorrido.Text;
+            String fecha_inicio = textBoxFechaInicio.Text;
+            String fecha_fin = textBoxFechaFin.Text;
+
+            Dictionary<String, String> parametrosObligatorios = new Dictionary<String, String>();
+            parametrosObligatorios.Add("Crucero", idCrucero);
+            parametrosObligatorios.Add("Recorrido", idRecorrido);
+            parametrosObligatorios.Add("Fecha inicio", fecha_inicio);
+            parametrosObligatorios.Add("Fecha fin", fecha_fin);
+            if (parametrosObligatorios.Any(parametro => this.ValidarNulo(parametro.Value)))
+            {
+                foreach (KeyValuePair<string, string> parametro in parametrosObligatorios)
+                {
+                    if (this.ValidarNulo(parametro.Value))
+                        MessageBox.Show("No se puede dejar el campo " + parametro.Key + " vacio.", "Error",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                CrearViaje crearViaje = new CrearViaje(Int32.Parse(idCrucero), 
+                                                       Int32.Parse(idRecorrido), 
+                                                       Convert.ToDateTime(fecha_inicio), 
+                                                       Convert.ToDateTime(fecha_fin));
+                crearViaje.Crear();
+            }          
+        }
+
+        private bool ValidarNulo(String parametro)
+        {
+            return String.IsNullOrWhiteSpace(parametro);
         }
 
         private void buttonSeleccionarPuertoHasta_Click(object sender, EventArgs e)
@@ -72,6 +95,14 @@ namespace FrbaCrucero.GeneracionViaje
         private void buttonCancelar_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void buttonLimpiar_Click(object sender, EventArgs e)
+        {
+            textBoxIDRecorrido.Text = null;
+            textBoxCrucero.Text = null;
+            textBoxFechaFin.Text = null;
+            textBoxFechaInicio.Text = null;
         }
     }
 }

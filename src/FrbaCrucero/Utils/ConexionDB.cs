@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -127,6 +128,31 @@ namespace FrbaCrucero
             {
                 throw ex;
             }
-        }    
+        }
+
+        public List<object> ejecutarStoredProcedureConOutputs(SqlCommand cmd, List<String> parametrosOutput)
+        {
+            try
+            {
+                SqlConnection cnn = crearConexion();
+                cnn.Open();
+
+                cmd.Connection = cnn;
+
+                int result = cmd.ExecuteNonQuery();
+                List<object> listaResultados = new List<object>();
+                foreach (String parametro in parametrosOutput)
+                {
+                    listaResultados.Add(cmd.Parameters[parametro].Value);
+                }
+                cnn.Close();
+                return listaResultados;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
