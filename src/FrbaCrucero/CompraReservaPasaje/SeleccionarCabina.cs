@@ -28,6 +28,7 @@ namespace FrbaCrucero.CompraReservaPasaje
         {
             tablaTotal = Repositorios.RepoCrucero.instancia.cabinasDisponibles(dataGridViewCabinas, idCrucero, tablaTotal);
             dataGridViewCabinas.DataSource = tablaTotal;
+            this.dataGridViewCabinas.Columns[1].Visible = false;
         }
 
         private void dataGridViewCabinas_CellContentClick(object sender, DataGridViewCellEventArgs e)

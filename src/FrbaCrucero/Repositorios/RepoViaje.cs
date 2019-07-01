@@ -41,11 +41,17 @@ namespace FrbaCrucero.Repositorios
                 Int32 id = Convert.ToInt32(row["codigo"]);
                 Int32 crucero_id = Convert.ToInt32(row["crucero_id"]);
                 Int32 recorrido_codigo = Convert.ToInt32(row["recorrido_codigo"]);
+                String crucero_nombre = (String)row["nombre"];
+                String puertoDesde = (String)row["desc"];
+                String puertoHasta = (String)row["descripcion"];
                 DateTime fecha_inicio = Convert.ToDateTime(row["fecha_inicio"]);
                 DateTime fecha_fin = Convert.ToDateTime(row["fecha_fin"]);
                 DateTime? fecha_fin_estimada = row.Field<DateTime?>("fecha_fin_estimada");
 
                 Viaje viaje = new Viaje(id, crucero_id, recorrido_codigo, fecha_inicio, fecha_fin, fecha_fin_estimada);
+                viaje.crucero_nombre = crucero_nombre;
+                viaje.puertoDesde = puertoDesde;
+                viaje.puertoHasta = puertoHasta;
 
                 viajes.Add(viaje);
             }
@@ -58,13 +64,19 @@ namespace FrbaCrucero.Repositorios
             string sqlQuery;
             if (String.IsNullOrWhiteSpace(puertoDesde) && String.IsNullOrWhiteSpace(puertoHasta))
             {
-                sqlQuery = "SELECT v.codigo, v.crucero_id, v.recorrido_codigo, v.fecha_inicio, v.fecha_fin, v.fecha_fin_estimada"
-                                + " FROM FGNN_19.Viajes v WHERE v.codigo > 0";
+                sqlQuery = "SELECT v.codigo, v.crucero_id, v.recorrido_codigo, c.nombre, pd.descripcion AS 'desc', ph.descripcion, "
+                         + "v.fecha_inicio, v.fecha_fin, v.fecha_fin_estimada "
+                         + "FROM FGNN_19.Viajes v, FGNN_19.Cruceros c, FGNN_19.Puertos pd, FGNN_19.Puertos ph, FGNN_19.Recorridos r "
+                         + "WHERE v.codigo > 0 "
+                         + "AND c.id = v.crucero_id AND r.id = v.recorrido_codigo AND r.puerto_desde_id = pd.id AND r.puerto_hasta_id = ph.id";
             }
             else
             {
-                sqlQuery = "SELECT v.codigo, v.crucero_id, v.recorrido_codigo, v.fecha_inicio, v.fecha_fin, v.fecha_fin_estimada"
-                                + " FROM FGNN_19.Viajes v, FGNN_19.Recorridos r WHERE v.codigo > 0 AND v.recorrido_codigo = r.id";
+                sqlQuery = "SELECT v.codigo, v.crucero_id, v.recorrido_codigo, c.nombre, pd.descripcion AS 'desc', ph.descripcion, "
+                         + "v.fecha_inicio, v.fecha_fin, v.fecha_fin_estimada "
+                         + "FROM FGNN_19.Viajes v, FGNN_19.Cruceros c, FGNN_19.Puertos pd, FGNN_19.Puertos ph, FGNN_19.Recorridos r "
+                         + "WHERE v.codigo > 0 AND v.recorrido_codigo = r.id "
+                         + "AND c.id = v.crucero_id AND r.puerto_desde_id = pd.id AND r.puerto_hasta_id = ph.id";
             }
             SqlCommand cmd = new SqlCommand(sqlQuery);
 

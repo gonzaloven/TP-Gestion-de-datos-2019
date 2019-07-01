@@ -65,6 +65,9 @@ namespace FrbaCrucero.CompraPasaje
             dataGridViewViajes.DataSource = viajes;
             dataGridViewViajes.MultiSelect = false;
             this.dataGridViewViajes.Columns["fecha_fin_estimada"].Visible = false;
+            this.dataGridViewViajes.Columns[1].Visible = false;
+            this.dataGridViewViajes.Columns[2].Visible = false;
+            this.dataGridViewViajes.Columns[3].Visible = false;
         }
 
         private void buttonLimpiar_Click(object sender, EventArgs e)

@@ -1130,9 +1130,10 @@ CREATE PROCEDURE FGNN_19.P_CabinasDelCrucero
 AS
 BEGIN
 
-SELECT codigo, numero, piso, tipo_id
-FROM FGNN_19.Cabinas
+SELECT codigo, numero, piso, tc.descripcion
+FROM FGNN_19.Cabinas c, FGNN_19.Tipos_Cabinas tc
 WHERE estado = 1
+AND tc.id = c.tipo_id
 AND crucero_id = @idCrucero
 
 END
