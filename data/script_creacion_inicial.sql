@@ -1033,7 +1033,7 @@ BEGIN TRANSACTION
 COMMIT TRANSACTION;
 GO
 
-CREATE PROCEDURE FGNN_19.Cancelar_pasajes_crucero(@idCrucero NUMERIC(18,0), @motivo VARCHAR(255))
+CREATE PROCEDURE FGNN_19.Cancelar_pasajes_crucero(@idCrucero NUMERIC(18,0), @motivo VARCHAR(255), @fechaReinicio datetime2(3))
 AS
 BEGIN TRANSACTION
 	
@@ -1042,6 +1042,10 @@ BEGIN TRANSACTION
 	FROM Pasajes p
 		JOIN Cabinas c ON c.codigo = p.cabina_id
 	WHERE c.crucero_id = @idCrucero
+
+	UPDATE FGNN_19.Cruceros
+	SET baja_servicio = 1, fecha_fuera_servicio = CONVERT(datetime2(3), GETDATE()), fecha_reinicio_servicio = @fechaReinicio
+	WHERE id = @idCrucero
 
 COMMIT TRANSACTION;
 GO
@@ -1057,7 +1061,7 @@ BEGIN TRANSACTION
 	WHERE c.crucero_id = @idCrucero
 
 	UPDATE Cruceros
-	SET baja_vida_util = 1
+	SET baja_vida_util = 1, fecha_baja_definitiva = CONVERT(datetime2(3), GETDATE())
 	WHERE id = @idCrucero 
 
 COMMIT TRANSACTION;
@@ -1089,7 +1093,7 @@ BEGIN TRANSACTION
 	WHERE crucero_id = @idCrucero AND fecha_inicio >= CONVERT(datetime2(3), GETDATE()) AND EXISTS(SELECT 1 FROM Pasajes WHERE viaje_codigo = codigo AND FGNN_19.FN_Pasaje_no_cancelado(id) = 1)
 
 	UPDATE Cruceros
-	SET baja_vida_util = 1
+	SET baja_vida_util = 1, fecha_baja_definitiva = CONVERT(datetime2(3), GETDATE())
 	WHERE id = @idCrucero 
 
 COMMIT TRANSACTION;
