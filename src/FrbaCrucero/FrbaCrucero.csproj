@@ -220,32 +220,20 @@
     <Compile Include="GeneracionViaje\SeleccionarPuerto.Designer.cs">
       <DependentUpon>SeleccionarPuerto.cs</DependentUpon>
     </Compile>
-    <Compile Include="ListadoEstadistico\CrucerosConMasDiasSinServicio.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ListadoEstadistico\CrucerosConMasDiasSinServicio.Designer.cs">
-      <DependentUpon>CrucerosConMasDiasSinServicio.cs</DependentUpon>
-    </Compile>
     <Compile Include="ListadoEstadistico\CrucerosSinServicio.cs">
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ListadoEstadistico\ListadoEstadisticoForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ListadoEstadistico\ListadoEstadisticoForm.Designer.cs">
+      <DependentUpon>ListadoEstadisticoForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ListadoEstadistico\RecorridosConMasCabinas.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ListadoEstadistico\RecorridosConMasCabinasLibres.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ListadoEstadistico\RecorridosConMasCabinasLibres.Designer.cs">
-      <DependentUpon>RecorridosConMasCabinasLibres.cs</DependentUpon>
-    </Compile>
     <Compile Include="ListadoEstadistico\RecorridosConMasPasajes.cs">
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ListadoEstadistico\RecorridosConMasPasajesComprados.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ListadoEstadistico\RecorridosConMasPasajesComprados.Designer.cs">
-      <DependentUpon>RecorridosConMasPasajesComprados.cs</DependentUpon>
     </Compile>
     <Compile Include="Login.cs">
       <SubType>Form</SubType>
@@ -313,6 +301,7 @@
     <EmbeddedResource Include="AbmCrucero\BajaCrucero.resx">
       <DependentUpon>BajaCrucero.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="AbmCrucero\BajaCruceroForm.resx" />
     <EmbeddedResource Include="AbmCrucero\BajaDefinitiva.resx">
       <DependentUpon>BajaDefinitiva.cs</DependentUpon>
     </EmbeddedResource>
@@ -397,14 +386,8 @@
     <EmbeddedResource Include="GeneracionViaje\SeleccionarPuerto.resx">
       <DependentUpon>SeleccionarPuerto.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ListadoEstadistico\CrucerosConMasDiasSinServicio.resx">
-      <DependentUpon>CrucerosConMasDiasSinServicio.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ListadoEstadistico\RecorridosConMasCabinasLibres.resx">
-      <DependentUpon>RecorridosConMasCabinasLibres.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ListadoEstadistico\RecorridosConMasPasajesComprados.resx">
-      <DependentUpon>RecorridosConMasPasajesComprados.cs</DependentUpon>
+    <EmbeddedResource Include="ListadoEstadistico\ListadoEstadisticoForm.resx">
+      <DependentUpon>ListadoEstadisticoForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
@@ -412,6 +395,40 @@
     <EmbeddedResource Include="MenuPrincipal.resx">
       <DependentUpon>MenuPrincipal.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="obj\Debug\FrbaCrucero.AbmCrucero.AgregarCrucero.resources" />
+    <EmbeddedResource Include="obj\Debug\FrbaCrucero.AbmCrucero.BajaCrucero.resources" />
+    <EmbeddedResource Include="obj\Debug\FrbaCrucero.AbmCrucero.BajaDefinitiva.resources" />
+    <EmbeddedResource Include="obj\Debug\FrbaCrucero.AbmCrucero.BajaTemporal.resources" />
+    <EmbeddedResource Include="obj\Debug\FrbaCrucero.AbmCrucero.CancelarPasajesOReprogramar.resources" />
+    <EmbeddedResource Include="obj\Debug\FrbaCrucero.AbmCrucero.ListadoCrucerosForm.resources" />
+    <EmbeddedResource Include="obj\Debug\FrbaCrucero.AbmCrucero.ModificarCrucero.resources" />
+    <EmbeddedResource Include="obj\Debug\FrbaCrucero.AbmCrucero.ReprogramarViaje.resources" />
+    <EmbeddedResource Include="obj\Debug\FrbaCrucero.AbmCrucero.SeleccionarFabricante.resources" />
+    <EmbeddedResource Include="obj\Debug\FrbaCrucero.AbmCrucero.SeleccionarFecha.resources" />
+    <EmbeddedResource Include="obj\Debug\FrbaCrucero.AbmRecorrido.AgregarRecorrido.resources" />
+    <EmbeddedResource Include="obj\Debug\FrbaCrucero.AbmRecorrido.ListadoRecorridoForm.resources" />
+    <EmbeddedResource Include="obj\Debug\FrbaCrucero.AbmRecorrido.ModificarRecorrido.resources" />
+    <EmbeddedResource Include="obj\Debug\FrbaCrucero.AbmRecorrido.SeleccionarPuerto.resources" />
+    <EmbeddedResource Include="obj\Debug\FrbaCrucero.AbmRol.FormAgregarFuncionalidad.resources" />
+    <EmbeddedResource Include="obj\Debug\FrbaCrucero.AbmRol.ListadoRolesForm.resources" />
+    <EmbeddedResource Include="obj\Debug\FrbaCrucero.AbmRol.RolForm.resources" />
+    <EmbeddedResource Include="obj\Debug\FrbaCrucero.CompraPasaje.CompraReservaPasajeForm.resources" />
+    <EmbeddedResource Include="obj\Debug\FrbaCrucero.CompraPasaje.SeleccionarFecha.resources" />
+    <EmbeddedResource Include="obj\Debug\FrbaCrucero.CompraPasaje.SeleccionarPuerto.resources" />
+    <EmbeddedResource Include="obj\Debug\FrbaCrucero.CompraReservaPasaje.CompletarDatosCliente.resources" />
+    <EmbeddedResource Include="obj\Debug\FrbaCrucero.CompraReservaPasaje.Comprar.resources" />
+    <EmbeddedResource Include="obj\Debug\FrbaCrucero.CompraReservaPasaje.SeleccionarCabina.resources" />
+    <EmbeddedResource Include="obj\Debug\FrbaCrucero.CompraReservaPasaje.SeleccionarCompraOReserva.resources" />
+    <EmbeddedResource Include="obj\Debug\FrbaCrucero.CompraReservaPasaje.SeleccionarPasajeros.resources" />
+    <EmbeddedResource Include="obj\Debug\FrbaCrucero.GeneracionViaje.FormGenerarViaje.resources" />
+    <EmbeddedResource Include="obj\Debug\FrbaCrucero.GeneracionViaje.ListadoCruceros.resources" />
+    <EmbeddedResource Include="obj\Debug\FrbaCrucero.GeneracionViaje.ListadoRecorrido.resources" />
+    <EmbeddedResource Include="obj\Debug\FrbaCrucero.GeneracionViaje.SeleccionarFecha.resources" />
+    <EmbeddedResource Include="obj\Debug\FrbaCrucero.GeneracionViaje.SeleccionarPuerto.resources" />
+    <EmbeddedResource Include="obj\Debug\FrbaCrucero.ListadoEstadistico.ListadoEstadisticoForm.resources" />
+    <EmbeddedResource Include="obj\Debug\FrbaCrucero.Login.resources" />
+    <EmbeddedResource Include="obj\Debug\FrbaCrucero.MenuPrincipalForm.resources" />
+    <EmbeddedResource Include="obj\Debug\FrbaCrucero.Properties.Resources.resources" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -421,6 +438,13 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="bin\Debug\FrbaCrucero.exe.config" />
+    <None Include="bin\Debug\FrbaCrucero.vshost.exe.config" />
+    <None Include="bin\Debug\FrbaCrucero.vshost.exe.manifest" />
+    <None Include="obj\Debug\DesignTimeResolveAssemblyReferences.cache" />
+    <None Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
+    <None Include="obj\Debug\FrbaCrucero.csproj.GenerateResource.Cache" />
+    <None Include="obj\Debug\FrbaCrucero.csprojResolveAssemblyReference.cache" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -434,7 +458,17 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="bin\Debug\FrbaCrucero.exe" />
+    <Content Include="bin\Debug\FrbaCrucero.pdb" />
+    <Content Include="bin\Debug\FrbaCrucero.vshost.exe" />
+    <Content Include="obj\Debug\FrbaCrucero.csproj.FileListAbsolute.txt" />
+    <Content Include="obj\Debug\FrbaCrucero.exe" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\Release\" />
+    <Folder Include="obj\Debug\TempPE\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

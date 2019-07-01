@@ -75,9 +75,6 @@ namespace FrbaCrucero
             toolStripLabelRecorrido.Visible = false;
             toolStripLabelGenerarViaje.Visible = false;
             toolStripLabelCrucero.Visible = false;
-            toolStripLabelTopPasaje.Visible = false;
-            toolStripLabelTop5CabinaLibres.Visible = false;
-            toolStripLabelTop5CrucerosSinServicio.Visible = false;
         }
 
         private void toolStripLabelGenerarViaje_Click(object sender, EventArgs e)

@@ -43,7 +43,7 @@
             // buttonRecorridosMasPasajes
             // 
             this.buttonRecorridosMasPasajes.Location = new System.Drawing.Point(11, 102);
-            this.buttonRecorridosMasPasajes.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonRecorridosMasPasajes.Margin = new System.Windows.Forms.Padding(2);
             this.buttonRecorridosMasPasajes.Name = "buttonRecorridosMasPasajes";
             this.buttonRecorridosMasPasajes.Size = new System.Drawing.Size(172, 39);
             this.buttonRecorridosMasPasajes.TabIndex = 0;
@@ -54,7 +54,7 @@
             // buttonRecorridosMasCabinasLibres
             // 
             this.buttonRecorridosMasCabinasLibres.Location = new System.Drawing.Point(209, 102);
-            this.buttonRecorridosMasCabinasLibres.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonRecorridosMasCabinasLibres.Margin = new System.Windows.Forms.Padding(2);
             this.buttonRecorridosMasCabinasLibres.Name = "buttonRecorridosMasCabinasLibres";
             this.buttonRecorridosMasCabinasLibres.Size = new System.Drawing.Size(175, 39);
             this.buttonRecorridosMasCabinasLibres.TabIndex = 1;
@@ -65,7 +65,7 @@
             // buttonCrucerosDiasSinServicio
             // 
             this.buttonCrucerosDiasSinServicio.Location = new System.Drawing.Point(415, 102);
-            this.buttonCrucerosDiasSinServicio.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonCrucerosDiasSinServicio.Margin = new System.Windows.Forms.Padding(2);
             this.buttonCrucerosDiasSinServicio.Name = "buttonCrucerosDiasSinServicio";
             this.buttonCrucerosDiasSinServicio.Size = new System.Drawing.Size(174, 39);
             this.buttonCrucerosDiasSinServicio.TabIndex = 2;
@@ -76,7 +76,7 @@
             // dateTimePicker1
             // 
             this.dateTimePicker1.Location = new System.Drawing.Point(88, 28);
-            this.dateTimePicker1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dateTimePicker1.Margin = new System.Windows.Forms.Padding(2);
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.Size = new System.Drawing.Size(151, 20);
             this.dateTimePicker1.TabIndex = 3;
@@ -111,9 +111,9 @@
             // resultadosTop5Grid
             // 
             this.resultadosTop5Grid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.resultadosTop5Grid.Location = new System.Drawing.Point(46, 160);
+            this.resultadosTop5Grid.Location = new System.Drawing.Point(129, 158);
             this.resultadosTop5Grid.Name = "resultadosTop5Grid";
-            this.resultadosTop5Grid.Size = new System.Drawing.Size(506, 227);
+            this.resultadosTop5Grid.Size = new System.Drawing.Size(344, 227);
             this.resultadosTop5Grid.TabIndex = 26;
             // 
             // limpiarButton
@@ -141,7 +141,7 @@
             this.Controls.Add(this.buttonCrucerosDiasSinServicio);
             this.Controls.Add(this.buttonRecorridosMasCabinasLibres);
             this.Controls.Add(this.buttonRecorridosMasPasajes);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "ListadoEstadisticoForm";
             this.Text = "ListadoEstadistico";
             ((System.ComponentModel.ISupportInitialize)(this.resultadosTop5Grid)).EndInit();
