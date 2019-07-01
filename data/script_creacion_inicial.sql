@@ -852,8 +852,8 @@ FROM FGNN_19.Tramos t, FGNN_19.Recorrido_X_Tramo rt, FGNN_19.Recorridos r, FGNN_
 WHERE t.id = rt.tramo_id
 AND r.id = rt.recorrido_id
 AND r.id = @idRecorrido
-AND pd.id = r.puerto_desde_id
-AND ph.id = r.puerto_hasta_id
+AND pd.id = t.puerto_desde_id
+AND ph.id = t.puerto_hasta_id
 ORDER BY rt.orden ASC
 
 END;
