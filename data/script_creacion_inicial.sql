@@ -226,6 +226,10 @@ IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.Inser
 	DROP PROCEDURE FGNN_19.Insertar_Reserva
 GO
 
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.Obtener_datos_mostrar_pasaje') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
+	DROP PROCEDURE FGNN_19.Obtener_datos_mostrar_pasaje
+GO
+
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_19.FN_Calcular_costo_pasaje') AND type in (N'FN', N'IF', N'TF', N'FS', N'FT'))
 	DROP FUNCTION FGNN_19.FN_Calcular_costo_pasaje
 GO
@@ -1291,6 +1295,33 @@ BEGIN TRANSACTION
 	SET @id = SCOPE_IDENTITY()
 
 COMMIT TRANSACTION;
+GO
+
+CREATE PROCEDURE FGNN_19.Obtener_datos_mostrar_pasaje(@id_viaje DECIMAL(18,0), @id_cabina DECIMAL(18,0), @descripcionPS VARCHAR(255) OUTPUT,
+	@descripcionPL VARCHAR(255) OUTPUT, @fecha_salida DATETIME2(3) OUTPUT, @fecha_llegada DATETIME2(3) OUTPUT, @crucero_nombre VARCHAR(255) OUTPUT,
+	@cabina_numero INT OUTPUT)
+AS
+BEGIN
+
+	SET @descripcionPS = (SELECT p.descripcion
+		FROM FGNN_19.Viajes v
+			JOIN FGNN_19.Recorridos r ON r.codigo = v.recorrido_codigo
+			JOIN FGNN_19.Puertos p ON p.id = r.puerto_desde_id
+		WHERE v.codigo = @id_viaje)
+
+	SET @descripcionPL = (SELECT p.descripcion
+		FROM FGNN_19.Viajes v
+			JOIN FGNN_19.Recorridos r ON r.codigo = v.recorrido_codigo
+			JOIN FGNN_19.Puertos p ON p.id = r.puerto_hasta_id
+		WHERE v.codigo = @id_viaje)
+
+	(SELECT @fecha_salida = fecha_inicio, @fecha_llegada = fecha_fin FROM FGNN_19.Viajes WHERE codigo = @id_viaje)
+
+	(SELECT @crucero_nombre = cr.nombre, @cabina_numero = ca.numero
+		FROM Cabinas ca
+			JOIN Cruceros cr ON cr.id = ca.crucero_id
+		WHERE ca.codigo = @id_cabina)
+END;
 GO
 
 -- Triggers
