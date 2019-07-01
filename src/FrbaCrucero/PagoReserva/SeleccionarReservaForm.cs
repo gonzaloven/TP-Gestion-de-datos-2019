@@ -39,6 +39,7 @@ namespace FrbaCrucero.PagoReserva
 
                 ReservaForm reservaForm = new ReservaForm(pasajes);
                 reservaForm.Show();
+                this.Close();
             }
         }
     }

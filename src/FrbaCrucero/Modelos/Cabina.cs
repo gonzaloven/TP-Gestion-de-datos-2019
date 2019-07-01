@@ -8,12 +8,12 @@ namespace FrbaCrucero.Modelos
 {
     public class Cabina
     {
-        Int32 codigo { get; set; }
-        Int32 crucero_id { get; set; }
-        Int32 numero { get; set; }
-        Int32 piso { get; set; }
-        TipoCabina tipoCabina { get; set; }
-        Int16 estado { get; set; }
+        public Int32 codigo { get; set; }
+        public Int32 crucero_id { get; set; }
+        public Int32 numero { get; set; }
+        public Int32 piso { get; set; }
+        public TipoCabina tipoCabina { get; set; }
+        public Int16 estado { get; set; }
 
         public Cabina(Int32 codigo, Int32 crucero_id, Int32 numero, Int32 piso, TipoCabina tipoCabina, Int16 estado)
         {

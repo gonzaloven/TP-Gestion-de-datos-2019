@@ -53,6 +53,7 @@ namespace FrbaCrucero.PagoReserva
         {
             SeleccionarMetodoPagoReservaForm seleccionarMetodoPago = new SeleccionarMetodoPagoReservaForm(pasajes, totalAPagar);
             seleccionarMetodoPago.Show();
+            this.Close();
         }
 
     }

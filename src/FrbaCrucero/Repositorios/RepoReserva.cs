@@ -24,7 +24,7 @@ namespace FrbaCrucero.Repositorios
 
             foreach (DataRow row in tabla.Rows)
             {
-                Int32 codigo = Convert.ToInt32(row["codigo"]);
+                Int32 codigo = Convert.ToInt32(row["id"]);
                 Int16 habilitado = Convert.ToInt16(row["habilitada"]);
                 DateTime fecha = Convert.ToDateTime(row["fecha"]);
 
@@ -43,7 +43,7 @@ namespace FrbaCrucero.Repositorios
 
         public Reserva EncontrarPorCodigo(Int32 codigo)
         {
-            string sqlQuery = "SELECT * FROM " + nombreTabla + " WHERE codigo = @Codigo";
+            string sqlQuery = "SELECT * FROM " + nombreTabla + " WHERE id = @Codigo";
             SqlCommand cmd = new SqlCommand(sqlQuery);
             cmd.Parameters.Add(new SqlParameter("Codigo", codigo));
 
@@ -53,7 +53,7 @@ namespace FrbaCrucero.Repositorios
 
         public Reserva EncontrarPorCodigoConPasajeNoCompradoYHabilitado(Int32 codigo)
         {
-            string sqlQuery = "SELECT r.* FROM " + nombreTabla + " r, " +  TABLA_PASAJE + " p WHERE p.reserva_codigo = r.codigo AND p.compra_codigo IS NULL AND r.codigo = @Codigo AND r.habilitada = 1";
+            string sqlQuery = "SELECT r.* FROM " + nombreTabla + " r, " +  TABLA_PASAJE + " p WHERE p.reserva_codigo = r.id AND p.compra_codigo IS NULL AND r.id = @Codigo AND r.habilitada = 1";
             SqlCommand cmd = new SqlCommand(sqlQuery);
             cmd.Parameters.Add(new SqlParameter("Codigo", codigo));
 

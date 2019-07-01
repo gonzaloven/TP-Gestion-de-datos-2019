@@ -110,7 +110,11 @@ namespace FrbaCrucero.Repositorios
 
         public Viaje EncontrarPorCodigo(Int32 codigo)
         {
-            String sqlQuery = "SELECT  *   FROM " + nombreTabla + " WHERE codigo = @Codigo";
+            String sqlQuery = "SELECT v.codigo, v.crucero_id, v.recorrido_codigo, c.nombre, pd.descripcion AS 'desc', ph.descripcion, "
+                         + "v.fecha_inicio, v.fecha_fin, v.fecha_fin_estimada "
+                         + "FROM FGNN_19.Viajes v, FGNN_19.Cruceros c, FGNN_19.Puertos pd, FGNN_19.Puertos ph, FGNN_19.Recorridos r "
+                         + "WHERE v.codigo > 0 "
+                         + "AND c.id = v.crucero_id AND r.id = v.recorrido_codigo AND r.puerto_desde_id = pd.id AND r.puerto_hasta_id = ph.id AND v.codigo = @Codigo";
             SqlCommand cmd = new SqlCommand(sqlQuery);
             SqlParameter parametro = new SqlParameter("Codigo", codigo);
             cmd.Parameters.Add(parametro);

@@ -17,6 +17,12 @@ namespace FrbaCrucero.PagoReserva
     {
         private List<Pasaje> pasajes;
         private Double totalAPagar;
+        String descPuertoSalida;
+        String descPuertoLlegada;
+        String fechaSalida;
+        String fechaLlegada;
+        String cruceroNombre;
+        String cabinaNumero;
 
         public SeleccionarMetodoPagoReservaForm(List<Pasaje> pasajes, Double totalAPagar)
         {
@@ -58,6 +64,16 @@ namespace FrbaCrucero.PagoReserva
 
             MessageBox.Show("Se pago la reserva de forma exitosa.", "Exito",
             MessageBoxButtons.OK, MessageBoxIcon.None);
+
+            this.setDatosMostrarPasaje(pasajes[0].viaje.id, pasajes[0].cabina.codigo);
+
+            MessageBox.Show("La compra del pasaje resulto exitosa. \n Datos de la compra: \n " +
+                "- Puerto de salida: " + descPuertoSalida + "\n - Puerto de llegada: " + descPuertoLlegada + "\n - Fecha de salida: " + fechaSalida +
+                "\n - Fecha de llegada: " + fechaLlegada + "\n - Crucero: " + cruceroNombre + "\n - Cabina numero: " + cabinaNumero +
+                "\n - Cantidad de pasajeros: " + pasajes.Count + "\n - Metodo de pago: " + comboBoxMetodoDePago.Text,
+                "Exito", MessageBoxButtons.OK, MessageBoxIcon.None);
+            
+            this.Close();
         }
 
         private Int32 obtenerIDMetodoPago(String descripcion)
@@ -68,6 +84,35 @@ namespace FrbaCrucero.PagoReserva
             cmdInsertar.Parameters.Add(new SqlParameter("descripcion", descripcion));
             cmdInsertar.Parameters.Add(parametroOutput, SqlDbType.Decimal).Direction = ParameterDirection.Output;
             return ConexionDB.instancia.ejecutarStoredProcedureConOutput(cmdInsertar, parametroOutput);
+        }
+
+        private void setDatosMostrarPasaje(Int32 idViaje, Int32 idCabina)
+        {
+            String parametroOutputPS = "@descripcionPS";
+            String parametroOutputPL = "@descripcionPL";
+            String parametroOutputFS = "@fecha_salida";
+            String parametroOutputFL = "@fecha_llegada";
+            String parametrOutputCN = "@crucero_nombre";
+            String parametroOutputCabN = "@cabina_numero";
+            String sqlQuery = "FGNN_19.Obtener_datos_mostrar_pasaje";
+            SqlCommand cmd = new SqlCommand(sqlQuery);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add(new SqlParameter("id_viaje", idViaje));
+            cmd.Parameters.Add(new SqlParameter("id_cabina", idCabina));
+            cmd.Parameters.Add(parametroOutputPS, SqlDbType.VarChar, 255).Direction = ParameterDirection.Output;
+            cmd.Parameters.Add(parametroOutputPL, SqlDbType.VarChar, 255).Direction = ParameterDirection.Output;
+            cmd.Parameters.Add(parametroOutputFS, SqlDbType.DateTime2).Direction = ParameterDirection.Output;
+            cmd.Parameters.Add(parametroOutputFL, SqlDbType.DateTime2).Direction = ParameterDirection.Output;
+            cmd.Parameters.Add(parametrOutputCN, SqlDbType.VarChar, 255).Direction = ParameterDirection.Output;
+            cmd.Parameters.Add(parametroOutputCabN, SqlDbType.Int).Direction = ParameterDirection.Output;
+            List<String> parametros = new List<String>(new String[] { parametroOutputPS, parametroOutputPL, parametroOutputFS, parametroOutputFL, parametrOutputCN, parametroOutputCabN });
+            List<object> listDatosPasaje = ConexionDB.instancia.ejecutarStoredProcedureConOutputs(cmd, parametros);
+            descPuertoLlegada = listDatosPasaje[0].ToString();
+            descPuertoSalida = listDatosPasaje[1].ToString();
+            fechaSalida = listDatosPasaje[2].ToString();
+            fechaLlegada = listDatosPasaje[3].ToString();
+            cruceroNombre = listDatosPasaje[4].ToString();
+            cabinaNumero = listDatosPasaje[5].ToString();
         }
     }
 }
