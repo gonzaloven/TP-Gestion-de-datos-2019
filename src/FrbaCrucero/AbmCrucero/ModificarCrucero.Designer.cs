@@ -166,9 +166,7 @@
             // 
             this.comboBoxBajaServicio.FormattingEnabled = true;
             this.comboBoxBajaServicio.Items.AddRange(new object[] {
-            "",
-            "0",
-            "1"});
+            "0"});
             this.comboBoxBajaServicio.Location = new System.Drawing.Point(131, 177);
             this.comboBoxBajaServicio.Name = "comboBoxBajaServicio";
             this.comboBoxBajaServicio.Size = new System.Drawing.Size(121, 24);
@@ -207,9 +205,19 @@
             // numericUpDownCantidadCabinas
             // 
             this.numericUpDownCantidadCabinas.Location = new System.Drawing.Point(211, 317);
+            this.numericUpDownCantidadCabinas.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.numericUpDownCantidadCabinas.Name = "numericUpDownCantidadCabinas";
             this.numericUpDownCantidadCabinas.Size = new System.Drawing.Size(120, 22);
             this.numericUpDownCantidadCabinas.TabIndex = 21;
+            this.numericUpDownCantidadCabinas.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // buttonGuardar
             // 
@@ -260,6 +268,10 @@
             // comboBoxTipoServicio
             // 
             this.comboBoxTipoServicio.FormattingEnabled = true;
+            this.comboBoxTipoServicio.Items.AddRange(new object[] {
+            "",
+            "Estandar",
+            "All-Inclusive"});
             this.comboBoxTipoServicio.Location = new System.Drawing.Point(132, 141);
             this.comboBoxTipoServicio.Name = "comboBoxTipoServicio";
             this.comboBoxTipoServicio.Size = new System.Drawing.Size(121, 24);

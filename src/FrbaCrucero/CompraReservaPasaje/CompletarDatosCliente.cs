@@ -173,13 +173,16 @@ namespace FrbaCrucero.CompraReservaPasaje
                 if (this.existeElCliente(dni))
                 {
                     cliente.Modificar(idCliente);
+                    MessageBox.Show("Se ha modificado con exito.", "Exito",
+                                    MessageBoxButtons.OK, MessageBoxIcon.None);
                 }
                 else
                 {
-                    cliente.Crear(idCliente);
-                }
-                MessageBox.Show("Se ha modificado con exito.", "Exito",
+                    idCliente = cliente.Crear();
+                    MessageBox.Show("Se ha creado con exito.", "Exito",
                                     MessageBoxButtons.OK, MessageBoxIcon.None);
+                }
+                
                 pasaje.cliente_id = idCliente;
                 SeleccionarCompraOReserva seleccionarCompraOReserva = new SeleccionarCompraOReserva(pasaje);
                 seleccionarCompraOReserva.Show();
@@ -205,6 +208,67 @@ namespace FrbaCrucero.CompraReservaPasaje
         {
             SeleccionarFecha seleccionarFecha = new SeleccionarFecha(textBoxFechaNacimiento);
             seleccionarFecha.Show();
+        }
+
+        private void textBoxTelefono_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (Char.IsDigit(e.KeyChar))
+            {
+                e.Handled = false;
+            }
+            else
+                if (Char.IsControl(e.KeyChar))
+                {
+                    e.Handled = false;
+                }
+                else
+                {
+                    e.Handled = true;
+                } 
+        }
+
+        private void textBoxNombre_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (Char.IsLetter(e.KeyChar))
+            {
+                e.Handled = false;
+            }
+            else
+                if (Char.IsControl(e.KeyChar))
+                {
+                    e.Handled = false;
+                }
+                else
+                    if (Char.IsSeparator(e.KeyChar))
+                    {
+                        e.Handled = false;
+                    }
+                    else
+                    {
+                        e.Handled = true;
+                    } 
+        }
+
+        private void textBoxApellido_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (Char.IsLetter(e.KeyChar))
+            {
+                e.Handled = false;
+            }
+            else
+                if (Char.IsControl(e.KeyChar))
+                {
+                    e.Handled = false;
+                }
+                else
+                    if (Char.IsSeparator(e.KeyChar))
+                    {
+                        e.Handled = false;
+                    }
+                    else
+                    {
+                        e.Handled = true;
+                    } 
         }
     }
 }

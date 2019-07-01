@@ -18,6 +18,7 @@ namespace FrbaCrucero.CompraReservaPasaje
         {
             InitializeComponent();
             this.pasaje = pasaje;
+            this.numericUpDownPasajeros.ReadOnly = true;
         }
 
         private void buttonGuardar_Click(object sender, EventArgs e)

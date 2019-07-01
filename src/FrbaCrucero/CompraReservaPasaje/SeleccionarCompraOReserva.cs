@@ -29,7 +29,16 @@ namespace FrbaCrucero.CompraReservaPasaje
 
         private void buttonReservar_Click(object sender, EventArgs e)
         {
+            Int32 idReserva = new CrearReserva().Crear();
+            while (pasaje.pasajeros > 0)
+            {
+                new CrearPasaje(idReserva, pasaje.cliente_id, null, pasaje.viaje_codigo, pasaje.cabina_id).Crear();
+                pasaje.pasajeros--;
+            }
 
+            MessageBox.Show("La reserva del pasaje resulto exitosa. El codigo para su pago es " + idReserva, "Exito",
+                                MessageBoxButtons.OK, MessageBoxIcon.None);
+            this.Close();
         }
     }
 }

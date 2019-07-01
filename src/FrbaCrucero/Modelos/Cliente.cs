@@ -43,9 +43,11 @@ namespace FrbaCrucero.Modelos
             this.fechaNacimiento = fechaNacimiento;
         }
 
-        public void Crear(Int32 idCliente)
+        public Int32 Crear()
         {
-            this.crearCliente(idCliente);
+            this.crearCliente();
+            Int32 idCliente = this.idCreado();
+            return idCliente;
         }
 
         public void Modificar(Int32 idCliente)
@@ -70,7 +72,7 @@ namespace FrbaCrucero.Modelos
             ConexionDB.instancia.ejecutarQuery(cmd);
         }
 
-        private void crearCliente(Int32 idCliente)
+        private void crearCliente()
         {
             String sqlQuery = "INSERT INTO FGNN_19.Clientes (nombre, apellido, dni, direccion, telefono, fecha_nac, mail) "
                             + "VALUES(@nombre,@apellido,@dni,@direccion,@telefono,@fecha_nac,@mail)";
@@ -83,6 +85,15 @@ namespace FrbaCrucero.Modelos
             cmd.Parameters.Add(new SqlParameter("mail", this.mail));
             cmd.Parameters.Add(new SqlParameter("dni", this.dni));
             ConexionDB.instancia.ejecutarQuery(cmd);
+        }
+
+
+        private Int32 idCreado()
+        {
+            String sqlQuery = "SELECT IDENT_CURRENT ('FGNN_19.Clientes')";
+            SqlCommand cmd = new SqlCommand(sqlQuery);
+            DataTable resultado = ConexionDB.instancia.obtenerData(cmd);
+            return Int32.Parse(resultado.Rows[0][0].ToString());
         }
     }
 }

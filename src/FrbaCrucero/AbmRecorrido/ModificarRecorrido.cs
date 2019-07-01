@@ -26,13 +26,6 @@ namespace FrbaCrucero.AbmRecorrido
             this.idRecorrido = idRecorrido;
             this.codigoRecorrido = codigoRecorrido;
             this.textBoxCodigo.Text = codigoRecorrido;
-            this.llenarDatos();
-            this.actualizarTramosActuales();
-            this.llenarListaActual();
-        }
-
-        private void llenarDatos()
-        {
             Repositorios.RepoTramo.instancia.llenarDatos(dataGridViewTramosTotales);
             tablaTotal.Columns.Add("id", typeof(Int32));
             tablaTotal.Columns.Add("puertoDesde", typeof(String));
@@ -45,6 +38,8 @@ namespace FrbaCrucero.AbmRecorrido
             dataGridViewTramosActuales.Columns[1].Visible = false;
             dataGridViewTramosActuales.Columns[2].Visible = false;
             dataGridViewTramosActuales.Columns[3].Visible = false;
+            this.actualizarTramosActuales();
+            this.llenarListaActual();
         }
 
         private void llenarListaActual()

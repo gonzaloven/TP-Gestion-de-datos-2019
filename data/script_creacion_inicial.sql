@@ -186,16 +186,8 @@ IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.TOP5_
 	DROP PROCEDURE FGNN_19.TOP5_recorridos_mas_comprados
 GO
 
-IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.Anios_TOP5_recorridos_mas_comprados') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
-	DROP PROCEDURE FGNN_19.Anios_TOP5_recorridos_mas_comprados
-GO
-
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.TOP5_recorridos_mas_cabinas_libres') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
 	DROP PROCEDURE FGNN_19.TOP5_recorridos_mas_cabinas_libres
-GO
-
-IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.Anios_TOP5_recorridos_mas_cabinas_libres') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
-	DROP PROCEDURE FGNN_19.Anios_TOP5_recorridos_mas_cabinas_libres
 GO
 
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.TOP5_cruceros_mas_dias_fuera_servicio') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
@@ -218,16 +210,20 @@ IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.Inser
 	DROP PROCEDURE FGNN_19.Insertar_Compra
 GO
 
-IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.Insertar_Metodo_pago') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
-	DROP PROCEDURE FGNN_19.Insertar_Metodo_pago
-GO
-
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.Calcular_costo_pasaje') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
 	DROP PROCEDURE FGNN_19.Calcular_costo_pasaje
 GO
 
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.Insertar_pasaje') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
 	DROP PROCEDURE FGNN_19.Insertar_pasaje
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.Obtener_id_metodo_pago') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
+	DROP PROCEDURE FGNN_19.Obtener_id_metodo_pago
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.Insertar_Reserva') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
+	DROP PROCEDURE FGNN_19.Insertar_Reserva
 GO
 
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_19.FN_Calcular_costo_pasaje') AND type in (N'FN', N'IF', N'TF', N'FS', N'FT'))
@@ -289,17 +285,17 @@ CREATE TABLE [FGNN_19].[Roles] (
 GO
 
 CREATE TABLE [FGNN_19].[Reservas] (
+	[id] NUMERIC(18, 0) IDENTITY(1, 1),
 	[codigo] NUMERIC(18, 0),
 	[habilitada] BIT DEFAULT 1 NOT NULL,
 	[fecha] DATETIME2(3) NOT NULL,
-	PRIMARY KEY ([codigo])
+	PRIMARY KEY ([id])
 );
 GO
 
 CREATE TABLE [FGNN_19].[Metodos_Pago] (
 	[id] NUMERIC(18, 0) IDENTITY(1, 1),
 	[descripcion] VARCHAR(255) NOT NULL,
-	[cuotas] INT NOT NULL,
 	PRIMARY KEY ([id])
 );
 GO
@@ -404,6 +400,7 @@ CREATE TABLE [FGNN_19].[Compras] (
 	[codigo_pasaje] NUMERIC(18,0),
 	[metodo_pago] NUMERIC(18, 0),
 	[fecha] DATETIME2(3) NOT NULL,
+	[cuotas] INT,
 	PRIMARY KEY ([codigo]),
 	FOREIGN KEY (metodo_pago) REFERENCES FGNN_19.Metodos_Pago(id)
 );
@@ -445,7 +442,7 @@ CREATE TABLE [FGNN_19].[Pasajes] (
 	[precio] FLOAT,
 	[codigo] NUMERIC(18,0),
 	PRIMARY KEY ([id]),
-	FOREIGN KEY (reserva_codigo) REFERENCES FGNN_19.Reservas(codigo),
+	FOREIGN KEY (reserva_codigo) REFERENCES FGNN_19.Reservas(id),
 	FOREIGN KEY (cliente_id) REFERENCES FGNN_19.Clientes(id),
 	FOREIGN KEY (compra_codigo) REFERENCES FGNN_19.Compras(codigo),
 	FOREIGN KEY (viaje_codigo) REFERENCES FGNN_19.Viajes(codigo),
@@ -565,7 +562,9 @@ FROM gd_esquema.Maestra m
 GROUP BY m.CRUCERO_IDENTIFICADOR, m.CRUCERO_MODELO, m.CRU_FABRICANTE, m.CABINA_NRO, m.CABINA_PISO, m.CABINA_TIPO, m.CABINA_TIPO_PORC_RECARGO
 
 INSERT INTO FGNN_19.Pasajes(reserva_codigo, cliente_id, compra_codigo, viaje_codigo, cabina_id, precio, codigo)
-SELECT m.RESERVA_CODIGO, 
+SELECT (SELECT r.id 
+	FROM FGNN_19.Reservas r 
+	WHERE r.codigo = m.RESERVA_CODIGO AND r.fecha = m.RESERVA_FECHA), 
 	(SELECT c.id
 	FROM FGNN_19.Clientes c
 	WHERE m.CLI_APELLIDO = c.apellido
@@ -619,14 +618,31 @@ INSERT INTO FGNN_19.Recorrido_X_Tramo (recorrido_id, tramo_id, orden)
 SELECT r.id, t.id, 1
 FROM FGNN_19.Recorridos r, FGNN_19.Tramos t
 WHERE r.puerto_desde_id = t.puerto_desde_id AND r.puerto_hasta_id = t.puerto_hasta_id
-GROUP BY r.id, t.id 
+GROUP BY r.id, t.id
  
 
 -- Fin Migracion
 
+-- Inserto metodos de pago
+
+INSERT INTO FGNN_19.Metodos_Pago(descripcion)
+VALUES('Tarjeta de débito')
+
+INSERT INTO FGNN_19.Metodos_Pago(descripcion)
+VALUES('Tarjeta de crédito')
+
+INSERT INTO FGNN_19.Metodos_Pago(descripcion)
+VALUES('Efectivo')
+
+-- Fin insercion metodos de pago
+
 -- Roles --
 INSERT INTO [FGNN_19].[Roles](descripcion)
 VALUES ('Administrador')
+
+INSERT INTO [FGNN_19].[Roles](descripcion)
+VALUES ('Administrador General')
+
 
 -- Funcionalidades --
 INSERT INTO [FGNN_19].[Funcionalidades](descripcion)
@@ -643,6 +659,11 @@ INSERT INTO [FGNN_19].[Funcionalidades_Roles]
 	SELECT r.id, f.id 
 	FROM [FGNN_19].[Funcionalidades] f, [FGNN_19].[Roles] r
 	WHERE r.descripcion = 'Administrador';
+
+INSERT INTO [FGNN_19].[Funcionalidades_Roles]
+	SELECT r.id, f.id 
+	FROM [FGNN_19].[Funcionalidades] f, [FGNN_19].[Roles] r
+	WHERE r.descripcion = 'Administrador General';
 GO
 
 INSERT INTO FGNN_19.Usuarios (username, password, intentos_fallidos, habilitado)
@@ -656,7 +677,15 @@ GO
 INSERT INTO FGNN_19.Usuarios_Roles
 SELECT u.id, r.id
 FROM FGNN_19.Usuarios u, FGNN_19.Roles r
-WHERE r.descripcion = 'Administrador';
+WHERE r.descripcion = 'Administrador'
+AND u.username != 'admin';
+GO
+
+INSERT INTO FGNN_19.Usuarios_Roles
+SELECT u.id, r.id
+FROM FGNN_19.Usuarios u, FGNN_19.Roles r
+WHERE r.descripcion = 'Administrador General'
+AND u.username = 'admin';
 GO
 
 -- Vistas
@@ -827,11 +856,13 @@ CREATE PROCEDURE FGNN_19.P_TramosDelRecorrido
 AS
 BEGIN
 
-SELECT t.id, t.puerto_desde_id, t.puerto_hasta_id, t.precio_base
-FROM FGNN_19.Tramos t, FGNN_19.Recorrido_X_Tramo rt, FGNN_19.Recorridos r
+SELECT t.id, t.puerto_desde_id, t.puerto_hasta_id, pd.descripcion, ph.descripcion, t.precio_base
+FROM FGNN_19.Tramos t, FGNN_19.Recorrido_X_Tramo rt, FGNN_19.Recorridos r, FGNN_19.Puertos pd, FGNN_19.Puertos ph
 WHERE t.id = rt.tramo_id
 AND r.id = rt.recorrido_id
 AND r.id = @idRecorrido
+AND pd.id = t.puerto_desde_id
+AND ph.id = t.puerto_hasta_id
 ORDER BY rt.orden ASC
 
 END;
@@ -1110,9 +1141,10 @@ CREATE PROCEDURE FGNN_19.P_CabinasDelCrucero
 AS
 BEGIN
 
-SELECT codigo, numero, piso, tipo_id
-FROM FGNN_19.Cabinas
+SELECT codigo, numero, piso, tc.descripcion
+FROM FGNN_19.Cabinas c, FGNN_19.Tipos_Cabinas tc
 WHERE estado = 1
+AND tc.id = c.tipo_id
 AND crucero_id = @idCrucero
 
 END
@@ -1138,15 +1170,6 @@ DECLARE @QUERY_5 VARCHAR(200) = ' GROUP BY r.id, ps.descripcion, pl.descripcion 
 END
 GO
 
-CREATE PROCEDURE FGNN_19.Anios_TOP5_recorridos_mas_comprados
-AS
-BEGIN
-	SELECT DISTINCT YEAR(c.fecha) AS anio
-	FROM FGNN_19.Compras c 
-	JOIN FGNN_19.Pasajes p
-	ON (c.codigo = p.compra_codigo)
-END
-GO
 
 CREATE PROCEDURE FGNN_19.TOP5_recorridos_mas_cabinas_libres(@anio INT, @semestre INT)
 AS
@@ -1169,15 +1192,6 @@ DECLARE @QUERY_6 VARCHAR(200) = ' GROUP BY r.codigo, ps.descripcion, pl.descripc
 END
 GO
 
-CREATE PROCEDURE FGNN_19.Anios_TOP5_recorridos_mas_cabinas_libres
-AS
-BEGIN
-	SELECT DISTINCT YEAR(v.fecha_fin) AS anio
-	FROM FGNN_19.Viajes v 
-	JOIN FGNN_19.Pasajes p
-	ON (v.codigo = p.viaje_codigo)
-END
-GO
 
 CREATE PROCEDURE FGNN_19.TOP5_cruceros_mas_dias_fuera_servicio(@anio INT, @semestre INT)
 AS
@@ -1198,13 +1212,6 @@ DECLARE @QUERY_4 VARCHAR(200) = ' GROUP BY id, nombre, modelo, fecha_fuera_servi
 END
 GO
 
-CREATE PROCEDURE FGNN_19.Anios_TOP5_cruceros_mas_dias_fuera_servicio
-AS
-BEGIN
-	SELECT DISTINCT YEAR(fecha_fuera_servicio) AS anio
-	FROM FGNN_19.Cruceros
-END
-GO
 
 CREATE PROCEDURE FGNN_19.Datos_cliente(@dni NUMERIC(18,0), @id NUMERIC(18,0) OUTPUT, @nombre VARCHAR(255) OUTPUT, @apellido VARCHAR(255) OUTPUT, @direccion VARCHAR(255) OUTPUT, @telefono NUMERIC(18,0) OUTPUT,
 	@fecha_nac DATETIME2(3) OUTPUT, @mail VARCHAR(255) OUTPUT)
@@ -1219,26 +1226,14 @@ BEGIN
 END;
 GO
 
-CREATE PROCEDURE FGNN_19.Insertar_Compra(@metodo_pago NUMERIC(18,0), @codigo NUMERIC(18,0) OUTPUT)
+CREATE PROCEDURE FGNN_19.Insertar_Compra(@metodo_pago NUMERIC(18,0), @cuotas INT, @codigo NUMERIC(18,0) OUTPUT)
 AS
 BEGIN TRANSACTION
 
-	INSERT INTO Compras(metodo_pago, fecha)
-	VALUES(@metodo_pago, CONVERT(DATETIME2(3),GETDATE()))
+	INSERT INTO Compras(metodo_pago, cuotas, fecha)
+	VALUES(@metodo_pago, @cuotas, CONVERT(DATETIME2(3),GETDATE()))
 
 	SET @codigo = SCOPE_IDENTITY()
-
-COMMIT TRANSACTION;
-GO
-
-CREATE PROCEDURE FGNN_19.Insertar_Metodo_pago(@descripcion VARCHAR(255), @cuotas INT, @id NUMERIC(18,0) OUTPUT)
-AS
-BEGIN TRANSACTION
-
-	INSERT INTO Metodos_Pago(descripcion, cuotas)
-	VALUES(@descripcion, @cuotas)
-
-	SET @id = SCOPE_IDENTITY()
 
 COMMIT TRANSACTION;
 GO
@@ -1277,6 +1272,27 @@ BEGIN TRANSACTION
 COMMIT TRANSACTION;
 GO
 
+CREATE PROCEDURE FGNN_19.Obtener_id_metodo_pago(@descripcion VARCHAR(255), @id NUMERIC(18,0) OUTPUT)
+AS
+BEGIN
+	
+	SET @id = (SELECT id FROM FGNN_19.Metodos_Pago WHERE descripcion = @descripcion)
+
+END;
+GO
+
+CREATE PROCEDURE FGNN_19.Insertar_Reserva(@id NUMERIC(18,0) OUTPUT)
+AS
+BEGIN TRANSACTION
+
+	INSERT INTO Reservas(habilitada, fecha)
+	VALUES(1, CONVERT(DATETIME2(3),GETDATE()))
+
+	SET @id = SCOPE_IDENTITY()
+
+COMMIT TRANSACTION;
+GO
+
 -- Triggers
 
 CREATE TRIGGER FGNN_19.TR_Roles_InsteadOfDelete ON FGNN_19.Roles
@@ -1309,3 +1325,4 @@ WHERE id IN (SELECT i.id FROM INSERTED i, FGNN_19.Viajes v
 
 COMMIT TRANSACTION;
 GO
+

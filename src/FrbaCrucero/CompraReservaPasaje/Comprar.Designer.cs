@@ -33,6 +33,8 @@
             this.comboBoxMetodoDePago = new System.Windows.Forms.ComboBox();
             this.numericUpDownCuotas = new System.Windows.Forms.NumericUpDown();
             this.groupBoxPago = new System.Windows.Forms.GroupBox();
+            this.textBoxPrecio = new System.Windows.Forms.TextBox();
+            this.labelPrecio = new System.Windows.Forms.Label();
             this.buttonGuardar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCuotas)).BeginInit();
             this.groupBoxPago.SuspendLayout();
@@ -78,27 +80,57 @@
             0,
             0,
             0});
+            this.numericUpDownCuotas.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.numericUpDownCuotas.Name = "numericUpDownCuotas";
             this.numericUpDownCuotas.ReadOnly = true;
             this.numericUpDownCuotas.Size = new System.Drawing.Size(120, 20);
             this.numericUpDownCuotas.TabIndex = 3;
+            this.numericUpDownCuotas.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDownCuotas.Visible = false;
             // 
             // groupBoxPago
             // 
+            this.groupBoxPago.Controls.Add(this.textBoxPrecio);
+            this.groupBoxPago.Controls.Add(this.labelPrecio);
             this.groupBoxPago.Controls.Add(this.label1);
             this.groupBoxPago.Controls.Add(this.numericUpDownCuotas);
             this.groupBoxPago.Controls.Add(this.comboBoxMetodoDePago);
             this.groupBoxPago.Controls.Add(this.labelMetodoDePago);
             this.groupBoxPago.Location = new System.Drawing.Point(12, 12);
             this.groupBoxPago.Name = "groupBoxPago";
-            this.groupBoxPago.Size = new System.Drawing.Size(266, 100);
+            this.groupBoxPago.Size = new System.Drawing.Size(230, 116);
             this.groupBoxPago.TabIndex = 4;
             this.groupBoxPago.TabStop = false;
             this.groupBoxPago.Text = "Pago de pasaje";
             // 
+            // textBoxPrecio
+            // 
+            this.textBoxPrecio.Location = new System.Drawing.Point(97, 87);
+            this.textBoxPrecio.Name = "textBoxPrecio";
+            this.textBoxPrecio.ReadOnly = true;
+            this.textBoxPrecio.Size = new System.Drawing.Size(100, 20);
+            this.textBoxPrecio.TabIndex = 7;
+            // 
+            // labelPrecio
+            // 
+            this.labelPrecio.AutoSize = true;
+            this.labelPrecio.Location = new System.Drawing.Point(6, 87);
+            this.labelPrecio.Name = "labelPrecio";
+            this.labelPrecio.Size = new System.Drawing.Size(59, 13);
+            this.labelPrecio.TabIndex = 6;
+            this.labelPrecio.Text = "Precio final";
+            // 
             // buttonGuardar
             // 
-            this.buttonGuardar.Location = new System.Drawing.Point(207, 120);
+            this.buttonGuardar.Location = new System.Drawing.Point(167, 134);
             this.buttonGuardar.Name = "buttonGuardar";
             this.buttonGuardar.Size = new System.Drawing.Size(75, 23);
             this.buttonGuardar.TabIndex = 5;
@@ -110,11 +142,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(294, 155);
+            this.ClientSize = new System.Drawing.Size(256, 162);
             this.Controls.Add(this.buttonGuardar);
             this.Controls.Add(this.groupBoxPago);
             this.Name = "Comprar";
-            this.Text = "SeleccionarMetodoDePago";
+            this.Text = "Compra pasaje";
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCuotas)).EndInit();
             this.groupBoxPago.ResumeLayout(false);
             this.groupBoxPago.PerformLayout();
@@ -130,5 +162,7 @@
         private System.Windows.Forms.NumericUpDown numericUpDownCuotas;
         private System.Windows.Forms.GroupBox groupBoxPago;
         private System.Windows.Forms.Button buttonGuardar;
+        private System.Windows.Forms.TextBox textBoxPrecio;
+        private System.Windows.Forms.Label labelPrecio;
     }
 }
