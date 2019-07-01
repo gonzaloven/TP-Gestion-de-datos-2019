@@ -160,7 +160,7 @@ namespace FrbaCrucero.AbmCrucero
             }
             else
             {
-                numericUD.Value = 0;
+                numericUD.Value = 1;
             }
         }
 

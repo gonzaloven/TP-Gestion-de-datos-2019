@@ -58,11 +58,8 @@ namespace FrbaCrucero
                 menuPrincipalForm.Show();
 
             } catch(Exception ex) {
-                DialogResult dr = MessageBox.Show(
-                ex.Message.ToString(),
-                "Validacion",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Error);
+                DialogResult dr = MessageBox.Show("El usuario al que trata de acceder no existe o no tiene los permisos necesarios.", "Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
         }
@@ -85,5 +82,6 @@ namespace FrbaCrucero
                 throw new Exception("Password incorrecto\n");
             }
         }
+
     }
 }

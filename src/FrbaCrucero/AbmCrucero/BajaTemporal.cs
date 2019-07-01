@@ -22,10 +22,18 @@ namespace FrbaCrucero.AbmCrucero
             this.textBoxFechaReinicioServicio.ReadOnly = true;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void buttonGuardar_Click(object sender, EventArgs e)
         {
-            CancelarPasajesOReprogramar cancelarPasajesOReprogramar = new CancelarPasajesOReprogramar(this, id);
-            cancelarPasajesOReprogramar.Show();
+            if (!String.IsNullOrWhiteSpace(textBoxFechaReinicioServicio.Text))
+            {
+                CancelarPasajesOReprogramar cancelarPasajesOReprogramar = new CancelarPasajesOReprogramar(this, id);
+                cancelarPasajesOReprogramar.Show();
+            }
+            else
+            {
+                MessageBox.Show("No se puede dejar el campo fecha vacio.", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void buttonSeleccionar_Click(object sender, EventArgs e)

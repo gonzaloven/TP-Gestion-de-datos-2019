@@ -94,10 +94,6 @@ IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_19.Puert
     DROP TABLE FGNN_19.Puertos
 GO
 
-IF EXISTS (SELECT * FROM sys.views WHERE name = 'vw_RolesYFuncionalidades' AND type = 'V') 
-	DROP VIEW FGNN_19.vw_RolesYFuncionalidades
-GO
-
 IF EXISTS (SELECT * FROM sys.objects WHERE [name] = N'TR_Roles_InsteadOfDelete' AND [type] = 'TR')
     DROP TRIGGER FGNN_19.TR_Roles_InsteadOfDelete
 GO
@@ -692,16 +688,6 @@ WHERE r.descripcion = 'Administrador General'
 AND u.username = 'admin';
 GO
 
--- Vistas
-
-CREATE VIEW FGNN_19.vw_RolesYFuncionalidades
-AS 
-SELECT r.descripcion AS ROL, f.descripcion AS FUNCIONALIDAD 
-FROM FGNN_19.Roles r, FGNN_19.Funcionalidades f, FGNN_19.Funcionalidades_Roles fr
-WHERE fr.funcionalidad_id = f.id
-AND fr.rol_id = r.id;
-GO
-
 -- Funciones
 
 CREATE FUNCTION FGNN_19.FN_Calcular_costo_base(@idRecorrido NUMERIC(18,0))
@@ -1047,7 +1033,7 @@ BEGIN TRANSACTION
 COMMIT TRANSACTION;
 GO
 
-CREATE PROCEDURE FGNN_19.Cancelar_pasajes_crucero(@idCrucero NUMERIC(18,0), @motivo VARCHAR(255))
+CREATE PROCEDURE FGNN_19.Cancelar_pasajes_crucero(@idCrucero NUMERIC(18,0), @motivo VARCHAR(255), @fechaReinicio datetime2(3))
 AS
 BEGIN TRANSACTION
 	
@@ -1056,6 +1042,10 @@ BEGIN TRANSACTION
 	FROM Pasajes p
 		JOIN Cabinas c ON c.codigo = p.cabina_id
 	WHERE c.crucero_id = @idCrucero
+
+	UPDATE FGNN_19.Cruceros
+	SET baja_servicio = 1, fecha_fuera_servicio = CONVERT(datetime2(3), GETDATE()), fecha_reinicio_servicio = @fechaReinicio
+	WHERE id = @idCrucero
 
 COMMIT TRANSACTION;
 GO
@@ -1071,7 +1061,7 @@ BEGIN TRANSACTION
 	WHERE c.crucero_id = @idCrucero
 
 	UPDATE Cruceros
-	SET baja_vida_util = 1
+	SET baja_vida_util = 1, fecha_baja_definitiva = CONVERT(datetime2(3), GETDATE())
 	WHERE id = @idCrucero 
 
 COMMIT TRANSACTION;
@@ -1103,7 +1093,7 @@ BEGIN TRANSACTION
 	WHERE crucero_id = @idCrucero AND fecha_inicio >= CONVERT(datetime2(3), GETDATE()) AND EXISTS(SELECT 1 FROM Pasajes WHERE viaje_codigo = codigo AND FGNN_19.FN_Pasaje_no_cancelado(id) = 1)
 
 	UPDATE Cruceros
-	SET baja_vida_util = 1
+	SET baja_vida_util = 1, fecha_baja_definitiva = CONVERT(datetime2(3), GETDATE())
 	WHERE id = @idCrucero 
 
 COMMIT TRANSACTION;

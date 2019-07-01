@@ -38,11 +38,11 @@
             this.comboBoxServicio = new System.Windows.Forms.ComboBox();
             this.labelServicio = new System.Windows.Forms.Label();
             this.dataGridViewCrucero = new System.Windows.Forms.DataGridView();
-            this.Modificar = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.Eliminar = new System.Windows.Forms.DataGridViewButtonColumn();
             this.buttonLimpiar = new System.Windows.Forms.Button();
             this.buttonBuscar = new System.Windows.Forms.Button();
             this.buttonAgregar = new System.Windows.Forms.Button();
+            this.Modificar = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.Eliminar = new System.Windows.Forms.DataGridViewButtonColumn();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewCrucero)).BeginInit();
             this.SuspendLayout();
@@ -163,22 +163,6 @@
             this.dataGridViewCrucero.TabIndex = 3;
             this.dataGridViewCrucero.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewCrucero_CellContentClick);
             // 
-            // Modificar
-            // 
-            this.Modificar.HeaderText = "";
-            this.Modificar.Name = "Modificar";
-            this.Modificar.ReadOnly = true;
-            this.Modificar.Text = "Modificar";
-            this.Modificar.UseColumnTextForButtonValue = true;
-            // 
-            // Eliminar
-            // 
-            this.Eliminar.HeaderText = "";
-            this.Eliminar.Name = "Eliminar";
-            this.Eliminar.ReadOnly = true;
-            this.Eliminar.Text = "Eliminar";
-            this.Eliminar.UseColumnTextForButtonValue = true;
-            // 
             // buttonLimpiar
             // 
             this.buttonLimpiar.Location = new System.Drawing.Point(16, 153);
@@ -210,6 +194,22 @@
             this.buttonAgregar.Text = "Agregar";
             this.buttonAgregar.UseVisualStyleBackColor = true;
             this.buttonAgregar.Click += new System.EventHandler(this.buttonAgregar_Click);
+            // 
+            // Modificar
+            // 
+            this.Modificar.HeaderText = "";
+            this.Modificar.Name = "Modificar";
+            this.Modificar.ReadOnly = true;
+            this.Modificar.Text = "Modificar";
+            this.Modificar.UseColumnTextForButtonValue = true;
+            // 
+            // Eliminar
+            // 
+            this.Eliminar.HeaderText = "";
+            this.Eliminar.Name = "Eliminar";
+            this.Eliminar.ReadOnly = true;
+            this.Eliminar.Text = "Dar de baja";
+            this.Eliminar.UseColumnTextForButtonValue = true;
             // 
             // ListadoCrucerosForm
             // 
@@ -245,8 +245,8 @@
         private System.Windows.Forms.ComboBox comboBoxEstado;
         private System.Windows.Forms.Button buttonLimpiar;
         private System.Windows.Forms.Button buttonBuscar;
+        private System.Windows.Forms.Button buttonAgregar;
         private System.Windows.Forms.DataGridViewButtonColumn Modificar;
         private System.Windows.Forms.DataGridViewButtonColumn Eliminar;
-        private System.Windows.Forms.Button buttonAgregar;
     }
 }
