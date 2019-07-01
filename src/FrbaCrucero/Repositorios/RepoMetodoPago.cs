@@ -23,13 +23,12 @@ namespace FrbaCrucero.Repositorios
             foreach (DataRow row in tabla.Rows)
             {
                 Int32 id = Convert.ToInt32(row["id"]);
-                String descripcion = Convert.ToInt32(row["descripcion"]);
-                MetodoPago metodoPago = DBNull.Value.Equals(row["metodo_pago"]) ? null : RepoReserva.instancia.EncontrarPorCodigo(Convert.ToInt32(row["metodo_pago"]));
-                DateTime fecha = Convert.ToDateTime(row["fecha"]);
-               
-                Cliente cliente = new Cliente(id, nombre, apellido, dni, direccion, telefono, fechaNacimiento, mail)
+                String descripcion = Convert.ToString(row["descripcion"]);
+                Int16 cuotas = Convert.ToInt16(row["cuotas"]);
+                
+                MetodoPago metodoPago = new MetodoPago(id, descripcion, cuotas);
 
-                metodoPagos.Add(cliente);
+                metodoPagos.Add(metodoPago);
             }
 
             return metodoPagos;

@@ -14,11 +14,11 @@ namespace FrbaCrucero.Modelos
         public Compra compra { get; set; }
         public Viaje viaje { get; set; }
         public Cabina cabina { get; set; }
-        public Double precio { get; set; }
-        public Int32 codigo { get; set; }
+        public Double? precio { get; set; }
+        public Int32? codigo { get; set; }
 
         public Pasaje(Int32 id, Reserva reserva, Cliente cliente, Compra compra, Viaje viaje, Cabina cabina,
-            Double precio, Int32 codigo)
+            Double? precio, Int32? codigo)
         {
             this.id = id;
             this.reserva = reserva;

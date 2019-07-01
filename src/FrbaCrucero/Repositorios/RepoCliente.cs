@@ -30,8 +30,8 @@ namespace FrbaCrucero.Repositorios
                 Int32 telefono = Convert.ToInt32(row["telefono"]);
                 DateTime fechaNacimiento = Convert.ToDateTime(row["fecha_nac"]);
                 String mail = Convert.ToString(row["mail"]);
-               
-                Cliente cliente = new Cliente(id, nombre, apellido, dni, direccion, telefono, fechaNacimiento, mail)
+
+                Cliente cliente = new Cliente(id, nombre, apellido, dni, direccion, telefono, fechaNacimiento, mail);
 
                 clientes.Add(cliente);
             }

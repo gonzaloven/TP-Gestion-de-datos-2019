@@ -5,9 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace FrbaCrucero.Modelos
@@ -27,6 +24,17 @@ namespace FrbaCrucero.Modelos
             DateTime fechaNacimiento, String mail)
         {
             this.id = id;
+            this.nombre = nombre;
+            this.apellido = apellido;
+            this.dni = dni;
+            this.direccion = direccion;
+            this.telefono = telefono;
+            this.fechaNacimiento = fechaNacimiento;
+        }
+
+        public Cliente(String nombre, String apellido, Int32 dni, String direccion, Int32 telefono,
+            DateTime fechaNacimiento, String mail)
+        {
             this.nombre = nombre;
             this.apellido = apellido;
             this.dni = dni;

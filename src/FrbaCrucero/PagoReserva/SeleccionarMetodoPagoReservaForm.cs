@@ -13,9 +13,9 @@ namespace FrbaCrucero.PagoReserva
 {
     public partial class SeleccionarMetodoPagoReservaForm : Form
     {
-        private Reserva reserva;
+        private ReservaForm reserva;
 
-        public SeleccionarMetodoPagoReservaForm(Reserva reserva)
+        public SeleccionarMetodoPagoReservaForm(ReservaForm reserva)
         {
             InitializeComponent();
             this.reserva = reserva;
@@ -45,6 +45,7 @@ namespace FrbaCrucero.PagoReserva
 
             CrearCompra compra = new CrearCompra(idMetodoPago);
             Int32 idCompra = compra.Crear();
+
         }
     }
 }

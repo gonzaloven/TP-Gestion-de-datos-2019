@@ -12,13 +12,8 @@ namespace FrbaCrucero.Repositorios
     class RepoPasaje : AbstractRepo<Pasaje>
     {
 
-        public static RepoPasaje instancia = new RepoPasaje("[FGNN_19].[Pasaje]");
-        public static string TABLA_RESERVA = "[FGNN_19].[Reservas]";
-        public static string TABLA_CLIENTE = "[FGNN_19].[Clientes]";
-        public static string TABLA_COMPRA = "[FGNN_19].[Compras]";
-        public static string TABLA_VIAJE = "[FGNN_19].[Viajes]";
-        public static string TABLA_CABINA = "[FGNN_19].[Cabinas]";
-        public static string TABLA_PASAJE = "[FGNN_19].[PASAJES]";
+        public static RepoPasaje instancia = new RepoPasaje("[FGNN_19].[Pasajes]");
+
 
         public RepoPasaje(string nombreTabla) : base(nombreTabla) 
         {
@@ -32,18 +27,19 @@ namespace FrbaCrucero.Repositorios
             {
                 Int32 id = Convert.ToInt32(row["id"]);
                 Reserva reserva = DBNull.Value.Equals(row["reserva_codigo"]) ? null : RepoReserva.instancia.EncontrarPorCodigo(Convert.ToInt32(row["reserva_codigo"]));
-                Cliente cliente = RepoCliente.instancia.EncontrarPorId(Convert.ToInt32(row["reserva_codigo"]));
-                Compra compra = DBNull.Value.Equals(row["compra_codigo"]) ? null : RepoReserva.instancia.EncontrarPorCodigo(Convert.ToInt32(row["compra_codigo"]));
+                Cliente cliente = RepoCliente.instancia.EncontrarPorId(Convert.ToInt32(row["cliente_id"]));
+                Compra compra = DBNull.Value.Equals(row["compra_codigo"]) ? null : RepoCompra.instancia.EncontrarPorCodigo(Convert.ToInt32(row["compra_codigo"]));
+                Viaje viaje = RepoViaje.instancia.EncontrarPorCodigo(Convert.ToInt32(row["viaje_codigo"]));
+                Cabina cabina = RepoCabina.instancia.EncontrarPorCodigo(Convert.ToInt32(row["cabina_id"]));
+                //Double precio = DBNull.Value.Equals(row["precio"]) ? null : Convert.ToDouble(row["precio"]);
+                //Int32 codigo = DBNull.Value.Equals(row["codigo"]) ? null : Convert.ToInt32(row["codigo"]);
 
-                Int16 habilitado = Convert.ToInt16(row["habilitada"]);
-                DateTime fecha = Convert.ToDateTime(row["fecha"]);
+                Pasaje pasaje = new Pasaje(id, reserva, cliente, compra, viaje, cabina, null, null);
 
-                Reserva reserva = new Reserva(codigo, habilitado, fecha);
-
-                reservas.Add(reserva);
+                pasajes.Add(pasaje);
             }
 
-            return reservas;
+            return pasajes;
         }
 
         public override int Crear(Pasaje entidad)
@@ -51,7 +47,7 @@ namespace FrbaCrucero.Repositorios
             throw new NotImplementedException();
         }
 
-        public Pasaje EncontrarPorCodigoReserva(string codigo)
+        public List<Pasaje> EncontrarPorCodigoReserva(Int32 codigo)
         {
             string sqlQuery = "SELECT * FROM " + nombreTabla + " WHERE reserva_codigo = @Codigo";
             SqlCommand cmd = new SqlCommand(sqlQuery);
@@ -64,7 +60,7 @@ namespace FrbaCrucero.Repositorios
             }
             else
             {
-                return ObtenerModeloDesdeTabla(tabla);
+                return ObtenerModelosDesdeTabla(tabla);
             }
         }
     }
