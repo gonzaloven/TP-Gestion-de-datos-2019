@@ -21,7 +21,6 @@ namespace FrbaCrucero.AbmCrucero
         {
             InitializeComponent();
             this.listadoCruceros = listadoCruceros;
-            comboBoxTipoServicio.Enabled = false;
             textBoxFechaBajaDefinitiva.ReadOnly = true;
             textBoxFechaFueraServicio.ReadOnly = true;
             textBoxFechaReinicioServicio.ReadOnly = true;

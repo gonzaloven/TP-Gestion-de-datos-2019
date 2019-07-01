@@ -37,6 +37,11 @@
             // numericUpDownPasajeros
             // 
             this.numericUpDownPasajeros.Location = new System.Drawing.Point(168, 58);
+            this.numericUpDownPasajeros.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.numericUpDownPasajeros.Name = "numericUpDownPasajeros";
             this.numericUpDownPasajeros.Size = new System.Drawing.Size(120, 22);
             this.numericUpDownPasajeros.TabIndex = 0;
