@@ -648,6 +648,10 @@ VALUES('Efectivo')
 INSERT INTO [FGNN_19].[Roles](descripcion)
 VALUES ('Administrador')
 
+INSERT INTO [FGNN_19].[Roles](descripcion)
+VALUES ('Administrador General')
+
+
 -- Funcionalidades --
 INSERT INTO [FGNN_19].[Funcionalidades](descripcion)
 VALUES ('ABM Roles'),
@@ -663,6 +667,11 @@ INSERT INTO [FGNN_19].[Funcionalidades_Roles]
 	SELECT r.id, f.id 
 	FROM [FGNN_19].[Funcionalidades] f, [FGNN_19].[Roles] r
 	WHERE r.descripcion = 'Administrador';
+
+INSERT INTO [FGNN_19].[Funcionalidades_Roles]
+	SELECT r.id, f.id 
+	FROM [FGNN_19].[Funcionalidades] f, [FGNN_19].[Roles] r
+	WHERE r.descripcion = 'Administrador General';
 GO
 
 INSERT INTO FGNN_19.Usuarios (username, password, intentos_fallidos, habilitado)
@@ -676,7 +685,15 @@ GO
 INSERT INTO FGNN_19.Usuarios_Roles
 SELECT u.id, r.id
 FROM FGNN_19.Usuarios u, FGNN_19.Roles r
-WHERE r.descripcion = 'Administrador';
+WHERE r.descripcion = 'Administrador'
+AND u.username != 'admin';
+GO
+
+INSERT INTO FGNN_19.Usuarios_Roles
+SELECT u.id, r.id
+FROM FGNN_19.Usuarios u, FGNN_19.Roles r
+WHERE r.descripcion = 'Administrador General'
+AND u.username = 'admin';
 GO
 
 -- Vistas
