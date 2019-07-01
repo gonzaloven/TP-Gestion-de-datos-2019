@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -21,6 +22,7 @@ namespace FrbaCrucero.PagoReserva
 
         private void buttonSeleccionar_Click(object sender, EventArgs e)
         {
+            this.actualizarReservas(); 
             Int32 codigo = Convert.ToInt32(numericUpDownCodigo.Value);
 
             Reserva reserva = RepoReserva.instancia.EncontrarPorCodigoConPasajeNoCompradoYHabilitado(codigo);
@@ -41,6 +43,14 @@ namespace FrbaCrucero.PagoReserva
                 reservaForm.Show();
                 this.Close();
             }
+        }
+
+        private void actualizarReservas()
+        {
+            String sqlQuery = "FGNN_19.Actualizar_Reservas";
+            SqlCommand cmd = new SqlCommand(sqlQuery);
+            cmd.CommandType = CommandType.StoredProcedure;
+            ConexionDB.instancia.ejecutarQuery(cmd);
         }
     }
 }

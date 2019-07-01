@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -55,6 +56,8 @@ namespace FrbaCrucero.AbmCrucero
 
         public void buscar()
         {
+            this.actualizarCruceros();
+
             string valorDescripcion = (!String.IsNullOrEmpty(textBoxCrucero.Text)) ? textBoxCrucero.Text.Trim() : "";
             string textEstado = Convert.ToString(comboBoxEstado.SelectedItem);
             Int16? valorFueraServicio = null;
@@ -77,6 +80,14 @@ namespace FrbaCrucero.AbmCrucero
             this.dataGridViewCrucero.Columns["cant_cabinas"].HeaderText = "Cantidad de cabinas";
             dataGridViewCrucero.MultiSelect = false;
             dataGridViewCrucero.Columns["id"].Visible = false;
+        }
+
+        private void actualizarCruceros()
+        {
+            String sqlQuery = "FGNN_19.Actualizacion_reinicio_cruceros";
+            SqlCommand cmd = new SqlCommand(sqlQuery);
+            cmd.CommandType = CommandType.StoredProcedure;
+            ConexionDB.instancia.ejecutarQuery(cmd);
         }
 
         private void buttonAgregar_Click(object sender, EventArgs e)

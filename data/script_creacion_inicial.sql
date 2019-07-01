@@ -206,6 +206,10 @@ IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.Cance
 	DROP PROCEDURE FGNN_19.Cancelar_pasajes_crucero_definitiva
 GO
 
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.Actualizar_Reservas') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
+	DROP PROCEDURE FGNN_19.Actualizar_Reservas
+GO
+
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = object_id(N'FGNN_19.Insertar_Compra') AND OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
 	DROP PROCEDURE FGNN_19.Insertar_Compra
 GO
@@ -1045,6 +1049,17 @@ BEGIN TRANSACTION
 	WHERE baja_servicio = 1 AND fecha_reinicio_servicio <= CONVERT(datetime2(3), GETDATE())
 
 COMMIT TRANSACTION;
+GO
+
+CREATE PROCEDURE FGNN_19.Actualizar_Reservas
+AS
+BEGIN
+
+	UPDATE FGNN_19.Reservas
+	SET habilitada = 0
+	WHERE habilitada = 1 AND ABS(DATEDIFF(day, fecha, CONVERT(datetime2(3), GETDATE()))) >= 4 
+
+END;
 GO
 
 CREATE PROCEDURE FGNN_19.Cancelar_pasajes_crucero(@idCrucero NUMERIC(18,0), @motivo VARCHAR(255))
