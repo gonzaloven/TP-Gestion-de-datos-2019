@@ -40,6 +40,9 @@
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripCompreReserva = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolABMRolesLabel2 = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripPagoReserva = new System.Windows.Forms.ToolStripLabel();
             this.toolStripLabelTop = new System.Windows.Forms.ToolStripLabel();
             this.toolABMRolesLabel2 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripBarraMenu.SuspendLayout();
@@ -69,6 +72,7 @@
             this.toolStripSeparator4,
             this.toolStripCompreReserva,
             this.toolStripSeparator5,
+            this.toolStripPagoReserva});
             this.toolStripLabelTop});
             this.toolStripBarraMenu.Location = new System.Drawing.Point(0, 0);
             this.toolStripBarraMenu.Name = "toolStripBarraMenu";
@@ -145,6 +149,23 @@
             this.toolABMRolesLabel2.Name = "toolABMRolesLabel2";
             this.toolABMRolesLabel2.Size = new System.Drawing.Size(23, 23);
             // 
+            // toolABMRolesLabel2
+            // 
+            this.toolABMRolesLabel2.Name = "toolABMRolesLabel2";
+            this.toolABMRolesLabel2.Size = new System.Drawing.Size(23, 23);
+            // 
+            // toolStripSeparator8
+            // 
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            this.toolStripSeparator8.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripPagoReserva
+            // 
+            this.toolStripPagoReserva.Name = "toolStripPagoReserva";
+            this.toolStripPagoReserva.Size = new System.Drawing.Size(77, 22);
+            this.toolStripPagoReserva.Text = "Pago Reserva";
+            this.toolStripPagoReserva.Click += new System.EventHandler(this.toolStripPagoReserva_Click);
+            // 
             // MenuPrincipalForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -177,6 +198,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripLabel toolStripLabelCrucero;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripLabel toolStripPagoReserva;
         private System.Windows.Forms.ToolStripLabel toolStripLabelTop;
     }
 }

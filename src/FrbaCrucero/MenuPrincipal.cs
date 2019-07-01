@@ -14,6 +14,7 @@ using FrbaCrucero.ListadoEstadistico;
 using FrbaCrucero.Modelos;
 using FrbaCrucero.AbmCrucero;
 using FrbaCrucero.CompraPasaje;
+using FrbaCrucero.PagoReserva;
 
 namespace FrbaCrucero
 {
@@ -115,6 +116,14 @@ namespace FrbaCrucero
             ListadoEstadisticoForm recorridosConMasPasajes = new ListadoEstadisticoForm();
             recorridosConMasPasajes.MdiParent = this;
             recorridosConMasPasajes.Show();
+        }
+
+        private void toolStripPagoReserva_Click(object sender, EventArgs e)
+        {
+            this.IsMdiContainer = true;
+            SeleccionarReservaForm reservaForm = new SeleccionarReservaForm();
+            reservaForm.MdiParent = this;
+            reservaForm.Show();
         }
     }
 }

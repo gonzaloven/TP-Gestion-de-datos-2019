@@ -107,5 +107,16 @@ namespace FrbaCrucero.Repositorios
             DataTable tabla = conexionDB.obtenerData(cmd);
             return ObtenerModelosDesdeTabla(tabla);  
         }
+
+        public Viaje EncontrarPorCodigo(Int32 codigo)
+        {
+            String sqlQuery = "SELECT  *   FROM " + nombreTabla + " WHERE codigo = @Codigo";
+            SqlCommand cmd = new SqlCommand(sqlQuery);
+            SqlParameter parametro = new SqlParameter("Codigo", codigo);
+            cmd.Parameters.Add(parametro);
+
+            DataTable tabla = conexionDB.obtenerData(cmd);
+            return ObtenerModeloDesdeTabla(tabla);
+        }
     }
 }

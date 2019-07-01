@@ -56,7 +56,7 @@ namespace FrbaCrucero.Repositorios
                 }
 
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 listado = null;
             }
