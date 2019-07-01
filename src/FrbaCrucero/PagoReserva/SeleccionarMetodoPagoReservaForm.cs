@@ -1,4 +1,5 @@
 ﻿using FrbaCrucero.Modelos;
+using FrbaCrucero.Repositorios;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,39 +14,50 @@ namespace FrbaCrucero.PagoReserva
 {
     public partial class SeleccionarMetodoPagoReservaForm : Form
     {
-        private ReservaForm reserva;
+        private List<Pasaje> pasajes;
+        private Double totalAPagar;
 
-        public SeleccionarMetodoPagoReservaForm(ReservaForm reserva)
+        public SeleccionarMetodoPagoReservaForm(List<Pasaje> pasajes, Double totalAPagar)
         {
             InitializeComponent();
-            this.reserva = reserva;
-            numericUpDownCuotas.TabIndex = 1;
-           
+            this.pasajes = pasajes;
+            this.totalAPagar = totalAPagar;
+            labelTotalAPagarInfo.Text = "$ " + totalAPagar.ToString();
+            numericUpDownCuotas.Value = 1;
+            comboBoxMetodoDePago.SelectedIndex = 0;
         }
 
         private void comboBoxMetodoDePago_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (comboBoxMetodoDePago.Text == "Efectivo")
+            if (comboBoxMetodoDePago.Text != "Tarjeta de crédito")
             {
-                numericUpDownCuotas.Enabled = false;
+                numericUpDownCuotas.ReadOnly = true;
+                labelCuotas.Visible = false;
+                numericUpDownCuotas.Visible = false;
             }
             else
             {
-                numericUpDownCuotas.Enabled = true;
+                labelCuotas.Visible = true;
+                numericUpDownCuotas.Visible = true;
+                numericUpDownCuotas.ReadOnly = false;
             }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string descripcion = comboBoxMetodoDePago.Text;
+            string metodoPagoDesc = comboBoxMetodoDePago.Text;
             int cuotas = Convert.ToInt32(numericUpDownCuotas.Value);
 
-            CrearMetodoDePago metodoPago = new CrearMetodoDePago(descripcion, cuotas);
-            Int32 idMetodoPago = metodoPago.Crear();
+            Int32 idMetodoPago = new CrearMetodoDePago(metodoPagoDesc, cuotas).Crear();
+            Int32 idCompra = new CrearCompra(idMetodoPago).Crear();
 
-            CrearCompra compra = new CrearCompra(idMetodoPago);
-            Int32 idCompra = compra.Crear();
+            Dictionary<string, object> paramametrosAModificar = new Dictionary<string, object>();
+            paramametrosAModificar.Add("compra_codigo", idCompra);
+            
+            pasajes.ForEach(pasaje => RepoPasaje.instancia.Modificar(pasaje.id, paramametrosAModificar));
 
+            MessageBox.Show("Se pago la reserva de forma exitosa.", "Exito",
+            MessageBoxButtons.OK, MessageBoxIcon.None);
         }
     }
 }

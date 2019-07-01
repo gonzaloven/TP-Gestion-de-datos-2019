@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FrbaCrucero.Modelos
 {
-    class Compra
+    public class Compra
     {
         Int32 codigo { get; set; }
         Int32 codigoPasaje { get; set; }

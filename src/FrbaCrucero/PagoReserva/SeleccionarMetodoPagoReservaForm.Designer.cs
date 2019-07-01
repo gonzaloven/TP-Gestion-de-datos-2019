@@ -29,36 +29,38 @@
         private void InitializeComponent()
         {
             this.groupBoxPago = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.labelCuotas = new System.Windows.Forms.Label();
             this.numericUpDownCuotas = new System.Windows.Forms.NumericUpDown();
             this.comboBoxMetodoDePago = new System.Windows.Forms.ComboBox();
             this.labelMetodoDePago = new System.Windows.Forms.Label();
             this.buttonPagar = new System.Windows.Forms.Button();
+            this.labelTotalAPagar = new System.Windows.Forms.Label();
+            this.labelTotalAPagarInfo = new System.Windows.Forms.Label();
             this.groupBoxPago.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCuotas)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBoxPago
             // 
-            this.groupBoxPago.Controls.Add(this.label1);
+            this.groupBoxPago.Controls.Add(this.labelCuotas);
             this.groupBoxPago.Controls.Add(this.numericUpDownCuotas);
             this.groupBoxPago.Controls.Add(this.comboBoxMetodoDePago);
             this.groupBoxPago.Controls.Add(this.labelMetodoDePago);
-            this.groupBoxPago.Location = new System.Drawing.Point(12, 12);
+            this.groupBoxPago.Location = new System.Drawing.Point(12, 66);
             this.groupBoxPago.Name = "groupBoxPago";
             this.groupBoxPago.Size = new System.Drawing.Size(266, 100);
             this.groupBoxPago.TabIndex = 5;
             this.groupBoxPago.TabStop = false;
             this.groupBoxPago.Text = "Pago de reserva";
             // 
-            // label1
+            // labelCuotas
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 57);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(40, 13);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Cuotas";
+            this.labelCuotas.AutoSize = true;
+            this.labelCuotas.Location = new System.Drawing.Point(6, 57);
+            this.labelCuotas.Name = "labelCuotas";
+            this.labelCuotas.Size = new System.Drawing.Size(40, 13);
+            this.labelCuotas.TabIndex = 1;
+            this.labelCuotas.Text = "Cuotas";
             // 
             // numericUpDownCuotas
             // 
@@ -68,9 +70,20 @@
             0,
             0,
             0});
+            this.numericUpDownCuotas.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.numericUpDownCuotas.Name = "numericUpDownCuotas";
+            this.numericUpDownCuotas.ReadOnly = true;
             this.numericUpDownCuotas.Size = new System.Drawing.Size(120, 20);
             this.numericUpDownCuotas.TabIndex = 3;
+            this.numericUpDownCuotas.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // comboBoxMetodoDePago
             // 
@@ -96,7 +109,7 @@
             // 
             // buttonPagar
             // 
-            this.buttonPagar.Location = new System.Drawing.Point(197, 120);
+            this.buttonPagar.Location = new System.Drawing.Point(203, 201);
             this.buttonPagar.Name = "buttonPagar";
             this.buttonPagar.Size = new System.Drawing.Size(75, 23);
             this.buttonPagar.TabIndex = 6;
@@ -104,11 +117,31 @@
             this.buttonPagar.UseVisualStyleBackColor = true;
             this.buttonPagar.Click += new System.EventHandler(this.button1_Click);
             // 
+            // labelTotalAPagar
+            // 
+            this.labelTotalAPagar.AutoSize = true;
+            this.labelTotalAPagar.Location = new System.Drawing.Point(9, 24);
+            this.labelTotalAPagar.Name = "labelTotalAPagar";
+            this.labelTotalAPagar.Size = new System.Drawing.Size(73, 13);
+            this.labelTotalAPagar.TabIndex = 4;
+            this.labelTotalAPagar.Text = "Total a pagar:";
+            // 
+            // labelTotalAPagarInfo
+            // 
+            this.labelTotalAPagarInfo.AutoSize = true;
+            this.labelTotalAPagarInfo.Location = new System.Drawing.Point(88, 24);
+            this.labelTotalAPagarInfo.Name = "labelTotalAPagarInfo";
+            this.labelTotalAPagarInfo.Size = new System.Drawing.Size(106, 13);
+            this.labelTotalAPagarInfo.TabIndex = 7;
+            this.labelTotalAPagarInfo.Text = "labelTotalAPagarInfo";
+            // 
             // SeleccionarMetodoPagoReservaForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(288, 155);
+            this.ClientSize = new System.Drawing.Size(288, 236);
+            this.Controls.Add(this.labelTotalAPagarInfo);
+            this.Controls.Add(this.labelTotalAPagar);
             this.Controls.Add(this.buttonPagar);
             this.Controls.Add(this.groupBoxPago);
             this.Name = "SeleccionarMetodoPagoReservaForm";
@@ -117,16 +150,19 @@
             this.groupBoxPago.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCuotas)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
         private System.Windows.Forms.GroupBox groupBoxPago;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label labelCuotas;
         private System.Windows.Forms.NumericUpDown numericUpDownCuotas;
         private System.Windows.Forms.ComboBox comboBoxMetodoDePago;
         private System.Windows.Forms.Label labelMetodoDePago;
         private System.Windows.Forms.Button buttonPagar;
+        private System.Windows.Forms.Label labelTotalAPagar;
+        private System.Windows.Forms.Label labelTotalAPagarInfo;
     }
 }

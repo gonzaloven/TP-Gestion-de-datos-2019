@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace FrbaCrucero.Modelos
 {
-    class Cliente
+    public class Cliente
     {
         public Int32 id { get; set; }
         public String nombre { get; set; }

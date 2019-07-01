@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FrbaCrucero.Modelos
 {
-    class TipoCabina
+    public class TipoCabina
     {
         Int32 id { get; set; }
         String descripcion { get; set; }

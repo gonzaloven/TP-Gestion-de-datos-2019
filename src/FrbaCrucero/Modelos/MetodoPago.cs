@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FrbaCrucero.Modelos
 {
-    class MetodoPago
+    public class MetodoPago
     {
         Int32 id { get; set; }
         String descripcion { get; set; }

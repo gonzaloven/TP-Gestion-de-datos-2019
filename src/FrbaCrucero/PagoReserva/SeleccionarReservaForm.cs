@@ -23,7 +23,7 @@ namespace FrbaCrucero.PagoReserva
         {
             Int32 codigo = Convert.ToInt32(numericUpDownCodigo.Value);
 
-            ReservaForm reserva = RepoReserva.instancia.EncontrarPorCodigoConPasajeNoComprado(codigo);
+            Reserva reserva = RepoReserva.instancia.EncontrarPorCodigoConPasajeNoCompradoYHabilitado(codigo);
             if (reserva == null)
             {
                 string texto = "No se encontró una reserva pagar con ese codigo";
@@ -36,8 +36,9 @@ namespace FrbaCrucero.PagoReserva
             else 
             {
                 List<Pasaje> pasajes = RepoPasaje.instancia.EncontrarPorCodigoReserva(reserva.codigo); 
-                SeleccionarMetodoPagoReservaForm metodoPagoReserva = new SeleccionarMetodoPagoReservaForm(reserva);
-                metodoPagoReserva.Show();
+
+                ReservaForm reservaForm = new ReservaForm(pasajes);
+                reservaForm.Show();
             }
         }
     }

@@ -51,9 +51,9 @@ namespace FrbaCrucero.Repositorios
             return ObtenerModeloDesdeTabla(tabla);
         }
 
-        public Reserva EncontrarPorCodigoConPasajeNoComprado(Int32 codigo)
+        public Reserva EncontrarPorCodigoConPasajeNoCompradoYHabilitado(Int32 codigo)
         {
-            string sqlQuery = "SELECT r.* FROM " + nombreTabla + " r, " +  TABLA_PASAJE + " p WHERE p.reserva_codigo = r.codigo AND p.compra_codigo IS NULL AND r.codigo = @Codigo";
+            string sqlQuery = "SELECT r.* FROM " + nombreTabla + " r, " +  TABLA_PASAJE + " p WHERE p.reserva_codigo = r.codigo AND p.compra_codigo IS NULL AND r.codigo = @Codigo AND r.habilitada = 1";
             SqlCommand cmd = new SqlCommand(sqlQuery);
             cmd.Parameters.Add(new SqlParameter("Codigo", codigo));
 

@@ -31,10 +31,27 @@ namespace FrbaCrucero.Repositorios
                 Compra compra = DBNull.Value.Equals(row["compra_codigo"]) ? null : RepoCompra.instancia.EncontrarPorCodigo(Convert.ToInt32(row["compra_codigo"]));
                 Viaje viaje = RepoViaje.instancia.EncontrarPorCodigo(Convert.ToInt32(row["viaje_codigo"]));
                 Cabina cabina = RepoCabina.instancia.EncontrarPorCodigo(Convert.ToInt32(row["cabina_id"]));
-                //Double precio = DBNull.Value.Equals(row["precio"]) ? null : Convert.ToDouble(row["precio"]);
-                //Int32 codigo = DBNull.Value.Equals(row["codigo"]) ? null : Convert.ToInt32(row["codigo"]);
+                Double? precio;
+                if(DBNull.Value.Equals(row["precio"]))
+                {
+                    precio = null;
+                }
+                else
+                {
+                    precio = Convert.ToDouble(row["precio"]);
+                }
 
-                Pasaje pasaje = new Pasaje(id, reserva, cliente, compra, viaje, cabina, null, null);
+                Int32? codigo;
+                if (DBNull.Value.Equals(row["codigo"]))
+                {
+                    codigo = null;
+                }
+                else
+                {
+                    codigo = Convert.ToInt32(row["codigo"]);
+                } 
+
+                Pasaje pasaje = new Pasaje(id, reserva, cliente, compra, viaje, cabina, precio, codigo);
 
                 pasajes.Add(pasaje);
             }

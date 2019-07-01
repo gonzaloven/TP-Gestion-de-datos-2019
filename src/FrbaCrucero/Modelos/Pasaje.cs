@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FrbaCrucero.Modelos
 {
-    class Pasaje
+    public class  Pasaje
     {
         public Int32 id { get; set; }
         public Reserva reserva { get; set; }
