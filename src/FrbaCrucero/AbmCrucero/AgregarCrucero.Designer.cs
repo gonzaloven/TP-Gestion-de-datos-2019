@@ -47,22 +47,22 @@
             // 
             // textBoxNombre
             // 
-            this.textBoxNombre.Location = new System.Drawing.Point(76, 33);
+            this.textBoxNombre.Location = new System.Drawing.Point(153, 37);
             this.textBoxNombre.Name = "textBoxNombre";
-            this.textBoxNombre.Size = new System.Drawing.Size(100, 22);
+            this.textBoxNombre.Size = new System.Drawing.Size(117, 22);
             this.textBoxNombre.TabIndex = 0;
             // 
             // textBoxModelo
             // 
-            this.textBoxModelo.Location = new System.Drawing.Point(76, 62);
+            this.textBoxModelo.Location = new System.Drawing.Point(153, 65);
             this.textBoxModelo.Name = "textBoxModelo";
-            this.textBoxModelo.Size = new System.Drawing.Size(100, 22);
+            this.textBoxModelo.Size = new System.Drawing.Size(117, 22);
             this.textBoxModelo.TabIndex = 1;
             // 
             // labelNombre
             // 
             this.labelNombre.AutoSize = true;
-            this.labelNombre.Location = new System.Drawing.Point(12, 33);
+            this.labelNombre.Location = new System.Drawing.Point(12, 37);
             this.labelNombre.Name = "labelNombre";
             this.labelNombre.Size = new System.Drawing.Size(58, 17);
             this.labelNombre.TabIndex = 2;
@@ -71,7 +71,7 @@
             // labelModelo
             // 
             this.labelModelo.AutoSize = true;
-            this.labelModelo.Location = new System.Drawing.Point(12, 62);
+            this.labelModelo.Location = new System.Drawing.Point(13, 65);
             this.labelModelo.Name = "labelModelo";
             this.labelModelo.Size = new System.Drawing.Size(54, 17);
             this.labelModelo.TabIndex = 3;
@@ -89,7 +89,7 @@
             // labelTipoServicio
             // 
             this.labelTipoServicio.AutoSize = true;
-            this.labelTipoServicio.Location = new System.Drawing.Point(12, 122);
+            this.labelTipoServicio.Location = new System.Drawing.Point(12, 121);
             this.labelTipoServicio.Name = "labelTipoServicio";
             this.labelTipoServicio.Size = new System.Drawing.Size(108, 17);
             this.labelTipoServicio.TabIndex = 9;
@@ -101,14 +101,14 @@
             this.comboBoxTipoServicio.Items.AddRange(new object[] {
             "Estandar",
             "All-inclusive"});
-            this.comboBoxTipoServicio.Location = new System.Drawing.Point(126, 121);
+            this.comboBoxTipoServicio.Location = new System.Drawing.Point(153, 121);
             this.comboBoxTipoServicio.Name = "comboBoxTipoServicio";
             this.comboBoxTipoServicio.Size = new System.Drawing.Size(121, 24);
             this.comboBoxTipoServicio.TabIndex = 10;
             // 
             // numericUpDownCantidadCabinas
             // 
-            this.numericUpDownCantidadCabinas.Location = new System.Drawing.Point(154, 153);
+            this.numericUpDownCantidadCabinas.Location = new System.Drawing.Point(153, 151);
             this.numericUpDownCantidadCabinas.Name = "numericUpDownCantidadCabinas";
             this.numericUpDownCantidadCabinas.Size = new System.Drawing.Size(120, 22);
             this.numericUpDownCantidadCabinas.TabIndex = 11;
@@ -116,7 +116,7 @@
             // labelCantidadCabinas
             // 
             this.labelCantidadCabinas.AutoSize = true;
-            this.labelCantidadCabinas.Location = new System.Drawing.Point(13, 153);
+            this.labelCantidadCabinas.Location = new System.Drawing.Point(12, 151);
             this.labelCantidadCabinas.Name = "labelCantidadCabinas";
             this.labelCantidadCabinas.Size = new System.Drawing.Size(137, 17);
             this.labelCantidadCabinas.TabIndex = 12;
@@ -124,9 +124,9 @@
             // 
             // buttonGuardar
             // 
-            this.buttonGuardar.Location = new System.Drawing.Point(320, 70);
+            this.buttonGuardar.Location = new System.Drawing.Point(292, 197);
             this.buttonGuardar.Name = "buttonGuardar";
-            this.buttonGuardar.Size = new System.Drawing.Size(94, 75);
+            this.buttonGuardar.Size = new System.Drawing.Size(82, 23);
             this.buttonGuardar.TabIndex = 13;
             this.buttonGuardar.Text = "Guardar";
             this.buttonGuardar.UseVisualStyleBackColor = true;
@@ -144,14 +144,14 @@
             // 
             // textBoxFabricante
             // 
-            this.textBoxFabricante.Location = new System.Drawing.Point(93, 93);
+            this.textBoxFabricante.Location = new System.Drawing.Point(153, 93);
             this.textBoxFabricante.Name = "textBoxFabricante";
-            this.textBoxFabricante.Size = new System.Drawing.Size(100, 22);
+            this.textBoxFabricante.Size = new System.Drawing.Size(117, 22);
             this.textBoxFabricante.TabIndex = 5;
             // 
             // buttonSeleccionarFabricante
             // 
-            this.buttonSeleccionarFabricante.Location = new System.Drawing.Point(199, 93);
+            this.buttonSeleccionarFabricante.Location = new System.Drawing.Point(276, 93);
             this.buttonSeleccionarFabricante.Name = "buttonSeleccionarFabricante";
             this.buttonSeleccionarFabricante.Size = new System.Drawing.Size(98, 23);
             this.buttonSeleccionarFabricante.TabIndex = 6;
@@ -173,7 +173,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(439, 243);
+            this.ClientSize = new System.Drawing.Size(393, 243);
             this.Controls.Add(this.buttonLimpiar);
             this.Controls.Add(this.buttonCancelar);
             this.Controls.Add(this.buttonGuardar);
