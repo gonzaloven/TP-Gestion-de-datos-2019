@@ -847,11 +847,13 @@ CREATE PROCEDURE FGNN_19.P_TramosDelRecorrido
 AS
 BEGIN
 
-SELECT t.id, t.puerto_desde_id, t.puerto_hasta_id, t.precio_base
-FROM FGNN_19.Tramos t, FGNN_19.Recorrido_X_Tramo rt, FGNN_19.Recorridos r
+SELECT t.id, t.puerto_desde_id, t.puerto_hasta_id, pd.descripcion, ph.descripcion, t.precio_base
+FROM FGNN_19.Tramos t, FGNN_19.Recorrido_X_Tramo rt, FGNN_19.Recorridos r, FGNN_19.Puertos pd, FGNN_19.Puertos ph
 WHERE t.id = rt.tramo_id
 AND r.id = rt.recorrido_id
 AND r.id = @idRecorrido
+AND pd.id = r.puerto_desde_id
+AND ph.id = r.puerto_hasta_id
 ORDER BY rt.orden ASC
 
 END;
