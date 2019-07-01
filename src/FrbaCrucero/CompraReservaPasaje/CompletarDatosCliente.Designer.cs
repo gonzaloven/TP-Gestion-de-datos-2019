@@ -122,15 +122,16 @@
             // textBoxDNI
             // 
             this.textBoxDNI.Location = new System.Drawing.Point(113, 18);
-            this.textBoxDNI.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBoxDNI.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxDNI.Name = "textBoxDNI";
             this.textBoxDNI.Size = new System.Drawing.Size(101, 20);
             this.textBoxDNI.TabIndex = 7;
+            this.textBoxDNI.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxDNI_KeyPress);
             // 
             // textBoxNombre
             // 
             this.textBoxNombre.Location = new System.Drawing.Point(113, 45);
-            this.textBoxNombre.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBoxNombre.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxNombre.Name = "textBoxNombre";
             this.textBoxNombre.Size = new System.Drawing.Size(101, 20);
             this.textBoxNombre.TabIndex = 8;
@@ -139,7 +140,7 @@
             // textBoxApellido
             // 
             this.textBoxApellido.Location = new System.Drawing.Point(113, 73);
-            this.textBoxApellido.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBoxApellido.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxApellido.Name = "textBoxApellido";
             this.textBoxApellido.Size = new System.Drawing.Size(101, 20);
             this.textBoxApellido.TabIndex = 9;
@@ -148,7 +149,7 @@
             // textBoxDireccion
             // 
             this.textBoxDireccion.Location = new System.Drawing.Point(113, 98);
-            this.textBoxDireccion.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBoxDireccion.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxDireccion.Name = "textBoxDireccion";
             this.textBoxDireccion.Size = new System.Drawing.Size(101, 20);
             this.textBoxDireccion.TabIndex = 10;
@@ -156,7 +157,7 @@
             // textBoxTelefono
             // 
             this.textBoxTelefono.Location = new System.Drawing.Point(113, 124);
-            this.textBoxTelefono.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBoxTelefono.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxTelefono.Name = "textBoxTelefono";
             this.textBoxTelefono.Size = new System.Drawing.Size(101, 20);
             this.textBoxTelefono.TabIndex = 11;
@@ -165,7 +166,7 @@
             // textBoxFechaNacimiento
             // 
             this.textBoxFechaNacimiento.Location = new System.Drawing.Point(113, 147);
-            this.textBoxFechaNacimiento.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBoxFechaNacimiento.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxFechaNacimiento.Name = "textBoxFechaNacimiento";
             this.textBoxFechaNacimiento.Size = new System.Drawing.Size(101, 20);
             this.textBoxFechaNacimiento.TabIndex = 12;
@@ -173,7 +174,7 @@
             // textBoxMail
             // 
             this.textBoxMail.Location = new System.Drawing.Point(113, 170);
-            this.textBoxMail.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBoxMail.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxMail.Name = "textBoxMail";
             this.textBoxMail.Size = new System.Drawing.Size(101, 20);
             this.textBoxMail.TabIndex = 13;
@@ -181,7 +182,7 @@
             // buttonGuardar
             // 
             this.buttonGuardar.Location = new System.Drawing.Point(293, 215);
-            this.buttonGuardar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonGuardar.Margin = new System.Windows.Forms.Padding(2);
             this.buttonGuardar.Name = "buttonGuardar";
             this.buttonGuardar.Size = new System.Drawing.Size(66, 28);
             this.buttonGuardar.TabIndex = 14;
@@ -192,7 +193,7 @@
             // buttonVerificar
             // 
             this.buttonVerificar.Location = new System.Drawing.Point(218, 18);
-            this.buttonVerificar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonVerificar.Margin = new System.Windows.Forms.Padding(2);
             this.buttonVerificar.Name = "buttonVerificar";
             this.buttonVerificar.Size = new System.Drawing.Size(56, 19);
             this.buttonVerificar.TabIndex = 15;
@@ -203,7 +204,7 @@
             // buttonEditar
             // 
             this.buttonEditar.Location = new System.Drawing.Point(78, 215);
-            this.buttonEditar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonEditar.Margin = new System.Windows.Forms.Padding(2);
             this.buttonEditar.Name = "buttonEditar";
             this.buttonEditar.Size = new System.Drawing.Size(64, 28);
             this.buttonEditar.TabIndex = 16;
@@ -214,7 +215,7 @@
             // buttonLimpiar
             // 
             this.buttonLimpiar.Location = new System.Drawing.Point(9, 215);
-            this.buttonLimpiar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonLimpiar.Margin = new System.Windows.Forms.Padding(2);
             this.buttonLimpiar.Name = "buttonLimpiar";
             this.buttonLimpiar.Size = new System.Drawing.Size(64, 28);
             this.buttonLimpiar.TabIndex = 17;
@@ -225,7 +226,7 @@
             // buttonSeleccionarFecha
             // 
             this.buttonSeleccionarFecha.Location = new System.Drawing.Point(218, 146);
-            this.buttonSeleccionarFecha.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonSeleccionarFecha.Margin = new System.Windows.Forms.Padding(2);
             this.buttonSeleccionarFecha.Name = "buttonSeleccionarFecha";
             this.buttonSeleccionarFecha.Size = new System.Drawing.Size(76, 19);
             this.buttonSeleccionarFecha.TabIndex = 18;
@@ -257,7 +258,7 @@
             this.Controls.Add(this.labelApellido);
             this.Controls.Add(this.labelNombre);
             this.Controls.Add(this.labelDNI);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "CompletarDatosCliente";
             this.Text = "CompletarDatosCliente";
             this.ResumeLayout(false);

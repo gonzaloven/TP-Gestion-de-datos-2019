@@ -40,10 +40,10 @@
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripCompreReserva = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolABMRolesLabel2 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripPagoReserva = new System.Windows.Forms.ToolStripLabel();
             this.toolStripLabelTop = new System.Windows.Forms.ToolStripLabel();
             this.toolABMRolesLabel2 = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripBarraMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -72,10 +72,11 @@
             this.toolStripCompreReserva,
             this.toolStripSeparator5,
             this.toolStripPagoReserva,
+            this.toolStripSeparator6,
             this.toolStripLabelTop});
             this.toolStripBarraMenu.Location = new System.Drawing.Point(0, 0);
             this.toolStripBarraMenu.Name = "toolStripBarraMenu";
-            this.toolStripBarraMenu.Size = new System.Drawing.Size(1076, 25);
+            this.toolStripBarraMenu.Size = new System.Drawing.Size(807, 25);
             this.toolStripBarraMenu.TabIndex = 1;
             this.toolStripBarraMenu.Text = "toolStrip1";
             // 
@@ -83,7 +84,7 @@
             // 
             this.toolStripLabelABM.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripLabelABM.Name = "toolStripLabelABM";
-            this.toolStripLabelABM.Size = new System.Drawing.Size(45, 22);
+            this.toolStripLabelABM.Size = new System.Drawing.Size(35, 22);
             this.toolStripLabelABM.Text = "Roles";
             this.toolStripLabelABM.ToolTipText = "ABM Roles";
             this.toolStripLabelABM.Click += new System.EventHandler(this.toolStripLabel2_Click_1);
@@ -96,14 +97,14 @@
             // toolStripLabelRecorrido
             // 
             this.toolStripLabelRecorrido.Name = "toolStripLabelRecorrido";
-            this.toolStripLabelRecorrido.Size = new System.Drawing.Size(74, 22);
+            this.toolStripLabelRecorrido.Size = new System.Drawing.Size(58, 22);
             this.toolStripLabelRecorrido.Text = "Recorrido";
             this.toolStripLabelRecorrido.Click += new System.EventHandler(this.toolStripLabelRecorrido_Click);
             // 
             // toolStripLabelGenerarViaje
             // 
             this.toolStripLabelGenerarViaje.Name = "toolStripLabelGenerarViaje";
-            this.toolStripLabelGenerarViaje.Size = new System.Drawing.Size(98, 22);
+            this.toolStripLabelGenerarViaje.Size = new System.Drawing.Size(76, 22);
             this.toolStripLabelGenerarViaje.Text = "Generar Viaje";
             this.toolStripLabelGenerarViaje.Click += new System.EventHandler(this.toolStripLabelGenerarViaje_Click);
             // 
@@ -115,7 +116,7 @@
             // toolStripLabelCrucero
             // 
             this.toolStripLabelCrucero.Name = "toolStripLabelCrucero";
-            this.toolStripLabelCrucero.Size = new System.Drawing.Size(60, 22);
+            this.toolStripLabelCrucero.Size = new System.Drawing.Size(49, 22);
             this.toolStripLabelCrucero.Text = "Crucero";
             this.toolStripLabelCrucero.Click += new System.EventHandler(this.toolStripLabelCrucero_Click);
             // 
@@ -127,7 +128,7 @@
             // toolStripCompreReserva
             // 
             this.toolStripCompreReserva.Name = "toolStripCompreReserva";
-            this.toolStripCompreReserva.Size = new System.Drawing.Size(128, 22);
+            this.toolStripCompreReserva.Size = new System.Drawing.Size(102, 22);
             this.toolStripCompreReserva.Text = "Compra y Reserva";
             this.toolStripCompreReserva.Click += new System.EventHandler(this.toolStripCompreReserva_Click);
             // 
@@ -136,10 +137,17 @@
             this.toolStripSeparator5.Name = "toolStripSeparator5";
             this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
             // 
+            // toolStripPagoReserva
+            // 
+            this.toolStripPagoReserva.Name = "toolStripPagoReserva";
+            this.toolStripPagoReserva.Size = new System.Drawing.Size(77, 22);
+            this.toolStripPagoReserva.Text = "Pago Reserva";
+            this.toolStripPagoReserva.Click += new System.EventHandler(this.toolStripPagoReserva_Click);
+            // 
             // toolStripLabelTop
             // 
             this.toolStripLabelTop.Name = "toolStripLabelTop";
-            this.toolStripLabelTop.Size = new System.Drawing.Size(52, 22);
+            this.toolStripLabelTop.Size = new System.Drawing.Size(41, 22);
             this.toolStripLabelTop.Text = "Tops 5";
             this.toolStripLabelTop.Click += new System.EventHandler(this.toolStripLabelTopPasaje_Click);
             // 
@@ -148,25 +156,17 @@
             this.toolABMRolesLabel2.Name = "toolABMRolesLabel2";
             this.toolABMRolesLabel2.Size = new System.Drawing.Size(23, 23);
             // 
-            // toolABMRolesLabel2
+            // toolStripSeparator6
             // 
-            this.toolABMRolesLabel2.Name = "toolABMRolesLabel2";
-            this.toolABMRolesLabel2.Size = new System.Drawing.Size(23, 23);
-            // 
-            // toolStripPagoReserva
-            // 
-            this.toolStripPagoReserva.Name = "toolStripPagoReserva";
-            this.toolStripPagoReserva.Size = new System.Drawing.Size(77, 22);
-            this.toolStripPagoReserva.Text = "Pago Reserva";
-            this.toolStripPagoReserva.Click += new System.EventHandler(this.toolStripPagoReserva_Click);
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(6, 25);
             // 
             // MenuPrincipalForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1076, 476);
+            this.ClientSize = new System.Drawing.Size(807, 387);
             this.Controls.Add(this.toolStripBarraMenu);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "MenuPrincipalForm";
             this.Text = "MenuPrincipal Crucero";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -194,5 +194,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripLabel toolStripPagoReserva;
         private System.Windows.Forms.ToolStripLabel toolStripLabelTop;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
     }
 }

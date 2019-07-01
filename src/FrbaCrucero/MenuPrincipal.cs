@@ -76,6 +76,12 @@ namespace FrbaCrucero
             toolStripLabelRecorrido.Visible = false;
             toolStripLabelGenerarViaje.Visible = false;
             toolStripLabelCrucero.Visible = false;
+            toolStripSeparator2.Visible = false;
+            toolStripSeparator1.Visible = false;
+            toolStripSeparator3.Visible = false;
+            toolStripSeparator4.Visible = false;
+            toolStripSeparator6.Visible = false;
+            toolStripLabelTop.Visible = false; 
         }
 
         private void toolStripLabelGenerarViaje_Click(object sender, EventArgs e)
