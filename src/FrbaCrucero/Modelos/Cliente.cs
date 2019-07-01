@@ -30,6 +30,7 @@ namespace FrbaCrucero.Modelos
             this.direccion = direccion;
             this.telefono = telefono;
             this.fechaNacimiento = fechaNacimiento;
+            this.mail = mail;
         }
 
         public Cliente(String nombre, String apellido, Int32 dni, String direccion, Int32 telefono,
@@ -41,6 +42,7 @@ namespace FrbaCrucero.Modelos
             this.direccion = direccion;
             this.telefono = telefono;
             this.fechaNacimiento = fechaNacimiento;
+            this.mail = mail;
         }
 
         public Int32 Crear()
