@@ -94,10 +94,6 @@ IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'FGNN_19.Puert
     DROP TABLE FGNN_19.Puertos
 GO
 
-IF EXISTS (SELECT * FROM sys.views WHERE name = 'vw_RolesYFuncionalidades' AND type = 'V') 
-	DROP VIEW FGNN_19.vw_RolesYFuncionalidades
-GO
-
 IF EXISTS (SELECT * FROM sys.objects WHERE [name] = N'TR_Roles_InsteadOfDelete' AND [type] = 'TR')
     DROP TRIGGER FGNN_19.TR_Roles_InsteadOfDelete
 GO
@@ -690,16 +686,6 @@ SELECT u.id, r.id
 FROM FGNN_19.Usuarios u, FGNN_19.Roles r
 WHERE r.descripcion = 'Administrador General'
 AND u.username = 'admin';
-GO
-
--- Vistas
-
-CREATE VIEW FGNN_19.vw_RolesYFuncionalidades
-AS 
-SELECT r.descripcion AS ROL, f.descripcion AS FUNCIONALIDAD 
-FROM FGNN_19.Roles r, FGNN_19.Funcionalidades f, FGNN_19.Funcionalidades_Roles fr
-WHERE fr.funcionalidad_id = f.id
-AND fr.rol_id = r.id;
 GO
 
 -- Funciones
