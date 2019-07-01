@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -43,13 +44,12 @@ namespace FrbaCrucero.PagoReserva
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void buttonPagar_Click(object sender, EventArgs e)
         {
-            string metodoPagoDesc = comboBoxMetodoDePago.Text;
-            int cuotas = Convert.ToInt32(numericUpDownCuotas.Value);
-
-            Int32 idMetodoPago = new CrearMetodoDePago(metodoPagoDesc, cuotas).Crear();
-            Int32 idCompra = new CrearCompra(idMetodoPago).Crear();
+            String metodoDePagoDesc = comboBoxMetodoDePago.Text;
+            Int32 cuotas = metodoDePagoDesc == "Tarjeta de crédito" ? Decimal.ToInt32(numericUpDownCuotas.Value) : 0;
+            Int32 idMetodoPago = this.obtenerIDMetodoPago(comboBoxMetodoDePago.Text);
+            Int32 idCompra = new CrearCompra(idMetodoPago, cuotas).Crear();
 
             Dictionary<string, object> paramametrosAModificar = new Dictionary<string, object>();
             paramametrosAModificar.Add("compra_codigo", idCompra);
@@ -58,6 +58,16 @@ namespace FrbaCrucero.PagoReserva
 
             MessageBox.Show("Se pago la reserva de forma exitosa.", "Exito",
             MessageBoxButtons.OK, MessageBoxIcon.None);
+        }
+
+        private Int32 obtenerIDMetodoPago(String descripcion)
+        {
+            String parametroOutput = "id";
+            SqlCommand cmdInsertar = new SqlCommand("FGNN_19.Obtener_id_metodo_pago");
+            cmdInsertar.CommandType = CommandType.StoredProcedure;
+            cmdInsertar.Parameters.Add(new SqlParameter("descripcion", descripcion));
+            cmdInsertar.Parameters.Add(parametroOutput, SqlDbType.Decimal).Direction = ParameterDirection.Output;
+            return ConexionDB.instancia.ejecutarStoredProcedureConOutput(cmdInsertar, parametroOutput);
         }
     }
 }

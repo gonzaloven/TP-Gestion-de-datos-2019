@@ -41,7 +41,6 @@
             this.toolStripCompreReserva = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolABMRolesLabel2 = new System.Windows.Forms.ToolStripLabel();
-            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripPagoReserva = new System.Windows.Forms.ToolStripLabel();
             this.toolStripLabelTop = new System.Windows.Forms.ToolStripLabel();
             this.toolABMRolesLabel2 = new System.Windows.Forms.ToolStripLabel();
@@ -72,7 +71,7 @@
             this.toolStripSeparator4,
             this.toolStripCompreReserva,
             this.toolStripSeparator5,
-            this.toolStripPagoReserva});
+            this.toolStripPagoReserva,
             this.toolStripLabelTop});
             this.toolStripBarraMenu.Location = new System.Drawing.Point(0, 0);
             this.toolStripBarraMenu.Name = "toolStripBarraMenu";
@@ -153,11 +152,6 @@
             // 
             this.toolABMRolesLabel2.Name = "toolABMRolesLabel2";
             this.toolABMRolesLabel2.Size = new System.Drawing.Size(23, 23);
-            // 
-            // toolStripSeparator8
-            // 
-            this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(6, 25);
             // 
             // toolStripPagoReserva
             // 

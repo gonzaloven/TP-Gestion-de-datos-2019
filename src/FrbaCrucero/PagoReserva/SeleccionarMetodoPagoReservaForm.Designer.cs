@@ -115,7 +115,7 @@
             this.buttonPagar.TabIndex = 6;
             this.buttonPagar.Text = "Pagar";
             this.buttonPagar.UseVisualStyleBackColor = true;
-            this.buttonPagar.Click += new System.EventHandler(this.button1_Click);
+            this.buttonPagar.Click += new System.EventHandler(this.buttonPagar_Click);
             // 
             // labelTotalAPagar
             // 
