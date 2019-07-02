@@ -1124,7 +1124,7 @@ BEGIN TRANSACTION
 	WHERE crucero_id = @idCrucero AND fecha_inicio >= @fechaHoy AND EXISTS(SELECT 1 FROM Pasajes WHERE viaje_codigo = codigo AND FGNN_19.FN_Pasaje_no_cancelado(id) = 1)
 
 	UPDATE Cruceros
-	SET baja_vida_util = 1
+	SET baja_vida_util = 1, fecha_baja_definitiva = @fechaHoy
 	WHERE id = @idCrucero 
 
 COMMIT TRANSACTION;
