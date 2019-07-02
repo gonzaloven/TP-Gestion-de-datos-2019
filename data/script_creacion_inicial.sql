@@ -795,7 +795,8 @@ BEGIN
 
 	SET @cantidad_pasajes_existentes = (SELECT COUNT(DISTINCT v.codigo)
 		FROM FGNN_19.Viajes v
-		WHERE v.crucero_id = @idCruceroOriginal AND v.fecha_inicio >= @fechaHoy
+			JOIN FGNN_19.Pasajes p ON p.viaje_codigo = v.codigo
+		WHERE v.crucero_id = @idCruceroOriginal AND v.fecha_inicio >= @fechaHoy AND FGNN_19.FN_Pasaje_no_cancelado(p.id) = 1
 		GROUP BY v.crucero_id)
 
 	IF(@cantidad_pasajes_cumple_fecha = @cantidad_pasajes_existentes AND @cantidad_pasajes_cumple_recorrido = @cantidad_pasajes_existentes)
@@ -1199,8 +1200,8 @@ AS
 BEGIN
 DECLARE @QUERY_FINAL NVARCHAR(1500)
 DECLARE @QUERY_1 VARCHAR(200) = 'SELECT TOP 5 ps.descripcion AS [Puerto de salida], pl.descripcion AS [Puerto de llegada], COUNT(*) AS [Cantidad de cabinas libres]'
-DECLARE @QUERY_2 VARCHAR(200) = ' FROM FGNN_19.Cabinas c JOIN FGNN_19.Pasajes p ON p.cabina_id = c.codigo JOIN FGNN_19.Viajes v ON v.codigo = p.viaje_codigo'
-DECLARE @QUERY_3 VARCHAR(200) = ' JOIN FGNN_19.Recorridos r ON r.id = v.recorrido_codigo JOIN FGNN_19.Puertos ps ON ps.id = r.puerto_desde_id JOIN FGNN_19.Puertos pl ON pl.id = r.puerto_hasta_id'
+DECLARE @QUERY_2 VARCHAR(200) = ' FROM FGNN_19.Cabinas c JOIN FGNN_19.Pasajes p ON p.id = c.pasaje_codigo JOIN FGNN_19.Viajes v ON v.codigo = p.viaje_codigo'
+DECLARE @QUERY_3 VARCHAR(200) = ' JOIN FGNN_19.Recorridos r ON r.codigo = v.recorrido_codigo JOIN FGNN_19.Puertos ps ON ps.id = r.puerto_desde_id JOIN FGNN_19.Puertos pl ON pl.id = r.puerto_hasta_id'
 DECLARE @QUERY_4 VARCHAR(200) = ' WHERE c.estado = 0 AND '
 DECLARE @QUERY_5 VARCHAR(200)
 DECLARE @QUERY_6 VARCHAR(200) = ' GROUP BY r.codigo, ps.descripcion, pl.descripcion ORDER BY [Cantidad de cabinas libres] DESC'
@@ -1230,7 +1231,7 @@ DECLARE @QUERY_4 VARCHAR(200) = ' GROUP BY id, nombre, modelo, fecha_fuera_servi
 		ELSE
 			SET @QUERY_3 = 'YEAR(fecha_fuera_servicio) = @anio AND MONTH(fecha_fuera_servicio) IN (7, 8, 9, 10, 11, 12)'
 	SET @QUERY_FINAL = @QUERY_1 + @QUERY_2 + @QUERY_3 + @QUERY_4
-	EXEC sp_executesql @QUERY_FINAL, N'@anio INT, @semestre INT, @fechaHoy datetime2(3)', @anio, @semestre, @fechaHoy
+	EXEC sp_executesql @QUERY_FINAL, N'@anio INT, @semestre INT', @anio, @semestre
 
 END
 GO
