@@ -1232,7 +1232,7 @@ DECLARE @QUERY_4 VARCHAR(200) = ' GROUP BY id, nombre, modelo, fecha_fuera_servi
 		ELSE
 			SET @QUERY_3 = 'YEAR(fecha_fuera_servicio) = @anio AND MONTH(fecha_fuera_servicio) IN (7, 8, 9, 10, 11, 12)'
 	SET @QUERY_FINAL = @QUERY_1 + @QUERY_2 + @QUERY_3 + @QUERY_4
-	EXEC sp_executesql @QUERY_FINAL, N'@anio INT, @semestre INT', @anio, @semestre
+	EXEC sp_executesql @QUERY_FINAL, N'@anio INT, @semestre INT, @fechaHoy datetime2(3)', @anio, @semestre, @fechaHoy
 
 END
 GO
