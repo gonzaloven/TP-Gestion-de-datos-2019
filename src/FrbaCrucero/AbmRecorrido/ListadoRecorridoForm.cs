@@ -3,7 +3,9 @@ using FrbaCrucero.Repositorios;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -75,6 +77,20 @@ namespace FrbaCrucero.AbmRecorrido
             dataGridViewRecorrido.Columns["id"].Visible = false;
         }
 
+        private Int32 actualizarRecorridos()
+        {
+            String sqlQuery = "FGNN_19.P_Actualizar_Recorridos";
+            SqlCommand cmd = new SqlCommand(sqlQuery);
+            cmd.CommandType = CommandType.StoredProcedure;
+            DateTime fechaHoy = Convert.ToDateTime(ConfigurationManager.AppSettings["Date"]);
+            cmd.Parameters.Add(new SqlParameter("fechaHoy", fechaHoy));
+            ConexionDB.instancia.ejecutarQuery(cmd);
+            String sqlQuery2 = "SELECT @@ROWCOUNT";
+            SqlCommand cmd2 = new SqlCommand(sqlQuery2);
+            DataTable resultado = ConexionDB.instancia.obtenerData(cmd2);
+            return Int32.Parse(resultado.Rows[0][0].ToString()); 
+        }
+
         private void dataGridViewRecorrido_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.ColumnIndex == 0)
@@ -86,8 +102,7 @@ namespace FrbaCrucero.AbmRecorrido
             }
             else if (e.ColumnIndex == 1)
             {
-                Int32 id = Int32.Parse(dataGridViewRecorrido[2,e.RowIndex].Value.ToString());
-                Int32 filasCambiadas = RepoRecorrido.instancia.Baja(id);
+                Int32 filasCambiadas = this.actualizarRecorridos();
                 if (filasCambiadas == 0)
                 {
                     MessageBox.Show("El recorrido no puede darse de baja ya que tiene viajes pendientes.", "Error",

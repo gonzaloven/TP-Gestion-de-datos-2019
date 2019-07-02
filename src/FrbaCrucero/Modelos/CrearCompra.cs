@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;
+using System.Configuration;
 
 namespace FrbaCrucero.Modelos
 {
@@ -26,6 +27,8 @@ namespace FrbaCrucero.Modelos
             cmdInsertar.CommandType = CommandType.StoredProcedure;
             cmdInsertar.Parameters.Add(new SqlParameter("metodo_pago", metodo_pago));
             cmdInsertar.Parameters.Add(new SqlParameter("cuotas", cuotas));
+            DateTime fechaHoy = Convert.ToDateTime(ConfigurationManager.AppSettings["Date"]);
+            cmdInsertar.Parameters.Add(new SqlParameter("fechaHoy", fechaHoy));
             cmdInsertar.Parameters.Add(parametroOutput, SqlDbType.Decimal).Direction = ParameterDirection.Output;
             Int32 codigo = ConexionDB.instancia.ejecutarStoredProcedureConOutput(cmdInsertar, parametroOutput);
             return codigo;

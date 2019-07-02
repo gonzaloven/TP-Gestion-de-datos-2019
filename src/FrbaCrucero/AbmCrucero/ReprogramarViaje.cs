@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
@@ -64,6 +65,8 @@ namespace FrbaCrucero.AbmCrucero
             cmd.Parameters.Add(new SqlParameter("idCrucero", id));
             cmd.Parameters.Add(new SqlParameter("cantidadDias", cantidadDias));
             cmd.Parameters.Add(new SqlParameter("fecha_reinicio_servicio", fecha_reinicio_servicio));
+            DateTime fechaHoy = Convert.ToDateTime(ConfigurationManager.AppSettings["Date"]);
+            cmd.Parameters.Add(new SqlParameter("fechaHoy", fechaHoy));
             String parametroOutput = "@Resultado";
             cmd.Parameters.Add(parametroOutput, SqlDbType.Int).Direction = ParameterDirection.Output;
             Int32 resultado = ConexionDB.instancia.ejecutarStoredProcedureConOutput(cmd, parametroOutput);
@@ -77,6 +80,8 @@ namespace FrbaCrucero.AbmCrucero
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.Add(new SqlParameter("idCrucero", id));
             cmd.Parameters.Add(new SqlParameter("cantidadDias", cantidadDias));
+            DateTime fechaHoy = Convert.ToDateTime(ConfigurationManager.AppSettings["Date"]);
+            cmd.Parameters.Add(new SqlParameter("fechaHoy", fechaHoy));
             ConexionDB.instancia.ejecutarQuery(cmd);
         }
     }

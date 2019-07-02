@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
@@ -37,6 +38,8 @@ namespace FrbaCrucero.AbmCrucero
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.Add(new SqlParameter("idCrucero", id));
             cmd.Parameters.Add(new SqlParameter("motivo", "Crucero dado de baja definitiva"));
+            DateTime fechaHoy = Convert.ToDateTime(ConfigurationManager.AppSettings["Date"]);
+            cmd.Parameters.Add(new SqlParameter("fechaHoy", fechaHoy));
             ConexionDB.instancia.ejecutarQuery(cmd);
             MessageBox.Show("Se han cancelado los pasajes que involucraban al crucero.", "Exito",
                                 MessageBoxButtons.OK, MessageBoxIcon.None);
@@ -62,6 +65,8 @@ namespace FrbaCrucero.AbmCrucero
             SqlCommand cmd = new SqlCommand(sqlQuery);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.Add(new SqlParameter("idCrucero", id));
+            DateTime fechaHoy = Convert.ToDateTime(ConfigurationManager.AppSettings["Date"]);
+            cmd.Parameters.Add(new SqlParameter("fechaHoy", fechaHoy));
             String parametroOutput = "resultado";
             cmd.Parameters.Add(parametroOutput, SqlDbType.Int).Direction = ParameterDirection.Output;
             Int32 resultado = ConexionDB.instancia.ejecutarStoredProcedureConOutput(cmd, parametroOutput);

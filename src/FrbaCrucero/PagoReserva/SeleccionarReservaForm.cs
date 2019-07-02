@@ -3,6 +3,7 @@ using FrbaCrucero.Repositorios;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
@@ -50,6 +51,8 @@ namespace FrbaCrucero.PagoReserva
             String sqlQuery = "FGNN_19.Actualizar_Reservas";
             SqlCommand cmd = new SqlCommand(sqlQuery);
             cmd.CommandType = CommandType.StoredProcedure;
+            DateTime fechaHoy = Convert.ToDateTime(ConfigurationManager.AppSettings["Date"]);
+            cmd.Parameters.Add(new SqlParameter("fechaHoy", fechaHoy));
             ConexionDB.instancia.ejecutarQuery(cmd);
         }
     }
