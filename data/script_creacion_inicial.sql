@@ -785,20 +785,17 @@ BEGIN
 
 	SET @cantidad_pasajes_cumple_fecha = (SELECT ISNULL(SUM(FGNN_19.FN_Tiene_fecha_libre(@idCruceroReemplazo, fecha_inicio, fecha_fin)),0)
 		FROM FGNN_19.Viajes v
-			JOIN FGNN_19.Pasajes p ON p.viaje_codigo = v.codigo
-		WHERE v.crucero_id = @idCruceroOriginal AND v.fecha_inicio >= @fechaHoy AND FGNN_19.FN_Pasaje_no_cancelado(p.id) = 1
+		WHERE v.crucero_id = @idCruceroOriginal AND v.fecha_inicio >= @fechaHoy
 		GROUP BY v.crucero_id)
 		
 	SET @cantidad_pasajes_cumple_recorrido = (SELECT ISNULL(SUM(FGNN_19.FN_Puede_cumplir_recorrido(@idCruceroReemplazo, recorrido_codigo)),0)
 		FROM FGNN_19.Viajes v
-			JOIN FGNN_19.Pasajes p ON p.viaje_codigo = v.codigo
-		WHERE v.crucero_id = @idCruceroOriginal AND v.fecha_inicio >= @fechaHoy AND FGNN_19.FN_Pasaje_no_cancelado(p.id) = 1
+		WHERE v.crucero_id = @idCruceroOriginal AND v.fecha_inicio >= @fechaHoy
 		GROUP BY v.crucero_id)
 
-	SET @cantidad_pasajes_existentes = (SELECT COUNT(v.codigo)
+	SET @cantidad_pasajes_existentes = (SELECT COUNT(DISTINCT v.codigo)
 		FROM FGNN_19.Viajes v
-			JOIN FGNN_19.Pasajes p ON p.viaje_codigo = v.codigo
-		WHERE v.crucero_id = @idCruceroOriginal AND v.fecha_inicio >= @fechaHoy AND FGNN_19.FN_Pasaje_no_cancelado(p.id) = 1
+		WHERE v.crucero_id = @idCruceroOriginal AND v.fecha_inicio >= @fechaHoy
 		GROUP BY v.crucero_id)
 
 	IF(@cantidad_pasajes_cumple_fecha = @cantidad_pasajes_existentes AND @cantidad_pasajes_cumple_recorrido = @cantidad_pasajes_existentes)
@@ -1055,13 +1052,13 @@ GO
 CREATE PROCEDURE FGNN_19.Actualizar_Reservas
 @fechaHoy datetime2(3)
 AS
-BEGIN
+BEGIN TRANSACTION
 
 	UPDATE FGNN_19.Reservas
 	SET habilitada = 0
 	WHERE habilitada = 1 AND ABS(DATEDIFF(day, fecha, @fechaHoy)) >= 4 
 
-END;
+COMMIT TRANSACTION;
 GO
 
 CREATE PROCEDURE FGNN_19.Cancelar_pasajes_crucero(@idCrucero NUMERIC(18,0), @motivo VARCHAR(255), @fechaHoy datetime2(3), @fechaReinicio datetime2(3))
@@ -1111,6 +1108,7 @@ BEGIN TRANSACTION
 	IF(@idCruceroReemplazo IS NULL)
 		BEGIN
 			SET @resultado = 1
+			RETURN
 		END
 
 	UPDATE Pasajes 
