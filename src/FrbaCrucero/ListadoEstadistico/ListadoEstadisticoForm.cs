@@ -48,9 +48,9 @@ namespace FrbaCrucero.ListadoEstadistico
             }
             else
             {
-                limpiarButton.Enabled = false;
+                //limpiarButton.Enabled = false;
                 resultadosTop5Grid.DataSource = null;
-                comboSemestre.Enabled = false;
+                //comboSemestre.Enabled = false;
                 this.recorridosConMasPasajes.GetRecorridosConFiltros(anio, semestre);
             }
         }
@@ -125,9 +125,9 @@ namespace FrbaCrucero.ListadoEstadistico
             }
             else
             {
-                limpiarButton.Enabled = false;
+                //limpiarButton.Enabled = false;
                 resultadosTop5Grid.DataSource = null;
-                comboSemestre.Enabled = false;
+                //comboSemestre.Enabled = false;
                 this.recorridosConMasCabinas.GetRecorridosConFiltros(anio, semestre);
             }
         }
@@ -142,9 +142,9 @@ namespace FrbaCrucero.ListadoEstadistico
             }
             else
             {
-                limpiarButton.Enabled = false;
+                //limpiarButton.Enabled = false;
                 resultadosTop5Grid.DataSource = null;
-                comboSemestre.Enabled = false;
+                //comboSemestre.Enabled = false;
                 this.crucerosSinServicio.GetCrucerosConFiltros(anio, semestre);
             }
         }
