@@ -1110,6 +1110,7 @@ BEGIN TRANSACTION
 	IF(@idCruceroReemplazo IS NULL)
 		BEGIN
 			SET @resultado = 1
+			COMMIT TRANSACTION
 			RETURN
 		END
 
