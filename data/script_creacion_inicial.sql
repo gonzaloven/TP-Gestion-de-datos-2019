@@ -1201,8 +1201,8 @@ AS
 BEGIN
 DECLARE @QUERY_FINAL NVARCHAR(1500)
 DECLARE @QUERY_1 VARCHAR(200) = 'SELECT TOP 5 ps.descripcion AS [Puerto de salida], pl.descripcion AS [Puerto de llegada], COUNT(*) AS [Cantidad de cabinas libres]'
-DECLARE @QUERY_2 VARCHAR(200) = ' FROM FGNN_19.Cabinas c JOIN FGNN_19.Pasajes p ON p.id = c.pasaje_codigo JOIN FGNN_19.Viajes v ON v.codigo = p.viaje_codigo'
-DECLARE @QUERY_3 VARCHAR(200) = ' JOIN FGNN_19.Recorridos r ON r.codigo = v.recorrido_codigo JOIN FGNN_19.Puertos ps ON ps.id = r.puerto_desde_id JOIN FGNN_19.Puertos pl ON pl.id = r.puerto_hasta_id'
+DECLARE @QUERY_2 VARCHAR(200) = ' FROM FGNN_19.Cabinas c JOIN FGNN_19.Pasajes p ON p.cabina_id = c.codigo JOIN FGNN_19.Viajes v ON v.codigo = p.viaje_codigo'
+DECLARE @QUERY_3 VARCHAR(200) = ' JOIN FGNN_19.Recorridos r ON r.id = v.recorrido_codigo JOIN FGNN_19.Puertos ps ON ps.id = r.puerto_desde_id JOIN FGNN_19.Puertos pl ON pl.id = r.puerto_hasta_id'
 DECLARE @QUERY_4 VARCHAR(200) = ' WHERE c.estado = 0 AND '
 DECLARE @QUERY_5 VARCHAR(200)
 DECLARE @QUERY_6 VARCHAR(200) = ' GROUP BY r.codigo, ps.descripcion, pl.descripcion ORDER BY [Cantidad de cabinas libres] DESC'
