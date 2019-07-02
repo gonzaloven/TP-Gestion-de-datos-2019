@@ -817,8 +817,9 @@ BEGIN
 	SET @idCruceroReemplazo = (SELECT TOP 1 cr.id
 		FROM FGNN_19.Cruceros co
 			JOIN FGNN_19.Cruceros cr ON co.id != cr.id
-		WHERE co.id = @idCruceroOriginal AND cr.baja_servicio = 0 AND cr.baja_vida_util = 0 AND FGNN_19.FN_Puede_cumplir_sus_viajes(@idCruceroOriginal, cr.id, @fechaHoy) = 1
-			AND cr.modelo = co.modelo AND cr.tipo_servicio = co.tipo_servicio)
+		WHERE co.id = @idCruceroOriginal AND cr.baja_servicio = 0 AND cr.baja_vida_util = 0 AND cr.modelo = co.modelo AND cr.tipo_servicio = co.tipo_servicio
+			AND FGNN_19.FN_Puede_cumplir_sus_viajes(@idCruceroOriginal, cr.id, @fechaHoy) = 1
+			)
 
 	RETURN @idCruceroReemplazo
 END
