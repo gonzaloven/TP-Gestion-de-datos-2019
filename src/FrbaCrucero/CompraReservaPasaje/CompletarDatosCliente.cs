@@ -176,8 +176,6 @@ namespace FrbaCrucero.CompraReservaPasaje
                 if (this.existeElCliente(dni))
                 {
                     cliente.Modificar(idCliente);
-                    MessageBox.Show("Se ha modificado con exito.", "Exito",
-                                    MessageBoxButtons.OK, MessageBoxIcon.None);
                 }
                 else
                 {
@@ -185,12 +183,32 @@ namespace FrbaCrucero.CompraReservaPasaje
                     MessageBox.Show("Se ha creado con exito.", "Exito",
                                     MessageBoxButtons.OK, MessageBoxIcon.None);
                 }
-                
-                pasaje.cliente_id = idCliente;
-                SeleccionarCompraOReserva seleccionarCompraOReserva = new SeleccionarCompraOReserva(pasaje);
-                seleccionarCompraOReserva.Show();
-                this.Close();
+
+                if (this.puedeViajar(idCliente, pasaje.viaje_codigo) == 1)
+                {
+                    pasaje.cliente_id = idCliente;
+                    SeleccionarCompraOReserva seleccionarCompraOReserva = new SeleccionarCompraOReserva(pasaje);
+                    seleccionarCompraOReserva.Show();
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("El cliente ingresado ya posee un viaje en esa fecha.", "Error",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    this.Close();
+                }
             }
+        }
+
+        private Int32 puedeViajar(Int32 idCliente, Int32 viaje_codigo)
+        {
+            String sqlQuery = "FGNN_19.P_PuedeViajarCliente";
+            SqlCommand cmd = new SqlCommand(sqlQuery);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add(new SqlParameter("codigoViaje", viaje_codigo));
+            cmd.Parameters.Add(new SqlParameter("idCliente", idCliente));
+            DataTable resultado = ConexionDB.instancia.obtenerData(cmd);
+            return Int32.Parse(resultado.Rows[0][0].ToString());
         }
 
         private bool existeElCliente(string dni)

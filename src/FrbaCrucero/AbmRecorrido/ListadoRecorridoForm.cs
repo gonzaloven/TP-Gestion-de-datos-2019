@@ -75,35 +75,32 @@ namespace FrbaCrucero.AbmRecorrido
             dataGridViewRecorrido.DataSource = recorridos;
             dataGridViewRecorrido.MultiSelect = false;
             dataGridViewRecorrido.Columns["id"].Visible = false;
+            this.actualizarRecorridos();
         }
 
-        private Int32 actualizarRecorridos()
+        private void actualizarRecorridos()
         {
             String sqlQuery = "FGNN_19.P_Actualizar_Recorridos";
             SqlCommand cmd = new SqlCommand(sqlQuery);
             cmd.CommandType = CommandType.StoredProcedure;
-            DateTime fechaHoy = Convert.ToDateTime(ConfigurationManager.AppSettings["Date"]);
+            String fechaHoy = ConfigurationManager.AppSettings["Date"];
             cmd.Parameters.Add(new SqlParameter("fechaHoy", fechaHoy));
             ConexionDB.instancia.ejecutarQuery(cmd);
-            String sqlQuery2 = "SELECT @@ROWCOUNT";
-            SqlCommand cmd2 = new SqlCommand(sqlQuery2);
-            DataTable resultado = ConexionDB.instancia.obtenerData(cmd2);
-            return Int32.Parse(resultado.Rows[0][0].ToString()); 
         }
 
         private void dataGridViewRecorrido_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            Int32 id = Int32.Parse(dataGridViewRecorrido[2, e.RowIndex].Value.ToString());
             if (e.ColumnIndex == 0)
             {
                 String codigo = dataGridViewRecorrido[3, e.RowIndex].Value.ToString();
-                Int32 id = Int32.Parse(dataGridViewRecorrido[2, e.RowIndex].Value.ToString());
                 ModificarRecorrido modificarRecorrido = new ModificarRecorrido(this, id, codigo);
                 modificarRecorrido.Show();
             }
             else if (e.ColumnIndex == 1)
             {
-                Int32 filasCambiadas = this.actualizarRecorridos();
-                if (filasCambiadas == 0)
+                Int32 tieneViajes = this.tieneViaje(id);
+                if (tieneViajes == 1)
                 {
                     MessageBox.Show("El recorrido no puede darse de baja ya que tiene viajes pendientes.", "Error",
                                 MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -113,10 +110,38 @@ namespace FrbaCrucero.AbmRecorrido
                 {
                     MessageBox.Show("Se ha dado de baja el recorrido correctamente.", "Exito",
                                 MessageBoxButtons.OK, MessageBoxIcon.None);
+                    this.bajaRecorrido(id);
                     this.Buscar();
                 }
 
             }
+        }
+
+        private Int32 tieneViaje(Int32 idRecorrido)
+        {
+            String sqlQuery = "FGNN_19.P_Verificar_Recorrido";
+            SqlCommand cmd = new SqlCommand(sqlQuery);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add(new SqlParameter("idRecorrido", idRecorrido));
+            String fechaHoy = ConfigurationManager.AppSettings["Date"];
+            cmd.Parameters.Add(new SqlParameter("fechaHoy", fechaHoy));
+            DataTable resultado = ConexionDB.instancia.obtenerData(cmd);
+            if (resultado.Rows.Count != 0)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            } 
+        }
+
+        private void bajaRecorrido(Int32 idRecorrido)
+        {
+            String sqlQuery = "UPDATE FGNN_19.Recorridos SET habilitado = 0 WHERE id = @idRecorrido";
+            SqlCommand cmd = new SqlCommand(sqlQuery);
+            cmd.Parameters.Add(new SqlParameter("idRecorrido", idRecorrido));
+            ConexionDB.instancia.ejecutarQuery(cmd);
         }
 
 

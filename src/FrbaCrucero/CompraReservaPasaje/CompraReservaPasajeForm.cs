@@ -4,7 +4,9 @@ using FrbaCrucero.Repositorios;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -68,6 +70,17 @@ namespace FrbaCrucero.CompraPasaje
             this.dataGridViewViajes.Columns[1].Visible = false;
             this.dataGridViewViajes.Columns[2].Visible = false;
             this.dataGridViewViajes.Columns[3].Visible = false;
+            this.actualizarViajes();
+        }
+
+        private void actualizarViajes()
+        {
+            String sqlQuery = "FGNN_19.Actualizar_Viajes";
+            SqlCommand cmd = new SqlCommand(sqlQuery);
+            cmd.CommandType = CommandType.StoredProcedure;
+            String fechaHoy = ConfigurationManager.AppSettings["Date"];
+            cmd.Parameters.Add(new SqlParameter("fechaHoy", fechaHoy));
+            ConexionDB.instancia.ejecutarQuery(cmd);
         }
 
         private void buttonLimpiar_Click(object sender, EventArgs e)

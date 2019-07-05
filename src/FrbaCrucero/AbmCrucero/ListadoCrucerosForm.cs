@@ -88,7 +88,7 @@ namespace FrbaCrucero.AbmCrucero
             String sqlQuery = "FGNN_19.Actualizacion_reinicio_cruceros";
             SqlCommand cmd = new SqlCommand(sqlQuery);
             cmd.CommandType = CommandType.StoredProcedure;
-            DateTime fechaHoy = Convert.ToDateTime(ConfigurationManager.AppSettings["Date"]);
+            String fechaHoy = ConfigurationManager.AppSettings["Date"];
             cmd.Parameters.Add(new SqlParameter("fechaHoy", fechaHoy));
             ConexionDB.instancia.ejecutarQuery(cmd);
         }

@@ -45,7 +45,7 @@ namespace FrbaCrucero.CompraReservaPasaje
             this.setDatosMostrarPasaje(pasaje.viaje_codigo, pasaje.cabina_id);
 
             MessageBox.Show("La compra del pasaje resulto exitosa. \n Datos de la compra: \n " +
-                "- Puerto de salida: " + descPuertoSalida + "\n - Puerto de llegada: " + descPuertoLlegada + "\n - Fecha de salida: " + fechaSalida +
+                "\n - Voucher de compra: " + idCompra + "\n - Puerto de salida: " + descPuertoSalida + "\n - Puerto de llegada: " + descPuertoLlegada + "\n - Fecha de salida: " + fechaSalida +
                 "\n - Fecha de llegada: " + fechaLlegada + "\n - Crucero: " + cruceroNombre + "\n - Cabina numero: " + cabinaNumero +
                 "\n - Cantidad de pasajeros: " + pasajeros + "\n - Metodo de pago: " + comboBoxMetodoDePago.Text, 
                 "Exito", MessageBoxButtons.OK, MessageBoxIcon.None);

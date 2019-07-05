@@ -1,6 +1,7 @@
 ﻿using FrbaCrucero.Modelos;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -53,9 +54,13 @@ namespace FrbaCrucero.Repositorios
 
         public Reserva EncontrarPorCodigoConPasajeNoCompradoYHabilitado(Int32 codigo)
         {
-            string sqlQuery = "SELECT r.* FROM " + nombreTabla + " r, " +  TABLA_PASAJE + " p WHERE p.reserva_codigo = r.id AND p.compra_codigo IS NULL AND r.id = @Codigo AND r.habilitada = 1";
+            string sqlQuery = "SELECT r.* FROM " + nombreTabla + " r, " +  TABLA_PASAJE + " p, FGNN_19.Viajes v WHERE p.reserva_codigo = r.id "
+                            + "AND p.compra_codigo IS NULL AND r.id = @Codigo AND r.habilitada = 1 AND p.viaje_codigo = v.codigo "
+                            + "AND v.fecha_inicio > @fechaHoy";
             SqlCommand cmd = new SqlCommand(sqlQuery);
             cmd.Parameters.Add(new SqlParameter("Codigo", codigo));
+            String fechaHoy = ConfigurationManager.AppSettings["Date"];
+            cmd.Parameters.Add(new SqlParameter("fechaHoy", fechaHoy));
 
             DataTable tabla = conexionDB.obtenerData(cmd);
             if (tabla.Rows.Count == 0)

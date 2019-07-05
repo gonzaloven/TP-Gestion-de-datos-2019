@@ -18,7 +18,7 @@ namespace FrbaCrucero.Modelos
             String parametroOutput = "@id";
             SqlCommand cmdInsertar = new SqlCommand("FGNN_19.Insertar_Reserva");
             cmdInsertar.CommandType = CommandType.StoredProcedure;
-            DateTime fechaHoy = Convert.ToDateTime(ConfigurationManager.AppSettings["Date"]);
+            String fechaHoy = ConfigurationManager.AppSettings["Date"];
             cmdInsertar.Parameters.Add(new SqlParameter("fechaHoy", fechaHoy));
             cmdInsertar.Parameters.Add(parametroOutput, SqlDbType.Decimal).Direction = ParameterDirection.Output;
             Int32 codigo = ConexionDB.instancia.ejecutarStoredProcedureConOutput(cmdInsertar, parametroOutput);

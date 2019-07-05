@@ -38,7 +38,7 @@ namespace FrbaCrucero.AbmCrucero
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.Add(new SqlParameter("idCrucero", id));
             cmd.Parameters.Add(new SqlParameter("motivo", "Crucero fuera de servicio"));
-            DateTime fechaHoy = Convert.ToDateTime(ConfigurationManager.AppSettings["Date"]);
+            String fechaHoy = ConfigurationManager.AppSettings["Date"];
             cmd.Parameters.Add(new SqlParameter("fechaHoy", fechaHoy));
             cmd.Parameters.Add(new SqlParameter("fechaReinicio", Convert.ToDateTime(formBajaTemporal.textBoxFechaReinicioServicio.Text)));
             ConexionDB.instancia.ejecutarQuery(cmd);

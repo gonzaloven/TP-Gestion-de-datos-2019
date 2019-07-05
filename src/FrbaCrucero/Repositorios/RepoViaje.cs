@@ -2,6 +2,7 @@
 using FrbaCrucero.Modelos;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -68,7 +69,8 @@ namespace FrbaCrucero.Repositorios
                          + "v.fecha_inicio, v.fecha_fin, v.fecha_fin_estimada "
                          + "FROM FGNN_19.Viajes v, FGNN_19.Cruceros c, FGNN_19.Puertos pd, FGNN_19.Puertos ph, FGNN_19.Recorridos r "
                          + "WHERE v.codigo > 0 "
-                         + "AND c.id = v.crucero_id AND r.id = v.recorrido_codigo AND r.puerto_desde_id = pd.id AND r.puerto_hasta_id = ph.id";
+                         + "AND c.id = v.crucero_id AND r.id = v.recorrido_codigo AND r.puerto_desde_id = pd.id AND r.puerto_hasta_id = ph.id "
+                         + "AND r.habilitado = 1 AND v.fecha_inicio > Convert(datetime2,@fechaHoy,103)";
             }
             else
             {
@@ -76,9 +78,12 @@ namespace FrbaCrucero.Repositorios
                          + "v.fecha_inicio, v.fecha_fin, v.fecha_fin_estimada "
                          + "FROM FGNN_19.Viajes v, FGNN_19.Cruceros c, FGNN_19.Puertos pd, FGNN_19.Puertos ph, FGNN_19.Recorridos r "
                          + "WHERE v.codigo > 0 AND v.recorrido_codigo = r.id "
-                         + "AND c.id = v.crucero_id AND r.puerto_desde_id = pd.id AND r.puerto_hasta_id = ph.id";
+                         + "AND c.id = v.crucero_id AND r.puerto_desde_id = pd.id AND r.puerto_hasta_id = ph.id "
+                         + "AND r.habilitado = 1 AND v.fecha_inicio > Convert(datetime2,@fechaHoy,103)";
             }
             SqlCommand cmd = new SqlCommand(sqlQuery);
+            String fechaHoy = ConfigurationManager.AppSettings["Date"];
+            cmd.Parameters.Add(new SqlParameter("fechaHoy", fechaHoy));
 
             if (!String.IsNullOrWhiteSpace(puertoDesde))
             {
